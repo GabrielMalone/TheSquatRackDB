@@ -1,0 +1,45 @@
+# Python bytecode files
+__pycache__/
+*.py[cod]
+
+# Virtual environment folders
+venv/
+env/
+.venv/
+
+# IDE/editor settings (optional but recommended)
+.vscode/
+.idea/
+*.sublime-workspace
+
+# OS generated files
+.DS_Store
+
+# Environment variable files
+.env
+
+# Logs and local output
+*.log
+
+# Test database or debug dumps
+*.sqlite3
+*.db
+
+
+# Pytest cache
+.pytest_cache/
+
+# Migrations (optional, if you use frameworks like Django)
+migrations/
+
+# Coverage reports
+htmlcov/
+coverage.xml
+*.cover
+*.py,cover
+
+# Jupyter Notebook checkpoints (if relevant)
+.ipynb_checkpoints/
+
+# Local development configs (optional)
+*.local
