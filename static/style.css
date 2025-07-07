@@ -1,0 +1,614 @@
+
+/*-------------------------------------------------------*/
+:root {
+    font-family: 'Arial', sans-serif; 
+    font-size: 16px; 
+    line-height: 1.5;
+    color: #333; 
+    background-color: black;
+    height: 100vh;
+    --button-bg-color:  rgba(152, 251, 152, 0.496);
+  }
+/*-------------------------------------------------------*/
+ul {
+    list-style: none;
+    padding-left: 0%;
+  }
+li {
+    padding-left: 0%;             /*these indent too much*/
+}
+
+/*-------------------------------------------------------*/
+/* GENERAL BUTTON CLASS
+/*-------------------------------------------------------*/
+.button {
+    padding: 1rem;
+    border-radius: 0px;
+    background-color: black;
+    color: rgba(255, 255, 255, 0.484);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+    margin-top: 10px;
+}
+.button:hover {
+    background-color:  rgba(102, 51, 153, 0.232);
+    color: mintcream;
+}
+/*-------------------------------------------------------*/
+/* MAIN BROWSER CONTAINER
+/*-------------------------------------------------------*/
+.container {                         /*the entire browser*/
+    display: flex;       
+    flex-direction: column; 
+    min-height: 90vh;    
+    max-height: 95vh;
+  }
+/*-------------------------------------------------------*/
+/* HEADER AND FOOTER
+/*-------------------------------------------------------*/
+.header{
+    background-color:rgb(0, 0, 0);
+    display: flex;
+    flex-direction: row;
+    min-height: 70px;
+}
+.footer{
+    border-top: 1px solid rgba(128, 128, 128, 0.447);
+}
+#headerTitle {
+    margin-left: 20px;
+    padding-top: 10px;
+    margin-top: 20px;
+    color:beige;
+    font-size: 1rem;
+    flex:8;
+    letter-spacing: 0.0em;
+}
+.headerButtons {
+    display: flex;
+    flex: 2;
+    justify-content: flex-end;
+    gap: 1rem;
+    min-width: fit-content;
+}
+/*-------------------------------------------------------*/
+/* LIFTER WINDOW AND SIDEBAR
+/*-------------------------------------------------------*/
+.dashboard {      /*holds lifter window and sidebar*/
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    border-top: solid;
+    border-color: #333;
+    border-width: 1px;
+}
+/*-------------------------------------------------------*/
+/* LIFTER WINDOW - columns
+/*-------------------------------------------------------*/
+.lifterBox {
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid rgba(128, 128, 128, 0.543);
+    background-color:black; 
+    flex: 2;
+    overflow: scroll;
+}
+.lifterBoxHeader{
+    display: flex;
+    flex-direction: row;
+    gap: 3rem;
+}
+#lifterConfig {
+    margin-top: 32px;
+    align-self:flex-start;
+    font-size: 1rem;
+    color: palevioletred;
+    visibility: hidden;
+    /* border-style: solid;
+    border-color: white;
+    border-width: 1px; */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+#lifterConfig:hover {
+    color: red;
+}
+#lifterHeaderName {
+    margin-top: 20px;
+    font-size: 2rem;
+    color: #ddd;
+    /* border-style: solid;
+    border-color: white;
+    border-width: 1px; */
+    margin-left:20px;
+    margin-bottom: 35px;
+}
+
+/*-------------------------------------------------------*/
+/* CALENDAR CLASS in LIFTER WINDOW
+/*-------------------------------------------------------*/
+.month {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+    min-width: fit-content;
+    display: none;
+}
+.week { 
+    display: flex;
+    flex-direction: row;
+}
+.day {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    outline: solid rgb(95, 95, 95) 1px;
+    user-select: none;
+    padding: 1rem;
+    transition: background-color, outline 300ms ease-in-out;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE/Edge */
+    -webkit-touch-callout: none; /* iOS Safari */
+}
+.day:hover {
+    background-color:rgba(102, 51, 153, 0.232);
+    outline-color: black;
+    .dayNum{
+        color: white;
+    }
+    /* transition: 1000ms; */
+}
+.dayNum{
+    display: flex;
+    gap: 2px;
+    flex-direction: row;
+    font-size: 1rem;
+    color: white;
+    pointer-events: none;
+}
+.squatDay{
+    position: absolute;
+    top: 10px;
+    left: 55px;
+    width: 10px;
+    height: 10px;
+    min-width: 10px;
+    min-height: 10px;
+    background-color: palegreen;
+    pointer-events: none;
+}
+.benchDay{
+    position: absolute;
+    top: 30px;
+    left: 55px;
+    width: 10px;
+    height: 10px;
+    min-width: 10px;
+    min-height: 10px;
+    background-color:paleturquoise;
+    pointer-events: none;
+}
+.deadDay{
+    position: absolute;
+    top: 50px;
+    left: 55px;
+    width: 10px;
+    height: 10px;
+    min-width: 10px;
+    min-height: 10px;
+    background-color: palegoldenrod;
+    pointer-events: none; 
+}
+.otherLiftDay{
+    position: absolute;
+    top: 50px;
+    left: 55px;
+    width: 10px;
+    height: 10px;
+    min-width: 10px;
+    min-height: 10px;
+    background-color: palevioletred;
+    pointer-events: none;    
+}
+.unfocusedDate {
+    color: rgba(128, 128, 128, 0.767);
+    outline: solid rgb(23, 23, 23) 1px;
+}
+.dayName {
+    color: white;
+    position: absolute;
+    top: -20px;
+    font-size: 0.5rem;
+}
+.weekNumber {
+    color: white;
+    position: absolute;
+    left: -50px;
+    font-size: 0.5rem;
+    
+}
+.monthName {
+    color: white;
+    position: absolute;
+    left: 100px;
+    font-size: 1rem;
+}
+#year{
+    position: absolute;
+    top:-40px;
+    color: #333;
+    font-size: 1.5rem;
+}
+.today {
+    background-color: rgba(47, 47, 47, 0.486);
+}
+/*-------------------------------------------------------*/
+/* WORKOUT AREA
+/*-------------------------------------------------------*/
+.workout {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 50px;
+    margin-left: 20px;
+    flex: 1;
+    display: none;
+    overflow: visible;
+    width: fit-content;
+    height: fit-content;
+}
+
+.workoutHeader {
+    display: flex;
+    flex: row;
+}
+.sessionTitle{
+    color: white;
+    font-size: 1rem;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+.trainingDate{
+    color: grey;
+    font-size: 1rem;
+}
+/*-------------------------------------------------------*/
+/* workout area cursor
+/*-------------------------------------------------------*/
+.cursor{
+    position: relative;
+    outline: solid rgb(43, 43, 43) 1px;
+    padding:  1rem;
+    width: 1rem;
+    color: gray;   
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+.cursor:hover {
+    background-color: rgba(238, 232, 170, 0.82);
+    color: black;
+}
+.plus{
+    font-size: 3rem;
+    color: white;
+}
+/*-------------------------------------------------------*/
+/* WORKOUT AREA -> EXERCISE ROW
+/*-------------------------------------------------------*/
+.exerciseRow{
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    margin-bottom: 10px;
+    user-select: none;
+    width: fit-content;
+}
+/*-------------------------------------------------------*/
+/* EXERCISE -> SET
+/*-------------------------------------------------------*/
+.set{
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    outline: solid gray 1px;
+    font-size: .75rem;
+    margin-right: 10px;
+    padding-top: 10px;
+    padding-left: 1rem;
+    cursor: pointer;
+    min-width: 7rem;
+    overflow: auto;
+    gap: 0;
+}
+.setExpand{
+    width: 20rem;
+}
+
+.set:hover{
+    outline-color:rgba(102, 51, 153, 0.56);
+}
+.setInfoWrapper{
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    pointer-events: none; 
+    line-height: 1;
+}
+.setWeightRepsWrapper{
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    gap: 0;    
+    pointer-events: none; 
+}
+.setRPEwrapper{
+    margin-top: 5px;
+    display: flex;
+    flex-direction: row;
+    pointer-events: none;  
+    color: gray;
+}
+.setRPE{
+    margin-top: 10px;
+    color: mintcream;
+    pointer-events: none;  
+}
+.setNumber{
+    position: absolute;
+    bottom: 5px;
+    left: 10px;
+    font-size: .75rem;
+    color: mintcream;
+    pointer-events: none;  
+}
+.setWeight{
+    font-size: 1.75rem;
+    color:mintcream;
+    pointer-events: none;    
+}
+.setBy{
+    font-size: 1rem;
+    color:gray;
+    pointer-events: none;    
+}
+.setReps{
+    font-size: 1.5rem;
+    color:mintcream;
+    pointer-events: none;  
+}
+.setReps:hover{
+    color: aquamarine;
+}
+
+
+/*-------------------------------------------------------*/
+/* WOKROUT AREA -> EXERCISE ROW -> SET-> UPDATE FORM
+/*-------------------------------------------------------*/
+.setUpdateForm{
+    display: none;
+}
+.setUpdateFormVisible{
+    display: flex;
+    width: fit-content;
+    position: relative;
+    gap: 0;
+    overflow: visible;
+}
+.setUpdate{
+    display: flex;
+    flex-direction: column;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+.setInfoField{
+    background-color:black;
+    border: none;    
+    margin-left:20px;
+    font-size: .75rem;
+    color: mintcream;
+    max-width: 30px;
+}
+.setInfoField:focus {
+    background-color: black;
+    border-color: none;
+    box-shadow: none;
+    outline: none;
+}
+.setInfoField:hover {
+    outline: none;
+    color: greenyellow;
+}
+.setButton{
+    position: absolute;
+    top: 20px;
+    left: 80px;
+    color: mintcream;
+    cursor: pointer;
+    min-width: fit-content;
+}
+.setButton:hover{
+    color: greenyellow;
+}
+.inputWrapper{
+    display: flex;
+    flex-direction: row;
+    max-width: 100px;
+}
+.inputTag{
+    position: relative;
+    color: grey;
+}
+
+/*-------------------------------------------------------*/
+/* WOKROUT AREA -> EXERCISE ROW -> SET-> UPDATE FORM -> REMOVE SET
+/*-------------------------------------------------------*/
+.setRemove{
+    position: absolute;
+    color: red;
+    bottom: 5px;
+    right: 10px;
+}
+
+
+.addSet{
+    position: absolute;
+    color: white;
+    bottom: 30px;
+    left: 45px;
+}
+.exercise{
+    text-wrap:nowrap;
+    overflow: hidden;
+    text-align: left;
+    position: relative;
+    padding-top: 1rem;
+    padding-left: 1rem;
+    font-size: 10px;
+    height: 5.5rem;
+    width: 5.5rem;
+    min-width: 5.5rem;
+    outline: 1px solid gray;
+    color:white;
+    margin-right: 20px;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+}
+.exercise:hover{
+    background-color:rgba(102, 51, 153, 0.232) ;
+    color: rgb(255, 255, 255);
+    .addSet{
+        color:white;
+    }
+}
+/*-------------------------------------------------------*/
+/* THE SIDEBAR
+/*-------------------------------------------------------*/
+.sidebar {
+    display: flex;
+    flex-direction: column; /*for adding buttons*/
+    background-color: black;
+    min-width:auto;
+    flex: .55;
+    justify-content: flex-start;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+.sidebar.visible{
+    display:none;
+}
+/*-------------------------------------------------------*/
+/* LIFTER NAME IN THE SIDEBAR
+/*-------------------------------------------------------*/
+.lifterName {
+    border-radius: 0px;
+    color: mintcream;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.1s ease-in-out;
+    padding-left: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.lifterName:hover {
+    background-color: rgba(102, 51, 153, 0.48);
+    color: mintcream;
+}
+/*-------------------------------------------------------*/
+/* CREATE A LIFTER POP UP BOX
+/*-------------------------------------------------------*/
+.createLifterBox {
+    top: 25%;
+    left: 25%;
+    width: 500px;
+    height: 450px;
+    display:none;
+}
+.createLifterBox.visible{
+    display: flex;
+    flex: .75;
+    flex-direction: column;
+    min-width: 500px;
+}
+
+.createLifterBoxHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+#X {
+    align-content: center;
+    text-align: center;
+    font-size: 1rem;
+    color: rgba(255, 250, 250, 0.645);
+    margin-right: 30px;
+    margin-top: 20px;
+    flex: 1;
+}
+#X:hover {
+    /* border-color: palegoldenrod; */
+    color:palegreen;
+}
+#newLifterTitle {
+    margin-left: 8%;
+    margin-top: 20px;
+    font-size: 1rem;
+    color:mintcream;
+    flex: 9;
+}
+
+.createLifterFields {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;            
+    align-items: center;         
+    gap: 20px;
+}
+.inputField {
+    background-color: rgba(169, 169, 169, 0.147); 
+    border: none;
+    outline: none;     
+    width: 80%;
+    padding: 10px;
+    border-radius: 0px;
+    font-size: 1rem;
+    color: black;
+}
+.inputField:focus {
+    background-color: rgba(152, 251, 152, 0.225);
+    border-color: none;
+    box-shadow: none;
+    outline: none;
+}
+.inputField:hover {
+    outline: 1px solid rgba(152, 251, 152, 0.629);
+}
+.inputField:not(:placeholder-shown) {
+    color: white;         /* Active text color */
+}
+#submitNewLifter {
+    padding: 1.5rem;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+}
+#submitNewLifter:hover {
+    background-color: rgba(152, 251, 152, 0.683);
+    border-color: black;
+}
+#submitErrorMsg {
+    margin-top: 50px;
+    color: palevioletred;
+}
