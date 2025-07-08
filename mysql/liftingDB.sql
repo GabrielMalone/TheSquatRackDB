@@ -39,6 +39,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Workout` (
   `idWorkout` INT NOT NULL AUTO_INCREMENT,
   `Date` DATETIME NOT NULL,
   `idUser` INT NOT NULL,
+  `workoutTitle` VARCHAR(255) NULL,
   `userWeight` INT NULL,
   `userAge` INT NULL,
   `fatigueRating` INT NULL,
@@ -77,16 +78,16 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Set` (
   `SetNumber` INT NOT NULL,
   `idExercise` INT NOT NULL,
   `idWorkout` INT NOT NULL,
-  `setWeight` DOUBLE NOT NULL,
-  `setReps` INT NOT NULL,
-  `setRPE` FLOAT NULL,
+  `setWeight` DOUBLE NOT NULL DEFAULT 0,
+  `setReps` INT NOT NULL DEFAULT 0,
+  `setRPE` FLOAT NOT NULL DEFAULT 0,
   `paused` TINYINT NULL,
   `setComment` BLOB NULL,
   `setVideo` VARCHAR(45) NULL,
-  `setCompleted` TINYINT NOT NULL,
+  `setCompleted` TINYINT NULL,
   PRIMARY KEY (`idSet`),
   UNIQUE INDEX `idSet_UNIQUE` (`idSet` ASC) VISIBLE,
-  UNIQUE INDEX `unique_set_per_exercise` (`idWorkout`, `idExercise`, `SetNumber`), -- so that we can have unique set numbers per exercise but can have overlapping set number between exercises
+  -- UNIQUE INDEX `unique_set_per_exercise` (`idWorkout`, `idExercise`, `SetNumber`),
   INDEX `fk_Set_Exercise1_idx` (`idExercise` ASC) VISIBLE,
   INDEX `fk_Set_Workout1_idx` (`idWorkout` ASC) VISIBLE,
   CONSTRAINT `fk_Set_Exercise1`
@@ -100,7 +101,6 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Set` (
     ON DELETE CASCADE
     ON UPDATE NO ACTION
 ) ENGINE = InnoDB;
-
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
@@ -135,7 +135,7 @@ VALUES (1, 7, 1, 225, 5, 8, 1);
 INSERT INTO Workout (Date, idUser)
 VALUES ('2025-7-25', 1);
 INSERT INTO `Set` (SetNumber, idExercise, idWorkout, setWeight, setReps, setRPE, setCompleted)
-VALUES (2, 3, 2, 225, 5, 8, 1);
+VALUES (1, 3, 2, 225, 5, 8, 1);
 INSERT INTO Workout (Date, idUser)
 VALUES ('2025-7-11', 1);
 INSERT INTO `Set` (SetNumber, idExercise, idWorkout, setWeight, setReps, setRPE, setCompleted)

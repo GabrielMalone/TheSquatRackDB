@@ -11,6 +11,43 @@ def connect():
         database=os.getenv('DB_NAME'),
         host=os.getenv('DB_HOST', 'localhost') )
 #------------------------------------------------------------------------------
+def createSet(setData):
+    idExercise  = setData["idExercise"]
+    idWorkout   = setData["idWorkout"]
+    SetNumber   = setData["SetNumber"]
+
+    cnx = connect()
+    if (cnx.is_connected()):
+        try:
+            cursor = cnx.cursor(dictionary=True)
+            cursor.execute(
+                '''
+                    INSERT into `Set`
+                        (idExercise, idWorkout, SetNumber)
+                    VALUES 
+                        (%s, %s, %s)
+                ''', 
+                (idExercise, idWorkout, SetNumber))
+            cnx.commit()
+            newSetID = cursor.lastrowid
+            newSetID = cursor.lastrowid # then get all the setInfo returned back
+            cursor.execute(
+                '''
+                    SELECT * FROM `Set`
+                    WHERE idSet = %s
+                ''',
+                (newSetID,))
+            newSet = cursor.fetchone()
+            cursor.close()
+            cnx.close()
+            return newSet
+        except mysql.connector.Error as err:
+            print("MySQL Error:", err)     # This will show you the exact error
+            print("Error code:", err.errno)                # Numeric error code
+            cnx.rollback() 
+            cnx.close()
+            return err.errno       
+#------------------------------------------------------------------------------
 def deleteSet(setID):
     cnx = connect()
     if (cnx.is_connected()):
@@ -32,7 +69,6 @@ def deleteSet(setID):
             cnx.rollback() 
             cnx.close()
             return err.errno
-    pass
 #------------------------------------------------------------------------------
 def updateSet(updateInfo):
 
@@ -68,6 +104,33 @@ def updateSet(updateInfo):
             cnx.rollback() 
             cnx.close()
             return err.errno
+#------------------------------------------------------------------------------        
+def updateSetNumber(setNumber, setID):
+    cnx = connect()
+    if (cnx.is_connected()):
+        try:
+            cursor = cnx.cursor()
+            cursor.execute(
+            '''
+                UPDATE
+                    `Set`
+                SET
+                    SetNumber = %s
+                WHERE 
+                    idSet = %s
+            ''', 
+                (setNumber, setID))
+            cnx.commit()
+            updated = cursor.rowcount
+            cursor.close()
+            cnx.close()
+            return updated
+        except mysql.connector.Error as err:
+            print("MySQL Error:", err)     # This will show you the exact error
+            print("Error code:", err.errno)                # Numeric error code
+            cnx.rollback() 
+            cnx.close()
+            return err.errno
 #------------------------------------------------------------------------------
 def getWorkoutFromID(workoutID):
     cnx = connect()
@@ -77,9 +140,9 @@ def getWorkoutFromID(workoutID):
             cursor.execute('''
             SELECT 
                 e.ExerciseName AS exercise,
+                e.idExercise as exerciseID,
                 s.idSet AS setID,
                 s.idWorkout as workoutID,
-                s.SetNumber as `set`,
                 s.setWeight as weight,
                 s.setReps as reps,  
                 s.setRPE as rpe,     
@@ -93,7 +156,7 @@ def getWorkoutFromID(workoutID):
             JOIN 
                 Exercise e ON s.idExercise = e.idExercise
             WHERE 
-                w.idWorkout = %s;
+                w.idWorkout = %s
             ''', (workoutID,))
             workout = cursor.fetchall()
             cursor.close()
@@ -140,9 +203,9 @@ def getDaysTrained(userID, Date):
             e.ExerciseName
         FROM 
             Workout w
-        LEFT JOIN 
+        JOIN 
             `Set` s ON w.idWorkout = s.idWorkout
-        LEFT JOIN 
+        JOIN 
             Exercise e ON s.idExercise = e.idExercise
         WHERE 
             w.idUser = %s        

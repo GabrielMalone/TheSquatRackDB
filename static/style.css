@@ -528,26 +528,26 @@ li {
 /*-------------------------------------------------------*/
 /* CREATE A LIFTER POP UP BOX
 /*-------------------------------------------------------*/
-.createLifterBox {
+.createLifterBox, .createExerciseBox {
     top: 25%;
     left: 25%;
     width: 500px;
     height: 450px;
-    display:none;
+    display: none;
 }
-.createLifterBox.visible{
+.createLifterBox.visible, .createExerciseBox.visible{
     display: flex;
     flex: .75;
     flex-direction: column;
     min-width: 500px;
 }
 
-.createLifterBoxHeader {
+.createLifterBoxHeader, .createExerciseBoxHeader {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
 }
-#X {
+.X {
     align-content: center;
     text-align: center;
     font-size: 1rem;
@@ -556,11 +556,11 @@ li {
     margin-top: 20px;
     flex: 1;
 }
-#X:hover {
+.X:hover {
     /* border-color: palegoldenrod; */
     color:palegreen;
 }
-#newLifterTitle {
+#newLifterTitle, #newExerciseTitle {
     margin-left: 8%;
     margin-top: 20px;
     font-size: 1rem;

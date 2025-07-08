@@ -15,7 +15,7 @@ export const clearNewLifterFields = () => {
 // event listener for the X close button on the new lifter window
 //-----------------------------------------------------------------------------
 export const xNewLifterWindow = () => {
-    const x = document.getElementById("X");
+    const x = document.querySelector(".X");
     const addLifterBox  = document.querySelector(".createLifterBox");
     x.addEventListener("click", ()=>{
         clearNewLifterFields();
