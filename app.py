@@ -64,13 +64,20 @@ def createSet():
     setData = request.get_json()
     return jsonify(database.createSet(setData))
 #------------------------------------------------------------------------------
-@app.route("/updateSetNumber", methods=["PUT"])
-def updateSetNumber():
+@app.route("/createExerciseOrder", methods=["PUT"])
+def createExerciseOrder():
     data = request.get_json()
-    newSetNumber = data["newSetNumber"]
-    setID = data["curSetId"]
-    print(f'new set number: {newSetNumber} setID: {setID}')
-    return jsonify(database.updateSetNumber(newSetNumber, setID))
+    orderNumber = data["orderNumber"]
+    exerciseID = data["exerciseID"]
+    workoutID = data["workoutID"]
+    return jsonify(database.createExerciseOrder(workoutID, exerciseID, orderNumber))
+#------------------------------------------------------------------------------
+@app.route("/reorderSetNumbers", methods=["PUT"])
+def reorderSetNumbers():
+    data = request.get_json()
+    exerciseID = data["exerciseID"]
+    workoutID = data["workoutID"]
+    return jsonify(database.reorderSetNumbers(workoutID, exerciseID))
 #------------------------------------------------------------------------------
 if __name__ == "__main__":
     app.run(debug=True, port=5001)

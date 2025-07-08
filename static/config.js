@@ -37,7 +37,8 @@ const devConfig = {
     LIFTER_ENDPOINT: "lifter",
     WORKOUT_ENDPOINT: "workout",
     SET_ENDPOINT: "createSet",
-    UPDATE_SET_NUMBER: "updateSetNumber"
+    UPDATE_SET_NUMBER: "updateSetNumber",
+    REORDER__SET_ENDPOINT: "reorderSetNumbers"
   };
   
 
@@ -48,7 +49,8 @@ const prodConfig = {
     LIFTER_ENDPOINT: "lifter",
     WORKOUT_ENDPOINT: "workout",
     SET_ENDPOINT: "createSet",
-    UPDATE_SET_NUMBER: "updateSetNumber"
+    UPDATE_SET_NUMBER: "updateSetNumber",
+    REORDER__SET_ENDPOINT: "reorderSetNumbers"
   };
 
 export const config = window.location.hostname === "localhost" ? 

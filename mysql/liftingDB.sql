@@ -67,6 +67,30 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Exercise` (
   PRIMARY KEY (`idExercise`))
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table `mydb`.`ExerciseOrderInWorkout`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `mydb`.`ExerciseOrderInWorkout`;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`ExerciseOrderInWorkout` (
+  `idExercise` INT NOT NULL,
+  `idWorkout` INT NOT NULL,
+  `Order` INT NOT NULL,  
+  PRIMARY KEY (`idExercise`, `idWorkout`),
+  UNIQUE (`idWorkout`, `Order`), 
+  INDEX `fk_Exercise_has_Workout_Workout1_idx` (`idWorkout` ASC) VISIBLE,
+  INDEX `fk_Exercise_has_Workout_Exercise1_idx` (`idExercise` ASC) VISIBLE,
+  CONSTRAINT `fk_Exercise_has_Workout_Exercise1`
+    FOREIGN KEY (`idExercise`)
+    REFERENCES `mydb`.`Exercise` (`idExercise`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Exercise_has_Workout_Workout1`
+    FOREIGN KEY (`idWorkout`)
+    REFERENCES `mydb`.`Workout` (`idWorkout`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+) ENGINE = InnoDB;
 
 -- -----------------------------------------------------
 -- Table `mydb`.`Set`
@@ -81,13 +105,13 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Set` (
   `setWeight` DOUBLE NOT NULL DEFAULT 0,
   `setReps` INT NOT NULL DEFAULT 0,
   `setRPE` FLOAT NOT NULL DEFAULT 0,
-  `paused` TINYINT NULL,
+  `paused` TINYINT DEFAULT 0,
   `setComment` BLOB NULL,
   `setVideo` VARCHAR(45) NULL,
-  `setCompleted` TINYINT NULL,
+  `setCompleted` TINYINT DEFAULT 1,
   PRIMARY KEY (`idSet`),
   UNIQUE INDEX `idSet_UNIQUE` (`idSet` ASC) VISIBLE,
-  -- UNIQUE INDEX `unique_set_per_exercise` (`idWorkout`, `idExercise`, `SetNumber`),
+  UNIQUE INDEX `unique_set_per_exercise` (`idWorkout`, `idExercise`, `SetNumber`),
   INDEX `fk_Set_Exercise1_idx` (`idExercise` ASC) VISIBLE,
   INDEX `fk_Set_Workout1_idx` (`idWorkout` ASC) VISIBLE,
   CONSTRAINT `fk_Set_Exercise1`
@@ -119,26 +143,46 @@ INSERT INTO Exercise (ExerciseName, ExerciseDescription) VALUES ('Deficit-Deadli
 INSERT INTO Exercise (ExerciseName, ExerciseDescription) VALUES ('Romanian-Deadlift', '');
 
 -- Queries to run for default database
+
+-- create user
 INSERT INTO User (userName) VALUES ('Goobert');
+-- create workout
 INSERT INTO Workout (Date, idUser)
 VALUES ('2025-07-04', 1);
+
+-- i think next would need to create exercise order 
+INSERT INTO `ExerciseOrderInWorkout` (idExercise, idWorkout, `Order`)
+VALUES (1, 1, 3);
+-- then sets for that exercise
 INSERT INTO `Set` (setNumber,idExercise, idWorkout, setWeight, setReps, setRPE, setCompleted)
 VALUES (1, 1, 1, 185, 5, 8, 1);
 INSERT INTO `Set` (SetNumber, idExercise, idWorkout, setWeight, setReps, setRPE, setCompleted)
 VALUES (2, 1, 1, 225, 12, 9, 1);
 INSERT INTO `Set` (SetNumber, idExercise, idWorkout, setWeight, setReps, setRPE, setCompleted)
 VALUES (3, 1, 1, 315, 7, 6, 1);
+
+
+-- i think next would need to create exercise order 
+INSERT INTO `ExerciseOrderInWorkout` (idExercise, idWorkout, `Order`)
+VALUES (5, 1, 1);
+-- then sets for that exercise
 INSERT INTO `Set` (SetNumber, idExercise, idWorkout, setWeight, setReps, setRPE, setCompleted)
-VALUES (1, 5, 1, 225, 5, 8, 1);
+VALUES (1, 5, 1, 225, 5, 6, 1);
 INSERT INTO `Set` (SetNumber, idExercise, idWorkout, setWeight, setReps, setRPE, setCompleted)
-VALUES (1, 7, 1, 225, 5, 8, 1);
-INSERT INTO Workout (Date, idUser)
-VALUES ('2025-7-25', 1);
+VALUES (2, 5, 1, 275, 3, 8, 1);
 INSERT INTO `Set` (SetNumber, idExercise, idWorkout, setWeight, setReps, setRPE, setCompleted)
-VALUES (1, 3, 2, 225, 5, 8, 1);
-INSERT INTO Workout (Date, idUser)
-VALUES ('2025-7-11', 1);
+VALUES (3, 5, 1, 315, 1, 9, 1);
+
+-- i think next would need to create exercise order 
+INSERT INTO `ExerciseOrderInWorkout` (idExercise, idWorkout, `Order`)
+VALUES (7, 1, 2);
+-- then sets for that exercise
 INSERT INTO `Set` (SetNumber, idExercise, idWorkout, setWeight, setReps, setRPE, setCompleted)
-VALUES (1, 6, 3, 225, 5, 8, 1);
+VALUES (1, 7, 1, 225, 5, 2, 1);
+INSERT INTO `Set` (SetNumber, idExercise, idWorkout, setWeight, setReps, setRPE, setCompleted)
+VALUES (2, 7, 1, 315, 5, 4, 1);
+INSERT INTO `Set` (SetNumber, idExercise, idWorkout, setWeight, setReps, setRPE, setCompleted)
+VALUES (3, 7, 1, 405, 5, 8, 1);
+
 
 
