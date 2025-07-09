@@ -181,13 +181,14 @@ function removeSetEvent(e){
 
 
 //-----------------------------------------------------------------------------
-// listens to see if a set was clicked on. if so, the set CSS will expand 
+// listens to see if an item in workout area clicked on. 
 //-----------------------------------------------------------------------------
 export function setListener(){
     workoutContainer.addEventListener("click", clickSetEvent);
     workoutContainer.addEventListener("mouseover", clickSetEvent);
 }
-function clickSetEvent(event){
+function clickSetEvent(event){  
+    // fills out description area of an exerice    
     if (event.type === "mouseover" && event.target.classList.contains("exerciseMenuItem")){
         const DescriptionBox = document.querySelector(".exerciseDescription");
         const exercise = event.target;
@@ -196,19 +197,50 @@ function clickSetEvent(event){
         DescriptionBox.innerHTML = Description;
         return;
     }
+    // selects an exercise to add to a workout   
+    if (event.type === "click" && event.target.classList.contains("exerciseMenuItem")){
+        const exercise = event.target;
+        const liftInfo = JSON.parse(decodeURIComponent(exercise.dataset.liftInfo));
+        const idExercise = liftInfo.exerciseID;
+        // if the current wokrout container has exercises present, 
+        // the workout is already in session
+        // and workout ID can be obtained from there.
+        // otherwise will need to to create a new workout in DB
+        const exercisePresent = workoutContainer.querySelector(".exercise");
+        if (exercisePresent){
+            const idWorkout = JSON.parse(exercisePresent.dataset.liftInfo).workoutID;
+            const SetNumber = 1;
+            const Order = workoutContainer.querySelectorAll(".exercise").length + 1;
+            console.log(idWorkout, Order);
+            f.post(config.INSERT_NEW_EXERCISE_ENDPOINT,{idWorkout, idExercise, SetNumber, Order})
+                .then(res=>{
+                    console.log(res);
+                    const rawData = (document.querySelector(".trainingDate")).dataset.dateInfo;
+                    const dateInfo = JSON.parse(decodeURIComponent(rawData)); 
+                    createWorkoutGrid(dateInfo);     // these three functions to redraw 
+                    getWorkoutFromWokroutID(idWorkout);             // the workout area
+                    fillCalendar(curYear, curMonth, curlastDay);    // and the calendar
+                })
+                .catch(err=>console.error(err));
+        }
+        return;
+    }
+    // expand set box and show update form
     if (event.type === "click" && event.target.classList.contains("set") ){
         const set = event.target;
         set.classList.toggle("setExpand");
-        const setID = set.dataset.setID; // expand set box and show update form
+        const setID = set.dataset.setID; 
         const form = document.querySelector(`#setUpdateForm${setID}`);
         form.classList.toggle("setUpdateFormVisible");
         return;
     } 
+    // cursor click to bring up exercise dashboard
     if (event.type === "click" && event.target.classList.contains("cursor")){
         workoutContainer.insertAdjacentHTML("beforeend",ExerciseDashTemplate());
         chooseNewExerciseBoxEvent();
         return;
     }
+    //  closes the exercise dashboard via the x button
     if (event.type === "click" && event.target.id === "addExerciseX"){
         const exerciseDash  = document.querySelector(".addExerciseDash");
         exerciseDash.classList.toggle("addExerciseDashVisible"); 

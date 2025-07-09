@@ -39,7 +39,8 @@ const devConfig = {
     SET_ENDPOINT: "createSet",
     UPDATE_SET_NUMBER: "updateSetNumber",
     REORDER__SET_ENDPOINT: "reorderSetNumbers",
-    GET_EXERCISES_ENDPOINT: "getExercises"
+    GET_EXERCISES_ENDPOINT: "getExercises",
+    INSERT_NEW_EXERCISE_ENDPOINT: "insertNewExercise"
   };
   
 
@@ -52,7 +53,8 @@ const prodConfig = {
     SET_ENDPOINT: "createSet",
     UPDATE_SET_NUMBER: "updateSetNumber",
     REORDER__SET_ENDPOINT: "reorderSetNumbers",
-    GET_EXERCISES_ENDPOINT: "getExercises"
+    GET_EXERCISES_ENDPOINT: "getExercises",
+    INSERT_NEW_EXERCISE_ENDPOINT: "insertNewExercise"
   };
 
 export const config = window.location.hostname === "localhost" ? 

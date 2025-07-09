@@ -113,8 +113,57 @@ def updateExerciseOrder(idWorkout, idExercise, orderNumber):
             cnx.close()
             return err.errno     
 #------------------------------------------------------------------------------
-def createSet(setData):
+def insertNewExercise(setData):
 
+    idExercise  = setData["idExercise"]
+    idWorkout   = setData["idWorkout"]
+    SetNumber   = setData["SetNumber"]
+    Order       = setData["Order"]
+
+    cnx = connect()
+    if (cnx.is_connected()):
+        try:
+            cursor = cnx.cursor(dictionary=True)
+            # exercise order first
+            cursor.execute(
+                '''
+                    INSERT INTO 
+                        `ExerciseOrderInWorkout` (idExercise, idWorkout, `Order`)
+                    VALUES 
+                        (%s, %s, %s);
+                ''', (idExercise, idWorkout, Order))
+            cnx.commit()
+            # then the exercise set info
+            cursor.execute(
+                '''
+                    INSERT into `Set`
+                        (idExercise, idWorkout, SetNumber)
+                    VALUES 
+                        (%s, %s, %s)
+                ''', 
+                (idExercise, idWorkout, SetNumber))
+            cnx.commit()
+            newSetID = cursor.lastrowid
+            newSetID = cursor.lastrowid
+            # then get all the setInfo returned back 
+            cursor.execute(
+                '''
+                    SELECT * FROM `Set`
+                    WHERE idSet = %s
+                ''',
+                (newSetID,))
+            newSet = cursor.fetchone()
+            cursor.close()
+            cnx.close()
+            return newSet
+        except mysql.connector.Error as err:
+            print("MySQL Error:", err)     # This will show you the exact error
+            print("Error code:", err.errno)                # Numeric error code
+            cnx.rollback() 
+            cnx.close()
+            return err.errno       
+#------------------------------------------------------------------------------
+def createSet(setData):
     idExercise  = setData["idExercise"]
     idWorkout   = setData["idWorkout"]
     SetNumber   = setData["SetNumber"]
@@ -133,7 +182,8 @@ def createSet(setData):
                 (idExercise, idWorkout, SetNumber))
             cnx.commit()
             newSetID = cursor.lastrowid
-            newSetID = cursor.lastrowid # then get all the setInfo returned back
+            newSetID = cursor.lastrowid
+            # then get all the setInfo returned back 
             cursor.execute(
                 '''
                     SELECT * FROM `Set`
@@ -149,7 +199,7 @@ def createSet(setData):
             print("Error code:", err.errno)                # Numeric error code
             cnx.rollback() 
             cnx.close()
-            return err.errno       
+            return err.errno   
 #------------------------------------------------------------------------------
 def deleteSet(setID):
     cnx = connect()

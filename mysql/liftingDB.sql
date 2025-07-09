@@ -148,7 +148,7 @@ INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDesc
 INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDescription) VALUES ('Deficit-Sumo-Deadlift', 'Def_Deads', 'deadlift', "Deadlift performed with greater ROM than from the floor");
 INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDescription) VALUES ('Romanian-Deadlift', 'Romanians', 'deadlift', "Convetional Deadlift performed with only a slight bend in the knees");
 
-INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDescription) VALUES ('Bicep-Curls-barbell', 'BB Curls', 'accessory', "curls done with an olympic barbell");
+INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDescription) VALUES ('Bicep-Curls-barbell', 'BB_Curls', 'accessory', "curls done with an olympic barbell");
 INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDescription) VALUES ('Bulgarian-Split-Squats', 'Bulgarians', 'accessory', "The thing you do not like to do");
 INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDescription) VALUES ('Pull-ups-wide-grip', 'pullups', 'accessory', "pull-ups done with hands farther apart than medium grip pull-ups");
 INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDescription) VALUES ('Pull-ups-medium-grip', 'pullups', 'accessory', "pull-ups done with hands closer togther than wide grip pull-ups");

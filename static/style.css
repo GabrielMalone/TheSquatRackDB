@@ -7,7 +7,7 @@
     color: #333; 
     background-color: black;
     height: 100vh;
-    --button-bg-color:  rgba(152, 251, 152, 0.496);
+    --button-bg-color: purple;
   }
 /*-------------------------------------------------------*/
 ul {
@@ -25,14 +25,14 @@ li {
     padding: 1rem;
     border-radius: 0px;
     background-color: black;
-    color: rgba(255, 255, 255, 0.484);
+    color: gray;
     font-size: 1rem;
     cursor: pointer;
-    transition: background-color 0.3s ease-in;
+    transition: background-color 0.1s ease-in;
     margin-top: 10px;
 }
 .button:hover {
-    background-color:  rgba(102, 51, 153, 0.497);
+    background-color: purple;
     color: mintcream;
 }
 /*-------------------------------------------------------*/
@@ -54,14 +54,13 @@ li {
     min-height: 70px;
 }
 .footer{
-    border-top: 1px solid rgba(128, 128, 128, 0.447);
+    border-top: 1px solid #333;
 }
 #headerTitle {
     margin-left: 20px;
-    padding-top: 10px;
     margin-top: 20px;
-    color:beige;
-    font-size: 1rem;
+    color:mintcream;
+    font-size: 2rem;
     flex:8;
     letter-spacing: 0.0em;
 }
@@ -89,7 +88,7 @@ li {
 .lifterBox {
     display: flex;
     flex-direction: column;
-    border-right: 1px solid rgba(128, 128, 128, 0.543);
+    border-right: 1px solid #333;
     background-color:black; 
     flex: 2;
     overflow: scroll;
@@ -117,7 +116,7 @@ li {
 #lifterHeaderName {
     margin-top: 20px;
     font-size: 2rem;
-    color: #ddd;
+    color: mintcream;
     /* border-style: solid;
     border-color: white;
     border-width: 1px; */
@@ -143,10 +142,10 @@ li {
     display: flex;
     flex-direction: column;
     position: relative;
-    outline: solid rgb(95, 95, 95) 1px;
+    outline: solid #333 1px;
     user-select: none;
     padding: 1rem;
-    transition: background-color, outline 300ms ease-in-out;
+    transition: background-color, outline 300ms ease-in;
     width: 40px;
     height: 40px;
     cursor: pointer;
@@ -156,10 +155,10 @@ li {
     -webkit-touch-callout: none; /* iOS Safari */
 }
 .day:hover {
-    background-color:rgba(102, 51, 153, 0.481);
+    background-color:purple;
     outline-color: black;
     .dayNum{
-        color: white;
+        color: mintcream;
     }
     /* transition: 1000ms; */
 }
@@ -168,7 +167,7 @@ li {
     gap: 2px;
     flex-direction: row;
     font-size: 1rem;
-    color: white;
+    color: mintcream;
     pointer-events: none;
 }
 .squatDay{
@@ -216,8 +215,8 @@ li {
     pointer-events: none;    
 }
 .unfocusedDate {
-    color: rgba(128, 128, 128, 0.767);
-    outline: solid rgb(23, 23, 23) 1px;
+    color:gray;
+    outline: none;
 }
 .dayName {
     color: white;
@@ -245,7 +244,7 @@ li {
     font-size: 2.5rem;
 }
 .today {
-    background-color:rgba(65, 105, 225, 0.29) ;
+    background-color: cornflowerblue ;
 }
 /*-------------------------------------------------------*/
 /* WORKOUT AREA
@@ -280,7 +279,7 @@ li {
 /* workout area cursor
 /*-------------------------------------------------------*/
 .cursor{
-    outline: solid rgb(43, 43, 43) 1px;
+    outline: solid #333 1px;
     padding:  1rem;
     width: 1rem;
     color: gray;   
@@ -316,7 +315,7 @@ li {
     display: flex;
     flex-direction: row;
     position: relative;
-    outline: 1px solid rgb(102, 51, 153);
+    outline: 1px solid #333;
     font-size: .75rem;
     margin-right: 10px;
     padding-top: 10px;
@@ -331,7 +330,7 @@ li {
 }
 
 .set:hover{
-    outline-color:rgba(102, 51, 153, 0.494);
+    outline-color:cornflowerblue;
 }
 .setInfoWrapper{
     display: flex;
@@ -461,27 +460,22 @@ li {
 /* WOKROUT AREA -> EXERCISE ROW  -> ADD SET
 /*-------------------------------------------------------*/
 .addSet{
-    position: absolute;
-    color: white;
-    bottom: 30px;
-    left: 45px;
+    position: relative;
+    color: mintcream;
 }
 .exercise{
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     position: relative;
-    text-wrap:nowrap;
     overflow: hidden;
-    text-align: left;
     position: relative;
-    padding-top: 1rem;
-    padding-left: 1rem;
-    font-size: 10px;
+    font-size: .75rem;
     height: 5.5rem;
     width: 5.5rem;
-    min-width: 5.5rem;
-    outline: 1px solid gray;
-    color:white;
+    outline: 1px solid #333;
+    color:mintcream;
     margin-right: 20px;
     cursor: pointer;
     user-select: none;
@@ -490,10 +484,10 @@ li {
     -ms-user-select: none; /* IE10+/Edge */
 }
 .exercise:hover{
-    background-color:rgba(102, 51, 153, 0.532) ;
-    color: rgb(255, 255, 255);
+    background-color:purple ;
+    color: mintcream;
     .addSet{
-        color:white;
+        color:mintcream;
     }
 }
 
@@ -515,7 +509,7 @@ li {
     display: flex;
     flex-direction: row;
     position: relative;
-    border-bottom: 1px solid purple;
+    border-bottom: 1px solid gray;
 }
 #addExerciseTitle {
     font-size: 1rem;
@@ -529,6 +523,9 @@ li {
     flex: 0;
     cursor: pointer;
 }   
+#addExerciseX:hover {
+    color: brown;
+}  
 .exerciseSelectionWrapper{
     display: flex;
     flex-direction: row;
@@ -538,15 +535,16 @@ li {
 .SquatCategory, .BenchCategory, .DeadliftCategory, .AccessoriesCategory{
     display: flex;
     flex-direction: column;
-    border-left: 1px solid purple;
+    border-left: 1px solid gray;
     font-size: 2rem;
     flex: 1;
+    padding-left: 10px;
+    color:cornflowerblue;
 }
 .SquatCategory{
     border: none;
 }
 .CategoryHeader {
-    color: mintcream;
     padding: 10px;
 }
 .exercisesInDB{
@@ -562,8 +560,8 @@ li {
 }
 .exerciseMenuItem:hover{
     font-size: 1rem;
-    color: lightpink;
-    background-color: purple;
+    color: black;
+    background-color: cornflowerblue;
 }
 .exerciseDescriptionWrapper{
     display: flex;
@@ -572,19 +570,14 @@ li {
 }
 .exerciseDescriptionHeader{
     display: none;
-    /* flex-direction: row;
-    flex: 1;
-    color: mintcream;
-    padding: 10px;
-    outline: 1px solid purple; */
 }
 .exerciseDescription{
     display: flex;
     flex-direction: row;
     color:mintcream;
     padding: 10px;
-    border-top:  1px solid purple;
-    border-bottom:  1px solid purple;
+    border-top:  1px solid gray;
+    border-bottom:  1px solid gray;
 }
 /*-------------------------------------------------------*/
 /* THE SIDEBAR
@@ -616,7 +609,7 @@ li {
     margin-right: 10px;
 }
 .lifterName:hover {
-    background-color: rgba(102, 51, 153, 0.48);
+    background-color: purple;
     color: mintcream;
 }
 /*-------------------------------------------------------*/
@@ -645,7 +638,7 @@ li {
     align-content: center;
     text-align: center;
     font-size: 1rem;
-    color: rgba(255, 250, 250, 0.645);
+    color: gray;
     margin-right: 30px;
     margin-top: 20px;
     flex: 1;
@@ -671,7 +664,7 @@ li {
     gap: 20px;
 }
 .inputField {
-    background-color: rgba(169, 169, 169, 0.147); 
+    background-color: #111; 
     border: none;
     outline: none;     
     width: 80%;
@@ -681,16 +674,16 @@ li {
     color: black;
 }
 .inputField:focus {
-    background-color: rgba(152, 251, 152, 0.225);
+    background-color: darkslateblue;
     border-color: none;
     box-shadow: none;
     outline: none;
 }
 .inputField:hover {
-    outline: 1px solid rgba(152, 251, 152, 0.629);
+    outline: 1px solid palegreen;
 }
 .inputField:not(:placeholder-shown) {
-    color: white;         /* Active text color */
+    color: mintcream;         /* Active text color */
 }
 #submitNewLifter {
     padding: 1.5rem;
@@ -699,8 +692,9 @@ li {
     border-color: black;
 }
 #submitNewLifter:hover {
-    background-color: rgba(152, 251, 152, 0.683);
+    background-color: palegreen;
     border-color: black;
+    color: black;
 }
 #submitErrorMsg {
     margin-top: 50px;

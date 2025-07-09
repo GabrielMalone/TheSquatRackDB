@@ -81,5 +81,11 @@ def reorderSetNumbers():
 def getExercises():
     return jsonify(database.getExercises())
 #------------------------------------------------------------------------------
+@app.route("/insertNewExercise", methods=["POST"])
+def insertNewExercise():
+    data = request.get_json()
+    print(data)
+    return jsonify(database.insertNewExercise(data))
+#------------------------------------------------------------------------------
 if __name__ == "__main__":
     app.run(debug=True, port=5001)
