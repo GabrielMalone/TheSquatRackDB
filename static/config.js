@@ -6,12 +6,12 @@ export const lastday   = new Date(year, month + 1, 0).getDate();
 export const DoW = 
 [
 	"sunday",
-    "monday",
-    "tuesday",
-    "wednesday",
-    "thursday",
-    "friday",
-    "saturday"
+  "monday",
+  "tuesday",
+  "wednesday",
+  "thursday",
+  "friday",
+  "saturday"
 ];
 
 export const months =
@@ -38,7 +38,8 @@ const devConfig = {
     WORKOUT_ENDPOINT: "workout",
     SET_ENDPOINT: "createSet",
     UPDATE_SET_NUMBER: "updateSetNumber",
-    REORDER__SET_ENDPOINT: "reorderSetNumbers"
+    REORDER__SET_ENDPOINT: "reorderSetNumbers",
+    GET_EXERCISES_ENDPOINT: "getExercises"
   };
   
 
@@ -50,7 +51,8 @@ const prodConfig = {
     WORKOUT_ENDPOINT: "workout",
     SET_ENDPOINT: "createSet",
     UPDATE_SET_NUMBER: "updateSetNumber",
-    REORDER__SET_ENDPOINT: "reorderSetNumbers"
+    REORDER__SET_ENDPOINT: "reorderSetNumbers",
+    GET_EXERCISES_ENDPOINT: "getExercises"
   };
 
 export const config = window.location.hostname === "localhost" ? 

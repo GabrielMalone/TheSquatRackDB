@@ -11,6 +11,40 @@ def connect():
         database=os.getenv('DB_NAME'),
         host=os.getenv('DB_HOST', 'localhost') )
 #------------------------------------------------------------------------------
+def getExercises():
+    cnx = connect()
+    exercises = []
+    if (cnx.is_connected()):
+        cursor = cnx.cursor(dictionary=True)   # dic = format for JSON objects
+        cursor.execute('SELECT * FROM Exercise')
+        exercises = cursor.fetchall()
+
+        categorized_lifts = {}          # then package results by lift category 
+        cat_lifts = [] # shadow the dictionary above for returning to front end
+        for exercise in exercises:
+            cur_category = exercise["ExerciseCategory"]
+            if cur_category not in categorized_lifts:
+                category = {
+                    "category" : cur_category,
+                    "lifts_in_category"    : []
+                }
+                categorized_lifts[cur_category] = category
+                cat_lifts.append(category)
+            lift_details = {
+                "Description"  : exercise["ExerciseDescription"],
+                "abbreviation" : exercise["abbreviation"],
+                "exerciseName" : exercise["ExerciseName"],
+                "category"     : cur_category,
+                "exerciseID"   : exercise["idExercise"] 
+            }
+            categorized_lifts[cur_category]["lifts_in_category"].append(lift_details)
+            categorized_lifts[cur_category]["lifts_in_category"]
+  
+        cursor.close()
+        cnx.close()
+
+    return  cat_lifts
+#------------------------------------------------------------------------------
 def createExerciseOrder(idWorkout, idExercise, orderNumber):
     cnx = connect()
     if (cnx.is_connected()):
@@ -215,7 +249,7 @@ def getWorkoutFromID(workoutID):
             cursor = cnx.cursor(dictionary=True)
             cursor.execute('''
                 SELECT 
-                    e.ExerciseName AS exercise,
+                    e.abbreviation AS exercise,
                     e.idExercise AS exerciseID,
                     eow.Order AS exerciseOrder,
                     s.idSet AS setID,

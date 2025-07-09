@@ -45,12 +45,13 @@ export const postNewLifter = (newLifter) => {
     const errField  = document.getElementById("submitErrorMsg");
     f.post(c.LIFTERS_ENDPOINT, newLifter)
     .then(res=>{
-        if (res.code === "201"){          // close the newLifter window if done
+        console.log(res);
+        if (res === 200){          // close the newLifter window if done
             document.querySelector(".createLifterBox").classList.toggle("visible");
             LIFTERS.length = 0;
             getLifters();
         }
-        if (res.code === "409"){
+        if (res === 1062){
             errField.innerText = "username already taken"
         }
     })
@@ -102,17 +103,22 @@ export function getLifterListeners(){
 }
 function clickLifterNameEvent(e){
     if (! e.target.classList.contains("lifterName")) return ;
+
     const lifterHeaderName = document.getElementById("lifterHeaderName");
     const config = document.getElementById("lifterConfig");
     const calendar = document.querySelector(".month");
     const workout = document.querySelector(".workout");
+    const exerciseMenu = document.querySelector(".addExerciseMenu");
     const info = JSON.parse(e.target.dataset.lifter);
+    // clear the various areas
     lifterHeaderName.innerHTML = `${info.userName}`;
     config.style.visibility = "visible";
     calendar.style.display = "flex"
+    workout.innerHTML='';                                 
+  
+
     currLifter = info;
-    fillCalendar(year,month,lastday);         // get this lifter's training sess
-    workout.innerHTML='';                                  // clear workout area
+    fillCalendar(year,month,lastday);     // get this lifter's training sessions
 }
 //------------------------------------------------------------------------------
 // the action for clicking on a lifter's config button

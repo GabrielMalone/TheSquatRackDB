@@ -62,7 +62,9 @@ DROP TABLE IF EXISTS `mydb`.`Exercise` ;
 CREATE TABLE IF NOT EXISTS `mydb`.`Exercise` (
   `idExercise` INT NOT NULL AUTO_INCREMENT,
   `ExerciseName` VARCHAR(45) NULL,
-  `ExerciseDescription` VARCHAR(45) NULL,
+  `abbreviation` VARCHAR(10) NULL,
+  `ExerciseCategory` VARCHAR(45) NULL, -- does this exercise fall under a squat deadlift bench variation ?
+  `ExerciseDescription` VARCHAR(255) NULL,
   UNIQUE INDEX `idExercise_UNIQUE` (`idExercise` ASC) VISIBLE,
   PRIMARY KEY (`idExercise`))
 ENGINE = InnoDB;
@@ -131,16 +133,25 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 -- Queries to run for default database
-INSERT INTO Exercise (ExerciseName, ExerciseDescription) VALUES ('Low-Bar-Squat', '');
-INSERT INTO Exercise (ExerciseName, ExerciseDescription) VALUES ('High-Bar-Squat', '');
-INSERT INTO Exercise (ExerciseName, ExerciseDescription) VALUES ('Front-Squat', '');
-INSERT INTO Exercise (ExerciseName, ExerciseDescription) VALUES ('SSB-Squat', '');
-INSERT INTO Exercise (ExerciseName, ExerciseDescription) VALUES ('Bench', '');
-INSERT INTO Exercise (ExerciseName, ExerciseDescription) VALUES ('Close-Grip-Bench', '');
-INSERT INTO Exercise (ExerciseName, ExerciseDescription) VALUES ('Deadlift', '');
-INSERT INTO Exercise (ExerciseName, ExerciseDescription) VALUES ('Paused-Deadlift', '');
-INSERT INTO Exercise (ExerciseName, ExerciseDescription) VALUES ('Deficit-Deadlift', '');
-INSERT INTO Exercise (ExerciseName, ExerciseDescription) VALUES ('Romanian-Deadlift', '');
+INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDescription) VALUES ('Low-Bar-Squat','LB_Squat','squat', 'Barbell placement atop rear delts');
+INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDescription) VALUES ('High-Bar-Squat','HB_Squat', 'squat','Barbell placement atop traps');
+INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDescription) VALUES ('Front-Squat', 'Fr_Squat','squat','Barbell placement along front delts');
+INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDescription) VALUES ('SSB-Squat','SSB', 'squat', 'Barbell squat with the Safety Squat Bar');
+
+INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDescription) VALUES ('Competition-Grip-Bench-Press', 'C_Bench','bench', "Bench press perfomed with competition grip width");
+INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDescription) VALUES ('Close-Grip-Bench', 'CG_Bench', 'bench', "Bench press performed with grip closer than competition grip");
+INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDescription) VALUES ('Board-Press', 'BoardPress', 'bench', "Bench press performed with reduced ROM");
+
+INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDescription) VALUES ('Conventional-Deadlift', 'Deadlift', 'deadlift', "Deadlift performed with grip ouside of legs");
+INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDescription) VALUES ('Sumo-Deadlift', 'Sumo', 'deadlift', "Deadlift performed with grip ouside of legs");
+INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDescription) VALUES ('Deficit-Conventional-Deadlift', 'Def_Deads', 'deadlift', "Deadlift performed with greater ROM than from the floor");
+INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDescription) VALUES ('Deficit-Sumo-Deadlift', 'Def_Deads', 'deadlift', "Deadlift performed with greater ROM than from the floor");
+INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDescription) VALUES ('Romanian-Deadlift', 'Romanians', 'deadlift', "Convetional Deadlift performed with only a slight bend in the knees");
+
+INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDescription) VALUES ('Bicep-Curls-barbell', 'BB Curls', 'accessory', "curls done with an olympic barbell");
+INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDescription) VALUES ('Bulgarian-Split-Squats', 'Bulgarians', 'accessory', "The thing you do not like to do");
+INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDescription) VALUES ('Pull-ups-wide-grip', 'pullups', 'accessory', "pull-ups done with hands farther apart than medium grip pull-ups");
+INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDescription) VALUES ('Pull-ups-medium-grip', 'pullups', 'accessory', "pull-ups done with hands closer togther than wide grip pull-ups");
 
 -- Queries to run for default database
 

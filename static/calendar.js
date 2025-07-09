@@ -276,6 +276,8 @@ export function clearCalendar(){
         day.style.visibility = "visible";
         day.style.display = "flex";
         Object.keys(day.dataset).forEach(key => delete day.dataset[key]);
+        // since not recreating the html for the calendar need to go through and
+                                // clear all the data in the days for each month
     });
     days.length = 0;
 }

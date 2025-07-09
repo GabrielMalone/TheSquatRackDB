@@ -19,7 +19,7 @@ export const xNewLifterWindow = () => {
     const addLifterBox  = document.querySelector(".createLifterBox");
     x.addEventListener("click", ()=>{
         clearNewLifterFields();
-        addLifterBox.classList.toggle("visible"); // Toggle a class
+        addLifterBox.classList.toggle("visible"); 
     });
 }
 //-----------------------------------------------------------------------------
