@@ -1,4 +1,4 @@
-import { DoW, months } from "./config.js";
+import { config, DoW, months } from "./config.js";
 import { currLifter, f } from "./lifterActions.js";
 import { createCursor, createrWorkoutHeader, getWorkoutFromWokroutID } from "./workout.js";
 
@@ -18,43 +18,84 @@ let workouts = [];
 //-----------------------------------------------------------------------------
 function getMonthlyWorkouts(userId, curDate){
     workouts.length = 0;
-    f.post("monthlyWorkouts", {userId, curDate})
-        .then(workouts=>{
-            workouts.forEach(workout=>{
+
+    const days = [...document.querySelectorAll(".day")];
+
+    const curMonth = Number(curDate.month);
+
+    const prevmonth = curMonth - 1 < 0 ? 11 : curMonth - 1;
+    const nextmonth = curMonth + 1 > 11 ? 0 : curMonth + 1;
+
+    const daysPrevMonth = days.filter(day=>Number(day.dataset.month)===prevmonth);
+    const daysThisMonth = days.filter(day=>Number(day.dataset.month)===Number(curDate.month));
+    const daysNextMonth = days.filter(day=>Number(day.dataset.month)===nextmonth);
+
+    const nextDate = new Date(curDate.year, curDate.month+1);
+    const prevDate = new Date(curDate.year, curDate.month-1);
+
+    // const prev = {"month" : prevDate.getMonth(), "year" : prevDate.getFullYear()};
+    // const next = {"month" : nextDate.getMonth(), "year" : nextDate.getFullYear()};
+
+    // let thisMonthsLifts = {};
+    // let prevMonthsLifts = {};
+    // let nextMonthsLifts = {};
+
+    // f.post(config.GET_MONTHLY_LIFTS, {userId, curDate}).then(lifts=>{
+    //     thisMonthsLifts  = lifts
+    // });
+    // f.post(config.GET_MONTHLY_LIFTS, {userId, "curDate" : prev}).then(lifts=>{
+    //     prevMonthsLifts = lifts;
+    //     console.log(prevMonthsLifts);
+    // });
+    // f.post(config.GET_MONTHLY_LIFTS, {userId, "curDate" : next}).then(lifts=>nextMonthsLifts = lifts);
+
+    f.post(config.GET_MONTHLY_LIFTS, {userId, curDate})
+        .then(lifts=>{
+            lifts.forEach(lift=>{
+    
                 let squat = false;
                 let bench = false;
                 let dead  = false;
-                let other = false;
-                // get the calendar day class that matches the training day
-                const curday = 
-                    document.querySelector(`.day[data-day="${workout.day}"]`);
-                curday.dataset.workoutID = workout.idWorkout;
+                let accessory = false;
+
+                // get the calendar day that matches the training day
+                let curday = daysThisMonth[0];
+                for (let i = 0 ; i < daysThisMonth.length ; i ++){
+                    if (Number(daysThisMonth[i].dataset.day) === Number(lift.day)){
+                        curday = daysThisMonth[i];
+                        break;
+                    }
+                }
+                
+                // add some more data 
+                curday.dataset.workoutID = lift.idWorkout;
+
                 // squat bench deadlift performed this day ?
-                const liftPerformed = workout.ExerciseName;
-                if (liftPerformed?.includes("Squat") && !squat){
+                const liftPerformed = lift.ExerciseCategory;
+                
+                if (liftPerformed === "squat" && !squat){
                     const squatBox = document.createElement('div');
                     squatBox.classList.add('squatDay');
                     curday.prepend(squatBox);
                     squat = true;
                 }
-                if (liftPerformed?.includes("Dead") && !dead){
+                if (liftPerformed === "deadlift" && !dead){
                     const deadBox = document.createElement('div');
                     deadBox.classList.add('deadDay');
                     curday.prepend(deadBox);
                     dead = true;
                 }
-                if (liftPerformed?.includes("Bench") && !bench){
+                if (liftPerformed === "bench" && !bench){
                     const benchBox = document.createElement('div');
                     benchBox.classList.add('benchDay');
                     curday.prepend(benchBox);
                     bench = true;
                 }
-                if (!squat && !bench && !dead && !other && liftPerformed){
+                if (liftPerformed === "accessory" && !accessory){
                     const otherLift = document.createElement('div');
                     otherLift.classList.add("otherLiftDay");
                     curday.prepend(otherLift);
-                    other = true;
-                    return;
+                    accessory = true;
                 }
             });
         })
@@ -96,7 +137,7 @@ export function fillCalendar(year, month, lastday){
         if (i >= firstDay){   // can start filling dates on first day of curMon
 
             if (idx >= datesThisMonth.length){     // if beyond cur month's day
-                fillPrevMonth(days, i, nextidx);
+                fillNextMonth(days, i, nextidx);
                 if (days[i].id.includes("sun")) {
                     done = true; // if at sunday after finishing current month,
                 }                                  //  hide the remaining boxes
@@ -115,7 +156,7 @@ export function fillCalendar(year, month, lastday){
                     days[i].classList.add("today");
                 }
         } else {   // if before start cur month, fill in with end of prev month
-            fillNextMonth(days, i, firstindex);
+            fillPrevMonth(days, i, firstindex);
             firstindex -- ;
         }
     }
@@ -138,6 +179,7 @@ function dayListener(e){
         e.target.classList.toggle("daySelected");
         const dateInfo = JSON.parse(e.target.dataset.info);         //get info
         if (e.target.dataset.workoutID) {
+            console.log(dateInfo);
             createrWorkoutHeader(dateInfo);
             getWorkoutFromWokroutID(e.target.dataset.workoutID);
         } else {
@@ -157,10 +199,12 @@ export function calendarListener(){
             case 'ArrowRight': 
                 clearCalendar();
                 changeDateUp(curYear,curMonth);
+                days.forEach(day=>day.classList.remove("daySelected"));
                 break;
             case 'ArrowLeft': 
                 clearCalendar();
                 changeDateDown(curYear,curMonth);
+                days.forEach(day=>day.classList.remove("daySelected"));
                 break;
             default:
                 return;
@@ -192,28 +236,55 @@ function addWeekNumbers(days, i, weekidx){
 //-----------------------------------------------------------------------------
 function fillCurrentMonth(days, i, idx){
     days[i].dataset.info = createDateObject(datesThisMonth[idx], 
-        datesThisMonth[datesThisMonth.length-1]);
-    days[i].dataset.day = datesThisMonth[idx].getDate();
+        datesThisMonth[datesThisMonth.length-1]);  // phase this out eventually
+
+    days[i].dataset.day       = datesThisMonth[idx].getDate();
+    days[i].dataset.dow       = datesThisMonth[idx].getDay();
+    days[i].dataset.month     = datesThisMonth[idx].getMonth();
+    days[i].dataset.monthName = months[datesThisMonth[idx].getMonth()];
+    days[i].dataset.year      = datesThisMonth[idx].getFullYear();
+    days[i].dataset.lastDay   = datesThisMonth[datesThisMonth.length-1].getDate(),
+    days[i].dataset.lifterID  = currLifter.id
+
     days[i].insertAdjacentHTML("beforeend",
-        `<div class="dayNum">${datesThisMonth[idx].getDate()}</div>`);
+        `<div class="dayNum">
+            ${datesThisMonth[idx].getDate()}
+        </div>`);
 }
 //-----------------------------------------------------------------------------
-function fillPrevMonth(days, i, nextidx){
-    days[i].dataset.info = createDateObject(datesNextMonth[nextidx], 
-        datesNextMonth[datesNextMonth.length-1]);
-    days[i].dataset.day = datesNextMonth[nextidx].getDate();
+function fillPrevMonth(days, i, idx){
+    days[i].dataset.info = createDateObject(datesPrevMonth.at(-idx), 
+    datesPrevMonth.at(datesPrevMonth.length-1));
+     
+    days[i].dataset.day       = datesPrevMonth.at(-idx)?.getDate();
+    days[i].dataset.dow       = datesPrevMonth.at(-idx)?.getDay();
+    days[i].dataset.month     = datesPrevMonth.at(-idx)?.getMonth();
+    days[i].dataset.monthName = months[datesPrevMonth.at(-idx)?.getMonth()];
+    days[i].dataset.year      = datesPrevMonth.at(-idx)?.getFullYear();
+    days[i].dataset.lifterID  = currLifter.id
+
     days[i].insertAdjacentHTML("beforeend",                  // start nxt month
-    `<div class="dayNum">${datesNextMonth[nextidx].getDate()}</div>`);  
+    `<div class="dayNum">
+        ${datesPrevMonth.at(-idx)?.getDate()}
+    </div>`);  
     days[i].classList.add("unfocusedDate");                   // dim these days
 }
 //-----------------------------------------------------------------------------
-function fillNextMonth(days,i, firstindex){
-    days[i].dataset.info = createDateObject(datesPrevMonth.at(-firstindex), 
-    datesPrevMonth.at(datesPrevMonth.length-1));
-    days[i].dataset.day = datesPrevMonth.at(-firstindex)?.getDate();
+function fillNextMonth(days,i, idx){
+    days[i].dataset.info = createDateObject(datesNextMonth[idx], 
+        datesNextMonth[datesNextMonth.length-1]);
+
+    days[i].dataset.day       = datesNextMonth[idx].getDate();
+    days[i].dataset.dow       = datesNextMonth[idx].getDay();
+    days[i].dataset.month     = datesNextMonth[idx].getMonth();
+    days[i].dataset.monthName = months[datesNextMonth[idx].getMonth()];
+    days[i].dataset.year      = datesNextMonth[idx].getFullYear();
+    days[i].dataset.lastDay   = datesNextMonth[datesNextMonth.length-1].getDate(),
+    days[i].dataset.lifterID  = currLifter.id
+    
     days[i].insertAdjacentHTML("beforeend",
         `<div class="dayNum">
-        ${datesPrevMonth.at(-firstindex)?.getDate()}
+        ${datesNextMonth[idx].getDate()}
         </div>`);
     days[i].classList.add("unfocusedDate");
 }

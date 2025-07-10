@@ -131,6 +131,7 @@ function configClickEvent(){
     const calendar = document.querySelector(".month");
     const lifterName = document.getElementById("lifterHeaderName");
     const config = document.getElementById("lifterConfig");
+    const workoutDash =  document.querySelector(".workout");
     f.delete(c.LIFTERS_ENDPOINT, currLifter.id)  // logic to delete current lifter
     .then(()=>{
         LIFTERS.length = 0;
@@ -139,6 +140,7 @@ function configClickEvent(){
         lifterName.innerHTML = ``; // clear out the main lifter window
         config.style.visibility = "hidden";
         calendar.style.display = "none";
+        workoutDash.style.display = "none";
     })
     .catch(err=>console.error(err));
 }

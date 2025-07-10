@@ -13,9 +13,10 @@ let unit = "LBS";
 //-----------------------------------------------------------------------------
 export function getWorkoutFromWokroutID(workoutID){
     workoutContainer.dataset.workoutID = workoutID;            // for ez access
-    f.post("workout", workoutID)
+    f.post(config.WORKOUT_ENDPOINT, workoutID)
         .then(lifts=>{  
             lifts.forEach(lift=>{            // will iterate over each exercise
+                
                 fillExerciseRow(lift);       // this will iterate over each set
             });
             createCursor(lifts.workoutID);            // place cursor at bottom

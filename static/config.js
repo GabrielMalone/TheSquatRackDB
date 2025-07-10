@@ -43,7 +43,8 @@ const devConfig = {
     INSERT_NEW_EXERCISE_ENDPOINT: "insertNewExerciseIntoWorkout",
     CREATE_WORKOUT_ENDPOINT: "createWorkout",
     DELETE_FROM_EORDER: "ExerciseOrder",
-    CHECK_IF_WORKOUT_EXISTS: "workoutExistCheck"
+    CHECK_IF_WORKOUT_EXISTS: "workoutExistCheck",
+    GET_MONTHLY_LIFTS: "monthlyWorkouts"
   };
   
 
@@ -60,7 +61,8 @@ const prodConfig = {
     INSERT_NEW_EXERCISE_ENDPOINT: "insertNewExerciseIntoWorkout",
     CREATE_WORKOUT_ENDPOINT: "createWorkout",
     DELETE_FROM_EORDER: "ExerciseOrder",
-    CHECK_IF_WORKOUT_EXISTS: "workoutExistCheck"
+    CHECK_IF_WORKOUT_EXISTS: "workoutExistCheck",
+    GET_MONTHLY_LIFTS: "monthlyWorkouts"
   };
 
 export const config = window.location.hostname === "localhost" ? 

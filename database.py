@@ -305,9 +305,9 @@ def deleteSet(setID, idWorkout, idExercise):
                 cursor.execute(
                     '''
                     DELETE from `ExerciseOrderInWorkout` eow
-                    WHERE eow.idExercise = %s
+                    WHERE eow.idExercise = %s AND eow.idWorkout = %s
                     ''',
-                    (idExercise,))
+                    (idExercise,idWorkout))
             cnx.commit()
             cursor.close()
             cnx.close()
@@ -404,7 +404,8 @@ def getWorkoutFromID(workoutID):
     if (cnx.is_connected()):
         try:
             cursor = cnx.cursor(dictionary=True, buffered=True)
-            cursor.execute('''
+            cursor.execute(
+                '''
                 SELECT 
                     e.abbreviation AS exercise,
                     e.idExercise AS exerciseID,
@@ -433,7 +434,7 @@ def getWorkoutFromID(workoutID):
             ''', (workoutID,))
 
             workout = cursor.fetchall()
-
+    
             cursor.close()
             cnx.close()
 
@@ -514,7 +515,8 @@ def getDaysTrained(userID, Date):
             SELECT 
                 DAY(w.Date) AS day,
                 w.idWorkout,
-                e.ExerciseName
+                e.ExerciseName,
+                e.ExerciseCategory
             FROM 
                 Workout w
             JOIN 
