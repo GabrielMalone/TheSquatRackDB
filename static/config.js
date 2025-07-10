@@ -40,7 +40,8 @@ const devConfig = {
     UPDATE_SET_NUMBER: "updateSetNumber",
     REORDER__SET_ENDPOINT: "reorderSetNumbers",
     GET_EXERCISES_ENDPOINT: "getExercises",
-    INSERT_NEW_EXERCISE_ENDPOINT: "insertNewExercise"
+    INSERT_NEW_EXERCISE_ENDPOINT: "insertNewExercise",
+    CREATE_WORKOUT_ENDPOINT: "createWorkout"
   };
   
 
@@ -54,7 +55,8 @@ const prodConfig = {
     UPDATE_SET_NUMBER: "updateSetNumber",
     REORDER__SET_ENDPOINT: "reorderSetNumbers",
     GET_EXERCISES_ENDPOINT: "getExercises",
-    INSERT_NEW_EXERCISE_ENDPOINT: "insertNewExercise"
+    INSERT_NEW_EXERCISE_ENDPOINT: "insertNewExercise",
+    CREATE_WORKOUT_ENDPOINT: "createWorkout"
   };
 
 export const config = window.location.hostname === "localhost" ? 

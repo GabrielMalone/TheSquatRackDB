@@ -1,7 +1,7 @@
 import { curlastDay, curMonth, curYear, fillCalendar } from "./calendar.js";
 import { config } from "./config.js";
 import { setTemplateHTML, setUpdateFormTemplateHTML, ExerciseDashTemplate } from "./htmlTemplates.js";
-import { f } from "./lifterActions.js";
+import { currLifter, f } from "./lifterActions.js";
 
 const workoutContainer = document.querySelector(".workout"); // clear container
 let unit = "LBS";
@@ -199,27 +199,19 @@ function clickSetEvent(event){
     }
     // selects an exercise to add to a workout   
     if (event.type === "click" && event.target.classList.contains("exerciseMenuItem")){
-        const exercise = event.target;
-        const liftInfo = JSON.parse(decodeURIComponent(exercise.dataset.liftInfo));
-        const idExercise = liftInfo.exerciseID;
-        // if the current wokrout container has exercises present, 
-        // the workout is already in session
-        // and workout ID can be obtained from there.
-        // otherwise will need to to create a new workout in DB
+        const selectedExercise = event.target;
         const exercisePresent = workoutContainer.querySelector(".exercise");
         if (exercisePresent){
-            const idWorkout = JSON.parse(exercisePresent.dataset.liftInfo).workoutID;
-            const SetNumber = 1;
-            const Order = workoutContainer.querySelectorAll(".exercise").length + 1;
-            console.log(idWorkout, Order);
-            f.post(config.INSERT_NEW_EXERCISE_ENDPOINT,{idWorkout, idExercise, SetNumber, Order})
-                .then(res=>{
-                    console.log(res);
-                    const rawData = (document.querySelector(".trainingDate")).dataset.dateInfo;
-                    const dateInfo = JSON.parse(decodeURIComponent(rawData)); 
-                    createWorkoutGrid(dateInfo);     // these three functions to redraw 
-                    getWorkoutFromWokroutID(idWorkout);             // the workout area
-                    fillCalendar(curYear, curMonth, curlastDay);    // and the calendar
+            inserNewExercise(selectedExercise, exercisePresent);
+        } else {
+            // need currently selected date
+            const rawData = document.querySelector(".trainingDate").dataset.dateInfo;
+            const curDateInfo = JSON.parse(decodeURIComponent(rawData));
+            const lifterID = curDateInfo['lifterID'];
+            // create a new workout 
+            f.post(config.CREATE_WORKOUT_ENDPOINT,curDateInfo)
+                .then(newWorkoutId=>{
+                    inserNewExercise(selectedExercise, null, newWorkoutId);
                 })
                 .catch(err=>console.error(err));
         }
@@ -248,6 +240,29 @@ function clickSetEvent(event){
     }
 }
 //-----------------------------------------------------------------------------
+// method for isnerting a new exercise into an existing or into a new workout
+//-----------------------------------------------------------------------------
+function inserNewExercise(selectedExercise, exercisePresent, id=null){
+    const liftInfo = JSON.parse(decodeURIComponent(selectedExercise.dataset.liftInfo));
+    const idExercise = liftInfo.exerciseID;
+    const rawData = (document.querySelector(".trainingDate")).dataset.dateInfo;
+    const dateInfo = JSON.parse(decodeURIComponent(rawData)); 
+    const idWorkout = exercisePresent ?
+        JSON.parse(exercisePresent.dataset.liftInfo).workoutID :
+        id;
+    const SetNumber = 1;
+    const Order = workoutContainer.querySelectorAll(".exercise").length + 1;
+    console.log(idWorkout, Order);
+    f.post(config.INSERT_NEW_EXERCISE_ENDPOINT,{idWorkout, idExercise, SetNumber, Order})
+        .then(res=>{
+            console.log(res);
+            createWorkoutGrid(dateInfo);     // these three functions to redraw 
+            getWorkoutFromWokroutID(idWorkout);             // the workout area
+            fillCalendar(curYear, curMonth, curlastDay);    // and the calendar
+        })
+        .catch(err=>console.error(err));  
+}
+//-----------------------------------------------------------------------------
 // event for clicking on add exercise. exercise dashboad visible/ fills out
 //-----------------------------------------------------------------------------
 function chooseNewExerciseBoxEvent(){
@@ -260,6 +275,8 @@ function chooseNewExerciseBoxEvent(){
         })
         .catch(err=>console.error(err));
 }
+//-----------------------------------------------------------------------------
+// Fill out bench / squat / deadlift / accessory columns in the exercise window
 //-----------------------------------------------------------------------------
 function fillOutLiftCategoryMenus(exercises){
     const addExerciseDash = document.querySelector(".addExerciseDash");
@@ -282,10 +299,11 @@ function fillOutLiftCategoryMenus(exercises){
     });
     addExerciseDash.scrollIntoView({ behavior: 'smooth' });
 }
-
+//-----------------------------------------------------------------------------
+// helper function to fill out bench / squat / deadlift / accessory columns 
+//-----------------------------------------------------------------------------
 function fillOutLiftCategory(categoryData){
     const ExerciseMenu  = document.querySelector(`.${categoryData.category}ExerciseMenu`);
-
     ExerciseMenu.innerHTML = '';
     const liftsInCategory = categoryData.lifts_in_category;
     liftsInCategory.forEach(lift=>{
@@ -339,7 +357,6 @@ function CreateRemoveSetButton(liftInfo, setInfo){
     setRemoveButton.innerHTML = `x`;
     return setRemoveButton;
 }
-
 //-----------------------------------------------------------------------------
 // HTML to create the layout for a set in the workout window
 //-----------------------------------------------------------------------------
@@ -389,8 +406,6 @@ function fillWorkoutDate(dateInfo){
     </div>`;
     workoutContainer.appendChild(workoutHeader);
 }
-
-
 //-----------------------------------------------------------------------------
 // HTML for the form that will be used to update a set
 //-----------------------------------------------------------------------------

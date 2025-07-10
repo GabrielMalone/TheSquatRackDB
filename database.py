@@ -368,7 +368,7 @@ def getWorkoutFromID(workoutID):
             cnx.close()
             return err.errno
 #------------------------------------------------------------------------------
-def createNewWorkout(userID, Date):
+def createNewWorkout(Date, userID):
     cnx = connect()
     if(cnx.is_connected()):
         try:

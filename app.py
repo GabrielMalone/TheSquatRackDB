@@ -55,7 +55,7 @@ def createWorkout():
     lifterID = data['lifterID']
     # get appropriate date format for sql 
     date =  str(data['year'])+ '-' + str(data['monthNumber']+1) + '-' + str(data['day'])
-    return jsonify(database.reateNewWorkout(lifterID, date))
+    return jsonify(database.createNewWorkout(date, lifterID))
 #------------------------------------------------------------------------------
 @app.route("/createSet", methods=["POST"])
 def createSet():
