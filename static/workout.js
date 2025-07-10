@@ -12,6 +12,7 @@ let unit = "LBS";
 // ExerciseRow class holds the exercise div and an exercise set div
 //-----------------------------------------------------------------------------
 export function getWorkoutFromWokroutID(workoutID){
+    workoutContainer.dataset.workoutID = workoutID;            // for ez access
     f.post("workout", workoutID)
         .then(lifts=>{  
             lifts.forEach(lift=>{            // will iterate over each exercise
@@ -160,20 +161,22 @@ function updateLiftInfo(curliftInfo, newSetInfo){
 //-----------------------------------------------------------------------------
 function removeSetEvent(e){
     if (e.target.classList.contains("setRemove")){
-        const setToRemove = e.target.dataset.setID;
-        const workoutID = e.target.dataset.workoutID;
-        const exerciseID = e.target.dataset.exerciseID;
-        const rawData = (document.querySelector(".trainingDate")).dataset.dateInfo;
-        const dateInfo = JSON.parse(decodeURIComponent(rawData)); 
+        const idSet         = e.target.dataset.setID;
+        const idWorkout     = e.target.dataset.workoutID;
+        const idExercise    = e.target.dataset.exerciseID;
+        const rawData       = (document.querySelector(".trainingDate"))
+                                .dataset.dateInfo;
+        const dateInfo       = JSON.parse(decodeURIComponent(rawData)); 
         e.target.closest(".set").remove();    // remove the setBox from the DOM
-        f.delete(config.WORKOUT_ENDPOINT,setToRemove)
+        f.delete(config.WORKOUT_ENDPOINT,{idSet,idWorkout,idExercise})
             .then(response=>{                            // reorder set numbers
-                f.put(config.REORDER__SET_ENDPOINT, {workoutID,exerciseID})
+                f.put(config.REORDER__SET_ENDPOINT, {idWorkout,idExercise})
+                    .catch(err=>console.error(err));
             })
             .catch(err=>console.error(err))
             .finally(()=>{
-                createWorkoutGrid(dateInfo);         // redraw the workout area 
-                getWorkoutFromWokroutID(workoutID); 
+                createWorkoutGrid(dateInfo); // redraw the workout area 
+                getWorkoutFromWokroutID(idWorkout); 
                 fillCalendar(curYear, curMonth, curlastDay); 
             });
     }
@@ -200,21 +203,7 @@ function clickSetEvent(event){
     // selects an exercise to add to a workout   
     if (event.type === "click" && event.target.classList.contains("exerciseMenuItem")){
         const selectedExercise = event.target;
-        const exercisePresent = workoutContainer.querySelector(".exercise");
-        if (exercisePresent){
-            inserNewExercise(selectedExercise, exercisePresent);
-        } else {
-            // need currently selected date
-            const rawData = document.querySelector(".trainingDate").dataset.dateInfo;
-            const curDateInfo = JSON.parse(decodeURIComponent(rawData));
-            const lifterID = curDateInfo['lifterID'];
-            // create a new workout 
-            f.post(config.CREATE_WORKOUT_ENDPOINT,curDateInfo)
-                .then(newWorkoutId=>{
-                    inserNewExercise(selectedExercise, null, newWorkoutId);
-                })
-                .catch(err=>console.error(err));
-        }
+        checkIfWorkoutExistsOnDate(selectedExercise);
         return;
     }
     // expand set box and show update form
@@ -240,22 +229,40 @@ function clickSetEvent(event){
     }
 }
 //-----------------------------------------------------------------------------
+// before inserting exercise on a date, check if workout exists on that date
+//-----------------------------------------------------------------------------
+function checkIfWorkoutExistsOnDate(selectedExercise){
+    let workoutID = null;
+    const idUser = currLifter.id;
+    const rawData = (document.querySelector(".trainingDate")).dataset.dateInfo;
+    const Date = JSON.parse(decodeURIComponent(rawData)); 
+    f.put(config.CHECK_IF_WORKOUT_EXISTS, Date, idUser)
+        .then(res=>{
+            if (res.success){
+                workoutID = res.idWorkout;
+                inserNewExerciseIntoWorkout(selectedExercise, workoutID);
+            } else {
+                f.post(config.CREATE_WORKOUT_ENDPOINT,Date)
+                    .then(newWorkoutId=>{
+                        inserNewExerciseIntoWorkout(selectedExercise,newWorkoutId);
+                    })
+                    .catch(err=>console.error(err));
+                }
+        })
+        .catch(err=>console.error(err));
+}
+//-----------------------------------------------------------------------------
 // method for isnerting a new exercise into an existing or into a new workout
 //-----------------------------------------------------------------------------
-function inserNewExercise(selectedExercise, exercisePresent, id=null){
+function inserNewExerciseIntoWorkout(selectedExercise, idWorkout){
     const liftInfo = JSON.parse(decodeURIComponent(selectedExercise.dataset.liftInfo));
     const idExercise = liftInfo.exerciseID;
     const rawData = (document.querySelector(".trainingDate")).dataset.dateInfo;
     const dateInfo = JSON.parse(decodeURIComponent(rawData)); 
-    const idWorkout = exercisePresent ?
-        JSON.parse(exercisePresent.dataset.liftInfo).workoutID :
-        id;
+    console.log(dateInfo);
     const SetNumber = 1;
-    const Order = workoutContainer.querySelectorAll(".exercise").length + 1;
-    console.log(idWorkout, Order);
-    f.post(config.INSERT_NEW_EXERCISE_ENDPOINT,{idWorkout, idExercise, SetNumber, Order})
+    f.post(config.INSERT_NEW_EXERCISE_ENDPOINT,{idWorkout, idExercise, SetNumber})
         .then(res=>{
-            console.log(res);
             createWorkoutGrid(dateInfo);     // these three functions to redraw 
             getWorkoutFromWokroutID(idWorkout);             // the workout area
             fillCalendar(curYear, curMonth, curlastDay);    // and the calendar
@@ -318,6 +325,7 @@ function fillOutLiftCategory(categoryData){
 //-----------------------------------------------------------------------------
 export function createWorkoutGrid(dateInfo){
     workoutContainer.style.display = "flex";
+    delete workoutContainer.dataset.workoutID;
     workoutContainer.innerHTML = ``;   
     fillWorkoutDate(dateInfo);  
 }
@@ -337,14 +345,14 @@ function createExerciseRow(exercise){
     newExerciseRow.classList.add("exerciseRow");
     workoutContainer.appendChild(newExerciseRow);    
     return newExerciseRow;
-    }
+}
 
 
 
 
 
 //-----------------------------------------------------------------------------
-// remove a set from an exercise Row
+// creates the button that removes a set from an exercise Row
 //-----------------------------------------------------------------------------
 function CreateRemoveSetButton(liftInfo, setInfo){
     const setRemoveButton = document.createElement('div');

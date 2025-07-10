@@ -142,7 +142,7 @@ li {
     display: flex;
     flex-direction: column;
     position: relative;
-    outline: solid #333 1px;
+    outline: solid #222 1px;
     user-select: none;
     padding: 1rem;
     transition: background-color, outline 300ms ease-in;
@@ -161,6 +161,9 @@ li {
         color: mintcream;
     }
     /* transition: 1000ms; */
+}
+.daySelected{
+    background-color:purple;
 }
 .dayNum{
     display: flex;
@@ -244,7 +247,7 @@ li {
     font-size: 2.5rem;
 }
 .today {
-    background-color: cornflowerblue ;
+    background-color: midnightblue;
 }
 /*-------------------------------------------------------*/
 /* WORKOUT AREA
@@ -509,7 +512,7 @@ li {
     display: flex;
     flex-direction: row;
     position: relative;
-    border-bottom: 1px solid gray;
+    border-bottom: 1px solid #222;
 }
 #addExerciseTitle {
     font-size: 1rem;
@@ -535,7 +538,7 @@ li {
 .SquatCategory, .BenchCategory, .DeadliftCategory, .AccessoriesCategory{
     display: flex;
     flex-direction: column;
-    border-left: 1px solid gray;
+    border-left: 1px solid #222;
     font-size: 2rem;
     flex: 1;
     padding-left: 10px;
@@ -574,10 +577,10 @@ li {
 .exerciseDescription{
     display: flex;
     flex-direction: row;
-    color:mintcream;
+    color:mediumspringgreen;
     padding: 10px;
-    border-top:  1px solid gray;
-    border-bottom:  1px solid gray;
+    border-top:  1px solid #222;
+    border-bottom:  1px solid #222;
 }
 /*-------------------------------------------------------*/
 /* THE SIDEBAR

@@ -11,72 +11,98 @@ def connect():
         database=os.getenv('DB_NAME'),
         host=os.getenv('DB_HOST', 'localhost') )
 #------------------------------------------------------------------------------
+def workoutExistCheck(idUser, date):
+    try:
+        cnx = connect()
+        cursor = cnx.cursor(dictionary=True, buffered=True)
+        cursor.execute(
+            '''
+            SELECT
+                w.idWorkout AS id
+            FROM 
+                `Workout` w
+            WHERE
+                w.idUser = %s AND w.Date = %s
+            ''', 
+            (idUser, date))
+        result = cursor.fetchone()
+        if result:
+            return {
+                "success" : True,
+                "idWorkout" : result["id"]
+            }
+        else : 
+            return {
+                "success": False,
+                "idWorkout": None,
+                "message": "No workout found for this user on this date."
+            }
+    except mysql.connector.Error as err:
+        print("MySQL Error:", err)     # This will show you the exact error
+        print("Error code:", err.errno)                # Numeric error code
+        cnx.rollback() 
+        cnx.close()
+        return {
+            "success" : False,
+            "message" : f' server error: {err.errno}' 
+        }  
+#------------------------------------------------------------------------------
 def getExercises():
     cnx = connect()
     exercises = []
-    if (cnx.is_connected()):
-        cursor = cnx.cursor(dictionary=True)   # dic = format for JSON objects
-        cursor.execute('SELECT * FROM Exercise')
-        exercises = cursor.fetchall()
+    try:
+        if (cnx.is_connected()):
+            cursor = cnx.cursor(dictionary=True, buffered=True)   # dic = format for JSON objects
+            cursor.execute('SELECT * FROM Exercise')
+            exercises = cursor.fetchall()
 
-        categorized_lifts = {}          # then package results by lift category 
-        cat_lifts = [] # shadow the dictionary above for returning to front end
-        for exercise in exercises:
-            cur_category = exercise["ExerciseCategory"]
-            if cur_category not in categorized_lifts:
-                category = {
-                    "category" : cur_category,
-                    "lifts_in_category"    : []
+            categorized_lifts = {}          # then package results by lift category 
+            cat_lifts = [] # shadow the dictionary above for returning to front end
+            for exercise in exercises:
+                cur_category = exercise["ExerciseCategory"]
+                if cur_category not in categorized_lifts:
+                    category = {
+                        "category" : cur_category,
+                        "lifts_in_category"    : []
+                    }
+                    categorized_lifts[cur_category] = category
+                    cat_lifts.append(category)
+                lift_details = {
+                    "Description"  : exercise["ExerciseDescription"],
+                    "abbreviation" : exercise["abbreviation"],
+                    "exerciseName" : exercise["ExerciseName"],
+                    "category"     : cur_category,
+                    "exerciseID"   : exercise["idExercise"] 
                 }
-                categorized_lifts[cur_category] = category
-                cat_lifts.append(category)
-            lift_details = {
-                "Description"  : exercise["ExerciseDescription"],
-                "abbreviation" : exercise["abbreviation"],
-                "exerciseName" : exercise["ExerciseName"],
-                "category"     : cur_category,
-                "exerciseID"   : exercise["idExercise"] 
-            }
-            categorized_lifts[cur_category]["lifts_in_category"].append(lift_details)
-            categorized_lifts[cur_category]["lifts_in_category"]
-  
-        cursor.close()
-        cnx.close()
-
-    return  cat_lifts
-#------------------------------------------------------------------------------
-def createExerciseOrder(idWorkout, idExercise, orderNumber):
-    cnx = connect()
-    if (cnx.is_connected()):
-        try:
-            cursor = cnx.cursor()
-            cursor.execute(
-                '''
-                    INSERT into `ExerciseOrderInWorkout`
-                        (idWorkout, idExercise, `Order`)
-                    VALUES 
-                        (%s, %s, %s)
-                ''', 
-                (idWorkout, idExercise, orderNumber))
-            cnx.commit()
+                categorized_lifts[cur_category]["lifts_in_category"].append(lift_details)
+                categorized_lifts[cur_category]["lifts_in_category"]
+    
             cursor.close()
             cnx.close()
-        except mysql.connector.Error as err:
-            print("MySQL Error:", err)     # This will show you the exact error
-            print("Error code:", err.errno)                # Numeric error code
-            cnx.rollback() 
-            cnx.close()
-            return err.errno     
+
+        return  cat_lifts
+    except mysql.connector.Error as err:
+        print("MySQL Error:", err)     # This will show you the exact error
+        print("Error code:", err.errno)                # Numeric error code
+        cnx.rollback() 
+        cnx.close()
+        return {
+            "success" : False,
+            "message" : f' server error: {err.errno}' 
+        }  
+#------------------------------------------------------------------------------
+# as long as deletes happen, dont need to change anything else,order will still
+# be maintained, just not with gaps of 1 
 #------------------------------------------------------------------------------
 def deleteExerciseOrder(idWorkout, idExercise):
     cnx = connect()
     if (cnx.is_connected()):
         try:
-            cursor = cnx.cursor()
+            cursor = cnx.cursor(buffered=True)
             cursor.execute(
                 '''
-                    DELETE from `ExerciseOrderInWorkout`
-                    WHERE idWOrkout = %s AND idExercise = %s; 
+                DELETE from `ExerciseOrderInWorkout`
+                WHERE idWOrkout = %s AND idExercise = %s; 
                 ''', 
                 (idWorkout, idExercise))
             cnx.commit()
@@ -87,81 +113,120 @@ def deleteExerciseOrder(idWorkout, idExercise):
             print("Error code:", err.errno)                # Numeric error code
             cnx.rollback() 
             cnx.close()
-            return err.errno     
+            return {
+                "success" : False,
+                "message" : f' server error: {err.errno}' 
+            }   
 #------------------------------------------------------------------------------
 def updateExerciseOrder(idWorkout, idExercise, orderNumber):
     cnx = connect()
     if (cnx.is_connected()):
         try:
-            cursor = cnx.cursor()
+            cursor = cnx.cursor(buffered=True)
             cursor.execute(
                 '''
-                    UPDATE 
-                        `ExerciseOrderInWorkout`
-                    SET
-                        `Order` = %s
-                    WHERE idWorkout = %s AND idExercise = %s; 
+                UPDATE 
+                    `ExerciseOrderInWorkout`
+                SET
+                    `Order` = %s
+                WHERE idWorkout = %s AND idExercise = %s; 
                 ''', 
                 (orderNumber, idWorkout, idExercise))
             cnx.commit()
             cursor.close()
             cnx.close()
         except mysql.connector.Error as err:
-            print("MySQL Error:", err)     # This will show you the exact error
-            print("Error code:", err.errno)                # Numeric error code
+            print("MySQL Error:", err)    
+            print("Error code:", err.errno)                
             cnx.rollback() 
             cnx.close()
-            return err.errno     
+            return {
+                "success" : False,
+                "message" : f' server error: {err.errno}' 
+            }   
 #------------------------------------------------------------------------------
-def insertNewExercise(setData):
+def insertNewExerciseIntoWorkout(setData):
 
     idExercise  = setData["idExercise"]
     idWorkout   = setData["idWorkout"]
     SetNumber   = setData["SetNumber"]
-    Order       = setData["Order"]
 
     cnx = connect()
     if (cnx.is_connected()):
         try:
-            cursor = cnx.cursor(dictionary=True)
-            # exercise order first
-            cursor.execute(
-                '''
+            cnx.start_transaction(isolation_level='READ COMMITTED')
+            with cnx.cursor(dictionary=True, buffered=True) as cursor:
+                # new exercise need update the totallifetime 
+                # number of exercises in this workout
+                cursor.execute(
+                    '''
+                    UPDATE 
+                        `Workout` 
+                    SET 
+                        `numberOfLifts` = numberOfLifts + 1 
+                    WHERE 
+                        idWorkout = %s;
+                    '''
+                    ,(idWorkout,))
+        
+                # get result form above 
+                cursor.execute(
+                    '''
+                    SELECT 
+                        numberOfLifts as num
+                    FROM 
+                        Workout 
+                    WHERE 
+                        idWorkout = %s;
+                    ''', (idWorkout,))
+                
+                row = cursor.fetchone()
+
+                print("DEBUG: fetched workout row:", row)
+                if row is None:
+                    raise Exception(f"No Workout row found for idWorkout={idWorkout}")
+                
+                order = row['num']
+                
+                # order = cursor.fetchone()['num']
+                cursor.execute(
+                    '''
                     INSERT INTO 
                         `ExerciseOrderInWorkout` (idExercise, idWorkout, `Order`)
                     VALUES 
                         (%s, %s, %s);
-                ''', (idExercise, idWorkout, Order))
-            cnx.commit()
-            # then the exercise set info
-            cursor.execute(
-                '''
+                    ''', 
+                    (idExercise, idWorkout, order))
+                # then the exercise set info
+                cursor.execute(
+                    '''
                     INSERT into `Set`
                         (idExercise, idWorkout, SetNumber)
                     VALUES 
                         (%s, %s, %s)
-                ''', 
-                (idExercise, idWorkout, SetNumber))
-            cnx.commit()
-            newSetID = cursor.lastrowid
-            newSetID = cursor.lastrowid
-            # then get all the setInfo returned back 
-            cursor.execute(
-                '''
+                    ''', 
+                    (idExercise, idWorkout, SetNumber))
+        
+                newSetID = cursor.lastrowid
+                # then get all the setInfo returned back 
+                cursor.execute(
+                    '''
                     SELECT * FROM `Set`
                     WHERE idSet = %s
-                ''',
-                (newSetID,))
-            newSet = cursor.fetchone()
-            cursor.close()
-            cnx.close()
-            return newSet
+                    ''',
+                    (newSetID,))
+                newSet = cursor.fetchall()
+                cnx.commit()
+                return  newSet
         except mysql.connector.Error as err:
-            print("MySQL Error:", err)     # This will show you the exact error
-            print("Error code:", err.errno)                # Numeric error code
+            print("MySQL Error:", err)    
+            print("Error code:", err.errno)              
             cnx.rollback() 
             cnx.close()
-            return err.errno       
+            return {
+                "success" : False,
+                "message" : f' server error: {err.errno}' 
+            }       
 #------------------------------------------------------------------------------
 def createSet(setData):
     idExercise  = setData["idExercise"]
@@ -171,26 +236,28 @@ def createSet(setData):
     cnx = connect()
     if (cnx.is_connected()):
         try:
-            cursor = cnx.cursor(dictionary=True)
+            cursor = cnx.cursor(dictionary=True, buffered=True)
+            cnx.start_transaction()
             cursor.execute(
                 '''
-                    INSERT into `Set`
-                        (idExercise, idWorkout, SetNumber)
-                    VALUES 
-                        (%s, %s, %s)
+                INSERT into `Set`
+                    (idExercise, idWorkout, SetNumber)
+                VALUES 
+                    (%s, %s, %s)
                 ''', 
                 (idExercise, idWorkout, SetNumber))
-            cnx.commit()
+   
             newSetID = cursor.lastrowid
             newSetID = cursor.lastrowid
             # then get all the setInfo returned back 
             cursor.execute(
                 '''
-                    SELECT * FROM `Set`
-                    WHERE idSet = %s
+                SELECT * FROM `Set`
+                WHERE idSet = %s
                 ''',
                 (newSetID,))
             newSet = cursor.fetchone()
+            cnx.commit()
             cursor.close()
             cnx.close()
             return newSet
@@ -199,30 +266,61 @@ def createSet(setData):
             print("Error code:", err.errno)                # Numeric error code
             cnx.rollback() 
             cnx.close()
-            return err.errno   
+            return {
+                "success" : False,
+                "message" : f' server error: {err.errno}' 
+            }  
 #------------------------------------------------------------------------------
-def deleteSet(setID):
+def deleteSet(setID, idWorkout, idExercise):
     cnx = connect()
     if (cnx.is_connected()):
         try:
-            cursor = cnx.cursor()
+            cursor = cnx.cursor(buffered=True)
+            cnx.start_transaction()
             cursor.execute(
                 '''
-                    DELETE from `Set`
-                    WHERE idSet = %s
+                DELETE from `Set`
+                WHERE idSet = %s
                 ''', (setID,))
+            
+            # When we delete a set from a workout (idSet)
+            # We need to ask, does this workout (idWorkout) still contain 
+            # Sets that have that particular exercise (idExercise).
+            # If they dont, we need to delete that exercise from the EOW (idExercise, idWorkout) table. 
+
+            print(f"idworkout and idexercise present? {idWorkout} {idExercise}")
+
+            cursor.execute(
+                '''
+                SELECT * FROM 
+                    `Set` s
+                WHERE
+                    s.idExercise = %s AND s.idWorkout = %s
+                ''',
+                (idExercise, idWorkout)
+            )
+            sets = cursor.rowcount
+            if sets == 0:
+                print("no sets of this exercise remain, deleting from EOW table")
+                cursor.execute(
+                    '''
+                    DELETE from `ExerciseOrderInWorkout` eow
+                    WHERE eow.idExercise = %s
+                    ''',
+                    (idExercise,))
             cnx.commit()
-            updated = cursor.rowcount
             cursor.close()
             cnx.close()
-            return updated
+            return {"success" : True }   
         except mysql.connector.Error as err:
             print("MySQL Error:", err)     # This will show you the exact error
             print("Error code:", err.errno)                # Numeric error code
             cnx.rollback() 
             cnx.close()
-            return err.errno
-
+            return {
+                "success" : False,
+                "message" : f' server error: {err.errno}' 
+            } 
 #------------------------------------------------------------------------------
 def updateSet(updateInfo):
 
@@ -234,17 +332,17 @@ def updateSet(updateInfo):
     cnx = connect()
     if (cnx.is_connected()):
         try:
-            cursor = cnx.cursor()
+            cursor = cnx.cursor(buffered=True)
             cursor.execute(
             '''
-                UPDATE
-                    `Set`
-                SET
-                    setWeight = %s,
-                    setReps = %s,
-                    setRPE = %s
-                WHERE 
-                    idSet = %s
+            UPDATE
+                `Set`
+            SET
+                setWeight = %s,
+                setReps = %s,
+                setRPE = %s
+            WHERE 
+                idSet = %s
             ''', 
                 (setWeight, setReps, setRPE,idSet))
             cnx.commit()
@@ -256,15 +354,20 @@ def updateSet(updateInfo):
             print("Error code:", err.errno)                # Numeric error code
             cnx.rollback() 
             cnx.close()
-            return err.errno
+            return {
+                "success" : False,
+                "message" : f' server error: {err.errno}' 
+            } 
 #------------------------------------------------------------------------------          
 def reorderSetNumbers(idWorkout, idExercise):
     cnx = connect()
     if (cnx.is_connected()):
         try:
-            cursor = cnx.cursor()
+            cursor = cnx.cursor(buffered=True)
+            cnx.start_transaction()
                # select all sets for this workout & exercise, ordered by set #
-            cursor.execute("""
+            cursor.execute(
+            """
                 SELECT idSet
                 FROM `Set`
                 WHERE idWorkout = %s AND idExercise = %s
@@ -272,9 +375,10 @@ def reorderSetNumbers(idWorkout, idExercise):
             """, (idWorkout, idExercise))
             sets = cursor.fetchall()
 
-            for i, row in enumerate(sets, start=1):# re-assign set #s from 1..n
+            for i, row in enumerate(sets, start=1):      # reassign set numbers
                 idSet = row[0] #only one value, the setID in the returned tuple
-                cursor.execute("""
+                cursor.execute(
+                """
                     UPDATE `Set`
                     SET `SetNumber` = %s
                     WHERE idSet = %s;
@@ -290,13 +394,16 @@ def reorderSetNumbers(idWorkout, idExercise):
             print("Error code:", err.errno)                # Numeric error code
             cnx.rollback() 
             cnx.close()
-            return err.errno
+            return {
+                "success" : False,
+                "message" : f' server error: {err.errno}' 
+            } 
 #------------------------------------------------------------------------------
 def getWorkoutFromID(workoutID):
     cnx = connect()
     if (cnx.is_connected()):
         try:
-            cursor = cnx.cursor(dictionary=True)
+            cursor = cnx.cursor(dictionary=True, buffered=True)
             cursor.execute('''
                 SELECT 
                     e.abbreviation AS exercise,
@@ -366,13 +473,16 @@ def getWorkoutFromID(workoutID):
             print("MySQL Error:", err)     # This will show you the exact error
             print("Error code:", err.errno)                # Numeric error code
             cnx.close()
-            return err.errno
+            return {
+                "success" : False,
+                "message" : f' server error: {err.errno}' 
+            } 
 #------------------------------------------------------------------------------
 def createNewWorkout(Date, userID):
     cnx = connect()
     if(cnx.is_connected()):
         try:
-            cursor = cnx.cursor()
+            cursor = cnx.cursor(buffered=True)
             cursor.execute('''
                 INSERT INTO Workout (Date, idUser)
                 VALUES (%s, %s);
@@ -388,59 +498,92 @@ def createNewWorkout(Date, userID):
             print("Error code:", err.errno)               # Numeric error code
             cnx.rollback() 
             cnx.close()
-            return err.errno
+            return {
+                "success" : False,
+                "message" : f' server error: {err.errno}' 
+            } 
 #------------------------------------------------------------------------------
 def getDaysTrained(userID, Date):
     cnx = connect()
     workouts = []
     if (cnx.is_connected()):
-        cursor = cnx.cursor(dictionary=True)   # dic = format for JSON objects
-        cursor.execute(
-        '''
-        SELECT 
-            DAY(w.Date) AS day,
-            w.idWorkout,
-            e.ExerciseName
-        FROM 
-            Workout w
-        JOIN 
-            `Set` s ON w.idWorkout = s.idWorkout
-        JOIN 
-            Exercise e ON s.idExercise = e.idExercise
-        WHERE 
-            w.idUser = %s        
-            AND MONTH(w.Date) = %s    
-            AND YEAR(w.Date) = %s
-        ORDER BY 
-            day;
-        ''', 
-        (userID, Date['month']+1, Date['year']))
-        workouts = cursor.fetchall()
-        cursor.close()
-        cnx.close()
-    return workouts
+        try:
+            cursor = cnx.cursor(dictionary=True, buffered=True)   # dic = format for JSON objects
+            cursor.execute(
+            '''
+            SELECT 
+                DAY(w.Date) AS day,
+                w.idWorkout,
+                e.ExerciseName
+            FROM 
+                Workout w
+            JOIN 
+                `Set` s ON w.idWorkout = s.idWorkout
+            JOIN 
+                Exercise e ON s.idExercise = e.idExercise
+            WHERE 
+                w.idUser = %s        
+                AND MONTH(w.Date) = %s    
+                AND YEAR(w.Date) = %s
+            ORDER BY 
+                day;
+            ''', 
+            (userID, Date['month']+1, Date['year']))
+            workouts = cursor.fetchall()
+            cursor.close()
+            cnx.close()
+            return workouts
+        except mysql.connector.Error as err:
+            print("MySQL Error:", err)    # This will show you the exact error
+            print("Error code:", err.errno)               # Numeric error code
+            cnx.rollback() 
+            cnx.close()
+            return {
+                "success" : False,
+                "message" : f' server error: {err.errno}' 
+            } 
 #------------------------------------------------------------------------------
 def getLifterInfo(lifterID):
     cnx = connect()
     user = "not found"
     if (cnx.is_connected()):
-        cursor = cnx.cursor(dictionary=True)   # dic = format for JSON objects
-        cursor.execute('''SELECT * FROM User WHERE idUser = %s''', (lifterID,))
-        user = cursor.fetchone()
-        cursor.close()
-        cnx.close()
-    return user
+        try:
+            cursor = cnx.cursor(dictionary=True, buffered=True)   # dic = format for JSON objects
+            cursor.execute('''SELECT * FROM User WHERE idUser = %s''', (lifterID,))
+            user = cursor.fetchone()
+            cursor.close()
+            cnx.close()
+            return user
+        except mysql.connector.Error as err:
+            print("MySQL Error:", err)    # This will show you the exact error
+            print("Error code:", err.errno)               # Numeric error code
+            cnx.rollback() 
+            cnx.close()
+            return {
+                "success" : False,
+                "message" : f' server error: {err.errno}' 
+            } 
 #------------------------------------------------------------------------------
 def getLifters():
     cnx = connect();
     users = []
     if (cnx.is_connected()):
-        cursor = cnx.cursor(dictionary=True)   # dic = format for JSON objects
-        cursor.execute('SELECT * FROM User')
-        users = cursor.fetchall()
-        cursor.close()
-        cnx.close()
-    return users
+        try:
+            cursor = cnx.cursor(dictionary=True, buffered=True)   # dic = format for JSON objects
+            cursor.execute('SELECT * FROM User')
+            users = cursor.fetchall()
+            cursor.close()
+            cnx.close()
+            return users
+        except mysql.connector.Error as err:
+            print("MySQL Error:", err)    # This will show you the exact error
+            print("Error code:", err.errno)               # Numeric error code
+            cnx.rollback() 
+            cnx.close()
+            return {
+                "success" : False,
+                "message" : f' server error: {err.errno}' 
+            } 
 #------------------------------------------------------------------------------
 def postNewLifter(newLifter):
     cnx = connect()
@@ -450,7 +593,7 @@ def postNewLifter(newLifter):
     userName    = newLifter["userName"]
     if(cnx.is_connected()):
         try:
-            cursor = cnx.cursor()
+            cursor = cnx.cursor(buffered=True)
             cursor.execute('''
                 INSERT INTO User 
                 (userName, userFirst, userLast, Email)
@@ -465,14 +608,16 @@ def postNewLifter(newLifter):
             print("Error code:", err.errno)               # Numeric error code
             cnx.rollback() 
             cnx.close()
-            return err.errno
-  
+            return {
+                "success" : False,
+                "message" : f' server error: {err.errno}' 
+            } 
 #------------------------------------------------------------------------------
 def removeLifter(lifterID):
     cnx = connect()
     if(cnx.is_connected()):
         try:
-            cursor = cnx.cursor()
+            cursor = cnx.cursor(buffered=True)
             cursor.execute('''
                 DELETE FROM User 
                 WHERE idUser = %s
@@ -487,8 +632,10 @@ def removeLifter(lifterID):
             print("Error code:", err.errno)               # Numeric error code
             cnx.rollback() 
             cnx.close()
-            return err.errno
-  
+            return {
+                "success" : False,
+                "message" : f' server error: {err.errno}' 
+            } 
 #------------------------------------------------------------------------------
 
 load_dotenv()

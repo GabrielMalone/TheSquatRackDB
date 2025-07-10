@@ -133,6 +133,9 @@ function dayListener(e){
     const workoutArea = document.querySelector(".workout");
     if (e.target.classList.contains("day")){ 
         workoutArea.innerHTML =``;                      // clear previous data
+        const days = document.querySelectorAll(".day");
+        days.forEach(day=>day.classList.remove("daySelected"));
+        e.target.classList.toggle("daySelected");
         const dateInfo = JSON.parse(e.target.dataset.info);         //get info
         if (e.target.dataset.workoutID) {
             createrWorkoutHeader(dateInfo);

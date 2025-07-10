@@ -39,6 +39,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Workout` (
   `idWorkout` INT NOT NULL AUTO_INCREMENT,
   `Date` DATETIME NOT NULL,
   `idUser` INT NOT NULL,
+  `numberOfLifts` INT NOT NULL DEFAULT 1, -- this will help me track Exercise Order more easily 
   `workoutTitle` VARCHAR(255) NULL,
   `userWeight` INT NULL,
   `userAge` INT NULL,
@@ -50,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Workout` (
   CONSTRAINT `fk_Workout_User`
     FOREIGN KEY (`idUser`)
     REFERENCES `mydb`.`User` (`idUser`)
-    ON DELETE CASCADE  -- Changed from NO ACTION to CASCADE
+    ON DELETE CASCADE  
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -90,7 +91,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`ExerciseOrderInWorkout` (
   CONSTRAINT `fk_Exercise_has_Workout_Workout1`
     FOREIGN KEY (`idWorkout`)
     REFERENCES `mydb`.`Workout` (`idWorkout`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE 
     ON UPDATE NO ACTION
 ) ENGINE = InnoDB;
 
@@ -141,6 +142,7 @@ INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDesc
 INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDescription) VALUES ('Competition-Grip-Bench-Press', 'C_Bench','bench', "Bench press perfomed with competition grip width");
 INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDescription) VALUES ('Close-Grip-Bench', 'CG_Bench', 'bench', "Bench press performed with grip closer than competition grip");
 INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDescription) VALUES ('Board-Press', 'BoardPress', 'bench', "Bench press performed with reduced ROM");
+INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDescription) VALUES ('Over-Head-Press', 'OHP', 'bench', "Barbell pressed overhead, performed while standing");
 
 INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDescription) VALUES ('Conventional-Deadlift', 'Deadlift', 'deadlift', "Deadlift performed with grip ouside of legs");
 INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDescription) VALUES ('Sumo-Deadlift', 'Sumo', 'deadlift', "Deadlift performed with grip ouside of legs");
@@ -152,48 +154,3 @@ INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDesc
 INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDescription) VALUES ('Bulgarian-Split-Squats', 'Bulgarians', 'accessory', "The thing you do not like to do");
 INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDescription) VALUES ('Pull-ups-wide-grip', 'pullups', 'accessory', "pull-ups done with hands farther apart than medium grip pull-ups");
 INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDescription) VALUES ('Pull-ups-medium-grip', 'pullups', 'accessory', "pull-ups done with hands closer togther than wide grip pull-ups");
-
--- Queries to run for default database
-
--- create user
-INSERT INTO User (userName) VALUES ('Goobert');
--- create workout
-INSERT INTO Workout (Date, idUser)
-VALUES ('2025-07-04', 1);
-
--- i think next would need to create exercise order 
-INSERT INTO `ExerciseOrderInWorkout` (idExercise, idWorkout, `Order`)
-VALUES (1, 1, 3);
--- then sets for that exercise
-INSERT INTO `Set` (setNumber,idExercise, idWorkout, setWeight, setReps, setRPE, setCompleted)
-VALUES (1, 1, 1, 185, 5, 8, 1);
-INSERT INTO `Set` (SetNumber, idExercise, idWorkout, setWeight, setReps, setRPE, setCompleted)
-VALUES (2, 1, 1, 225, 12, 9, 1);
-INSERT INTO `Set` (SetNumber, idExercise, idWorkout, setWeight, setReps, setRPE, setCompleted)
-VALUES (3, 1, 1, 315, 7, 6, 1);
-
-
--- i think next would need to create exercise order 
-INSERT INTO `ExerciseOrderInWorkout` (idExercise, idWorkout, `Order`)
-VALUES (5, 1, 1);
--- then sets for that exercise
-INSERT INTO `Set` (SetNumber, idExercise, idWorkout, setWeight, setReps, setRPE, setCompleted)
-VALUES (1, 5, 1, 225, 5, 6, 1);
-INSERT INTO `Set` (SetNumber, idExercise, idWorkout, setWeight, setReps, setRPE, setCompleted)
-VALUES (2, 5, 1, 275, 3, 8, 1);
-INSERT INTO `Set` (SetNumber, idExercise, idWorkout, setWeight, setReps, setRPE, setCompleted)
-VALUES (3, 5, 1, 315, 1, 9, 1);
-
--- i think next would need to create exercise order 
-INSERT INTO `ExerciseOrderInWorkout` (idExercise, idWorkout, `Order`)
-VALUES (7, 1, 2);
--- then sets for that exercise
-INSERT INTO `Set` (SetNumber, idExercise, idWorkout, setWeight, setReps, setRPE, setCompleted)
-VALUES (1, 7, 1, 225, 5, 2, 1);
-INSERT INTO `Set` (SetNumber, idExercise, idWorkout, setWeight, setReps, setRPE, setCompleted)
-VALUES (2, 7, 1, 315, 5, 4, 1);
-INSERT INTO `Set` (SetNumber, idExercise, idWorkout, setWeight, setReps, setRPE, setCompleted)
-VALUES (3, 7, 1, 405, 5, 8, 1);
-
-
-

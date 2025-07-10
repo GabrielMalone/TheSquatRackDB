@@ -45,8 +45,11 @@ def getUpdateWorkout():
         result = database.updateSet(updateInfo) # 1 means an update happened #0 none
         return jsonify(result)
     if request.method == "DELETE":
-        setID = request.get_json()
-        result = database.deleteSet(setID)
+        data = request.get_json()
+        idSet = data["idSet"]
+        idWorkout = data["idWorkout"]
+        idExercise = data["idExercise"]
+        result = database.deleteSet(idSet, idWorkout, idExercise)
         return jsonify(result)
 #------------------------------------------------------------------------------
 @app.route("/createWorkout", methods=["POST"])
@@ -62,30 +65,38 @@ def createSet():
     setData = request.get_json()
     return jsonify(database.createSet(setData))
 #------------------------------------------------------------------------------
-@app.route("/createExerciseOrder", methods=["PUT"])
-def createExerciseOrder():
-    data = request.get_json()
-    orderNumber = data["orderNumber"]
-    exerciseID = data["exerciseID"]
-    workoutID = data["workoutID"]
-    return jsonify(database.createExerciseOrder(workoutID, exerciseID, orderNumber))
+@app.route("/ExerciseOrder", methods=["PUT", "DELETE"])
+def deleteFromExerciseOrder():
+    data = request.json()
+    idWorkout  = data["idWorkout"]
+    idExercise = data["idExercise"]
+    database.deleteExerciseOrder(idWorkout, idExercise)
 #------------------------------------------------------------------------------
 @app.route("/reorderSetNumbers", methods=["PUT"])
 def reorderSetNumbers():
     data = request.get_json()
-    exerciseID = data["exerciseID"]
-    workoutID = data["workoutID"]
-    return jsonify(database.reorderSetNumbers(workoutID, exerciseID))
+    idExercise = data["idExercise"]
+    idWorkout = data["idWorkout"]
+    return jsonify(database.reorderSetNumbers(idWorkout, idExercise))
 #------------------------------------------------------------------------------
 @app.route("/getExercises", methods=["GET"])
 def getExercises():
     return jsonify(database.getExercises())
 #------------------------------------------------------------------------------
-@app.route("/insertNewExercise", methods=["POST"])
-def insertNewExercise():
+@app.route("/insertNewExerciseIntoWorkout", methods=["POST"])
+def insertNewExerciseIntoWorkout():
     data = request.get_json()
-    print(data)
-    return jsonify(database.insertNewExercise(data))
+    print("data recieved for insertion: ", data)
+    return jsonify(database.insertNewExerciseIntoWorkout(data))
 #------------------------------------------------------------------------------
+@app.route("/workoutExistCheck", methods=["PUT"])
+def workoutExistCheck():
+    data = request.get_json()
+    date =  date =  str(data['year'])+ '-' + str(data['monthNumber']+1) + '-' + str(data['day'])
+    idUser = data["lifterID"]
+    print(f'date received for workout exist check: " {date} {idUser}')
+    return jsonify(database.workoutExistCheck(idUser, date))
+#------------------------------------------------------------------------------
+
 if __name__ == "__main__":
     app.run(debug=True, port=5001)

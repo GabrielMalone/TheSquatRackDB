@@ -40,8 +40,10 @@ const devConfig = {
     UPDATE_SET_NUMBER: "updateSetNumber",
     REORDER__SET_ENDPOINT: "reorderSetNumbers",
     GET_EXERCISES_ENDPOINT: "getExercises",
-    INSERT_NEW_EXERCISE_ENDPOINT: "insertNewExercise",
-    CREATE_WORKOUT_ENDPOINT: "createWorkout"
+    INSERT_NEW_EXERCISE_ENDPOINT: "insertNewExerciseIntoWorkout",
+    CREATE_WORKOUT_ENDPOINT: "createWorkout",
+    DELETE_FROM_EORDER: "ExerciseOrder",
+    CHECK_IF_WORKOUT_EXISTS: "workoutExistCheck"
   };
   
 
@@ -55,8 +57,10 @@ const prodConfig = {
     UPDATE_SET_NUMBER: "updateSetNumber",
     REORDER__SET_ENDPOINT: "reorderSetNumbers",
     GET_EXERCISES_ENDPOINT: "getExercises",
-    INSERT_NEW_EXERCISE_ENDPOINT: "insertNewExercise",
-    CREATE_WORKOUT_ENDPOINT: "createWorkout"
+    INSERT_NEW_EXERCISE_ENDPOINT: "insertNewExerciseIntoWorkout",
+    CREATE_WORKOUT_ENDPOINT: "createWorkout",
+    DELETE_FROM_EORDER: "ExerciseOrder",
+    CHECK_IF_WORKOUT_EXISTS: "workoutExistCheck"
   };
 
 export const config = window.location.hostname === "localhost" ? 
