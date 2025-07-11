@@ -72,7 +72,7 @@ li {
     min-width: fit-content;
 }
 /*-------------------------------------------------------*/
-/* LIFTER WINDOW AND SIDEBAR
+/* LIFTER WINDOW (main dashboard) AND SIDEBAR
 /*-------------------------------------------------------*/
 .dashboard {      /*holds lifter window and sidebar*/
     display: flex;
@@ -83,7 +83,7 @@ li {
     border-width: 1px;
 }
 /*-------------------------------------------------------*/
-/* LIFTER WINDOW - columns
+/* LIFTER WINDOW (main dashboard) - columns
 /*-------------------------------------------------------*/
 .lifterBox {
     display: flex;
@@ -123,9 +123,28 @@ li {
     margin-left:20px;
     margin-bottom: 35px;
 }
-
 /*-------------------------------------------------------*/
-/* CALENDAR CLASS in LIFTER WINDOW
+/* LIFTER WINDOW -> CALENDAR DASHBOARD 
+/*-------------------------------------------------------*/
+.calendarWrapper{
+    display: flex;
+    flex-direction: row;
+}
+.monthlyChartWrapper{
+    display: flex;
+    flex-direction: column;
+    margin-left: 40px;
+}
+.monthlyChart{
+    display: none;
+}
+.monthlyChartVisible{
+    display: flex;
+    flex-direction: row;
+    height: 200px;
+}
+/*-------------------------------------------------------*/
+/* LIFTER WINDOW -> CALENDAR DASHBOARD -> CALENDAR 
 /*-------------------------------------------------------*/
 .month {
     display: flex;
@@ -259,14 +278,6 @@ li {
     font-size: 2.5rem;
 }
 
-
-/*-------------------------------------------------------*/
-/* CALENDAR CHART INFO AREA
-/*-------------------------------------------------------*/
-.calendarWrapper{
-    display: flex;
-    flex-direction: row;
-}
 
 /*-------------------------------------------------------*/
 /* WORKOUT AREA

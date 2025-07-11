@@ -1,11 +1,16 @@
 from flask import Flask, render_template, jsonify, request
-import queries
+import appQueries.queries as queries
+import appQueries.chartQueries as chartQueries
 
-app = Flask(__name__)
+app = Flask(__name__,
+            template_folder='../frontend/templates',
+            static_folder='../frontend/static')
+
 #------------------------------------------------------------------------------
 @app.route("/")
 def home():
     return render_template('index.html')
+
 #------------------------------------------------------------------------------
 @app.route("/lifters", methods=["GET", "POST", "DELETE"])
 def users():
@@ -23,18 +28,21 @@ def users():
         lifterToREmove = request.get_json()
         res = queries.removeLifter(lifterToREmove)
         return jsonify(res)
- #------------------------------------------------------------------------------   
+ #------------------------------------------------------------------------------ 
+   
 @app.route("/lifter", methods=["POST"])
 def getUser():
     lifterID = request.get_json()
     lifterInfo = queries.getLifterInfo(lifterID)
     return jsonify(lifterInfo)
 #------------------------------------------------------------------------------
+
 @app.route("/monthlyWorkouts", methods=["POST"])
 def monthlyWorkouts():
     data = request.get_json()
     return jsonify(queries.getDaysTrained(data['userId'], data['curDate'])), 200
 #------------------------------------------------------------------------------
+
 @app.route("/workout", methods=["POST", "PUT", "DELETE"])
 def getUpdateWorkout():
     if request.method == "POST": # get a workout
@@ -52,6 +60,7 @@ def getUpdateWorkout():
         result = queries.deleteSet(idSet, idWorkout, idExercise)
         return jsonify(result)
 #------------------------------------------------------------------------------
+
 @app.route("/createWorkout", methods=["POST"])
 def createWorkout():
     data = request.get_json()
@@ -60,11 +69,13 @@ def createWorkout():
     date =  str(data['year'])+ '-' + str(data['monthNumber']+1) + '-' + str(data['day'])
     return jsonify(queries.createNewWorkout(date, lifterID))
 #------------------------------------------------------------------------------
+
 @app.route("/createSet", methods=["POST"])
 def createSet():
     setData = request.get_json()
     return jsonify(queries.createSet(setData))
 #------------------------------------------------------------------------------
+
 @app.route("/ExerciseOrder", methods=["PUT", "DELETE"])
 def deleteFromExerciseOrder():
     data = request.json()
@@ -72,6 +83,7 @@ def deleteFromExerciseOrder():
     idExercise = data["idExercise"]
     queries.deleteExerciseOrder(idWorkout, idExercise)
 #------------------------------------------------------------------------------
+
 @app.route("/reorderSetNumbers", methods=["PUT"])
 def reorderSetNumbers():
     data = request.get_json()
@@ -79,16 +91,19 @@ def reorderSetNumbers():
     idWorkout = data["idWorkout"]
     return jsonify(queries.reorderSetNumbers(idWorkout, idExercise))
 #------------------------------------------------------------------------------
+
 @app.route("/getExercises", methods=["GET"])
 def getExercises():
     return jsonify(queries.getExercises())
 #------------------------------------------------------------------------------
+
 @app.route("/insertNewExerciseIntoWorkout", methods=["POST"])
 def insertNewExerciseIntoWorkout():
     data = request.get_json()
     print("data recieved for insertion: ", data)
     return jsonify(queries.insertNewExerciseIntoWorkout(data))
 #------------------------------------------------------------------------------
+
 @app.route("/workoutExistCheck", methods=["PUT"])
 def workoutExistCheck():
     data = request.get_json()
@@ -98,5 +113,15 @@ def workoutExistCheck():
     return jsonify(queries.workoutExistCheck(idUser, date))
 #------------------------------------------------------------------------------
 
+@app.route("/getMonthlyTrainingVolume", methods=["POST"])
+def getMonthlyTrainingVolume():
+    data = request.get_json()
+    print(data)
+    idUser = data["idUser"]
+    ExerciseCategory = data["ExerciseCategory"]
+    month = data["month"]
+    year = data["year"]
+    return jsonify(chartQueries.getMonthlyTrainingVolume(idUser, ExerciseCategory, month, year))
+#------------------------------------------------------------------------------
 if __name__ == "__main__":
     app.run(debug=True, port=5001)

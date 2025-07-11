@@ -4,13 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>testing</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js" defer ></script>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body class="container">
     {% include 'partials/header.html' %}
     {% include 'partials/mainDashboard.html' %}
     {% include 'partials/footer.html' %}
-  <script type="module" src="{{ url_for('static', filename='index.js') }}"></script>
+  <script type="module" src="{{ url_for('static', filename='index.js') }}" defer></script>
 </body>
 </html>

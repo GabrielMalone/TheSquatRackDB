@@ -1,5 +1,6 @@
 import { config, DoW, months } from "./config.js";
 import { currLifter, f } from "./lifterActions.js";
+import { loadMonthlyChart } from "./monthlyChart.js";
 import { createCursor, createrWorkoutHeader, getWorkoutFromWokroutID } from "./workout.js";
 
 export let curYear;
@@ -163,6 +164,7 @@ export function fillCalendar(year, month, lastday){
             firstindex -- ;
         }
     }
+    loadMonthlyChart('MONTHLY VOLUME', currLifter.id, curMonth, curYear);
     getMonthlyWorkouts(currLifter.id, {month, year});
     checkForSelectedDay();
     addMonthAndYear(curMonth, curYear);
@@ -364,6 +366,8 @@ export function clearCalendar(){
     });
     days.length = 0;
     removeMonthAndYear();
+    const chart = document.querySelector(".monthlyChart");
+    Chart.getChart(chart)?.destroy();
 }
 //-----------------------------------------------------------------------------
 // create an object to store in a day's data-set html
