@@ -6,76 +6,80 @@ export let curYear;
 export let curMonth;
 export let curlastDay;
 
+let daySelected = {};
+
 const calendarBoxes  = 42;
 const datesThisMonth = [];          // will hold date objects for the cur month
 const datesPrevMonth = [];         // will hold date objects for the prev month
 const datesNextMonth = [];         // will hold date objects for the next month
+
 let days = [];
 let workouts = [];
 
 //-----------------------------------------------------------------------------
-// method to populate calendar with days where trianing occurred and if SBD
+// method to retrieve the information to populate calendar with days 
 //-----------------------------------------------------------------------------
 function getMonthlyWorkouts(userId, curDate){
     workouts.length = 0;
-
+    // get all 42  days for the current calendar box
     const days = [...document.querySelectorAll(".day")];
-
+    // base from which we will get prev, cur, and next month training info
     const curMonth = Number(curDate.month);
-
+    // adjust if at boundaries of year
     const prevmonth = curMonth - 1 < 0 ? 11 : curMonth - 1;
     const nextmonth = curMonth + 1 > 11 ? 0 : curMonth + 1;
-
-    const daysPrevMonth = days.filter(day=>Number(day.dataset.month)===prevmonth);
-    const daysThisMonth = days.filter(day=>Number(day.dataset.month)===Number(curDate.month));
-    const daysNextMonth = days.filter(day=>Number(day.dataset.month)===nextmonth);
-    
+    // make arrays of the days on calendar that fall into prev,cur,next month
+    const daysPrevM = days.filter(day=>Number(day.dataset.month)===prevmonth);
+    const daysThisM = days.filter(day=>Number(day.dataset.month)===Number(curDate.month));
+    const daysNextM = days.filter(day=>Number(day.dataset.month)===nextmonth);
+    // make new date objects so we can query the DB about these dates
     const nextDate = new Date(curDate.year, curDate.month+1);
     const prevDate = new Date(curDate.year, curDate.month-1);
-
     const prev = {"month" : prevDate.getMonth(), "year" : prevDate.getFullYear()};
     const next = {"month" : nextDate.getMonth(), "year" : nextDate.getFullYear()};
-
+    // begin queries 
     f.post(config.GET_MONTHLY_LIFTS, {userId, curDate}).then(lifts=>{
         lifts.forEach(lift=>{
-                fillMiniWorkoutMap(daysThisMonth, lift);
+            fillMiniWorkoutMap(daysThisM, lift);
             });
     });
-
     f.post(config.GET_MONTHLY_LIFTS, {userId, "curDate" : prev}).then(lifts=>{
         lifts.forEach(lift=>{
-            console.log(lift);
-            fillMiniWorkoutMap(daysPrevMonth, lift);
+            fillMiniWorkoutMap(daysPrevM, lift);
         });
     });
-
     f.post(config.GET_MONTHLY_LIFTS, {userId, "curDate" : next}).then(lifts=>{
         lifts.forEach(lift=>{
-            fillMiniWorkoutMap(daysNextMonth, lift);
+            fillMiniWorkoutMap(daysNextM, lift);
         });
     });
 }
+//-----------------------------------------------------------------------------
+// method to populate calendar with days where trianing occurred and if SBD
+//-----------------------------------------------------------------------------
 function fillMiniWorkoutMap(daysThisMonth, lift){
+    // flags to make sure we just apply the styling once on the calenar
     let squat = false;
     let bench = false;
     let dead  = false;
     let accessory = false;
     let liftDayPresent = false;
-
     // get the calendar day that matches the training day
     let curday = daysThisMonth[0];
+
     for (let i = 0 ; i < daysThisMonth.length ; i ++){
-        console.log(daysThisMonth[i]);
         if (Number(daysThisMonth[i].dataset.day) === Number(lift.day)){
             curday = daysThisMonth[i];
             liftDayPresent = true;
             break;
         }
     }
-    if (!liftDayPresent) return;
+
+    // dont put anything if no workouts present for displayed days
+    if (!liftDayPresent) return; 
     // add some more data 
     curday.dataset.workoutID = lift.idWorkout;
-
+    curday.classList.add("dayLifted");
     // squat bench deadlift performed this day ?
     const liftPerformed = lift.ExerciseCategory;
     
@@ -125,11 +129,7 @@ export function fillCalendar(year, month, lastday){
     let weekidx = 1;
     let firstindex = firstDay;
     let done = false;
-    
     for (let i = 0 ; i < calendarBoxes ; i ++ ){     // fill out the html boxes
-        if (i === 6){                            // place the name of the month
-            addMonthAndYear(days, i, month, year);
-        }
         if(Math.floor((i)/7)===0) {// add the days of the week on the first row
             addNamesOfDays(days, i);
         } 
@@ -164,6 +164,8 @@ export function fillCalendar(year, month, lastday){
         }
     }
     getMonthlyWorkouts(currLifter.id, {month, year});
+    checkForSelectedDay();
+    addMonthAndYear(curMonth, curYear);
 }
 //-----------------------------------------------------------------------------
 // create an event listener for the calendar when a day is clicked
@@ -180,9 +182,9 @@ function dayListener(e){
         const days = document.querySelectorAll(".day");
         days.forEach(day=>day.classList.remove("daySelected"));
         e.target.classList.toggle("daySelected");
+        daySelected = {"day" : e.target.dataset.day, "month" : e.target.dataset.month};
         const dateInfo = JSON.parse(e.target.dataset.info);         //get info
         if (e.target.dataset.workoutID) {
-            console.log(dateInfo);
             createrWorkoutHeader(dateInfo);
             getWorkoutFromWokroutID(e.target.dataset.workoutID);
         } else {
@@ -195,7 +197,7 @@ function dayListener(e){
 // arrow key event listeners for changing calendar dates
 //-----------------------------------------------------------------------------
 export function calendarListener(){
-    document.addEventListener("keydown", (event)=>{
+    document.addEventListener("keydown", (event)=>{ //keydowna n
         const calendar = document.querySelector(".month");
         if (getComputedStyle(calendar).visibility === "hidden")return;
         switch (event.key){
@@ -218,12 +220,16 @@ export function calendarListener(){
 //-----------------------------------------------------------------------------
 // helper methods for filling out the calendar
 //-----------------------------------------------------------------------------
-function addMonthAndYear(days, i, month, year){
-    days[i].insertAdjacentHTML("beforeend",
-        `<div class="monthName">
+function addMonthAndYear(month, year){
+    const calendar =  document.querySelector(".month");
+    calendar.insertAdjacentHTML("afterend",
+        `<div class="dateWrapper">
             <p>${months[month]}</p> 
             <p id="year">${year}</p>
         </div>`);
+}
+function removeMonthAndYear(){
+    document.querySelector(".dateWrapper")?.remove();
 }
 //-----------------------------------------------------------------------------
 function addNamesOfDays(days, i){
@@ -349,7 +355,7 @@ export function clearCalendar(){
     datesPrevMonth.length = 0;
     days.forEach(day=>{
         day.innerHTML = '';
-        day.classList.remove('unfocusedDate', 'today');
+        day.classList.remove('unfocusedDate', 'today', 'dayLifted');
         day.style.visibility = "visible";
         day.style.display = "flex";
         Object.keys(day.dataset).forEach(key => delete day.dataset[key]);
@@ -357,6 +363,7 @@ export function clearCalendar(){
                                 // clear all the data in the days for each month
     });
     days.length = 0;
+    removeMonthAndYear();
 }
 //-----------------------------------------------------------------------------
 // create an object to store in a day's data-set html
@@ -378,4 +385,17 @@ function createDateObject(date, lastday){
 export function getToday(){
     const d = new Date();
     return {day: d.getDate(), month: d.getMonth(), year: d.getFullYear()};
+}
+//-----------------------------------------------------------------------------
+// method to keep the selected date highlighted after switching calendars
+//-----------------------------------------------------------------------------
+function checkForSelectedDay(){
+    days.forEach(day=>{;
+        if (day.dataset.day   === daySelected.day && 
+            day.dataset.month === daySelected.month){
+            setTimeout(() => {                                // force a redraw
+                day.classList.add('daySelected');
+            }, 10);
+        }
+    })
 }

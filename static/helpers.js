@@ -41,17 +41,17 @@ export function activeLiftersCLick(){
     });
 }
 //-----------------------------------------------------------------------------
-//                  all the listeners that need to be loaded for the app to work
+// all the listeners that need to be loaded for the app to work
 //-----------------------------------------------------------------------------
-export function init(){
-    calendarListener();   // event listener for key input for changing months in cal
-    activeLiftersCLick(); // event listener for detecting click on lifter in sidebar
-    dayEventListener(); // event listener for detecting click on day in the calendar
-    setListener();           // event listener for detecting a click on workout sets
-    formUpdateListner();                 // event listener for detecting set updates
-    configEventListener();    // event listener for config button in the main window
-    xNewLifterWindow();                         // x button on the new lifter window
-    addLifterClick();                             // add lifter button in the header
-    submitNewLifterClick();                 // submit button for new lifter creation
-    getLifters();                                  // load lifters from the database
+export function init() {
+    calendarListener();         // detects key input for changing months in cal
+    activeLiftersCLick();                 // detects click on lifter in sidebar
+    dayEventListener();               // detecting click on day in the calendar
+    setListener();                         // detecting a click on workout sets
+    formUpdateListner();                               // detecting set updates
+    configEventListener();                  // config button in the main window
+    xNewLifterWindow();                    // x button on the new lifter window
+    addLifterClick();                        // add lifter button in the header
+    submitNewLifterClick();            // submit button for new lifter creation
+    getLifters();                             // load lifters from the database
 }

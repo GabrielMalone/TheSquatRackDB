@@ -38,8 +38,8 @@ def workoutExistCheck(idUser, date):
                 "message": "No workout found for this user on this date."
             }
     except mysql.connector.Error as err:
-        print("MySQL Error:", err)     # This will show you the exact error
-        print("Error code:", err.errno)                # Numeric error code
+        print("MySQL Error:", err)         # This will show you the exact error
+        print("Error code:", err.errno)                    # Numeric error code
         cnx.rollback() 
         cnx.close()
         return {
@@ -52,7 +52,7 @@ def getExercises():
     exercises = []
     try:
         if (cnx.is_connected()):
-            cursor = cnx.cursor(dictionary=True, buffered=True)   # dic = format for JSON objects
+            cursor = cnx.cursor(dictionary=True, buffered=True)  
             cursor.execute('SELECT * FROM Exercise')
             exercises = cursor.fetchall()
 
@@ -181,14 +181,10 @@ def insertNewExerciseIntoWorkout(setData):
                     ''', (idWorkout,))
                 
                 row = cursor.fetchone()
-
-                print("DEBUG: fetched workout row:", row)
                 if row is None:
                     raise Exception(f"No Workout row found for idWorkout={idWorkout}")
-                
                 order = row['num']
                 
-                # order = cursor.fetchone()['num']
                 cursor.execute(
                     '''
                     INSERT INTO 
@@ -197,6 +193,7 @@ def insertNewExerciseIntoWorkout(setData):
                         (%s, %s, %s);
                     ''', 
                     (idExercise, idWorkout, order))
+                
                 # then the exercise set info
                 cursor.execute(
                     '''
@@ -286,7 +283,8 @@ def deleteSet(setID, idWorkout, idExercise):
             # When we delete a set from a workout (idSet)
             # We need to ask, does this workout (idWorkout) still contain 
             # Sets that have that particular exercise (idExercise).
-            # If they dont, we need to delete that exercise from the EOW (idExercise, idWorkout) table. 
+            # If they dont, we need to delete that exercise 
+            # from the EOW (idExercise, idWorkout) table. 
 
             print(f"idworkout and idexercise present? {idWorkout} {idExercise}")
 
@@ -509,7 +507,7 @@ def getDaysTrained(userID, Date):
     workouts = []
     if (cnx.is_connected()):
         try:
-            cursor = cnx.cursor(dictionary=True, buffered=True)   # dic = format for JSON objects
+            cursor = cnx.cursor(dictionary=True, buffered=True)   
             cursor.execute(
             '''
             SELECT 
@@ -571,7 +569,7 @@ def getLifters():
     users = []
     if (cnx.is_connected()):
         try:
-            cursor = cnx.cursor(dictionary=True, buffered=True)   # dic = format for JSON objects
+            cursor = cnx.cursor(dictionary=True, buffered=True)  
             cursor.execute('SELECT * FROM User')
             users = cursor.fetchall()
             cursor.close()

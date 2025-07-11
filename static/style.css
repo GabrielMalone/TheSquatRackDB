@@ -130,6 +130,7 @@ li {
 .month {
     display: flex;
     flex-direction: column;
+    position: relative;
     margin-left: 20px;
     min-width: fit-content;
     display: none;
@@ -142,10 +143,11 @@ li {
     display: flex;
     flex-direction: column;
     position: relative;
-    outline: solid #222 1px;
+    outline: dotted #444 1px;
     user-select: none;
     padding: 1rem;
-    transition: background-color, outline 300ms ease-in;
+    margin: 3px;
+    transition: background-color, outline 100ms ease-in;
     width: 40px;
     height: 40px;
     cursor: pointer;
@@ -155,15 +157,14 @@ li {
     -webkit-touch-callout: none; /* iOS Safari */
 }
 .day:hover {
-    background-color:purple;
-    outline-color: black;
+    outline: 1px dotted palegreen;
     .dayNum{
         color: mintcream;
     }
     /* transition: 1000ms; */
 }
 .daySelected{
-    background-color:purple;
+    background-color:rgba(186, 85, 211, 0.174) !important;
 }
 .dayNum{
     display: flex;
@@ -172,6 +173,14 @@ li {
     font-size: 1rem;
     color: mintcream;
     pointer-events: none;
+}
+.dayLifted{
+    /* border-top: 1px solid palegreen; */
+    border-bottom: 1px solid cornflowerblue;
+    background-color: none;
+}
+.today {
+    background-color: #222;
 }
 .squatDay{
     position: absolute;
@@ -234,11 +243,14 @@ li {
     font-size: 0.5rem;
     
 }
-.monthName {
+.dateWrapper {
+    display: flex;
+    flex-direction: column;
+    position: relative;
     color: white;
-    position: absolute;
-    left: 100px;
+    /* transform: rotate(90deg); */
     font-size: 2.5rem;
+    margin-left: 20px;
 }
 #year{
     position: absolute;
@@ -246,9 +258,16 @@ li {
     color: #333;
     font-size: 2.5rem;
 }
-.today {
-    background-color: midnightblue;
+
+
+/*-------------------------------------------------------*/
+/* CALENDAR CHART INFO AREA
+/*-------------------------------------------------------*/
+.calendarWrapper{
+    display: flex;
+    flex-direction: row;
 }
+
 /*-------------------------------------------------------*/
 /* WORKOUT AREA
 /*-------------------------------------------------------*/
