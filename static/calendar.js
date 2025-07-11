@@ -29,77 +29,80 @@ function getMonthlyWorkouts(userId, curDate){
     const daysPrevMonth = days.filter(day=>Number(day.dataset.month)===prevmonth);
     const daysThisMonth = days.filter(day=>Number(day.dataset.month)===Number(curDate.month));
     const daysNextMonth = days.filter(day=>Number(day.dataset.month)===nextmonth);
-
+    
     const nextDate = new Date(curDate.year, curDate.month+1);
     const prevDate = new Date(curDate.year, curDate.month-1);
 
-    // const prev = {"month" : prevDate.getMonth(), "year" : prevDate.getFullYear()};
-    // const next = {"month" : nextDate.getMonth(), "year" : nextDate.getFullYear()};
+    const prev = {"month" : prevDate.getMonth(), "year" : prevDate.getFullYear()};
+    const next = {"month" : nextDate.getMonth(), "year" : nextDate.getFullYear()};
 
-    // let thisMonthsLifts = {};
-    // let prevMonthsLifts = {};
-    // let nextMonthsLifts = {};
-
-    // f.post(config.GET_MONTHLY_LIFTS, {userId, curDate}).then(lifts=>{
-    //     thisMonthsLifts  = lifts
-    // });
-    // f.post(config.GET_MONTHLY_LIFTS, {userId, "curDate" : prev}).then(lifts=>{
-    //     prevMonthsLifts = lifts;
-    //     console.log(prevMonthsLifts);
-    // });
-    // f.post(config.GET_MONTHLY_LIFTS, {userId, "curDate" : next}).then(lifts=>nextMonthsLifts = lifts);
-
-    f.post(config.GET_MONTHLY_LIFTS, {userId, curDate})
-        .then(lifts=>{
-            lifts.forEach(lift=>{
-    
-                let squat = false;
-                let bench = false;
-                let dead  = false;
-                let accessory = false;
-
-                // get the calendar day that matches the training day
-                let curday = daysThisMonth[0];
-                for (let i = 0 ; i < daysThisMonth.length ; i ++){
-                    if (Number(daysThisMonth[i].dataset.day) === Number(lift.day)){
-                        curday = daysThisMonth[i];
-                        break;
-                    }
-                }
-                
-                // add some more data 
-                curday.dataset.workoutID = lift.idWorkout;
-
-                // squat bench deadlift performed this day ?
-                const liftPerformed = lift.ExerciseCategory;
-                
-                if (liftPerformed === "squat" && !squat){
-                    const squatBox = document.createElement('div');
-                    squatBox.classList.add('squatDay');
-                    curday.prepend(squatBox);
-                    squat = true;
-                }
-                if (liftPerformed === "deadlift" && !dead){
-                    const deadBox = document.createElement('div');
-                    deadBox.classList.add('deadDay');
-                    curday.prepend(deadBox);
-                    dead = true;
-                }
-                if (liftPerformed === "bench" && !bench){
-                    const benchBox = document.createElement('div');
-                    benchBox.classList.add('benchDay');
-                    curday.prepend(benchBox);
-                    bench = true;
-                }
-                if (liftPerformed === "accessory" && !accessory){
-                    const otherLift = document.createElement('div');
-                    otherLift.classList.add("otherLiftDay");
-                    curday.prepend(otherLift);
-                    accessory = true;
-                }
+    f.post(config.GET_MONTHLY_LIFTS, {userId, curDate}).then(lifts=>{
+        lifts.forEach(lift=>{
+                fillMiniWorkoutMap(daysThisMonth, lift);
             });
-        })
-        .catch(err=>console.error(err));
+    });
+
+    f.post(config.GET_MONTHLY_LIFTS, {userId, "curDate" : prev}).then(lifts=>{
+        lifts.forEach(lift=>{
+            console.log(lift);
+            fillMiniWorkoutMap(daysPrevMonth, lift);
+        });
+    });
+
+    f.post(config.GET_MONTHLY_LIFTS, {userId, "curDate" : next}).then(lifts=>{
+        lifts.forEach(lift=>{
+            fillMiniWorkoutMap(daysNextMonth, lift);
+        });
+    });
+}
+function fillMiniWorkoutMap(daysThisMonth, lift){
+    let squat = false;
+    let bench = false;
+    let dead  = false;
+    let accessory = false;
+    let liftDayPresent = false;
+
+    // get the calendar day that matches the training day
+    let curday = daysThisMonth[0];
+    for (let i = 0 ; i < daysThisMonth.length ; i ++){
+        console.log(daysThisMonth[i]);
+        if (Number(daysThisMonth[i].dataset.day) === Number(lift.day)){
+            curday = daysThisMonth[i];
+            liftDayPresent = true;
+            break;
+        }
+    }
+    if (!liftDayPresent) return;
+    // add some more data 
+    curday.dataset.workoutID = lift.idWorkout;
+
+    // squat bench deadlift performed this day ?
+    const liftPerformed = lift.ExerciseCategory;
+    
+    if (liftPerformed === "squat" && !squat){
+        const squatBox = document.createElement('div');
+        squatBox.classList.add('squatDay');
+        curday.prepend(squatBox);
+        squat = true;
+    }
+    if (liftPerformed === "deadlift" && !dead){
+        const deadBox = document.createElement('div');
+        deadBox.classList.add('deadDay');
+        curday.prepend(deadBox);
+        dead = true;
+    }
+    if (liftPerformed === "bench" && !bench){
+        const benchBox = document.createElement('div');
+        benchBox.classList.add('benchDay');
+        curday.prepend(benchBox);
+        bench = true;
+    }
+    if (liftPerformed === "accessory" && !accessory){
+        const otherLift = document.createElement('div');
+        otherLift.classList.add("otherLiftDay");
+        curday.prepend(otherLift);
+        accessory = true;
+    }
 }
 //-----------------------------------------------------------------------------
 // method to fill the calendar with the correct days

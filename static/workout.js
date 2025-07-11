@@ -260,7 +260,6 @@ function inserNewExerciseIntoWorkout(selectedExercise, idWorkout){
     const idExercise = liftInfo.exerciseID;
     const rawData = (document.querySelector(".trainingDate")).dataset.dateInfo;
     const dateInfo = JSON.parse(decodeURIComponent(rawData)); 
-    console.log(dateInfo);
     const SetNumber = 1;
     f.post(config.INSERT_NEW_EXERCISE_ENDPOINT,{idWorkout, idExercise, SetNumber})
         .then(res=>{
