@@ -2,6 +2,7 @@ export const date      = new Date();
 export const year      = date.getFullYear();
 export const month     = date.getMonth();
 export const lastday   = new Date(year, month + 1, 0).getDate(); 
+export let unit        = "LBS";
 
 export const DoW = 
 [
@@ -45,7 +46,9 @@ const devConfig = {
     DELETE_FROM_EORDER: "ExerciseOrder",
     CHECK_IF_WORKOUT_EXISTS: "workoutExistCheck",
     GET_MONTHLY_LIFTS: "monthlyWorkouts",
-    GET_MONTHLY_VOLUME: "getMonthlyTrainingVolume"
+    monthlyVolume: "getMonthlyTrainingVolume",
+    monthlyInetensity: "getMonthlyTrainingInensity",
+    monthlyFrequency: "getMonthlyTrainingFrequency"
   };
   
 
@@ -64,7 +67,9 @@ const prodConfig = {
     DELETE_FROM_EORDER: "ExerciseOrder",
     CHECK_IF_WORKOUT_EXISTS: "workoutExistCheck",
     GET_MONTHLY_LIFTS: "monthlyWorkouts",
-    GET_MONTHLY_VOLUME: "getMonthlyTrainingVolume"
+    monthlyVolume: "getMonthlyTrainingVolume",
+    monthlyInetensity: "getMonthlyTrainingInensity",
+    monthlyFrequency: "getMonthlyTrainingFrequency"
   };
 
 export const config = window.location.hostname === "localhost" ? 

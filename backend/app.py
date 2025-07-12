@@ -21,7 +21,6 @@ def users():
     elif request.method == "POST":
         newLifter = request.get_json()
         res = queries.postNewLifter(newLifter)
-        print(res)
         return jsonify(res)
         
     elif request.method == "DELETE":
@@ -100,7 +99,6 @@ def getExercises():
 @app.route("/insertNewExerciseIntoWorkout", methods=["POST"])
 def insertNewExerciseIntoWorkout():
     data = request.get_json()
-    print("data recieved for insertion: ", data)
     return jsonify(queries.insertNewExerciseIntoWorkout(data))
 #------------------------------------------------------------------------------
 
@@ -109,19 +107,34 @@ def workoutExistCheck():
     data = request.get_json()
     date =  date =  str(data['year'])+ '-' + str(data['monthNumber']+1) + '-' + str(data['day'])
     idUser = data["lifterID"]
-    print(f'date received for workout exist check: " {date} {idUser}')
     return jsonify(queries.workoutExistCheck(idUser, date))
 #------------------------------------------------------------------------------
-
 @app.route("/getMonthlyTrainingVolume", methods=["POST"])
 def getMonthlyTrainingVolume():
     data = request.get_json()
-    print(data)
     idUser = data["idUser"]
-    ExerciseCategory = data["ExerciseCategory"]
+    ExerciseCategories = data["ExerciseCategories"]
     month = data["month"]
     year = data["year"]
-    return jsonify(chartQueries.getMonthlyTrainingVolume(idUser, ExerciseCategory, month, year))
+    return jsonify(chartQueries.getMonthlyTrainingVolume(idUser, ExerciseCategories, month, year))
+#------------------------------------------------------------------------------
+@app.route("/getMonthlyTrainingInensity", methods=["POST"])
+def getMonthlyTrainingInensity():
+    data = request.get_json()
+    idUser = data["idUser"]
+    ExerciseCategories = data["ExerciseCategories"]
+    month = data["month"]
+    year = data["year"]
+    return jsonify(chartQueries.getMonthlyTrainingIntensity(idUser, ExerciseCategories, month, year))
+#------------------------------------------------------------------------------
+@app.route("/getMonthlyTrainingFrequency", methods=["POST"])
+def getMonthlyTrainingFrequency():
+    data = request.get_json()
+    idUser = data["idUser"]
+    ExerciseCategories = data["ExerciseCategories"]
+    month = data["month"]
+    year = data["year"]
+    return jsonify(chartQueries.getMonthlyTrainingFrequency(idUser, ExerciseCategories, month, year))
 #------------------------------------------------------------------------------
 if __name__ == "__main__":
     app.run(debug=True, port=5001)

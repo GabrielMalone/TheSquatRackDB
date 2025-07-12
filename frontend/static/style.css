@@ -130,18 +130,28 @@ li {
     display: flex;
     flex-direction: row;
 }
-.monthlyChartWrapper{
+.monthlyChartDash{
     display: flex;
     flex-direction: column;
-    margin-left: 40px;
 }
-.monthlyChart{
+.monthlyChartWrapper{
     display: none;
 }
-.monthlyChartVisible{
+.monthlyChartWrapperVisible{
     display: flex;
-    flex-direction: row;
-    height: 200px;
+    flex-direction: column;
+}
+.monthlyChart{
+    border-left: 1px dotted gray;
+    margin-left: 20px;
+}
+.monthlyChartTitle{
+    color: gray;
+    display: flex;
+}
+.monthlyVolumeTotal, .monthlyIntensityTotal, .monthlyFrequencyTotal {
+    color: mintcream;
+    flex: 1;
 }
 /*-------------------------------------------------------*/
 /* LIFTER WINDOW -> CALENDAR DASHBOARD -> CALENDAR 
@@ -153,6 +163,7 @@ li {
     margin-left: 20px;
     min-width: fit-content;
     display: none;
+    height: fit-content;
 }
 .week { 
     display: flex;
@@ -271,6 +282,7 @@ li {
     font-size: 2.5rem;
     margin-left: 20px;
 }
+
 #year{
     position: absolute;
     top:-40px;

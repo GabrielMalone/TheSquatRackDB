@@ -2,6 +2,7 @@ import Lifter from "./lifter.js";
 import { config as c, year, month, lastday } from "./config.js";
 import fetchWrapper from "./fetchWrapper.js";
 import {fillCalendar } from "./calendar.js";
+import { clearCharts } from "./monthlyChart.js";
 
 export const f = new fetchWrapper(c.API_URL);
 const LIFTERS = [];                      // list to hold all the lifter objects
@@ -111,13 +112,12 @@ function clickLifterNameEvent(e){
     const exerciseMenu = document.querySelector(".addExerciseMenu");
     const info = JSON.parse(e.target.dataset.lifter);
     // clear the various areas
-    lifterHeaderName.innerHTML = `${info.userName}`;
-    config.style.visibility = "visible";
-    calendar.style.display = "flex"
-    workout.innerHTML='';                                 
-  
-
-    currLifter = info;
+    clearCharts();
+    lifterHeaderName.innerHTML  = `${info.userName}`;
+    config.style.visibility     = "visible";
+    calendar.style.display      = "flex"
+    workout.innerHTML           ='';                                 
+    currLifter                  = info;
     fillCalendar(year,month,lastday);     // get this lifter's training sessions
 }
 //------------------------------------------------------------------------------
@@ -132,6 +132,7 @@ function configClickEvent(){
     const lifterName = document.getElementById("lifterHeaderName");
     const config = document.getElementById("lifterConfig");
     const workoutDash =  document.querySelector(".workout");
+    const dateWrapper = document.querySelector(".dateWrapper");
     f.delete(c.LIFTERS_ENDPOINT, currLifter.id)  // logic to delete current lifter
     .then(()=>{
         LIFTERS.length = 0;
@@ -141,6 +142,9 @@ function configClickEvent(){
         config.style.visibility = "hidden";
         calendar.style.display = "none";
         workoutDash.style.display = "none";
+        dateWrapper.style.display = "none";
+        const monthlyChartDash = document.querySelectorAll(".monthlyChartDash");
+        monthlyChartDash.forEach(chart=>chart.innerHTML=``);
     })
     .catch(err=>console.error(err));
 }

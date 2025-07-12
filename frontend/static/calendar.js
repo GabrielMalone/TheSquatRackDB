@@ -1,6 +1,6 @@
 import { config, DoW, months } from "./config.js";
 import { currLifter, f } from "./lifterActions.js";
-import { loadMonthlyChart } from "./monthlyChart.js";
+import { clearCharts, loadMonthlyCharts } from "./monthlyChart.js";
 import { createCursor, createrWorkoutHeader, getWorkoutFromWokroutID } from "./workout.js";
 
 export let curYear;
@@ -164,8 +164,8 @@ export function fillCalendar(year, month, lastday){
             firstindex -- ;
         }
     }
-    loadMonthlyChart('MONTHLY VOLUME', currLifter.id, curMonth, curYear);
     getMonthlyWorkouts(currLifter.id, {month, year});
+    loadMonthlyCharts(currLifter.id, curMonth, curYear);
     checkForSelectedDay();
     addMonthAndYear(curMonth, curYear);
 }
@@ -201,17 +201,22 @@ function dayListener(e){
 export function calendarListener(){
     document.addEventListener("keydown", (event)=>{ //keydowna n
         const calendar = document.querySelector(".month");
+        const workoutContainer = document.querySelector(".workout");
         if (getComputedStyle(calendar).visibility === "hidden")return;
         switch (event.key){
             case 'ArrowRight': 
                 clearCalendar();
                 changeDateUp(curYear,curMonth);
                 days.forEach(day=>day.classList.remove("daySelected"));
+                delete workoutContainer.dataset.workoutID;
+                workoutContainer.innerHTML = ``;   
                 break;
             case 'ArrowLeft': 
                 clearCalendar();
                 changeDateDown(curYear,curMonth);
                 days.forEach(day=>day.classList.remove("daySelected"));
+                delete workoutContainer.dataset.workoutID;
+                workoutContainer.innerHTML = ``;   
                 break;
             default:
                 return;
@@ -366,8 +371,7 @@ export function clearCalendar(){
     });
     days.length = 0;
     removeMonthAndYear();
-    const chart = document.querySelector(".monthlyChart");
-    Chart.getChart(chart)?.destroy();
+    clearCharts();
 }
 //-----------------------------------------------------------------------------
 // create an object to store in a day's data-set html

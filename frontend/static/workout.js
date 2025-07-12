@@ -2,9 +2,9 @@ import { curlastDay, curMonth, curYear, fillCalendar } from "./calendar.js";
 import { config } from "./config.js";
 import { setTemplateHTML, setUpdateFormTemplateHTML, ExerciseDashTemplate } from "./htmlTemplates.js";
 import { currLifter, f } from "./lifterActions.js";
-
+import { unit } from "./config.js";
 const workoutContainer = document.querySelector(".workout"); // clear container
-let unit = "LBS";
+
 
 
 //-----------------------------------------------------------------------------
