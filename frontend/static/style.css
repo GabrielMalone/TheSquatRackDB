@@ -7,7 +7,6 @@
     color: #333; 
     background-color: black;
     height: 100vh;
-    --button-bg-color: purple;
   }
 /*-------------------------------------------------------*/
 ul {
@@ -32,8 +31,8 @@ li {
     margin-top: 10px;
 }
 .button:hover {
-    background-color: purple;
-    color: mintcream;
+    background-color: cornflowerblue;
+    color: black;
 }
 /*-------------------------------------------------------*/
 /* MAIN BROWSER CONTAINER
@@ -57,9 +56,9 @@ li {
     border-top: 1px solid #333;
 }
 #headerTitle {
-    margin-left: 20px;
+    margin-left: 40px;
     margin-top: 20px;
-    color:mintcream;
+    color:antiquewhite;
     font-size: 2rem;
     flex:8;
     letter-spacing: 0.0em;
@@ -91,16 +90,27 @@ li {
     border-right: 1px solid #333;
     background-color:black; 
     flex: 2;
-    gap: 50px;
+    gap: 30px;
+    padding: 20px;
     overflow: auto;
 }
 .lifterBoxHeader{
     display: flex;
     flex-direction: row;
-    gap: 3rem;
+    align-items: center;
+    gap: 30px;
+}
+#lifterHeaderName {
+    margin-top: 20px;
+    font-size: 2rem;
+    color: mintcream;
+    /* border-style: solid;
+    border-color: white;
+    border-width: 1px; */
+    margin-left:25px;
 }
 #lifterConfig {
-    margin-top: 32px;
+    margin-top: 34px;
     align-self:flex-start;
     font-size: 1rem;
     color: palevioletred;
@@ -114,29 +124,13 @@ li {
 #lifterConfig:hover {
     color: red;
 }
-#lifterHeaderName {
-    margin-top: 20px;
-    font-size: 2rem;
-    color: mintcream;
-    /* border-style: solid;
-    border-color: white;
-    border-width: 1px; */
-    margin-left:20px;
-    margin-bottom: 35px;
-}
 /*-------------------------------------------------------*/
 /* LIFTER WINDOW -> CALENDAR DASHBOARD 
 /*-------------------------------------------------------*/
-.calendarWrapper{
-    display: flex;
-    flex-direction: row;
-    align-self: flex-start;
-    align-self: center;
-    overflow: scroll;
-}
 .monthlyChartDash{
     padding: 0px;
     display: flex;
+    flex: 1;
     flex-direction: row;
     align-self: center;
 }
@@ -146,13 +140,16 @@ li {
 .monthlyChartWrapperVisible{
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 .monthlyChart{
     margin-left: 20px;
 }
 .monthlyChartTitle{
-    color: gray;
+    color: mintcream;
     display: flex;
+    align-self: center;
+    margin-bottom: 50px;
 }
 .monthlyVolumeTotal, .monthlyIntensityTotal, .monthlyFrequencyTotal {
     color: mintcream;
@@ -161,6 +158,12 @@ li {
 /*-------------------------------------------------------*/
 /* LIFTER WINDOW -> CALENDAR DASHBOARD -> CALENDAR 
 /*-------------------------------------------------------*/
+.calendarWrapper{
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    margin-bottom: 50px;
+}
 .month {
     display: flex;
     flex-direction: column;
@@ -282,12 +285,12 @@ li {
     display: flex;
     flex-direction: row;
     position: relative;
-    font-size: 2rem;
     align-self: center;
     /* transform: rotate(90deg); */
 }
 .monthTitle{
     font-size: 2rem;
+    color: #555;
 }
 .yearTitle{
     color: mintcream;
@@ -301,7 +304,7 @@ li {
 .workout {
     display: flex;
     flex-direction: column;
-    align-self:flex-start;
+    align-self:center;
     position: relative;
     margin-top: 50px;
     margin-left: 20px;
@@ -311,7 +314,6 @@ li {
     overflow: scroll;
     height: fit-content;
 }
-
 .workoutHeader {
     display: flex;
     flex: row;
@@ -357,7 +359,6 @@ li {
     flex-direction: row;
     margin-bottom: 10px;
     user-select: none;
- 
 }
 /*-------------------------------------------------------*/
 /* EXERCISE -> SET
@@ -379,7 +380,6 @@ li {
 .setExpand{
     width: 20rem;
 }
-
 .set:hover{
     outline-color:cornflowerblue;
 }
@@ -661,8 +661,8 @@ li {
     margin-right: 10px;
 }
 .lifterName:hover {
-    background-color: purple;
-    color: mintcream;
+    background-color: cornflowerblue;
+    color: black;
 }
 /*-------------------------------------------------------*/
 /* CREATE A LIFTER POP UP BOX

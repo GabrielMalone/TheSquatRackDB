@@ -234,7 +234,9 @@ function clickSetEvent(event){
 function checkIfWorkoutExistsOnDate(selectedExercise){
     let workoutID = null;
     const idUser = currLifter.id;
-    const rawData = (document.querySelector(".trainingDate")).dataset.dateInfo;
+    const rawData = (document.querySelector(".trainingDate"))?.dataset.dateInfo;
+    if(!rawData) return; // means a user has not clicked on a date on the calendar
+    // but tha the exericse selection box is still open
     const Date = JSON.parse(decodeURIComponent(rawData)); 
     f.put(config.CHECK_IF_WORKOUT_EXISTS, Date, idUser)
         .then(res=>{
