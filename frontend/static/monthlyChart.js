@@ -2,12 +2,11 @@
 import { f } from "./lifterActions.js";
 import { config } from "./config.js";
 import { months } from "./config.js";
+
 //-----------------------------------------------------------------------------
-// method to get the monthly training volume for the main compounds plus accessory
+// get monthly training volume/intensity/frequency for main compounds/accessory
 //-----------------------------------------------------------------------------
-export function loadMonthlyCharts(idUser, month, year){
-    // not really worth having this as one method, 
-    //need to be able to customize the chart for each query more easily
+export async function loadMonthlyCharts(idUser, month, year){
     let chartNumber = 1;
 
     const types = 
@@ -15,21 +14,30 @@ export function loadMonthlyCharts(idUser, month, year){
     ["monthlyFrequency", `${months[month]} ${year} Frequency`, ["monthly frequency", "line"]], 
     ["monthlyInetensity",`${months[month]} ${year} Inetensity`,["monthly intensity", "bar"]]]
 
-    types.forEach(type=>{
+    for (const type of types) {
+        // enhanced for loop istead of foreach, foreach will not pause ierations for the async stuff
         const ExerciseCategories = ["squat","bench","deadlift", "accessory"]
-        f.post(config[`${type[0]}`], {idUser, ExerciseCategories, month, year})
-        .then(categories=>{
+
+        try {
+        
+            const response = await f.post(config[`${type[0]}`], {idUser, ExerciseCategories, month, year});
+            // returns a promise and pauses code until promise resolves. otherwise the order is not guaranteed
+            const categories = response;
+    
             createChartElement(type[0], type[1], chartNumber);
             const data = categories.result.map(data=>data);
             const dataTotals = data.reduce((accumulator, data)=>{
                 return accumulator+=data
-            },0); // might use the total data in the future
-            // need to pull draChart out of loop in future if want 
-            // the order tos tay consistent in output
+            },0);
+
             drawChart(type[1], data, `chart${type[0]}`, type[2][1]);  
             chartNumber ++ ;
-        });
-    })
+  
+        } catch (err) {
+            console.error(err);
+        }
+    };
+    
 }
 //-----------------------------------------------------------------------------
 // create the HTML element that will hold the chart display

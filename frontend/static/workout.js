@@ -161,6 +161,7 @@ function updateLiftInfo(curliftInfo, newSetInfo){
 //-----------------------------------------------------------------------------
 function removeSetEvent(e){
     if (e.target.classList.contains("setRemove")){
+        const cursor        = document.querySelector(".cursor");
         const idSet         = e.target.dataset.setID;
         const idWorkout     = e.target.dataset.workoutID;
         const idExercise    = e.target.dataset.exerciseID;
@@ -179,6 +180,7 @@ function removeSetEvent(e){
                 getWorkoutFromWokroutID(idWorkout); 
                 fillCalendar(curYear, curMonth, curlastDay); 
             });
+        cursor.scrollIntoView({ behavior: 'smooth' });
     }
 }
 

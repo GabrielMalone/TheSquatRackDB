@@ -109,7 +109,7 @@ function clickLifterNameEvent(e){
     const config = document.getElementById("lifterConfig");
     const calendar = document.querySelector(".month");
     const workout = document.querySelector(".workout");
-    const exerciseMenu = document.querySelector(".addExerciseMenu");
+    const addExerciseDash = document.querySelector(".addExerciseDash");
     const info = JSON.parse(e.target.dataset.lifter);
     // clear the various areas
     clearCharts();
@@ -118,6 +118,7 @@ function clickLifterNameEvent(e){
     calendar.style.display      = "flex"
     workout.innerHTML           = '';                                 
     currLifter                  = info;
+    addExerciseDash?.classList.remove("addExerciseDashVisible"); 
     fillCalendar(year,month,lastday);     // get this lifter's training sessions
 }
 //------------------------------------------------------------------------------
