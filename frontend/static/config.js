@@ -48,7 +48,8 @@ const devConfig = {
     GET_MONTHLY_LIFTS: "monthlyWorkouts",
     monthlyVolume: "getMonthlyTrainingVolume",
     monthlyInetensity: "getMonthlyTrainingInensity",
-    monthlyFrequency: "getMonthlyTrainingFrequency"
+    monthlyFrequency: "getMonthlyTrainingFrequency",
+    GET_PR_DATA_FOR_LIFT: "getPRDataForLift"
   };
   
 
@@ -69,7 +70,8 @@ const prodConfig = {
     GET_MONTHLY_LIFTS: "monthlyWorkouts",
     monthlyVolume: "getMonthlyTrainingVolume",
     monthlyInetensity: "getMonthlyTrainingInensity",
-    monthlyFrequency: "getMonthlyTrainingFrequency"
+    monthlyFrequency: "getMonthlyTrainingFrequency",
+    GET_PR_DATA_FOR_LIFT: "getPRDataForLift"
   };
 
 export const config = window.location.hostname === "localhost" ? 

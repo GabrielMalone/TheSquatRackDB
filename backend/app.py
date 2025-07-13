@@ -127,6 +127,7 @@ def getMonthlyTrainingInensity():
     year = data["year"]
     return jsonify(chartQueries.getMonthlyTrainingIntensity(idUser, ExerciseCategories, month, year))
 #------------------------------------------------------------------------------
+
 @app.route("/getMonthlyTrainingFrequency", methods=["POST"])
 def getMonthlyTrainingFrequency():
     data = request.get_json()
@@ -136,5 +137,14 @@ def getMonthlyTrainingFrequency():
     year = data["year"]
     return jsonify(chartQueries.getMonthlyTrainingFrequency(idUser, ExerciseCategories, month, year))
 #------------------------------------------------------------------------------
+
+@app.route("/getPRDataForLift", methods=["POST"])
+def getPRDataForLift():
+    data = request.get_json()
+    idUser = data["idUser"]
+    lift = data["lift"]
+    return jsonify(getPRDataForLift(idUser, lift))
+#------------------------------------------------------------------------------
+
 if __name__ == "__main__":
     app.run(debug=True, port=5001)

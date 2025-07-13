@@ -11,8 +11,8 @@ export async function loadMonthlyCharts(idUser, month, year){
 
     const types = 
     [ ["monthlyVolume",  `${months[month]} ${year} Volume`,    ["monthly volume", "bar"]], 
-    ["monthlyFrequency", `${months[month]} ${year} Frequency`, ["monthly frequency", "line"]], 
-    ["monthlyInetensity",`${months[month]} ${year} Inetensity`,["monthly intensity", "bar"]]]
+    ["monthlyFrequency", `${months[month]} ${year} Frequency`, ["monthly frequency", "doughnut"]], 
+    ["monthlyInetensity",`${months[month]} ${year} Inetensity`,["monthly intensity", "line"]]]
 
     for (const type of types) {
         // enhanced for loop istead of foreach, foreach will not pause ierations for the async stuff
@@ -29,7 +29,11 @@ export async function loadMonthlyCharts(idUser, month, year){
             const dataTotals = data.reduce((accumulator, data)=>{
                 return accumulator+=data
             },0);
-
+            if (dataTotals === 0) {
+                const monthlyChartDash = document.querySelector(".monthlyChartDash");
+                monthlyChartDash.innerHTML = ``;
+                return;
+            }
             drawChart(type[1], data, `chart${type[0]}`, type[2][1]);  
             chartNumber ++ ;
   
@@ -66,6 +70,21 @@ function drawChart(chartTitle, liftsData, graphElement, graphType){
     const deadliftData  = liftsData[2];
     const accessoryData = liftsData[3];
    
+    const xAxisConfig =
+        {
+            display: true,
+            offset: true,
+            ticks : {
+                align: 'center',
+                padding: 5,
+                color: "gray"
+            }
+        }
+
+    if (graphType === "doughnut"){
+        xAxisConfig.display = false;
+    }
+
     // Create a chart
     const ctx = document.getElementById(`${graphElement}`).getContext('2d');
     const chart = new Chart(ctx, {
@@ -144,23 +163,16 @@ function drawChart(chartTitle, liftsData, graphElement, graphType){
                             padding: 0
                          }
                 },
-                x: {
-                    offset: true,
-                    ticks : {
-                        align: 'center',
-                        padding: 5,
-                        color: "gray"
-                    }
-                }
+
+                x: xAxisConfig,
             },
 
             layout: {
-
                 padding: 0
             }
         }
-    
-    });    
+    });     // end new chart instantiation
+
 }
 
 //-----------------------------------------------------------------------------

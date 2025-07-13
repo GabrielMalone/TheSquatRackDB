@@ -142,6 +142,45 @@ def getMonthlyTrainingFrequency(idUser, ExerciseCategories, month, year):
             "message" : f' server error: {err.errno}' 
         }  
 #------------------------------------------------------------------------------
+def getPRDataForLift(idUser, Exercise):
+    try:
+        cnx = connect()
+        cursor = cnx.cursor(dictionary=True, buffered=True)
+        cursor.execute(
+            '''
+            SELECT 
+                s.setWeight AS weight,
+                s.setReps AS reps,
+                w.Date as date
+            FROM 
+                `Set` s
+            JOIN 
+                `Workout` w ON s.idWorkout = w.idWorkout
+            JOIN
+                `Exercise` e ON s.idExercise = e.idExercise
+            WHERE 
+                e.idExercise = %s AND w.idUser = %s 
+            ORDER BY 
+                reps ASC, weight DESC
+            ''', 
+            (idUser, Exercise))
+        # the above query returns a list of the unique days where that lift 
+        # was trained. can then sum those unique days for total frequency
+        result = cursor.fetchall()
+        return {
+            "success" : True,
+            "result"  : result,
+        }
+    except mysql.connector.Error as err:
+        print("MySQL Error:", err)         # This will show you the exact error
+        print("Error code:", err.errno)                    # Numeric error code
+        cnx.rollback() 
+        cnx.close()
+        return {
+            "success" : False,
+            "message" : f' server error: {err.errno}' 
+        }  
+#------------------------------------------------------------------------------
 load_dotenv()
 
 
@@ -160,4 +199,26 @@ load_dotenv()
 # 	`User` u ON w.idUser = u.idUser
 # WHERE 
 # 	u.idUser = "5" AND e.ExerciseCategory = "squat"
+
+# -- Template for PR Query --
+
+# this will return all the weights that exist for each rep range for a specific exercise and lift.
+# sorted by rep range, and then sorted within range by weight.
+# then can just pull out the data you want from there. 
+
+# SELECT 
+# 	s.setWeight AS weight,
+#     s.setReps AS reps,
+#     w.Date as date
+# FROM 
+# 	`Set` s
+# JOIN 
+# 	`Workout` w ON s.idWorkout = w.idWorkout
+# JOIN
+# 	`Exercise` e ON s.idExercise = e.idExercise
+# WHERE 
+# 	e.idExercise = "1" AND w.idUser = "24" 
+# ORDER BY 
+# 	reps ASC, weight DESC
+
 

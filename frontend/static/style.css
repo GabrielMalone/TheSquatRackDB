@@ -92,7 +92,8 @@ li {
     flex: 2;
     gap: 30px;
     padding: 20px;
-    overflow: auto;
+    overflow: clip;
+    overflow: hidden;
 }
 .lifterBoxHeader{
     display: flex;
@@ -304,15 +305,19 @@ li {
 .workout {
     display: flex;
     flex-direction: column;
-    align-self:center;
     position: relative;
-    margin-top: 50px;
-    margin-left: 20px;
-    padding-left: 10px;
-    flex: 3;
+    align-self: safe center;
     display: none;
-    overflow: scroll;
+    overflow-x: auto;
+    padding: 20px;
     height: fit-content;
+    scrollbar-width: 0px;
+    max-width: 80%;
+    border-right: 1px dotted #333;
+    border-left: 1px dotted #333;
+}
+.workout > * {
+    min-width: max-content; /* or a specific min-width */
 }
 .workoutHeader {
     display: flex;
@@ -332,14 +337,15 @@ li {
 /* workout area cursor
 /*-------------------------------------------------------*/
 .cursor{
-    outline: solid #333 1px;
+    outline: solid mediumseagreen 1px;
     padding:  1rem;
     width: 1rem;
-    color: gray;   
+    color: mediumspringgreen;   
     top: 250px;
     text-align: center;
     margin-bottom: 20px;
     margin-top: 10px;
+    margin-left: 10px;
     cursor: pointer;
 }
 .cursor:hover {
@@ -354,6 +360,7 @@ li {
 /* WORKOUT AREA -> EXERCISE ROW
 /*-------------------------------------------------------*/
 .exerciseRow{
+    padding: 10px;
     display: flex;
     position: relative;
     flex-direction: row;
@@ -552,16 +559,13 @@ li {
     flex-direction: column;
     position: relative;
     margin-right: 10px;
-    border-right:1px solid #333;
-    border-top: 1px solid #333;
-    border-left: 1px solid #333;
     margin-left: 28px;
+    outline: 1px dotted #333;
 }
 .addExerciseBoxHeader {
     display: flex;
     flex-direction: row;
     position: relative;
-    border-bottom: 1px solid #333;
 }
 #addExerciseTitle {
     font-size: 1rem;
@@ -583,7 +587,6 @@ li {
     display: flex;
     flex-direction: row;
     position: relative;
-
 }
 .SquatCategory, .BenchCategory, .DeadliftCategory, .AccessoriesCategory{
     display: flex;
@@ -628,9 +631,8 @@ li {
     display: flex;
     flex-direction: row;
     color:mediumspringgreen;
-    padding: 10px;
+    padding: 20px;
     border-top:  1px solid #222;
-    border-bottom:  1px solid #222;
 }
 /*-------------------------------------------------------*/
 /* THE SIDEBAR

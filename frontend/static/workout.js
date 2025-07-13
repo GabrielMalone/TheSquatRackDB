@@ -99,6 +99,7 @@ function updateSetEvent(e){
         let setRPE      = setUpdateForm.querySelector(`#rpe${idSet}`).value;
         updateSet(idSet, setWeight, setReps, setRPE, workoutID);    // query DB
     }
+    document.querySelector(".cursor").scrollIntoView({ behavior: 'smooth' });
 }
 //-----------------------------------------------------------------------------
 function updateSet(idSet, setWeight, setReps, setRPE, workoutID){
