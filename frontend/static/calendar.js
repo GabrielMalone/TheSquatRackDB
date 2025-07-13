@@ -228,11 +228,11 @@ export function calendarListener(){
 // helper methods for filling out the calendar
 //-----------------------------------------------------------------------------
 function addMonthAndYear(month, year){
-    const calendar =  document.querySelector(".month");
-    calendar.insertAdjacentHTML("afterend",
+    const calendar =  document.querySelector(".calendarWrapper");
+    calendar.insertAdjacentHTML("beforebegin",
         `<div class="dateWrapper">
-            <p>${months[month]}</p> 
-            <p id="year">${year}</p>
+            <div class="monthTitle">${months[month]}</div> 
+            <div class="yearTitle">${year}</div>
         </div>`);
 }
 function removeMonthAndYear(){

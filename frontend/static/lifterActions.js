@@ -116,7 +116,7 @@ function clickLifterNameEvent(e){
     lifterHeaderName.innerHTML  = `${info.userName}`;
     config.style.visibility     = "visible";
     calendar.style.display      = "flex"
-    workout.innerHTML           ='';                                 
+    workout.innerHTML           = '';                                 
     currLifter                  = info;
     fillCalendar(year,month,lastday);     // get this lifter's training sessions
 }
@@ -128,19 +128,19 @@ export const configEventListener = () => {
     config.addEventListener("click", configClickEvent);
 }
 function configClickEvent(){
-    const calendar = document.querySelector(".month");
-    const lifterName = document.getElementById("lifterHeaderName");
-    const config = document.getElementById("lifterConfig");
-    const workoutDash =  document.querySelector(".workout");
-    const dateWrapper = document.querySelector(".dateWrapper");
+    const calendar      = document.querySelector(".month");
+    const lifterName    = document.getElementById("lifterHeaderName");
+    const config        = document.getElementById("lifterConfig");
+    const workoutDash   = document.querySelector(".workout");
+    const dateWrapper   = document.querySelector(".dateWrapper");
     f.delete(c.LIFTERS_ENDPOINT, currLifter.id)  // logic to delete current lifter
     .then(()=>{
         LIFTERS.length = 0;
         getLifters();
         currLifter = {};
-        lifterName.innerHTML = ``; // clear out the main lifter window
-        config.style.visibility = "hidden";
-        calendar.style.display = "none";
+        lifterName.innerHTML      = ``; // clear out the main lifter window
+        config.style.visibility   = "hidden";
+        calendar.style.display    = "none";
         workoutDash.style.display = "none";
         dateWrapper.style.display = "none";
         const monthlyChartDash = document.querySelectorAll(".monthlyChartDash");

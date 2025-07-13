@@ -33,7 +33,7 @@ export function loadMonthlyCharts(idUser, month, year){
 // create the HTML element that will hold the chart display
 //-----------------------------------------------------------------------------
 function createChartElement(chartType, chartTitle, chartNumber){
-    const monthlyChartDash = [...document.querySelectorAll(".monthlyChartDash")];
+    const monthlyChartDash = document.querySelector(".monthlyChartDash");
     const chart = document.createElement("div");
     chart.classList.add("monthlyChartWrapper");
     chart.setAttribute("id", `monthlychartWrapper${chartNumber}`);
@@ -43,15 +43,7 @@ function createChartElement(chartType, chartTitle, chartNumber){
             <div class="${chartType}Total"></div>
         </div>
         <canvas class="monthlyChart" id="chart${chartType}"></canvas>`);
-    // if the chartnumber is evenly divisble by 3, start a new column
-    if (chartNumber % 3 === 0){
-        const newChartWrapper = document.createElement('div');
-        newChartWrapper.classList.add("monthlyChartDash");
-        calendarWrapper.appendChild(newChartWrapper);
-        newChartWrapper.appendChild(chart);
-    } else {
-        monthlyChartDash.at(-1).appendChild(chart); 
-    }
+        monthlyChartDash.appendChild(chart); 
 }
 //-----------------------------------------------------------------------------
 // This is the logic for clicking the addLifter button. makes add window appear
@@ -176,18 +168,8 @@ function hideLegendBoxes(chart) {
 // method to clear the charts from the main dashboard when needed
 //-----------------------------------------------------------------------------
 export function clearCharts(){
-    const monthlyChartWrapper = document.querySelectorAll(".monthlyChartDash"); 
-    if (monthlyChartWrapper.length > 1){
-        const calendarWrapper  = document.querySelector(".calendarWrapper");
-        let dashes = document.querySelectorAll(".monthlyChartDash");
-        // clearing out the dashes involves removing monthlyChartDashes 
-        // (multiple of them exist to be stacked 2 at a time)
-        dashes.forEach(dash=>{ 
-            calendarWrapper.removeChild(dash);
-        });
-        // when done need to reattach one dash to be able to hold future graphs
-        calendarWrapper.insertAdjacentHTML("beforeend", `<div class="monthlyChartDash"></div>`);
-    }
+    const monthlyChartDash = document.querySelector(".monthlyChartDash"); 
+    monthlyChartDash.innerHTML = ``;
     const chart = document.querySelector(".monthlyChart");
     if (chart){
         Chart.getChart(chart)?.destroy();

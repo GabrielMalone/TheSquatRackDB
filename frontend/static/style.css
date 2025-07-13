@@ -91,7 +91,8 @@ li {
     border-right: 1px solid #333;
     background-color:black; 
     flex: 2;
-    overflow: scroll;
+    gap: 50px;
+    overflow: auto;
 }
 .lifterBoxHeader{
     display: flex;
@@ -129,10 +130,15 @@ li {
 .calendarWrapper{
     display: flex;
     flex-direction: row;
+    align-self: flex-start;
+    align-self: center;
+    overflow: scroll;
 }
 .monthlyChartDash{
+    padding: 0px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    align-self: center;
 }
 .monthlyChartWrapper{
     display: none;
@@ -142,7 +148,6 @@ li {
     flex-direction: column;
 }
 .monthlyChart{
-    border-left: 1px dotted gray;
     margin-left: 20px;
 }
 .monthlyChartTitle{
@@ -275,19 +280,18 @@ li {
 }
 .dateWrapper {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     position: relative;
-    color: white;
+    font-size: 2rem;
+    align-self: center;
     /* transform: rotate(90deg); */
-    font-size: 2.5rem;
-    margin-left: 20px;
 }
-
-#year{
-    position: absolute;
-    top:-40px;
-    color: #333;
-    font-size: 2.5rem;
+.monthTitle{
+    font-size: 2rem;
+}
+.yearTitle{
+    color: mintcream;
+    font-size: 2rem;
 }
 
 
@@ -297,12 +301,14 @@ li {
 .workout {
     display: flex;
     flex-direction: column;
+    align-self:flex-start;
     position: relative;
     margin-top: 50px;
     margin-left: 20px;
-    flex: 1;
+    padding-left: 10px;
+    flex: 3;
     display: none;
-    overflow: visible;
+    overflow: scroll;
     height: fit-content;
 }
 
@@ -351,7 +357,7 @@ li {
     flex-direction: row;
     margin-bottom: 10px;
     user-select: none;
-    width: fit-content;
+ 
 }
 /*-------------------------------------------------------*/
 /* EXERCISE -> SET
@@ -514,12 +520,10 @@ li {
     justify-content: center;
     align-items: center;
     position: relative;
-    overflow: hidden;
-    position: relative;
-    font-size: .75rem;
-    height: 5.5rem;
-    width: 5.5rem;
-    outline: 1px solid #333;
+    font-size: 1rem;
+    height: 6.5rem;
+    width: 6.5rem;
+    outline: 1px dotted mintcream;
     color:mintcream;
     margin-right: 20px;
     cursor: pointer;
@@ -547,18 +551,22 @@ li {
     display: flex;
     flex-direction: column;
     position: relative;
-    flex: 1;
     margin-right: 10px;
+    border-right:1px solid #333;
+    border-top: 1px solid #333;
+    border-left: 1px solid #333;
+    margin-left: 28px;
 }
 .addExerciseBoxHeader {
     display: flex;
     flex-direction: row;
     position: relative;
-    border-bottom: 1px solid #222;
+    border-bottom: 1px solid #333;
 }
 #addExerciseTitle {
     font-size: 1rem;
     color: mintcream;
+    margin-left: 10px;
     padding: 10px;
     flex: 2;
 }
@@ -631,8 +639,7 @@ li {
     display: flex;
     flex-direction: column; /*for adding buttons*/
     background-color: black;
-    min-width:auto;
-    flex: .55;
+    flex: .35;
     justify-content: flex-start;
     overflow: hidden;
     overflow-y: scroll;

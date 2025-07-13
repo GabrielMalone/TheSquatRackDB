@@ -187,8 +187,8 @@ function removeSetEvent(e){
 // listens to see if an item in workout area clicked on. 
 //-----------------------------------------------------------------------------
 export function setListener(){
-    workoutContainer.addEventListener("click", clickSetEvent);
-    workoutContainer.addEventListener("mouseover", clickSetEvent);
+    document.querySelector(".lifterBox").addEventListener("click", clickSetEvent);
+    document.querySelector(".lifterBox").addEventListener("mouseover", clickSetEvent);
 }
 function clickSetEvent(event){  
     // fills out description area of an exerice    
@@ -217,7 +217,7 @@ function clickSetEvent(event){
     } 
     // cursor click to bring up exercise dashboard
     if (event.type === "click" && event.target.classList.contains("cursor")){
-        workoutContainer.insertAdjacentHTML("beforeend",ExerciseDashTemplate());
+        document.querySelector(".lifterBox").insertAdjacentHTML("beforeend",ExerciseDashTemplate());
         chooseNewExerciseBoxEvent();
         return;
     }
