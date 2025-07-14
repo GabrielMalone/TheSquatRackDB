@@ -171,6 +171,8 @@ li {
     overflow: hidden;
 }
 .prCell {
+    display: flex;
+    position: relative;
     min-width: 40px;
     min-height: 40px;
     max-width: 40px;
@@ -179,9 +181,6 @@ li {
     overflow: visible;
     user-select: none;
 } 
-.prCellVisible {
-    display: none;
-}
 .prDashHeader {
     display: flex;
 }
@@ -226,10 +225,32 @@ li {
 }
 .prPresent{
     color: mintcream;
+    cursor: pointer;
 }
 .prPresent:hover{
     background-color: paleturquoise;
     color: black;
+}
+.prPresent:hover .prToolTip{
+    display: flex;
+    position: absolute;
+    opacity: 1;
+    width: 10rem;
+    top: 100%;
+    right: 50%;
+    color: mintcream;
+    background-color: #2222228f;
+    outline: 1px solid #444;
+    z-index: 1000;
+}
+.prToolTip{
+    display: none;
+    opacity: 0;
+    flex-direction: column;
+}
+.prToolTipWeightsRepsWrapper{
+    display: flex;
+    flex-direction: row;
 }
 .prWeight{
     align-self: center;

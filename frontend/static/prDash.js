@@ -1,7 +1,6 @@
 import { f } from "./lifterActions.js";
 import { config } from "./config.js";
 
-
 const repRange = 10;
 
 //-----------------------------------------------------------------------------
@@ -12,21 +11,25 @@ export async function createPrDash(exerciseList, idUser){
     let curPr; // debugging 
 
     const prDash = initPrDash();
-    for (const liftID of exerciseList) {    // get info for exercises passed in
+    for (const liftID of exerciseList) {   // get info for exercises passed in
         const exerciseInfo = await f.post(config.GET_EXERCISE_INFO, liftID);
         const curLiftRow = buildLiftRow(exerciseInfo, prDash, idUser, liftID);
         f.post(config.GET_PR_DATA_FOR_LIFT, {idUser, "lift" : liftID})//pr data
         .then(prs=>{
             prs.forEach(pr=>{        //iterate prs, get corresponding box by id
                 curPr = pr;
-                if(pr.reps > repRange || pr.reps === 0) return;                   // cap at 20 for now
-                const repBox = curLiftRow.querySelector(`#${exerciseInfo.abbrev}_rep_${pr.reps}`);
-                repBox.dataset.weight   = pr.weight;
+                if(pr.reps > repRange || pr.reps === 0) return;
+                const curLift = exerciseInfo.abbrev;
+                const repBox = curLiftRow.querySelector(`#${curLift}_rep_${pr.reps}`);
+                repBox.dataset.weight   = pr.weight;// data gets workout for pr
                 repBox.dataset.reps     = pr.reps;
                 repBox.dataset.date     = pr.date;
+                repBox.dataset.idUser   = idUser;        // and to make tooltip
                 if (! repBox.innerHTML && pr.weight){
                     repBox.innerHTML = `<div class="prWeight">${pr.weight}</div>`;
                     repBox.classList.add("prPresent");
+                    const formatedDate = new Date(pr.date).toDateString();
+                    repBox.append(makePrToolTip(exerciseInfo.lift, pr.weight, pr.reps,formatedDate));
                 } 
             });
         })
@@ -111,8 +114,47 @@ function buildLiftRow(lift, prDash, idUser, liftID){
 function prInfoClick(prDash){
     prDash.addEventListener("click", (e)=>{
         if (e.target.classList.contains("prPresent")){
-            console.log("prclickorking");
+            const curPR = e.target;
+            const prDate = e.target.dataset.date;
         }
     });
+}
 
+function makePrToolTip(lift, weight, reps, date){
+
+    const toolTipWrapper = document.createElement('div');
+    toolTipWrapper.classList.add("prToolTip");
+
+    const toolTipDate = document.createElement('div');
+    toolTipDate.classList.add('prToolTipDate');
+    toolTipDate.classList.add('prToolTipdata');
+    toolTipDate.innerHTML =`${date}`;
+
+    const toolTipLift = document.createElement('div');
+    toolTipLift.classList.add("prToolTipLift");
+    toolTipLift.classList.add('prToolTipdata');
+    toolTipLift.innerHTML= `${lift}`;
+
+    const weightRepsWrapper = document.createElement('div');
+    weightRepsWrapper.classList.add("prToolTipWeightsRepsWrapper");
+
+    const toolTipWeight = document.createElement('div');
+    toolTipWeight.classList.add("prToolTipWeight");
+    toolTipWeight.classList.add('prToolTipdata');
+    toolTipWeight.innerHTML = `${weight} x `;
+
+    const toolTipReps = document.createElement('div');
+    toolTipReps.classList.add("prToolTipReps");
+    toolTipReps.classList.add('prToolTipdata');
+    toolTipReps.innerHTML =`&nbsp${reps}`;
+    toolTipWeight.insertAdjacentElement("beforeend",toolTipReps);
+
+    weightRepsWrapper.append(toolTipWeight);
+    weightRepsWrapper.append(toolTipReps);
+    
+
+
+    toolTipWrapper.append(toolTipDate,toolTipLift, weightRepsWrapper);
+
+    return toolTipWrapper;
 }
