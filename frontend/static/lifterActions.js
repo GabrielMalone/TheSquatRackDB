@@ -36,7 +36,7 @@ function clickLifterNameEvent(e){
     prDash.innerHTML = ``;
     addExerciseDash?.classList.remove("addExerciseDashVisible"); 
     fillCalendar(year,month,lastday);    // get this lifter's training sessions
-    createPrDash([1,5,9,], currLifter.id);   // GUI this eventualyly
+    createPrDash([1,5,9,10,11,12,14], currLifter.id);   // GUI this eventualyly
 }
 
 //-----------------------------------------------------------------------------

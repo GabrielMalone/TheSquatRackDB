@@ -1,7 +1,7 @@
 import { f } from "./lifterActions.js";
 import { config } from "./config.js";
 
-const repRange = 10;
+const repRange = 20;
 
 //-----------------------------------------------------------------------------
 // creates the lifetime pr chart and fetches the data to fill in the chart
@@ -25,6 +25,7 @@ export async function createPrDash(exerciseList, idUser){
                 repBox.dataset.reps     = pr.reps;
                 repBox.dataset.date     = pr.date;
                 repBox.dataset.idUser   = idUser;        // and to make tooltip
+                // get video link too at some point
                 if (! repBox.innerHTML && pr.weight){
                     repBox.innerHTML = `<div class="prWeight">${pr.weight}</div>`;
                     repBox.classList.add("prPresent");
