@@ -3,11 +3,41 @@ import { config as c, year, month, lastday } from "./config.js";
 import fetchWrapper from "./fetchWrapper.js";
 import {fillCalendar } from "./calendar.js";
 import { clearCharts } from "./monthlyChart.js";
-import { createPrDash } from "./prDisplay.js";
+import { createPrDash } from "./prDash.js";
 
 export const f = new fetchWrapper(c.API_URL);
 const LIFTERS = [];                      // list to hold all the lifter objects
 export let currLifter = {};        // track current lifter selected by the user
+
+
+//-----------------------------------------------------------------------------
+// This method basically controls the starting point for the whole app
+//-----------------------------------------------------------------------------
+function clickLifterNameEvent(e){
+
+    if (! e.target.classList.contains("lifterName")) return ;
+
+    const mainDash = document.querySelector(".lifterBox");
+    const lifterHeaderName = document.getElementById("lifterHeaderName");
+    const config = document.getElementById("lifterConfig");
+    const calendar = document.querySelector(".month");
+    const workout = document.querySelector(".workout");
+    const prDash = document.querySelector(".prDash");
+    const addExerciseDash = document.querySelector(".addExerciseDash");
+    const info = JSON.parse(e.target.dataset.lifter);
+    
+    currLifter = info;
+
+    clearCharts();                                   // clear the various areas
+    lifterHeaderName.innerHTML  = `${info.userName}`;
+    config.style.visibility     = "visible";
+    calendar.style.display      = "flex"
+    workout.innerHTML           = '';                                 
+    prDash.innerHTML = ``;
+    addExerciseDash?.classList.remove("addExerciseDashVisible"); 
+    fillCalendar(year,month,lastday);    // get this lifter's training sessions
+    createPrDash([1,5,9,], currLifter.id);   // GUI this eventualyly
+}
 
 //-----------------------------------------------------------------------------
 // event listener for the new lifter submit button
@@ -103,26 +133,6 @@ export function getLifterListeners(){
     const sidebar = document.querySelector(".sidebar");
     sidebar.addEventListener("click", clickLifterNameEvent);
 }
-function clickLifterNameEvent(e){
-    if (! e.target.classList.contains("lifterName")) return ;
-
-    const lifterHeaderName = document.getElementById("lifterHeaderName");
-    const config = document.getElementById("lifterConfig");
-    const calendar = document.querySelector(".month");
-    const workout = document.querySelector(".workout");
-    const addExerciseDash = document.querySelector(".addExerciseDash");
-    const info = JSON.parse(e.target.dataset.lifter);
-    // clear the various areas
-    clearCharts();
-    lifterHeaderName.innerHTML  = `${info.userName}`;
-    config.style.visibility     = "visible";
-    calendar.style.display      = "flex"
-    workout.innerHTML           = '';                                 
-    currLifter                  = info;
-    addExerciseDash?.classList.remove("addExerciseDashVisible"); 
-    fillCalendar(year,month,lastday);     // get this lifter's training sessions
-    createPrDash([1, 5, 9], currLifter.id);
-}
 //------------------------------------------------------------------------------
 // the action for clicking on a lifter's config button
 //------------------------------------------------------------------------------
@@ -137,6 +147,7 @@ function configClickEvent(){
     const workoutDash   = document.querySelector(".workout");
     const dateWrapper   = document.querySelector(".dateWrapper");
     const prDash        = document.querySelector(".prDash");
+    const prDashHeader  = document.querySelector(".prDashHeader");
     f.delete(c.LIFTERS_ENDPOINT, currLifter.id)  // logic to delete current lifter
     .then(()=>{
         LIFTERS.length = 0;

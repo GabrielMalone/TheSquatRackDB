@@ -127,71 +127,115 @@ li {
     color: red;
 }
 /*-------------------------------------------------------*/
+/* H LIFTER WINDOW -> PR DASH HEADER
+/*-------------------------------------------------------*/
+.prDashHeader {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    align-self: center;
+    height: fit-content;
+    border-bottom: 1px solid #222;
+    margin-bottom: 10px;
+}
+.prDashHeaderTitle {
+    color:mintcream;
+    padding-top: 2rem;
+    font-size: 1rem;
+    flex: 1;
+}
+.prDashMinimizer {
+    display: flex;
+    color: mintcream;
+    font-size: 3rem;
+    padding-top: 0;
+    user-select: none;
+}
+.prDashMinimizer:hover {
+    color: palegreen;
+    cursor: pointer;
+}
+/*-------------------------------------------------------*/
 /* LIFTER WINDOW -> PR DASHBOARD 
 /*-------------------------------------------------------*/
-.prDash{
+.prDash {
     display: flex;
-    flex: 1;
-    position: relative;
     flex-direction: column;
     position: relative;
-    align-self: safe center;
-    align-content: safe center;
+    align-self: center;
+    margin: 10px;
+    font-size: 1rem;
 }
-.prCell{
-    min-width: 60px;
-    min-height: 60px;
+.prDashVisible {
+    height: 80px;
+    overflow: hidden;
+}
+.prCell {
+    min-width: 40px;
+    min-height: 40px;
+    max-width: 40px;
+    max-height: 40px;
+    outline: 1px solid #222;
+    overflow: visible;
+    user-select: none;
 } 
-.prDashHeader{
-    display: flex;
-    padding: 10px;
-    border-top: 1px dotted #333;
-    border-left: 1px dotted #333;
-    border-right: 1px dotted #333;
+.prCellVisible {
+    display: none;
 }
-.prHeaderTitle{
-    color: mintcream;
+.prDashHeader {
+    display: flex;
 }
 .prRepsTitle {
     display: flex;
     color: mintcream;
-    padding: 0px;
-    align-content: flex-end;
-    align-self: flex-end;
 }
-.repNumberBoxInHeader{
+.repNumberBoxInHeader {
     display: flex;
     flex-direction: column;
+    justify-content: center;
 }
-.repNumInHeader{
+#repNumberBoxInHeader_0 {
+    outline: none;
+}
+.repNumInHeader {
     display: flex;
     align-self: center;
-    padding: 5px;
+    color: mediumaquamarine;
 }
 .prLiftRow{
     display:flex;
     color: mintcream;
+    overflow: visible;
+}
+.prLiftNameBox{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 .prLiftName{
-    padding-top: 10px;
-    padding-right: 10px;
     display: flex;
-    min-width: 100px;
+    justify-content: center;
+    font-size: 0.5rem;
+    color: aqua;
 }
 .repPRbox{
     display: flex;
     flex-direction: column;
     align-content: center;
     justify-content: center;
-    outline: 1px dotted rgba(60, 179, 114, 0.242);
 }
 .prPresent{
-    outline: 1px solid rgba(0, 100, 0, 0.751);
+    color: mintcream;
+}
+.prPresent:hover{
+    background-color: paleturquoise;
+    color: black;
 }
 .prWeight{
     align-self: center;
-    padding: 10px;
     display: flex;
+    font-size: 0.75rem;
+    pointer-events: none;
 }
 /*-------------------------------------------------------*/
 /* LIFTER WINDOW -> CALENDAR DASHBOARD 
@@ -199,7 +243,6 @@ li {
 .monthlyChartDash{
     padding: 0px;
     display: flex;
-    flex: 1;
     flex-direction: row;
     align-self: center;
 }
@@ -360,6 +403,7 @@ li {
 .monthTitle{
     font-size: 2rem;
     color: #555;
+    margin-right: 20px;
 }
 .yearTitle{
     color: mintcream;

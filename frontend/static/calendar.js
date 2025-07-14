@@ -210,7 +210,7 @@ export function calendarListener(){
                 days.forEach(day=>day.classList.remove("daySelected"));
                 delete workoutContainer.dataset.workoutID;
                 workoutContainer.innerHTML = ``;  
-                document.querySelector(".addExerciseDash").classList.remove("addExerciseDashVisible"); 
+                document.querySelector(".addExerciseDash")?.classList.remove("addExerciseDashVisible"); 
                 break;
             case 'ArrowLeft': 
                 clearCalendar();
@@ -218,7 +218,7 @@ export function calendarListener(){
                 days.forEach(day=>day.classList.remove("daySelected"));
                 delete workoutContainer.dataset.workoutID;
                 workoutContainer.innerHTML = ``;   
-                document.querySelector(".addExerciseDash").classList.remove("addExerciseDashVisible"); 
+                document.querySelector(".addExerciseDash")?.classList.remove("addExerciseDashVisible"); 
                 break;
             default:
                 return;
