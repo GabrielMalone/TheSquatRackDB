@@ -100,6 +100,7 @@ li {
     flex-direction: row;
     align-items: center;
     gap: 30px;
+    border-bottom: 1px dotted #333;
 }
 #lifterHeaderName {
     margin-top: 20px;
@@ -124,6 +125,73 @@ li {
 }
 #lifterConfig:hover {
     color: red;
+}
+/*-------------------------------------------------------*/
+/* LIFTER WINDOW -> PR DASHBOARD 
+/*-------------------------------------------------------*/
+.prDash{
+    display: flex;
+    flex: 1;
+    position: relative;
+    flex-direction: column;
+    position: relative;
+    align-self: safe center;
+    align-content: safe center;
+}
+.prCell{
+    min-width: 60px;
+    min-height: 60px;
+} 
+.prDashHeader{
+    display: flex;
+    padding: 10px;
+    border-top: 1px dotted #333;
+    border-left: 1px dotted #333;
+    border-right: 1px dotted #333;
+}
+.prHeaderTitle{
+    color: mintcream;
+}
+.prRepsTitle {
+    display: flex;
+    color: mintcream;
+    padding: 0px;
+    align-content: flex-end;
+    align-self: flex-end;
+}
+.repNumberBoxInHeader{
+    display: flex;
+    flex-direction: column;
+}
+.repNumInHeader{
+    display: flex;
+    align-self: center;
+    padding: 5px;
+}
+.prLiftRow{
+    display:flex;
+    color: mintcream;
+}
+.prLiftName{
+    padding-top: 10px;
+    padding-right: 10px;
+    display: flex;
+    min-width: 100px;
+}
+.repPRbox{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    outline: 1px dotted rgba(60, 179, 114, 0.242);
+}
+.prPresent{
+    outline: 1px solid rgba(0, 100, 0, 0.751);
+}
+.prWeight{
+    align-self: center;
+    padding: 10px;
+    display: flex;
 }
 /*-------------------------------------------------------*/
 /* LIFTER WINDOW -> CALENDAR DASHBOARD 
@@ -549,7 +617,7 @@ li {
 
 
 /*-------------------------------------------------------*/
-/* WOKROUT AREA -> ADD EXERCISE
+/* LITER DASH -> ADD EXERCISE
 /*-------------------------------------------------------*/
 .addExerciseDash {
     display: none;

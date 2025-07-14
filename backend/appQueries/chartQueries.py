@@ -163,14 +163,9 @@ def getPRDataForLift(idUser, Exercise):
             ORDER BY 
                 reps ASC, weight DESC
             ''', 
-            (idUser, Exercise))
-        # the above query returns a list of the unique days where that lift 
-        # was trained. can then sum those unique days for total frequency
+            (Exercise, idUser))
         result = cursor.fetchall()
-        return {
-            "success" : True,
-            "result"  : result,
-        }
+        return result
     except mysql.connector.Error as err:
         print("MySQL Error:", err)         # This will show you the exact error
         print("Error code:", err.errno)                    # Numeric error code

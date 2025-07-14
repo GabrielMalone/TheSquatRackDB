@@ -3,6 +3,7 @@ import { config as c, year, month, lastday } from "./config.js";
 import fetchWrapper from "./fetchWrapper.js";
 import {fillCalendar } from "./calendar.js";
 import { clearCharts } from "./monthlyChart.js";
+import { createPrDash } from "./prDisplay.js";
 
 export const f = new fetchWrapper(c.API_URL);
 const LIFTERS = [];                      // list to hold all the lifter objects
@@ -120,6 +121,7 @@ function clickLifterNameEvent(e){
     currLifter                  = info;
     addExerciseDash?.classList.remove("addExerciseDashVisible"); 
     fillCalendar(year,month,lastday);     // get this lifter's training sessions
+    createPrDash([1, 5, 9], currLifter.id);
 }
 //------------------------------------------------------------------------------
 // the action for clicking on a lifter's config button
@@ -134,6 +136,7 @@ function configClickEvent(){
     const config        = document.getElementById("lifterConfig");
     const workoutDash   = document.querySelector(".workout");
     const dateWrapper   = document.querySelector(".dateWrapper");
+    const prDash        = document.querySelector(".prDash");
     f.delete(c.LIFTERS_ENDPOINT, currLifter.id)  // logic to delete current lifter
     .then(()=>{
         LIFTERS.length = 0;
@@ -146,6 +149,7 @@ function configClickEvent(){
         dateWrapper.style.display = "none";
         const monthlyChartDash = document.querySelectorAll(".monthlyChartDash");
         monthlyChartDash.forEach(chart=>chart.innerHTML=``);
+        prDash.innerHTML = ``;
     })
     .catch(err=>console.error(err));
 }

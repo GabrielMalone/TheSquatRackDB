@@ -143,8 +143,13 @@ def getPRDataForLift():
     data = request.get_json()
     idUser = data["idUser"]
     lift = data["lift"]
-    return jsonify(getPRDataForLift(idUser, lift))
+    return jsonify(chartQueries.getPRDataForLift(idUser, lift))
 #------------------------------------------------------------------------------
 
+@app.route("/getExerciseInfo", methods=["POST"])
+def getExerciseInfo():
+    idExercise = request.get_json();
+    return jsonify(queries.getExerciseInfo(idExercise))
+#------------------------------------------------------------------------------
 if __name__ == "__main__":
     app.run(debug=True, port=5001)

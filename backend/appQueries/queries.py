@@ -78,7 +78,7 @@ def getExercises():
     
             cursor.close()
             cnx.close()
-
+        print (cat_lifts)
         return  cat_lifts
     except mysql.connector.Error as err:
         print("MySQL Error:", err)     # This will show you the exact error
@@ -636,5 +636,38 @@ def removeLifter(lifterID):
                 "message" : f' server error: {err.errno}' 
             } 
 #------------------------------------------------------------------------------
+def getExerciseInfo(idExercise):
+    cnx = connect()
+    if(cnx.is_connected()):
+        try:
+            cursor = cnx.cursor(buffered=True, dictionary=True)
+            cursor.execute('''
+                SELECT 
+                    e.ExerciseName AS lift,
+                    e.abbreviation AS abbrev,
+                    e.ExerciseCategory AS category
+                FROM 
+                    `Exercise` e
+                WHERE idExercise = %s
+                ''',
+                (idExercise,)
+            )
+            exerciseInfo = cursor.fetchone()
+            print(exerciseInfo)
+            cnx.commit()
+            cnx.close()
+            return exerciseInfo 
+        except mysql.connector.Error as err:
+            print("MySQL Error:", err)    # This will show you the exact error
+            print("Error code:", err.errno)               # Numeric error code
+            cnx.rollback() 
+            cnx.close()
+            return {
+                "success" : False,
+                "message" : f' server error: {err.errno}' 
+            } 
+    pass
+#------------------------------------------------------------------------------
+
 
 load_dotenv()
