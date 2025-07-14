@@ -8,7 +8,7 @@ import { months } from "./config.js";
 //-----------------------------------------------------------------------------
 export async function loadMonthlyCharts(idUser, month, year){
     let chartNumber = 1;
-
+    clearCharts();
     const types = 
     [ ["monthlyVolume",  `${months[month]} ${year} Volume`,    ["monthly volume", "bar"]], 
     ["monthlyFrequency", `${months[month]} ${year} Frequency`, ["monthly frequency", "doughnut"]], 
@@ -192,10 +192,14 @@ function hideLegendBoxes(chart) {
 // method to clear the charts from the main dashboard when needed
 //-----------------------------------------------------------------------------
 export function clearCharts(){
-    const monthlyChartDash = document.querySelector(".monthlyChartDash"); 
-    monthlyChartDash.innerHTML = ``;
-    const chart = document.querySelector(".monthlyChart");
-    if (chart){
-        Chart.getChart(chart)?.destroy();
+    const charts = [...document.querySelectorAll(".monthlyChart")];
+    if (charts){
+        charts.forEach(chart=>{
+            if (chart){
+                Chart.getChart(chart).destroy();
+            }
+        });
     }
+    const monthlyChartDash = document.querySelector(".monthlyChartDash"); 
+    if(monthlyChartDash) monthlyChartDash.innerHTML = ``;
 }

@@ -1,5 +1,9 @@
+
+import { config,DoW, months } from "./config.js";
+import { fillCalendar } from "./calendar.js";
+import { createrWorkoutHeader, getWorkoutFromWokroutID } from "./workout.js";
 import { f } from "./lifterActions.js";
-import { config } from "./config.js";
+
 
 const repRange = 20;
 
@@ -8,8 +12,6 @@ const repRange = 20;
 //-----------------------------------------------------------------------------
 export async function createPrDash(exerciseList, idUser){
 
-    let curPr; // debugging 
-
     const prDash = initPrDash();
     for (const liftID of exerciseList) {   // get info for exercises passed in
         const exerciseInfo = await f.post(config.GET_EXERCISE_INFO, liftID);
@@ -17,30 +19,74 @@ export async function createPrDash(exerciseList, idUser){
         f.post(config.GET_PR_DATA_FOR_LIFT, {idUser, "lift" : liftID})//pr data
         .then(prs=>{
             prs.forEach(pr=>{        //iterate prs, get corresponding box by id
-                curPr = pr;
                 if(pr.reps > repRange || pr.reps === 0) return;
                 const curLift = exerciseInfo.abbrev;
                 const repBox = curLiftRow.querySelector(`#${curLift}_rep_${pr.reps}`);
-                repBox.dataset.weight   = pr.weight;// data gets workout for pr
-                repBox.dataset.reps     = pr.reps;
-                repBox.dataset.date     = pr.date;
-                repBox.dataset.idUser   = idUser;        // and to make tooltip
+                const date = new Date(pr.date);
+                const formattedDate = date.toLocaleDateString("en-US", {
+                    timeZone: "UTC", // to prevent day changes with 00:00 times
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric"
+                });
+                repBox.dataset.weight = pr.weight;  // data gets workout for pr
+                repBox.dataset.reps = pr.reps;
+                repBox.dataset.date = formattedDate;
+                repBox.dataset.idUser = idUser;          // and to make tooltip
+                repBox.dataset.idWorkout = pr.idWorkout;
                 // get video link too at some point
                 if (! repBox.innerHTML && pr.weight){
                     repBox.innerHTML = `<div class="prWeight">${pr.weight}</div>`;
                     repBox.classList.add("prPresent");
-                    const formatedDate = new Date(pr.date).toDateString();
-                    repBox.append(makePrToolTip(exerciseInfo.lift, pr.weight, pr.reps,formatedDate));
+                    repBox.append(makePrToolTip(exerciseInfo.lift, pr.weight, pr.reps,formattedDate));
                 } 
             });
         })
         .catch(err=>{
             console.error(err); 
-            console.log(curPr);
         });
     }
     buildPrDashHeader(prDash);
     prInfoClick(prDash); // listen for clicks on PRs
+}
+//-----------------------------------------------------------------------------
+// EVENTS for clicking on a PR - load the workout in which PR happened
+//-----------------------------------------------------------------------------
+function prInfoClick(prDash){
+    prDash.addEventListener("click", prClickEvent);
+}
+function prClickEvent(e){
+    if (e.target.classList.contains("prPresent")){
+        const [dateInfo, year, month, prDay, lastday, idWorkout ] = getPRdata(e);
+        fillCalendar(year, month, lastday); // change calendar to match pr date
+        const days = [...document.querySelectorAll(".day")];
+        days.forEach(day=>{                  // match the cal day to the pr day
+            day.classList.remove("daySelected");
+        });
+       createrWorkoutHeader(dateInfo);                           // get workout 
+       getWorkoutFromWokroutID(idWorkout);
+    }
+}
+function getPRdata(e){
+    const curPR = e.target;      
+    const prDate = curPR.dataset.date;
+    const date = new Date(prDate);
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const prDay = date.getDate();
+    const idWorkout = curPR.dataset.idWorkout;
+    const lastday = new Date(year, month + 1, 0).getDate();
+    // ${dateInfo.dow.toUpperCase()}
+    // ${dateInfo.month} 
+    // ${dateInfo.day} 
+    // ${dateInfo.year}
+    const dateInfo = {
+        "dow"   : DoW[date.getDay()],
+        "month" : months[month],
+        "day"   : prDay,
+        "year"  : year
+    }
+    return [dateInfo, year, month, prDay, lastday, idWorkout]
 }
 //-----------------------------------------------------------------------------
 // helper methods for the createPrDash ^
@@ -51,7 +97,6 @@ function initPrDash(){
     buildRepsHeader(repsTitle);                  // build the rows of exercises 
     return prDash;
 }
-
 function buildPrDashHeader(prDash){
     prDash.insertAdjacentHTML("afterbegin",`  
             <div class="prDashHeader">
@@ -111,16 +156,6 @@ function buildLiftRow(lift, prDash, idUser, liftID){
     }
     return liftRow;
 }
-
-function prInfoClick(prDash){
-    prDash.addEventListener("click", (e)=>{
-        if (e.target.classList.contains("prPresent")){
-            const curPR = e.target;
-            const prDate = e.target.dataset.date;
-        }
-    });
-}
-
 function makePrToolTip(lift, weight, reps, date){
 
     const toolTipWrapper = document.createElement('div');
@@ -152,8 +187,6 @@ function makePrToolTip(lift, weight, reps, date){
 
     weightRepsWrapper.append(toolTipWeight);
     weightRepsWrapper.append(toolTipReps);
-    
-
 
     toolTipWrapper.append(toolTipDate,toolTipLift, weightRepsWrapper);
 

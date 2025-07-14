@@ -79,7 +79,7 @@ function fillMiniWorkoutMap(daysThisMonth, lift){
     // dont put anything if no workouts present for displayed days
     if (!liftDayPresent) return; 
     // add some more data 
-    curday.dataset.workoutID = lift.idWorkout;
+    curday.dataset.idWorkout = lift.idWorkout;
     curday.classList.add("dayLifted");
     // squat bench deadlift performed this day ?
     const liftPerformed = lift.ExerciseCategory;
@@ -112,7 +112,7 @@ function fillMiniWorkoutMap(daysThisMonth, lift){
 //-----------------------------------------------------------------------------
 // method to fill the calendar with the correct days
 //-----------------------------------------------------------------------------
-export function fillCalendar(year, month, lastday){
+export function fillCalendar(year, month, lastday){                               
     clearCalendar();
     curYear = year;
     curMonth = month;
@@ -186,9 +186,9 @@ function dayListener(e){
         e.target.classList.toggle("daySelected");
         daySelected = {"day" : e.target.dataset.day, "month" : e.target.dataset.month};
         const dateInfo = JSON.parse(e.target.dataset.info);         //get info
-        if (e.target.dataset.workoutID) {
+        if (e.target.dataset.idWorkout) {
             createrWorkoutHeader(dateInfo);
-            getWorkoutFromWokroutID(e.target.dataset.workoutID);
+            getWorkoutFromWokroutID(e.target.dataset.idWorkout);
         } else {
             createrWorkoutHeader(dateInfo);
             createCursor();                 // setup for starting a new workout
@@ -208,7 +208,7 @@ export function calendarListener(){
                 clearCalendar();
                 changeDateUp(curYear,curMonth);
                 days.forEach(day=>day.classList.remove("daySelected"));
-                delete workoutContainer.dataset.workoutID;
+                delete workoutContainer.dataset.idWorkout;
                 workoutContainer.innerHTML = ``;  
                 document.querySelector(".addExerciseDash")?.classList.remove("addExerciseDashVisible"); 
                 break;
@@ -216,7 +216,7 @@ export function calendarListener(){
                 clearCalendar();
                 changeDateDown(curYear,curMonth);
                 days.forEach(day=>day.classList.remove("daySelected"));
-                delete workoutContainer.dataset.workoutID;
+                delete workoutContainer.dataset.idWorkout;
                 workoutContainer.innerHTML = ``;   
                 document.querySelector(".addExerciseDash")?.classList.remove("addExerciseDashVisible"); 
                 break;
@@ -373,7 +373,6 @@ export function clearCalendar(){
     });
     days.length = 0;
     removeMonthAndYear();
-    clearCharts();
 }
 //-----------------------------------------------------------------------------
 // create an object to store in a day's data-set html

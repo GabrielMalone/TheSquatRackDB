@@ -396,7 +396,7 @@ def reorderSetNumbers(idWorkout, idExercise):
                 "message" : f' server error: {err.errno}' 
             } 
 #------------------------------------------------------------------------------
-def getWorkoutFromID(workoutID):
+def getWorkoutFromID(idWorkout):
     cnx = connect()
     if (cnx.is_connected()):
         try:
@@ -409,7 +409,7 @@ def getWorkoutFromID(workoutID):
                     eow.Order AS exerciseOrder,
                     s.idSet AS setID,
                     s.SetNumber AS `set`,
-                    s.idWorkout AS workoutID,
+                    s.idWorkout AS idWorkout,
                     s.setWeight AS weight,
                     s.setReps AS reps,
                     s.setRPE AS rpe,
@@ -428,7 +428,7 @@ def getWorkoutFromID(workoutID):
                     w.idWorkout = %s
                 ORDER BY 
                     eow.Order ASC, s.SetNumber ASC
-            ''', (workoutID,))
+            ''', (idWorkout,))
 
             workout = cursor.fetchall()
     
@@ -446,7 +446,7 @@ def getWorkoutFromID(workoutID):
                         "exercise"          : lift["exercise"],
                         "exerciseID"        : lift_id,
                         "exerciseOrder"     : lift["exerciseOrder"],
-                        "workoutID"         : lift["workoutID"],
+                        "idWorkout"         : lift["idWorkout"],
                         "sets"              : [] 
                     }
                     unique_lifts_in_workout[lift_id] = lift_info

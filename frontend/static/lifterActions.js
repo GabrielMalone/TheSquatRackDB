@@ -17,7 +17,6 @@ function clickLifterNameEvent(e){
 
     if (! e.target.classList.contains("lifterName")) return ;
 
-    const mainDash = document.querySelector(".lifterBox");
     const lifterHeaderName = document.getElementById("lifterHeaderName");
     const config = document.getElementById("lifterConfig");
     const calendar = document.querySelector(".month");
@@ -28,13 +27,13 @@ function clickLifterNameEvent(e){
     
     currLifter = info;
 
-    clearCharts();                                   // clear the various areas
     lifterHeaderName.innerHTML  = `${info.userName}`;
     config.style.visibility     = "visible";
     calendar.style.display      = "flex"
     workout.innerHTML           = '';                                 
     prDash.innerHTML = ``;
     addExerciseDash?.classList.remove("addExerciseDashVisible"); 
+
     fillCalendar(year,month,lastday);    // get this lifter's training sessions
     createPrDash([1,5,9,10,11,12,14], currLifter.id);   // GUI this eventualyly
 }

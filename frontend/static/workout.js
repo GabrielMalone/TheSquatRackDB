@@ -11,14 +11,14 @@ const workoutContainer = document.querySelector(".workout"); // clear container
 // This method takes a workout from database and formats it into the workout UI
 // ExerciseRow class holds the exercise div and an exercise set div
 //-----------------------------------------------------------------------------
-export function getWorkoutFromWokroutID(workoutID){
-    workoutContainer.dataset.workoutID = workoutID;            // for ez access
-    f.post(config.WORKOUT_ENDPOINT, workoutID)
+export function getWorkoutFromWokroutID(idWorkout){
+    workoutContainer.dataset.idWorkout = idWorkout;            // for ez access
+    f.post(config.WORKOUT_ENDPOINT, idWorkout)
         .then(lifts=>{  
             lifts.forEach(lift=>{            // will iterate over each exercise
                 fillExerciseRow(lift);       // this will iterate over each set
             });
-            createCursor(lifts.workoutID);            // place cursor at bottom
+            createCursor(lifts.idWorkout);            // place cursor at bottom
         })
         .catch(error=>console.error(error));
 }
@@ -55,7 +55,7 @@ function makeNewSetBox(setInfo, liftInfo, setNumber, curExerciseRow){
 
     newSet.dataset.liftInfo = JSON.stringify(liftInfo);  
     newSet.dataset.setID = `${setInfo.setID}`;
-    newSet.dataset.workoutID = liftInfo.workoutID;
+    newSet.dataset.idWorkout = liftInfo.idWorkout;
    
     newSet.insertAdjacentHTML("beforeend",CreateSetTemplate(setInfo));
     newSet.appendChild(createSetUpdateForm(setInfo));
@@ -92,23 +92,23 @@ function updateSetEvent(e){
         e.preventDefault();
         const setUpdateForm = e.target; // get all the info from the user input
         const setBox = setUpdateForm.closest(".set");
-        const workoutID = setBox.dataset.workoutID;
+        const idWorkout = setBox.dataset.idWorkout;
         const idSet     = setUpdateForm.dataset.setID;
         let setWeight   = setUpdateForm.querySelector(`#weight${idSet}`).value;
         let setReps     = setUpdateForm.querySelector(`#reps${idSet}`).value;
         let setRPE      = setUpdateForm.querySelector(`#rpe${idSet}`).value;
-        updateSet(idSet, setWeight, setReps, setRPE, workoutID);    // query DB
+        updateSet(idSet, setWeight, setReps, setRPE, idWorkout);    // query DB
     }
     document.querySelector(".cursor").scrollIntoView({ behavior: 'smooth' });
 }
 //-----------------------------------------------------------------------------
-function updateSet(idSet, setWeight, setReps, setRPE, workoutID){
+function updateSet(idSet, setWeight, setReps, setRPE, idWorkout){
     f.put(config.WORKOUT_ENDPOINT, {idSet, setWeight, setReps, setRPE})
         .then(data=>{
             const rawData = (document.querySelector(".trainingDate")).dataset.dateInfo;
             const dateInfo = JSON.parse(decodeURIComponent(rawData)); 
             createWorkoutGrid(dateInfo);     // these three functions to redraw 
-            getWorkoutFromWokroutID(workoutID);             // the workout area
+            getWorkoutFromWokroutID(idWorkout);             // the workout area
             fillCalendar(curYear, curMonth, curlastDay);    // and the calendar
         }) 
         .catch(err=>console.error(err));
@@ -128,7 +128,7 @@ function addSet(curExerciseRow, liftInfo){
 function createNewDBset(curliftInfo, setNumber, curExerciseRow){
     const SetNumber = setNumber;
     const idExercise = curliftInfo.exerciseID;
-    const idWorkout = curliftInfo.workoutID;
+    const idWorkout = curliftInfo.idWorkout;
     f.post(config.SET_ENDPOINT, {SetNumber, idExercise, idWorkout})
         .then(newSetInfo=>{
             const liftInfo = updateLiftInfo(curliftInfo, newSetInfo);
@@ -151,7 +151,7 @@ function updateLiftInfo(curliftInfo, newSetInfo){
         setID       : newSetInfo.idSet,
         videoLink   : newSetInfo.setVideo,
         weight      : newSetInfo.setWeight,
-        workoutID   : newSetInfo.idWorkout
+        idWorkout   : newSetInfo.idWorkout
     }
 }
 
@@ -164,7 +164,7 @@ function removeSetEvent(e){
     if (e.target.classList.contains("setRemove")){
         const cursor        = document.querySelector(".cursor");
         const idSet         = e.target.dataset.setID;
-        const idWorkout     = e.target.dataset.workoutID;
+        const idWorkout     = e.target.dataset.idWorkout;
         const idExercise    = e.target.dataset.exerciseID;
         const rawData       = (document.querySelector(".trainingDate"))
                                 .dataset.dateInfo;
@@ -235,7 +235,7 @@ function clickSetEvent(event){
 // before inserting exercise on a date, check if workout exists on that date
 //-----------------------------------------------------------------------------
 function checkIfWorkoutExistsOnDate(selectedExercise){
-    let workoutID = null;
+    let idWorkout = null;
     const idUser = currLifter.id;
     const rawData = (document.querySelector(".trainingDate"))?.dataset.dateInfo;
     if(!rawData) return; // means a user has not clicked on a date on the calendar
@@ -244,8 +244,8 @@ function checkIfWorkoutExistsOnDate(selectedExercise){
     f.put(config.CHECK_IF_WORKOUT_EXISTS, Date, idUser)
         .then(res=>{
             if (res.success){
-                workoutID = res.idWorkout;
-                inserNewExerciseIntoWorkout(selectedExercise, workoutID);
+                idWorkout = res.idWorkout;
+                inserNewExerciseIntoWorkout(selectedExercise, idWorkout);
             } else {
                 f.post(config.CREATE_WORKOUT_ENDPOINT,Date)
                     .then(newWorkoutId=>{
@@ -329,7 +329,7 @@ function fillOutLiftCategory(categoryData){
 //-----------------------------------------------------------------------------
 export function createWorkoutGrid(dateInfo){
     workoutContainer.style.display = "flex";
-    delete workoutContainer.dataset.workoutID;
+    delete workoutContainer.dataset.idWorkout;
     workoutContainer.innerHTML = ``;   
     fillWorkoutDate(dateInfo);  
 }
@@ -363,7 +363,7 @@ function CreateRemoveSetButton(liftInfo, setInfo){
     setRemoveButton.classList.add("setRemove");
     setRemoveButton.setAttribute("id", `setRemove${setInfo?.setID ?? liftInfo.setID}`);
     setRemoveButton.dataset.setID = setInfo?.setID ?? liftInfo.setID
-    setRemoveButton.dataset.workoutID = liftInfo.workoutID; 
+    setRemoveButton.dataset.idWorkout = liftInfo.idWorkout; 
     setRemoveButton.dataset.exercise = liftInfo.exercise;
     setRemoveButton.dataset.exerciseID = liftInfo.exerciseID;
     setRemoveButton.innerHTML = `x`;

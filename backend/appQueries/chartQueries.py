@@ -151,7 +151,8 @@ def getPRDataForLift(idUser, Exercise):
             SELECT 
                 s.setWeight AS weight,
                 s.setReps AS reps,
-                w.Date as date
+                w.Date as date,
+                w.idWorkout as idWorkout
             FROM 
                 `Set` s
             JOIN 
