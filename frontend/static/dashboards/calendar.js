@@ -1,7 +1,7 @@
-import { config, DoW, months } from "./config.js";
-import { currLifter, f } from "./lifterSidebar.js";
+import { config, DoW, months } from "../config.js";
+import { currLifter, f } from "../lifterSidebar.js";
 import { loadMonthlyCharts } from "./monthlyChart.js";
-import { createCursor } from "./cursor.js";
+import { createCursor } from "../cursor.js";
 import { createrWorkoutHeader, getWorkoutFromWokroutID } from "./workout.js";
 
 export let curYear;

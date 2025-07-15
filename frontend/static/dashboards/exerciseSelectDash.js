@@ -1,5 +1,5 @@
-import { f } from "./lifterSidebar.js";
-import { config } from "./config.js";
+import { f } from "../lifterSidebar.js";
+import { config } from "../config.js";
 import { checkIfWorkoutExistsOnDate } from "./workout.js";
 
 //-----------------------------------------------------------------------------
@@ -48,8 +48,9 @@ function fillOutLiftCategory(categoryData, ExerciseDash){
     const liftsInCategory = categoryData.lifts_in_category;
     liftsInCategory.forEach(lift=>{
         ExerciseMenu.insertAdjacentHTML("beforeend", 
-            `<li class="exerciseMenuItem" data-lift-info='
-				${encodeURIComponent(JSON.stringify(lift))}'>
+            `<li class="exerciseMenuItem" 
+                data-lift-info='${encodeURIComponent(JSON.stringify(lift))}'
+                data-dash='${ExerciseDash.id}'>
                 ${lift.exerciseName}
             </li>`);
     });
@@ -68,23 +69,73 @@ function selectedExerciselistener(container){
 function selectedExerciseEvents(event){  
 
     // fills out description area of an exerice    
+    fillExerciseDescriptionBox(event);
+
+    // selects an exercise to add to a workout if container is workoutDash
+    addExerciseToWorkout(event);
+    
+    // select an exercise to add to the PR tracker
+    addExerciseToPrDash(event);
+
+    // closes the exercise dashboard via the x button
+    closeExerciseDash(event);
+}
+//-----------------------------------------------------------------------------
+// helper functions for the event checks above
+//-----------------------------------------------------------------------------
+function fillExerciseDescriptionBox(event){
     if (event.type === "mouseover" && event.target.classList.contains("exerciseMenuItem")){
-        const DescriptionBox = document.querySelector(".exerciseDescription");
+        // which exerciseDescriptionBox ?
+        const targetDash = document.getElementById(event.target.dataset.dash);
+        const DescriptionBox = targetDash.querySelector(".exerciseDescription");
         const exercise = event.target;
         const liftInfo = JSON.parse(decodeURIComponent(exercise.dataset.liftInfo));
         const Description = liftInfo.Description;
         DescriptionBox.innerHTML = Description;
         return;
     }
-    // selects an exercise to add to a workout if container is workoutDash
+}
+//-----------------------------------------------------------------------------
+function addExerciseToPrDash(event){
+    if (event.type === "click" && isPrDashContainer(event)
+        && event.target.classList.contains("exerciseMenuItem")) {
+            // add the exercise to the PR menu
+            // will need the exercise ID and the lifter's id
+    }
+}
+//-----------------------------------------------------------------------------
+function addExerciseToWorkout(event){
     if (event.type === "click" && isWorkoutDashContainer(event) 
 		&& event.target.classList.contains("exerciseMenuItem")) {
-
         const selectedExercise = event.target;
         checkIfWorkoutExistsOnDate(selectedExercise);
         return;
     }
-    //  closes the exercise dashboard via the x button
+}
+//-----------------------------------------------------------------------------
+function isWorkoutDashContainer(event){ 
+	let node = event.target.parentNode;
+	while (node.parentNode) { 	    // see if this menu a child of workoutDash
+		if (node.id === "workoutDash"){
+			return true;
+		}
+		node = node.parentNode;
+	}
+	return false;
+}
+//-----------------------------------------------------------------------------
+function isPrDashContainer(event){ 
+	let node = event.target.parentNode;
+	while (node.parentNode) { 			 // see if this menu a child of prDash
+		if (node.id === "prDashBoard"){
+			return true;
+		}
+		node = node.parentNode;
+	}
+	return false;
+}
+//-----------------------------------------------------------------------------
+function closeExerciseDash(event){
     if (event.type === "click" && event.target.id === "addExerciseX"){
 		if (isWorkoutDashContainer(event)){ 
 			const exerciseDash  = document.getElementById("exerciseDashForworkoutDash");
@@ -96,69 +147,45 @@ function selectedExerciseEvents(event){
         return;
     }
 }
-
-function isWorkoutDashContainer(event){ 
-	let node = event.target.parentNode;
-	while (node.parentNode) { 			// see if this menu a child of workoutNode
-		if (node.id === "workoutDash"){
-			return true;
-		}
-		node = node.parentNode;
-	}
-	return false;
-}
-
-
+//-----------------------------------------------------------------------------
+// html to construct the exerciseDash
+//-----------------------------------------------------------------------------
 export function createExerciseDash(container){ 
-	const prevDash = document.getElementById(`exerciseDashFor${container}`);
-	// if (prevDash) prevDash.innerHTML = ``;
-
 	const exerciseDash =
-	`
-	<div class="addExerciseDash" id="exerciseDashFor${container}">
-
-	<div class="addExerciseBoxHeader">
-		<div id="addExerciseTitle">Select Exercise</div>
-		<div id="addExerciseX">X</div>
-	</div>
-
-	<div class="exerciseSelectionWrapper">
-
-		<div class="SquatCategory">
-		<div class="CategoryHeader">Squat</div>
-			<div class="exercisesInDB">
-			<ul class="squatExerciseMenu"></ul>
-			</div>
-		</div>
-
-		<div class="BenchCategory">
-		<div class="CategoryHeader">Bench</div>
-			<div class="exercisesInDB">
-			<ul class="benchExerciseMenu"></ul>
-		</div>
-		</div>
-
-		<div class="DeadliftCategory">
-		<div class="CategoryHeader">Deadlift</div>
-			<div class="exercisesInDB">
-			<ul class="deadliftExerciseMenu"></ul>
-		</div>
-		</div>
-
-		<div class="AccessoriesCategory">
-		<div class="CategoryHeader">Accessory</div>
-			<div class="exercisesInDB">
-			<ul class="accessoryExerciseMenu"></ul>
-			</div>
-		</div>
-
-	</div>
-
-	<div class="exerciseDescriptionWrapper">
-		<div class="exerciseDescription"></div>
-	</div>
-
-	</div>
-	`
+    `<div class="addExerciseDash" id="exerciseDashFor${container}">
+        <div class="addExerciseBoxHeader">
+            <div id="addExerciseTitle">Select Exercise</div>
+            <div id="addExerciseX">X</div>
+        </div>
+        <div class="exerciseSelectionWrapper">
+            <div class="SquatCategory">
+            <div class="CategoryHeader">Squat</div>
+                <div class="exercisesInDB">
+                <ul class="squatExerciseMenu"></ul>
+                </div>
+            </div>
+            <div class="BenchCategory">
+            <div class="CategoryHeader">Bench</div>
+                <div class="exercisesInDB">
+                <ul class="benchExerciseMenu"></ul>
+            </div>
+            </div>
+            <div class="DeadliftCategory">
+            <div class="CategoryHeader">Deadlift</div>
+                <div class="exercisesInDB">
+                <ul class="deadliftExerciseMenu"></ul>
+            </div>
+            </div>
+            <div class="AccessoriesCategory">
+            <div class="CategoryHeader">Accessory</div>
+                <div class="exercisesInDB">
+                <ul class="accessoryExerciseMenu"></ul>
+                </div>
+            </div>
+        </div>
+        <div class="exerciseDescriptionWrapper">
+            <div class="exerciseDescription"></div>
+        </div>
+	</div>`
 	return exerciseDash;
 }

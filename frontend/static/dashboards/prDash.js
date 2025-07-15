@@ -1,10 +1,10 @@
 
-import { config,DoW, months } from "./config.js";
+import { config,DoW, months } from "../config.js";
 import { fillCalendar } from "./calendar.js";
 import { createrWorkoutHeader, getWorkoutFromWokroutID } from "./workout.js";
 import { fillOutExerciseSelectMenu, createExerciseDash } from "./exerciseSelectDash.js";
-import { f } from "./lifterSidebar.js";
-import { createCursor } from "./cursor.js";
+import { f } from "../lifterSidebar.js";
+import { createCursor } from "../cursor.js";
 
 let repRange = 20;
 

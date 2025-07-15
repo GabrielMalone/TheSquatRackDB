@@ -1,8 +1,8 @@
 import Lifter from "./lifter.js";
 import { config as c, year, month, lastday, prArgs } from "./config.js";
 import fetchWrapper from "./fetchWrapper.js";
-import {fillCalendar } from "./calendar.js";
-import { createPrDash } from "./prDash.js";
+import {fillCalendar } from "./dashboards/calendar.js";
+import { createPrDash } from "./dashboards/prDash.js";
 
 export const f = new fetchWrapper(c.API_URL);
 const LIFTERS = [];                      // list to hold all the lifter objects

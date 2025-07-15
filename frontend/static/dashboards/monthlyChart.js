@@ -1,7 +1,7 @@
 
-import { f } from "./lifterSidebar.js";
-import { config } from "./config.js";
-import { months } from "./config.js";
+import { f } from "../lifterSidebar.js";
+import { config } from "../config.js";
+import { months } from "../config.js";
 
 //-----------------------------------------------------------------------------
 // get monthly training volume/intensity/frequency for main compounds/accessory
