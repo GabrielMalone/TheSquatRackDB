@@ -2,7 +2,7 @@ import { curlastDay, curMonth, curYear, fillCalendar } from "./calendar.js";
 import { config } from "./config.js";
 import { setTemplateHTML, setUpdateFormTemplateHTML } from "./htmlTemplates.js";
 import { fillOutExerciseSelectMenu, createExerciseDash } from "./exerciseSelectDash.js";
-import { currLifter, f } from "./lifterActions.js";
+import { currLifter, f } from "./lifterSidebar.js";
 import { unit, prArgs } from "./config.js";
 import { createPrDash } from "./prDash.js";
 import { createCursor } from "./cursor.js";

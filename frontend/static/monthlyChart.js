@@ -1,5 +1,5 @@
 
-import { f } from "./lifterActions.js";
+import { f } from "./lifterSidebar.js";
 import { config } from "./config.js";
 import { months } from "./config.js";
 

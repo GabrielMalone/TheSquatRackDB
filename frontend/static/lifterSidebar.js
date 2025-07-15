@@ -2,7 +2,6 @@ import Lifter from "./lifter.js";
 import { config as c, year, month, lastday, prArgs } from "./config.js";
 import fetchWrapper from "./fetchWrapper.js";
 import {fillCalendar } from "./calendar.js";
-import { clearCharts } from "./monthlyChart.js";
 import { createPrDash } from "./prDash.js";
 
 export const f = new fetchWrapper(c.API_URL);

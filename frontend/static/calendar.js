@@ -1,5 +1,5 @@
 import { config, DoW, months } from "./config.js";
-import { currLifter, f } from "./lifterActions.js";
+import { currLifter, f } from "./lifterSidebar.js";
 import { loadMonthlyCharts } from "./monthlyChart.js";
 import { createCursor } from "./cursor.js";
 import { createrWorkoutHeader, getWorkoutFromWokroutID } from "./workout.js";
@@ -203,7 +203,7 @@ export function calendarListener(){
     document.addEventListener("keydown", (event)=>{ //keydowna n
         const calendar = document.querySelector(".month");
         const workoutContainer = document.querySelector(".workout");
-        if (getComputedStyle(calendar).visibility === "hidden")return;
+        if (getComputedStyle(calendar).visibility === "hidden") return;
         switch (event.key){
             case 'ArrowRight': 
                 clearCalendar();
