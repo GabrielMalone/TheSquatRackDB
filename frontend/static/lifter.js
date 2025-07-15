@@ -10,6 +10,8 @@ export default class Lifter {
     #height;
     #photo;
 
+    #prDashSelection = []; // so that selections persist within and between app visits
+
     #federation;
     #weightClass;
 
@@ -71,6 +73,12 @@ export default class Lifter {
     }
     get photo(){
         return this.#photo;
+    }
+    set prDashSelection(idExercise){
+        this.#prDashSelection.push(idExercise);
+    }
+    get prDashSelection(){
+        return this.#prDashSelection;
     }
 
 }

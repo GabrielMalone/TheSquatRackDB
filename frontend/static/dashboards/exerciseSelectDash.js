@@ -1,18 +1,25 @@
-import { f } from "../lifterSidebar.js";
+import { currLifter, f, getLifterObject } from "../lifterSidebar.js";
 import { config } from "../config.js";
 import { checkIfWorkoutExistsOnDate } from "./workout.js";
+import { createPrDash } from "./prDash.js";
 
 //-----------------------------------------------------------------------------
 // event for clicking on cursor. exercise dashboad visible/ fills out
 //-----------------------------------------------------------------------------
 export function fillOutExerciseSelectMenu(container){
-    const ExerciseDash = document.getElementById(`exerciseDashFor${container}`);
+    const ExerciseDash = document.getElementById(`exerciseDashFor${container.id}`);
     ExerciseDash.classList.toggle("addExerciseDashVisible");
-    ExerciseDash.scrollIntoView({ behavior: 'smooth' })
+    if (ExerciseDash.id === "exerciseDashForworkoutDash") {
+        ExerciseDash.scrollIntoView({ behavior: 'smooth' })
+    }
+    if (ExerciseDash.id === "exerciseDashForprDashBoard") {
+        const prDash = document.querySelector(".prDash");
+        prDash.scrollIntoView({ behavior: 'smooth' })
+    }
     f.get(config.GET_EXERCISES_ENDPOINT)     // get all the exercises in the db
         .then(exercises=>{
             fillOutLiftCategoryMenus(exercises, ExerciseDash); // fill out dash
-            selectedExerciselistener(container);     // add e-listeners to dash
+            selectedExerciselistener(ExerciseDash);  // add e-listeners to dash
         })
         .catch(err=>console.error(err));
 }
@@ -37,7 +44,12 @@ function fillOutLiftCategoryMenus(exercises, ExerciseDash){
                 break
           }
     });
-    ExerciseDash.scrollIntoView({ behavior: 'smooth' });
+    // if (ExerciseDash.id === "exerciseDashForprDashBoard") {
+    //     const prDash = document.querySelector(".prDash");
+    //     prDash.scrollIntoView({ behavior: 'smooth' })
+    // } else {
+    //     ExerciseDash.scrollIntoView({ behavior: 'smooth' });
+    // }
 }
 //-----------------------------------------------------------------------------
 // helper function to fill out bench / squat / deadlift / accessory columns 
@@ -50,7 +62,8 @@ function fillOutLiftCategory(categoryData, ExerciseDash){
         ExerciseMenu.insertAdjacentHTML("beforeend", 
             `<li class="exerciseMenuItem" 
                 data-lift-info='${encodeURIComponent(JSON.stringify(lift))}'
-                data-dash='${ExerciseDash.id}'>
+                data-dash='${ExerciseDash.id}'
+                data-id-exercise='${lift.exerciseID}'>
                 ${lift.exerciseName}
             </li>`);
     });
@@ -58,10 +71,9 @@ function fillOutLiftCategory(categoryData, ExerciseDash){
 //-----------------------------------------------------------------------------
 // listens to see if an item in workout area clicked on. 
 //-----------------------------------------------------------------------------
-function selectedExerciselistener(container){
-    const addExerciseDash = document.getElementById(`exerciseDashFor${container}`);
-    addExerciseDash.addEventListener("click", selectedExerciseEvents);
-    addExerciseDash.addEventListener("mouseover", selectedExerciseEvents);
+function selectedExerciselistener(ExerciseDash){
+    ExerciseDash.addEventListener("click", selectedExerciseEvents);
+    ExerciseDash.addEventListener("mouseover", selectedExerciseEvents);
 }
 //-----------------------------------------------------------------------------
 // all the events that can happen on the Exercise Dash
@@ -97,10 +109,14 @@ function fillExerciseDescriptionBox(event){
 }
 //-----------------------------------------------------------------------------
 function addExerciseToPrDash(event){
-    if (event.type === "click" && isPrDashContainer(event)
+    if (event.type === "click" 
+        && isPrDashContainer(event)
         && event.target.classList.contains("exerciseMenuItem")) {
             // add the exercise to the PR menu
             // will need the exercise ID and the lifter's id
+            const lifter = getLifterObject(currLifter.id);
+            lifter.prDashSelection = event.target.dataset.idExercise;
+            createPrDash(lifter.prDashSelection, lifter.id);
     }
 }
 //-----------------------------------------------------------------------------
@@ -139,11 +155,11 @@ function closeExerciseDash(event){
     if (event.type === "click" && event.target.id === "addExerciseX"){
 		if (isWorkoutDashContainer(event)){ 
 			const exerciseDash  = document.getElementById("exerciseDashForworkoutDash");
-			exerciseDash.classList.toggle("addExerciseDashVisible"); 
+			exerciseDash.classList.remove("addExerciseDashVisible"); 
 			return;
 		} // otherwise is exercisedash for pr container
-        const exerciseDash  = document.getElementById("exerciseDashForprDash");
-        exerciseDash.classList.toggle("addExerciseDashVisible"); 
+        const exerciseDash  = document.getElementById("exerciseDashForprDashBoard");
+        exerciseDash.classList.remove("addExerciseDashVisible"); 
         return;
     }
 }
@@ -152,7 +168,7 @@ function closeExerciseDash(event){
 //-----------------------------------------------------------------------------
 export function createExerciseDash(container){ 
 	const exerciseDash =
-    `<div class="addExerciseDash" id="exerciseDashFor${container}">
+    `<div class="addExerciseDash" id="exerciseDashFor${container.id}">
         <div class="addExerciseBoxHeader">
             <div id="addExerciseTitle">Select Exercise</div>
             <div id="addExerciseX">X</div>

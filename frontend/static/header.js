@@ -10,6 +10,7 @@ export const addLifterClick = ()=> {
         addLifterBox.classList.toggle("visible"); // Toggle a class
     });
 }
+//-----------------------------------------------------------------------------
 export function activeLiftersCLick(){
     const activeLifterButton = document.querySelector("#activeLifters");
     const sidebar = document.querySelector(".sidebar");

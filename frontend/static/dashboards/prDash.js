@@ -13,14 +13,14 @@ let repRange = 20;
 //-----------------------------------------------------------------------------
 export async function createPrDash(exerciseList, idUser){
     document.querySelector(".prDash").innerHTML = ``;    // clear any prev dash
-    const prDash = initPrDash();
+    const prDash = initPrDash(exerciseList.length);
     for (const liftID of exerciseList) {    // get info for exercises passed in
         const exerciseInfo = await f.post(config.GET_EXERCISE_INFO, liftID);
         const curLiftRow = buildLiftRow(exerciseInfo, prDash, idUser, liftID);
         f.post(config.GET_PR_DATA_FOR_LIFT, {idUser, "lift" : liftID})//pr data
         .then(prs=>{
             prs.forEach(pr=>{        //iterate prs, get corresponding box by id
-                fillInRepPRBoxes(pr, idUser, exerciseInfo, curLiftRow);
+                fillInRepPRBoxes(pr, idUser, exerciseInfo, curLiftRow, liftID);
             });
         })
         .catch(err=>{
@@ -28,8 +28,8 @@ export async function createPrDash(exerciseList, idUser){
         });
     }
     buildPrDashHeader(prDash);
-    prInfoClick(prDash);                            // listen for clicks on PRs
     createCursor(prDash);
+    prInfoClick(prDash);                            // listen for clicks on PRs
 }
 //-----------------------------------------------------------------------------
 // EVENTS for clicking on a PR - load the workout in which PR happened
@@ -44,8 +44,8 @@ function prDashClickEvent(e){
     }
     if (e.target.id === "cursorForprDashBoard"){
         const prDash = document.querySelector(".prDash");
-        prDash.insertAdjacentHTML("beforeend",createExerciseDash("prDash"));
-        fillOutExerciseSelectMenu("prDash");
+        prDash.insertAdjacentHTML("beforeend",createExerciseDash(prDash));
+        fillOutExerciseSelectMenu(prDash);
         return;
     }
 }
@@ -88,8 +88,9 @@ function getPRdata(e){
 //-----------------------------------------------------------------------------
 // helper methods for the createPrDash ^
 //-----------------------------------------------------------------------------
-function initPrDash(){
+function initPrDash(exerciselistLength){
     const prDash = document.querySelector(".prDash"); // build the dash headers
+    if (exerciselistLength === 0 ) return prDash;
     const repsTitle = buildRepsTitle(prDash);
     buildRepsHeader(repsTitle);                  // build the rows of exercises 
     return prDash;
@@ -171,7 +172,7 @@ function formatBackendDateData(BackendPrDate){
     return formattedDate
 }
 //-----------------------------------------------------------------------------
-function fillInRepPRBoxes(pr, idUser, exerciseInfo, curLiftRow){ //backend data
+function fillInRepPRBoxes(pr, idUser, exerciseInfo, curLiftRow, idExercise){ //backend data
     if(pr.reps > repRange || pr.reps === 0) return;
     const curLift = exerciseInfo.abbrev;
     const repBox = curLiftRow.querySelector(`#${curLift}_rep_${pr.reps}`);
@@ -181,6 +182,7 @@ function fillInRepPRBoxes(pr, idUser, exerciseInfo, curLiftRow){ //backend data
     repBox.dataset.date = formattedDate;
     repBox.dataset.idUser = idUser;          // and to make tooltip
     repBox.dataset.idWorkout = pr.idWorkout;// video link in future
+    repBox.dataset.idExercise = idExercise;
     if (! repBox.innerHTML && pr.weight){
         repBox.innerHTML = `<div class="prWeight">${pr.weight}</div>`;
         repBox.classList.add("prPresent");

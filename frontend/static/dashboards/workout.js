@@ -2,7 +2,7 @@ import { curlastDay, curMonth, curYear, fillCalendar } from "./calendar.js";
 import { config } from "../config.js";
 import { setTemplateHTML, setUpdateFormTemplateHTML } from "../htmlTemplates.js";
 import { fillOutExerciseSelectMenu, createExerciseDash } from "./exerciseSelectDash.js";
-import { currLifter, f } from "../lifterSidebar.js";
+import { currLifter, f, getLifterObject } from "../lifterSidebar.js";
 import { unit, prArgs } from "../config.js";
 import { createPrDash } from "./prDash.js";
 import { createCursor } from "../cursor.js";
@@ -30,8 +30,9 @@ export function getWorkoutFromWokroutID(idWorkout){
 function updateDashesOnChange(dateInfo, idWorkout, curYear, curMonth, curlastDay){
     createWorkoutGrid(dateInfo);             // these four functions to redraw 
     getWorkoutFromWokroutID(idWorkout);                    // the workout area
-    fillCalendar(curYear, curMonth, curlastDay);           // and the calendar    
-    createPrDash(prArgs, currLifter.id);                        // and pr dash
+    fillCalendar(curYear, curMonth, curlastDay);           // and the calendar  
+    const lifter = getLifterObject(currLifter.id);  
+    createPrDash(lifter.prDashSelection, lifter.id);            // and pr dash
 }
 //-----------------------------------------------------------------------------
 // event actions for the workout dash
@@ -245,8 +246,8 @@ export function createWorkoutGrid(dateInfo){
 //-----------------------------------------------------------------------------
 function addExerciseEvent(e){
     if (e.target.id === "cursorForworkoutDash"){
-        workoutContainer.insertAdjacentHTML("beforeend",createExerciseDash("workoutDash"));
-        fillOutExerciseSelectMenu("workoutDash");
+        workoutContainer.insertAdjacentHTML("beforeend",createExerciseDash(workoutContainer));
+        fillOutExerciseSelectMenu(workoutContainer);
         return;
     }
 }

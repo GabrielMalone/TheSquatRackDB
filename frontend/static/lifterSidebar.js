@@ -5,7 +5,7 @@ import {fillCalendar } from "./dashboards/calendar.js";
 import { createPrDash } from "./dashboards/prDash.js";
 
 export const f = new fetchWrapper(c.API_URL);
-const LIFTERS = [];                      // list to hold all the lifter objects
+export const LIFTERS = [];               // list to hold all the lifter objects
 export let currLifter = {};        // track current lifter selected by the user
 
 
@@ -23,7 +23,7 @@ function clickLifterNameEvent(e){
     const prDash = document.querySelector(".prDash");
     const addExerciseDash = document.querySelector(".addExerciseDash");
     const info = JSON.parse(e.target.dataset.lifter);
-    
+
     currLifter = info;
 
     lifterHeaderName.innerHTML  = `${info.userName}`;
@@ -33,7 +33,8 @@ function clickLifterNameEvent(e){
     addExerciseDash?.classList.remove("addExerciseDashVisible"); 
 
     fillCalendar(year,month,lastday);    // get this lifter's training sessions
-    createPrDash(prArgs, currLifter.id);   // GUI this eventualyly
+    const cLifter = getLifterObject(currLifter.id); // holds array pr selection
+    createPrDash(cLifter.prDashSelection, cLifter.id);          
 }
 
 //-----------------------------------------------------------------------------
@@ -75,7 +76,7 @@ export const postNewLifter = (newLifter) => {
     f.post(c.LIFTERS_ENDPOINT, newLifter)
     .then(res=>{
         console.log(res);
-        if (res === 200){          // close the newLifter window if done
+        if (res === 200){                 // close the newLifter window if done
             document.querySelector(".createLifterBox").classList.toggle("visible");
             LIFTERS.length = 0;
             getLifters();
@@ -145,7 +146,7 @@ function configClickEvent(){
     const dateWrapper   = document.querySelector(".dateWrapper");
     const prDash        = document.querySelector(".prDash");
     const prDashHeader  = document.querySelector(".prDashHeader");
-    f.delete(c.LIFTERS_ENDPOINT, currLifter.id)  // logic to delete current lifter
+    f.delete(c.LIFTERS_ENDPOINT, currLifter.id)    // logic to delete currlifter
     .then(()=>{
         LIFTERS.length = 0;
         getLifters();
@@ -160,5 +161,15 @@ function configClickEvent(){
         prDash.innerHTML = ``;
     })
     .catch(err=>console.error(err));
+}
+//------------------------------------------------------------------------------
+// get the lifter class object for a spcific lifter via id
+//------------------------------------------------------------------------------
+export function getLifterObject(lifterID){
+    for (const lifter of LIFTERS){
+        if (parseInt(lifter.id) === parseInt(lifterID)){
+            return lifter;
+        }
+    }
 }
 //------------------------------------------------------------------------------

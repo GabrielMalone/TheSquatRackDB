@@ -100,7 +100,6 @@ li {
     flex-direction: row;
     align-items: center;
     gap: 30px;
-    border-bottom: 1px dotted #333;
 }
 #lifterHeaderName {
     margin-top: 20px;
@@ -135,6 +134,7 @@ li {
     position: relative;
     align-self: center;
     height: fit-content;
+    width: 840px;
     border-bottom: 1px solid #222;
     margin-bottom: 10px;
 }
@@ -163,8 +163,8 @@ li {
     flex-direction: column;
     position: relative;
     align-self: center;
-    margin: 10px;
     font-size: 1rem;
+  
 }
 .prDashVisible {
     height: 80px;
@@ -699,6 +699,7 @@ li {
     flex-direction: column;
     position: relative;
     outline: 1px dotted #333;
+    max-width: 840px; 
 }
 .addExerciseBoxHeader {
     display: flex;
