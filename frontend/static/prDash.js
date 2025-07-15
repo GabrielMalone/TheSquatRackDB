@@ -11,7 +11,7 @@ const repRange = 20;
 // creates the lifetime pr chart and fetches the data to fill in the chart
 //-----------------------------------------------------------------------------
 export async function createPrDash(exerciseList, idUser){
-
+    document.querySelector(".prDash").innerHTML = ``;
     const prDash = initPrDash();
     for (const liftID of exerciseList) {   // get info for exercises passed in
         const exerciseInfo = await f.post(config.GET_EXERCISE_INFO, liftID);
@@ -62,6 +62,9 @@ function prClickEvent(e){
         const days = [...document.querySelectorAll(".day")];
         days.forEach(day=>{                  // match the cal day to the pr day
             day.classList.remove("daySelected");
+            if (parseInt(day.dataset.day) ===  parseInt(prDay) && parseInt(day.dataset.month) === parseInt(month)){
+                day.classList.add("daySelected");
+            }
         });
        createrWorkoutHeader(dateInfo);                           // get workout 
        getWorkoutFromWokroutID(idWorkout);

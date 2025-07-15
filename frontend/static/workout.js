@@ -2,7 +2,8 @@ import { curlastDay, curMonth, curYear, fillCalendar } from "./calendar.js";
 import { config } from "./config.js";
 import { setTemplateHTML, setUpdateFormTemplateHTML, ExerciseDashTemplate } from "./htmlTemplates.js";
 import { currLifter, f } from "./lifterActions.js";
-import { unit } from "./config.js";
+import { unit, prArgs } from "./config.js";
+import { createPrDash } from "./prDash.js";
 const workoutContainer = document.querySelector(".workout"); // clear container
 
 
@@ -22,6 +23,18 @@ export function getWorkoutFromWokroutID(idWorkout){
         })
         .catch(error=>console.error(error));
 }
+//-----------------------------------------------------------------------------
+// if any update/delete/add refresh the various dashes 
+//-----------------------------------------------------------------------------
+function updateDashesOnChange(dateInfo, idWorkout, curYear, curMonth, curlastDay){
+    createWorkoutGrid(dateInfo);     // these three functions to redraw 
+    getWorkoutFromWokroutID(idWorkout);             // the workout area
+    fillCalendar(curYear, curMonth, curlastDay);    // and the calendar    
+    createPrDash(prArgs, currLifter.id);   // GUI this eventualyly
+}
+
+
+
 //-----------------------------------------------------------------------------
 // helper method to make the UI exercise Row
 //-----------------------------------------------------------------------------
@@ -72,10 +85,11 @@ export function createCursor(){
     cursor.classList.add("cursor");
     cursor.innerHTML = '╋';
     workoutContainer.appendChild(cursor); 
-    cursor.scrollIntoView({ behavior: 'smooth' });
+    setTimeout(()=>{
+        cursor.scrollIntoView({ behavior: 'smooth' });
+    }, 100)
+
 }
-
-
 
 //-----------------------------------------------------------------------------
 // listens to see if a set gets updated
@@ -107,9 +121,7 @@ function updateSet(idSet, setWeight, setReps, setRPE, idWorkout){
         .then(data=>{
             const rawData = (document.querySelector(".trainingDate")).dataset.dateInfo;
             const dateInfo = JSON.parse(decodeURIComponent(rawData)); 
-            createWorkoutGrid(dateInfo);     // these three functions to redraw 
-            getWorkoutFromWokroutID(idWorkout);             // the workout area
-            fillCalendar(curYear, curMonth, curlastDay);    // and the calendar
+            updateDashesOnChange(dateInfo, idWorkout, curYear, curMonth, curlastDay)
         }) 
         .catch(err=>console.error(err));
 }
@@ -173,13 +185,10 @@ function removeSetEvent(e){
         f.delete(config.WORKOUT_ENDPOINT,{idSet,idWorkout,idExercise})
             .then(response=>{                            // reorder set numbers
                 f.put(config.REORDER__SET_ENDPOINT, {idWorkout,idExercise})
-                    .catch(err=>console.error(err));
             })
             .catch(err=>console.error(err))
             .finally(()=>{
-                createWorkoutGrid(dateInfo); // redraw the workout area 
-                getWorkoutFromWokroutID(idWorkout); 
-                fillCalendar(curYear, curMonth, curlastDay); 
+                updateDashesOnChange(dateInfo, idWorkout, curYear, curMonth, curlastDay)
             });
         cursor.scrollIntoView({ behavior: 'smooth' });
     }
@@ -267,9 +276,7 @@ function inserNewExerciseIntoWorkout(selectedExercise, idWorkout){
     const SetNumber = 1;
     f.post(config.INSERT_NEW_EXERCISE_ENDPOINT,{idWorkout, idExercise, SetNumber})
         .then(res=>{
-            createWorkoutGrid(dateInfo);     // these three functions to redraw 
-            getWorkoutFromWokroutID(idWorkout);             // the workout area
-            fillCalendar(curYear, curMonth, curlastDay);    // and the calendar
+            updateDashesOnChange(dateInfo, idWorkout, curYear, curMonth, curlastDay)
         })
         .catch(err=>console.error(err));  
 }

@@ -1,5 +1,5 @@
 import Lifter from "./lifter.js";
-import { config as c, year, month, lastday } from "./config.js";
+import { config as c, year, month, lastday, prArgs } from "./config.js";
 import fetchWrapper from "./fetchWrapper.js";
 import {fillCalendar } from "./calendar.js";
 import { clearCharts } from "./monthlyChart.js";
@@ -31,11 +31,10 @@ function clickLifterNameEvent(e){
     config.style.visibility     = "visible";
     calendar.style.display      = "flex"
     workout.innerHTML           = '';                                 
-    prDash.innerHTML = ``;
     addExerciseDash?.classList.remove("addExerciseDashVisible"); 
 
     fillCalendar(year,month,lastday);    // get this lifter's training sessions
-    createPrDash([2, 8, 17], currLifter.id);   // GUI this eventualyly
+    createPrDash(prArgs, currLifter.id);   // GUI this eventualyly
 }
 
 //-----------------------------------------------------------------------------
