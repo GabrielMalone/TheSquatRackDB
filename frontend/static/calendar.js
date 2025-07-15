@@ -183,7 +183,7 @@ function dayListener(e){
         workoutArea.innerHTML =``;                      // clear previous data
         const days = document.querySelectorAll(".day");
         days.forEach(day=>day.classList.remove("daySelected"));
-        e.target.classList.toggle("daySelected");
+        e.target.classList.add("daySelected");
         daySelected = {"day" : e.target.dataset.day, "month" : e.target.dataset.month};
         const dateInfo = JSON.parse(e.target.dataset.info);         //get info
         if (e.target.dataset.idWorkout) {
@@ -364,7 +364,7 @@ export function clearCalendar(){
     datesPrevMonth.length = 0;
     days.forEach(day=>{
         day.innerHTML = '';
-        day.classList.remove('unfocusedDate', 'today', 'dayLifted');
+        day.classList.remove('unfocusedDate', 'today', 'dayLifted', 'daySelected', 'prDateHighlighted');
         day.style.visibility = "visible";
         day.style.display = "flex";
         Object.keys(day.dataset).forEach(key => delete day.dataset[key]);

@@ -335,7 +335,10 @@ li {
     /* transition: 1000ms; */
 }
 .daySelected{
-    background-color:rgba(186, 85, 211, 0.174) !important;
+    background-color:rgba(186, 85, 211, 0.174);
+}
+.prDateHighlighted{
+    background-color: rgba(60, 179, 114, 0.596);
 }
 .dayNum{
     display: flex;

@@ -25,7 +25,7 @@ export async function createPrDash(exerciseList, idUser){
                 const date = new Date(pr.date);
                 const formattedDate = date.toLocaleDateString("en-US", {
                     timeZone: "UTC", // to prevent day changes with 00:00 times
-                    year: "numeric",
+                    year: "numeric",               // due to earlier time zones
                     month: "short",
                     day: "numeric"
                 });
@@ -33,8 +33,7 @@ export async function createPrDash(exerciseList, idUser){
                 repBox.dataset.reps = pr.reps;
                 repBox.dataset.date = formattedDate;
                 repBox.dataset.idUser = idUser;          // and to make tooltip
-                repBox.dataset.idWorkout = pr.idWorkout;
-                // get video link too at some point
+                repBox.dataset.idWorkout = pr.idWorkout;// video link in future
                 if (! repBox.innerHTML && pr.weight){
                     repBox.innerHTML = `<div class="prWeight">${pr.weight}</div>`;
                     repBox.classList.add("prPresent");
@@ -61,9 +60,10 @@ function prClickEvent(e){
         fillCalendar(year, month, lastday); // change calendar to match pr date
         const days = [...document.querySelectorAll(".day")];
         days.forEach(day=>{                  // match the cal day to the pr day
-            day.classList.remove("daySelected");
-            if (parseInt(day.dataset.day) ===  parseInt(prDay) && parseInt(day.dataset.month) === parseInt(month)){
-                day.classList.add("daySelected");
+            day.classList.remove("daySelected", "prDateHighlighted");
+            if (parseInt(day.dataset.day)   ===  parseInt(prDay) && 
+                parseInt(day.dataset.month) ===  parseInt(month)){
+                day.classList.add("prDateHighlighted");
             }
         });
        createrWorkoutHeader(dateInfo);                           // get workout 
