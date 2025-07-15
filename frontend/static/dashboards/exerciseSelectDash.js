@@ -1,6 +1,6 @@
 import { currLifter, f, getLifterObject } from "../lifterSidebar.js";
 import { config } from "../config.js";
-import { checkIfWorkoutExistsOnDate } from "./workout.js";
+import { checkIfWorkoutExistsOnDate } from "./workoutDash.js";
 import { createPrDash } from "./prDash.js";
 
 //-----------------------------------------------------------------------------

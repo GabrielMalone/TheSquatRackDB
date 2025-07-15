@@ -1,7 +1,7 @@
-import { submitNewLifterClick, configEventListener, getLifters } from "./lifterSidebar.js";
-import { calendarListener, dayEventListener } from "./dashboards/calendar.js";
+import { configEventListener, getLifters } from "./lifterSidebar.js";
+import { calendarListener, dayEventListener } from "./dashboards/calendarDash.js";
 import { addLifterClick, activeLiftersCLick } from "./header.js";
-import { xNewLifterWindow } from "./newLifterSideBar.js";
+import { xNewLifterWindow, submitNewLifterClick} from "./newLifterSideBar.js";
 
 //-----------------------------------------------------------------------------
 // all the listeners that need to be loaded for the app to work

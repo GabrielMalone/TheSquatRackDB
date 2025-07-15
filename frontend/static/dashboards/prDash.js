@@ -1,7 +1,7 @@
 
 import { config,DoW, months } from "../config.js";
-import { fillCalendar } from "./calendar.js";
-import { createrWorkoutHeader, getWorkoutFromWokroutID } from "./workout.js";
+import { fillCalendar } from "./calendarDash.js";
+import { createrWorkoutHeader, getWorkoutFromWokroutID } from "./workoutDash.js";
 import { fillOutExerciseSelectMenu, createExerciseDash } from "./exerciseSelectDash.js";
 import { f } from "../lifterSidebar.js";
 import { createCursor } from "../cursor.js";
@@ -19,6 +19,7 @@ export async function createPrDash(exerciseList, idUser){
         const curLiftRow = buildLiftRow(exerciseInfo, prDash, idUser, liftID);
         f.post(config.GET_PR_DATA_FOR_LIFT, {idUser, "lift" : liftID})//pr data
         .then(prs=>{
+            console.log(prs);
             prs.forEach(pr=>{        //iterate prs, get corresponding box by id
                 fillInRepPRBoxes(pr, idUser, exerciseInfo, curLiftRow, liftID);
             });
@@ -177,20 +178,20 @@ function fillInRepPRBoxes(pr, idUser, exerciseInfo, curLiftRow, idExercise){ //b
     const curLift = exerciseInfo.abbrev;
     const repBox = curLiftRow.querySelector(`#${curLift}_rep_${pr.reps}`);
     const formattedDate = formatBackendDateData(pr.date);
-    repBox.dataset.weight = pr.weight;  // data gets workout for pr
-    repBox.dataset.reps = pr.reps;
-    repBox.dataset.date = formattedDate;
-    repBox.dataset.idUser = idUser;          // and to make tooltip
-    repBox.dataset.idWorkout = pr.idWorkout;// video link in future
-    repBox.dataset.idExercise = idExercise;
     if (! repBox.innerHTML && pr.weight){
+        repBox.dataset.weight = pr.weight;  // data gets workout for pr
+        repBox.dataset.reps = pr.reps;
+        repBox.dataset.idUser = idUser;          // and to make tooltip
+        repBox.dataset.idExercise = idExercise;
+        repBox.dataset.date = formattedDate;
+        repBox.dataset.idWorkout = pr.idWorkout;// video link in future
         repBox.innerHTML = `<div class="prWeight">${pr.weight}</div>`;
         repBox.classList.add("prPresent");
         repBox.append(makePrToolTip(exerciseInfo.lift,pr.weight,pr.reps,formattedDate));
     } 
 }
 //-----------------------------------------------------------------------------
-function makePrToolTip(lift, weight, reps, date){
+function makePrToolTip(lift, weight, reps, formattedDate){
 
     const toolTipWrapper = document.createElement('div');
     toolTipWrapper.classList.add("prToolTip");
@@ -198,7 +199,7 @@ function makePrToolTip(lift, weight, reps, date){
     const toolTipDate = document.createElement('div');
     toolTipDate.classList.add('prToolTipDate');
     toolTipDate.classList.add('prToolTipdata');
-    toolTipDate.innerHTML =`${date}`;
+    toolTipDate.innerHTML =`${formattedDate}`;
 
     const toolTipLift = document.createElement('div');
     toolTipLift.classList.add("prToolTipLift");

@@ -1,4 +1,4 @@
-import { curlastDay, curMonth, curYear, fillCalendar } from "./calendar.js";
+import { curlastDay, curMonth, curYear, fillCalendar } from "./calendarDash.js";
 import { config } from "../config.js";
 import { setTemplateHTML, setUpdateFormTemplateHTML } from "../htmlTemplates.js";
 import { fillOutExerciseSelectMenu, createExerciseDash } from "./exerciseSelectDash.js";

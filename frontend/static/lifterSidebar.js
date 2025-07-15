@@ -1,7 +1,7 @@
 import Lifter from "./lifter.js";
-import { config as c, year, month, lastday, prArgs } from "./config.js";
+import { config as c, year, month, lastday } from "./config.js";
 import fetchWrapper from "./fetchWrapper.js";
-import {fillCalendar } from "./dashboards/calendar.js";
+import {fillCalendar } from "./dashboards/calendarDash.js";
 import { createPrDash } from "./dashboards/prDash.js";
 
 export const f = new fetchWrapper(c.API_URL);
@@ -37,56 +37,6 @@ function clickLifterNameEvent(e){
     createPrDash(cLifter.prDashSelection, cLifter.id);          
 }
 
-//-----------------------------------------------------------------------------
-// event listener for the new lifter submit button
-//-----------------------------------------------------------------------------
-export const submitNewLifterClick = () => {
-    const submitButton = document.querySelector(".createLifterFields");
-    submitButton.addEventListener("submit", submitNewLifter);
-}
-//-----------------------------------------------------------------------------
-// This is the logic for clicking the submit new lifter button.
-//-----------------------------------------------------------------------------
-export const submitNewLifter = (e) => {
-    e.preventDefault();
-    let userName    = document.getElementById("inputUserName").value.trim();
-    const firstName = document.getElementById("inputFirst").value.trim();
-    const lastName  = document.getElementById("inputLast").value.trim();
-    const email     = document.getElementById("inputEmail").value.trim();
-    const errField  = document.getElementById("submitErrorMsg");
-    // can do validation stuff here. 
-    if (userName.length < 4){
-        errField.innerText = "User name must be at leat 4 characters long";
-        return;
-    }
-    userName = userName[0].toUpperCase() + userName.slice(1);
-    const newLifter = {
-        Email: email || null,
-        userFirst: firstName || null,
-        userLast: lastName || null,
-        userName: userName
-    };
-    postNewLifter(newLifter);           // if all good send datato the database
-}
-//-----------------------------------------------------------------------------
-// post method to create new lifter in database
-//-----------------------------------------------------------------------------
-export const postNewLifter = (newLifter) => {
-    const errField  = document.getElementById("submitErrorMsg");
-    f.post(c.LIFTERS_ENDPOINT, newLifter)
-    .then(res=>{
-        console.log(res);
-        if (res === 200){                 // close the newLifter window if done
-            document.querySelector(".createLifterBox").classList.toggle("visible");
-            LIFTERS.length = 0;
-            getLifters();
-        }
-        if (res === 1062){
-            errField.innerText = "username already taken"
-        }
-    })
-    .catch(err=>console.error(err));
-}
 //-----------------------------------------------------------------------------
 // This method fetches all the lifters and their info from the databse
 //-----------------------------------------------------------------------------
