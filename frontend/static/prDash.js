@@ -75,16 +75,15 @@ function getPRdata(e){
     const month = date.getMonth();
     const prDay = date.getDate();
     const idWorkout = curPR.dataset.idWorkout;
+    const idUser = curPR.dataset.idUser;
     const lastday = new Date(year, month + 1, 0).getDate();
-    // ${dateInfo.dow.toUpperCase()}
-    // ${dateInfo.month} 
-    // ${dateInfo.day} 
-    // ${dateInfo.year}
-    const dateInfo = {
-        "dow"   : DoW[date.getDay()],
+    const dateInfo = {// this data needed down line for the queries that result
+        "dow"   : DoW[date.getDay()],  // getworkout title and get workout data
         "month" : months[month],
+        "monthNumber" : month,
         "day"   : prDay,
-        "year"  : year
+        "year"  : year,
+        "lifterID" : idUser
     }
     return [dateInfo, year, month, prDay, lastday, idWorkout]
 }
