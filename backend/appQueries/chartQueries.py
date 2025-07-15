@@ -79,7 +79,6 @@ def getMonthlyTrainingIntensity(idUser, ExerciseCategories, month, year):
                 ''', 
                 (idUser, ExerciseCategory, month+1, year))
             result = cursor.fetchone()['averageIntensity']
-            print(result)
             results.append(result)
         return {
             "success" : True,

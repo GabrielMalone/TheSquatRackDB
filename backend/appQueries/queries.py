@@ -78,7 +78,6 @@ def getExercises():
     
             cursor.close()
             cnx.close()
-        print (cat_lifts)
         return  cat_lifts
     except mysql.connector.Error as err:
         print("MySQL Error:", err)     # This will show you the exact error
@@ -278,15 +277,11 @@ def deleteSet(setID, idWorkout, idExercise):
                 DELETE from `Set`
                 WHERE idSet = %s
                 ''', (setID,))
-            
             # When we delete a set from a workout (idSet)
             # We need to ask, does this workout (idWorkout) still contain 
             # Sets that have that particular exercise (idExercise).
             # If they dont, we need to delete that exercise 
             # from the EOW (idExercise, idWorkout) table. 
-
-            print(f"idworkout and idexercise present? {idWorkout} {idExercise}")
-
             cursor.execute(
                 '''
                 SELECT * FROM 
@@ -653,7 +648,6 @@ def getExerciseInfo(idExercise):
                 (idExercise,)
             )
             exerciseInfo = cursor.fetchone()
-            print(exerciseInfo)
             cnx.commit()
             cnx.close()
             return exerciseInfo 

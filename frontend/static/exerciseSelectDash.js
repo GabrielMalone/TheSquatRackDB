@@ -1,0 +1,164 @@
+import { f } from "./lifterActions.js";
+import { config } from "./config.js";
+import { checkIfWorkoutExistsOnDate } from "./workout.js";
+
+//-----------------------------------------------------------------------------
+// event for clicking on cursor. exercise dashboad visible/ fills out
+//-----------------------------------------------------------------------------
+export function fillOutExerciseSelectMenu(container){
+    const ExerciseDash = document.getElementById(`exerciseDashFor${container}`);
+    ExerciseDash.classList.toggle("addExerciseDashVisible");
+    ExerciseDash.scrollIntoView({ behavior: 'smooth' })
+    f.get(config.GET_EXERCISES_ENDPOINT)     // get all the exercises in the db
+        .then(exercises=>{
+            fillOutLiftCategoryMenus(exercises, ExerciseDash); // fill out dash
+            selectedExerciselistener(container);     // add e-listeners to dash
+        })
+        .catch(err=>console.error(err));
+}
+//-----------------------------------------------------------------------------
+// Fill out bench / squat / deadlift / accessory columns in the exercise window
+//-----------------------------------------------------------------------------
+function fillOutLiftCategoryMenus(exercises, ExerciseDash){
+    exercises.forEach(eData=>{ 
+        const liftCategory = eData.category;
+        switch (liftCategory) {
+            case "bench":
+                fillOutLiftCategory(eData, ExerciseDash);
+                break;
+            case "squat":
+                fillOutLiftCategory(eData, ExerciseDash);
+                break;
+            case "deadlift":
+                fillOutLiftCategory(eData, ExerciseDash);
+                break
+            case "accessory":
+                fillOutLiftCategory(eData, ExerciseDash);
+                break
+          }
+    });
+    ExerciseDash.scrollIntoView({ behavior: 'smooth' });
+}
+//-----------------------------------------------------------------------------
+// helper function to fill out bench / squat / deadlift / accessory columns 
+//-----------------------------------------------------------------------------
+function fillOutLiftCategory(categoryData, ExerciseDash){
+    const ExerciseMenu  = ExerciseDash.querySelector(`.${categoryData.category}ExerciseMenu`);
+    ExerciseMenu.innerHTML = '';
+    const liftsInCategory = categoryData.lifts_in_category;
+    liftsInCategory.forEach(lift=>{
+        ExerciseMenu.insertAdjacentHTML("beforeend", 
+            `<li class="exerciseMenuItem" data-lift-info='
+				${encodeURIComponent(JSON.stringify(lift))}'>
+                ${lift.exerciseName}
+            </li>`);
+    });
+}
+//-----------------------------------------------------------------------------
+// listens to see if an item in workout area clicked on. 
+//-----------------------------------------------------------------------------
+function selectedExerciselistener(container){
+    const addExerciseDash = document.getElementById(`exerciseDashFor${container}`);
+    addExerciseDash.addEventListener("click", selectedExerciseEvents);
+    addExerciseDash.addEventListener("mouseover", selectedExerciseEvents);
+}
+//-----------------------------------------------------------------------------
+// all the events that can happen on the Exercise Dash
+//-----------------------------------------------------------------------------
+function selectedExerciseEvents(event){  
+
+    // fills out description area of an exerice    
+    if (event.type === "mouseover" && event.target.classList.contains("exerciseMenuItem")){
+        const DescriptionBox = document.querySelector(".exerciseDescription");
+        const exercise = event.target;
+        const liftInfo = JSON.parse(decodeURIComponent(exercise.dataset.liftInfo));
+        const Description = liftInfo.Description;
+        DescriptionBox.innerHTML = Description;
+        return;
+    }
+    // selects an exercise to add to a workout if container is workoutDash
+    if (event.type === "click" && isWorkoutDashContainer(event) 
+		&& event.target.classList.contains("exerciseMenuItem")) {
+
+        const selectedExercise = event.target;
+        checkIfWorkoutExistsOnDate(selectedExercise);
+        return;
+    }
+    //  closes the exercise dashboard via the x button
+    if (event.type === "click" && event.target.id === "addExerciseX"){
+		if (isWorkoutDashContainer(event)){ 
+			const exerciseDash  = document.getElementById("exerciseDashForworkoutDash");
+			exerciseDash.classList.toggle("addExerciseDashVisible"); 
+			return;
+		} // otherwise is exercisedash for pr container
+        const exerciseDash  = document.getElementById("exerciseDashForprDash");
+        exerciseDash.classList.toggle("addExerciseDashVisible"); 
+        return;
+    }
+}
+
+function isWorkoutDashContainer(event){ 
+	let node = event.target.parentNode;
+	while (node.parentNode) { 			// see if this menu a child of workoutNode
+		if (node.id === "workoutDash"){
+			return true;
+		}
+		node = node.parentNode;
+	}
+	return false;
+}
+
+
+export function createExerciseDash(container){ 
+	const prevDash = document.getElementById(`exerciseDashFor${container}`);
+	// if (prevDash) prevDash.innerHTML = ``;
+
+	const exerciseDash =
+	`
+	<div class="addExerciseDash" id="exerciseDashFor${container}">
+
+	<div class="addExerciseBoxHeader">
+		<div id="addExerciseTitle">Select Exercise</div>
+		<div id="addExerciseX">X</div>
+	</div>
+
+	<div class="exerciseSelectionWrapper">
+
+		<div class="SquatCategory">
+		<div class="CategoryHeader">Squat</div>
+			<div class="exercisesInDB">
+			<ul class="squatExerciseMenu"></ul>
+			</div>
+		</div>
+
+		<div class="BenchCategory">
+		<div class="CategoryHeader">Bench</div>
+			<div class="exercisesInDB">
+			<ul class="benchExerciseMenu"></ul>
+		</div>
+		</div>
+
+		<div class="DeadliftCategory">
+		<div class="CategoryHeader">Deadlift</div>
+			<div class="exercisesInDB">
+			<ul class="deadliftExerciseMenu"></ul>
+		</div>
+		</div>
+
+		<div class="AccessoriesCategory">
+		<div class="CategoryHeader">Accessory</div>
+			<div class="exercisesInDB">
+			<ul class="accessoryExerciseMenu"></ul>
+			</div>
+		</div>
+
+	</div>
+
+	<div class="exerciseDescriptionWrapper">
+		<div class="exerciseDescription"></div>
+	</div>
+
+	</div>
+	`
+	return exerciseDash;
+}

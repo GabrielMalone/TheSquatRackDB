@@ -1,6 +1,5 @@
 import { submitNewLifterClick, configEventListener, getLifters } from "./lifterActions.js";
 import { calendarListener, dayEventListener } from "./calendar.js";
-import { formUpdateListner, setListener } from "./workout.js";
 //-----------------------------------------------------------------------------
 // This clears all the input fields for the create new lifter window
 //-----------------------------------------------------------------------------
@@ -47,8 +46,6 @@ export function init() {
     calendarListener();         // detects key input for changing months in cal
     activeLiftersCLick();                 // detects click on lifter in sidebar
     dayEventListener();               // detecting click on day in the calendar
-    setListener();                         // detecting a click on workout sets
-    formUpdateListner();                               // detecting set updates
     configEventListener();                  // config button in the main window
     xNewLifterWindow();                    // x button on the new lifter window
     addLifterClick();                        // add lifter button in the header

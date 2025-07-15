@@ -1,7 +1,8 @@
 import { config, DoW, months } from "./config.js";
 import { currLifter, f } from "./lifterActions.js";
-import { clearCharts, loadMonthlyCharts } from "./monthlyChart.js";
-import { createCursor, createrWorkoutHeader, getWorkoutFromWokroutID } from "./workout.js";
+import { loadMonthlyCharts } from "./monthlyChart.js";
+import { createCursor } from "./cursor.js";
+import { createrWorkoutHeader, getWorkoutFromWokroutID } from "./workout.js";
 
 export let curYear;
 export let curMonth;
@@ -191,7 +192,7 @@ function dayListener(e){
             getWorkoutFromWokroutID(e.target.dataset.idWorkout);
         } else {
             createrWorkoutHeader(dateInfo);
-            createCursor();                 // setup for starting a new workout
+            createCursor(workoutArea);     // setup for starting a new workout
         }
     }
 }

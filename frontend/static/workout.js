@@ -1,12 +1,13 @@
 import { curlastDay, curMonth, curYear, fillCalendar } from "./calendar.js";
 import { config } from "./config.js";
-import { setTemplateHTML, setUpdateFormTemplateHTML, ExerciseDashTemplate } from "./htmlTemplates.js";
+import { setTemplateHTML, setUpdateFormTemplateHTML } from "./htmlTemplates.js";
+import { fillOutExerciseSelectMenu, createExerciseDash } from "./exerciseSelectDash.js";
 import { currLifter, f } from "./lifterActions.js";
 import { unit, prArgs } from "./config.js";
 import { createPrDash } from "./prDash.js";
+import { createCursor } from "./cursor.js";
+
 const workoutContainer = document.querySelector(".workout"); // clear container
-
-
 
 //-----------------------------------------------------------------------------
 // This method takes a workout from database and formats it into the workout UI
@@ -19,7 +20,7 @@ export function getWorkoutFromWokroutID(idWorkout){
             lifts.forEach(lift=>{            // will iterate over each exercise
                 fillExerciseRow(lift);       // this will iterate over each set
             });
-            createCursor(lifts.idWorkout);            // place cursor at bottom
+            createCursor(workoutContainer);           // place cursor at bottom
         })
         .catch(error=>console.error(error));
 }
@@ -27,14 +28,30 @@ export function getWorkoutFromWokroutID(idWorkout){
 // if any update/delete/add refresh the various dashes 
 //-----------------------------------------------------------------------------
 function updateDashesOnChange(dateInfo, idWorkout, curYear, curMonth, curlastDay){
-    createWorkoutGrid(dateInfo);     // these three functions to redraw 
-    getWorkoutFromWokroutID(idWorkout);             // the workout area
-    fillCalendar(curYear, curMonth, curlastDay);    // and the calendar    
-    createPrDash(prArgs, currLifter.id);   // GUI this eventualyly
+    createWorkoutGrid(dateInfo);             // these four functions to redraw 
+    getWorkoutFromWokroutID(idWorkout);                    // the workout area
+    fillCalendar(curYear, curMonth, curlastDay);           // and the calendar    
+    createPrDash(prArgs, currLifter.id);                        // and pr dash
 }
-
-
-
+//-----------------------------------------------------------------------------
+// event actions for the workout dash
+//-----------------------------------------------------------------------------
+function workoutDashClickEvents(e){
+    removeSetEvent(e);
+    addExerciseEvent(e);
+    expandSetEvent(e);
+}
+function expandSetEvent(e){
+    // expand set box and show update form
+    if (e.type === "click" && e.target.classList.contains("set") ){
+        const set = e.target;
+        set.classList.toggle("setExpand");
+        const setID = set.dataset.setID; 
+        const form = document.querySelector(`#setUpdateForm${setID}`);
+        form.classList.toggle("setUpdateFormVisible");
+        return;
+    } 
+}
 //-----------------------------------------------------------------------------
 // helper method to make the UI exercise Row
 //-----------------------------------------------------------------------------
@@ -78,31 +95,11 @@ function makeNewSetBox(setInfo, liftInfo, setNumber, curExerciseRow){
     curExerciseRow.appendChild(newSet);
 }
 //-----------------------------------------------------------------------------
-// element to help add and remove exercises from a workout
-//-----------------------------------------------------------------------------
-export function createCursor(){
-    const cursor = document.createElement('div'); // cursor for adding exercise
-    cursor.classList.add("cursor");
-    cursor.innerHTML = '╋';
-    workoutContainer.appendChild(cursor); 
-    setTimeout(()=>{
-        cursor.scrollIntoView({ behavior: 'smooth' });
-    }, 100)
-
-}
-
-//-----------------------------------------------------------------------------
-// listens to see if a set gets updated
-//-----------------------------------------------------------------------------
-export function formUpdateListner(){
-    workoutContainer.addEventListener("submit", updateSetEvent);
-    workoutContainer.addEventListener("click", removeSetEvent);
-}
-//-----------------------------------------------------------------------------
 // if set updated, query the DB
 //-----------------------------------------------------------------------------
 function updateSetEvent(e){
     if (e.target.classList.contains("setUpdate")){
+        console.log("attempting update");
         e.preventDefault();
         const setUpdateForm = e.target; // get all the info from the user input
         const setBox = setUpdateForm.closest(".set");
@@ -113,7 +110,8 @@ function updateSetEvent(e){
         let setRPE      = setUpdateForm.querySelector(`#rpe${idSet}`).value;
         updateSet(idSet, setWeight, setReps, setRPE, idWorkout);    // query DB
     }
-    document.querySelector(".cursor").scrollIntoView({ behavior: 'smooth' });
+    const cursor = document.getElementById("cursorForworkoutDash");
+    cursor.scrollIntoView({ behavior: 'smooth' });
 }
 //-----------------------------------------------------------------------------
 function updateSet(idSet, setWeight, setReps, setRPE, idWorkout){
@@ -125,8 +123,6 @@ function updateSet(idSet, setWeight, setReps, setRPE, idWorkout){
         }) 
         .catch(err=>console.error(err));
 }
-
-
 
 //-----------------------------------------------------------------------------
 // this method will add a new set to an exercise row
@@ -167,14 +163,12 @@ function updateLiftInfo(curliftInfo, newSetInfo){
     }
 }
 
-
-
 //-----------------------------------------------------------------------------
 // if set remove button clicked, remove set from DB
 //-----------------------------------------------------------------------------
 function removeSetEvent(e){
     if (e.target.classList.contains("setRemove")){
-        const cursor        = document.querySelector(".cursor");
+        const cursor        = document.getElementById("cursorForworkoutDash");
         const idSet         = e.target.dataset.setID;
         const idWorkout     = e.target.dataset.idWorkout;
         const idExercise    = e.target.dataset.exerciseID;
@@ -193,63 +187,17 @@ function removeSetEvent(e){
         cursor.scrollIntoView({ behavior: 'smooth' });
     }
 }
-
-
-//-----------------------------------------------------------------------------
-// listens to see if an item in workout area clicked on. 
-//-----------------------------------------------------------------------------
-export function setListener(){
-    document.querySelector(".lifterBox").addEventListener("click", clickSetEvent);
-    document.querySelector(".lifterBox").addEventListener("mouseover", clickSetEvent);
-}
-function clickSetEvent(event){  
-    // fills out description area of an exerice    
-    if (event.type === "mouseover" && event.target.classList.contains("exerciseMenuItem")){
-        const DescriptionBox = document.querySelector(".exerciseDescription");
-        const exercise = event.target;
-        const liftInfo = JSON.parse(decodeURIComponent(exercise.dataset.liftInfo));
-        const Description = liftInfo.Description;
-        DescriptionBox.innerHTML = Description;
-        return;
-    }
-    // selects an exercise to add to a workout   
-    if (event.type === "click" && event.target.classList.contains("exerciseMenuItem")){
-        const selectedExercise = event.target;
-        checkIfWorkoutExistsOnDate(selectedExercise);
-        return;
-    }
-    // expand set box and show update form
-    if (event.type === "click" && event.target.classList.contains("set") ){
-        const set = event.target;
-        set.classList.toggle("setExpand");
-        const setID = set.dataset.setID; 
-        const form = document.querySelector(`#setUpdateForm${setID}`);
-        form.classList.toggle("setUpdateFormVisible");
-        return;
-    } 
-    // cursor click to bring up exercise dashboard
-    if (event.type === "click" && event.target.classList.contains("cursor")){
-        document.querySelector(".lifterBox").insertAdjacentHTML("beforeend",ExerciseDashTemplate());
-        chooseNewExerciseBoxEvent();
-        return;
-    }
-    //  closes the exercise dashboard via the x button
-    if (event.type === "click" && event.target.id === "addExerciseX"){
-        const exerciseDash  = document.querySelector(".addExerciseDash");
-        exerciseDash.classList.toggle("addExerciseDashVisible"); 
-        return;
-    }
-}
 //-----------------------------------------------------------------------------
 // before inserting exercise on a date, check if workout exists on that date
 //-----------------------------------------------------------------------------
-function checkIfWorkoutExistsOnDate(selectedExercise){
+export function checkIfWorkoutExistsOnDate(selectedExercise){
     let idWorkout = null;
     const idUser = currLifter.id;
     const rawData = (document.querySelector(".trainingDate"))?.dataset.dateInfo;
-    if(!rawData) return; // means a user has not clicked on a date on the calendar
-    // but tha the exericse selection box is still open
+    if(!rawData) return; // means user has not clicked on date on the calendar
+                                   // but exericse selection box is still open
     const Date = JSON.parse(decodeURIComponent(rawData)); 
+
     f.put(config.CHECK_IF_WORKOUT_EXISTS, Date, idUser)
         .then(res=>{
             if (res.success){
@@ -280,65 +228,27 @@ function inserNewExerciseIntoWorkout(selectedExercise, idWorkout){
         })
         .catch(err=>console.error(err));  
 }
-//-----------------------------------------------------------------------------
-// event for clicking on add exercise. exercise dashboad visible/ fills out
-//-----------------------------------------------------------------------------
-function chooseNewExerciseBoxEvent(){
-    const addExerciseDash = document.querySelector(".addExerciseDash");
-    addExerciseDash.classList.toggle("addExerciseDashVisible");
-    addExerciseDash.scrollIntoView({ behavior: 'smooth' })
-    f.get(config.GET_EXERCISES_ENDPOINT)     // get all the exercises in the db
-        .then(exercises=>{
-            fillOutLiftCategoryMenus(exercises);
-        })
-        .catch(err=>console.error(err));
-}
-//-----------------------------------------------------------------------------
-// Fill out bench / squat / deadlift / accessory columns in the exercise window
-//-----------------------------------------------------------------------------
-function fillOutLiftCategoryMenus(exercises){
-    const addExerciseDash = document.querySelector(".addExerciseDash");
-    exercises.forEach(eData=>{ 
-        const liftCategory = eData.category;
-        switch (liftCategory) {
-            case "bench":
-                fillOutLiftCategory(eData);
-                break;
-            case "squat":
-                fillOutLiftCategory(eData);
-                break;
-            case "deadlift":
-                fillOutLiftCategory(eData);
-                break
-            case "accessory":
-                fillOutLiftCategory(eData);
-                break
-          }
-    });
-    addExerciseDash.scrollIntoView({ behavior: 'smooth' });
-}
-//-----------------------------------------------------------------------------
-// helper function to fill out bench / squat / deadlift / accessory columns 
-//-----------------------------------------------------------------------------
-function fillOutLiftCategory(categoryData){
-    const ExerciseMenu  = document.querySelector(`.${categoryData.category}ExerciseMenu`);
-    ExerciseMenu.innerHTML = '';
-    const liftsInCategory = categoryData.lifts_in_category;
-    liftsInCategory.forEach(lift=>{
-        ExerciseMenu.insertAdjacentHTML("beforeend", 
-            `<li class="exerciseMenuItem" data-lift-info='${encodeURIComponent(JSON.stringify(lift))}'>
-                ${lift.exerciseName}
-            </li>`);
-    });
-}
+
+
 //-----------------------------------------------------------------------------
 // create workout input grid
 //-----------------------------------------------------------------------------
 export function createWorkoutGrid(dateInfo){
     workoutContainer.style.display = "flex";
-    delete workoutContainer.dataset.idWorkout;
+    delete workoutContainer.dataset.idWorkout;   // this doesn't look necessary
     workoutContainer.innerHTML = ``;   
+    workoutContainer.addEventListener("click", workoutDashClickEvents);
+    workoutContainer.addEventListener("submit", updateSetEvent);
     fillWorkoutDate(dateInfo);  
+}
+
+//-----------------------------------------------------------------------------
+function addExerciseEvent(e){
+    if (e.target.id === "cursorForworkoutDash"){
+        workoutContainer.insertAdjacentHTML("beforeend",createExerciseDash("workoutDash"));
+        fillOutExerciseSelectMenu("workoutDash");
+        return;
+    }
 }
 //-----------------------------------------------------------------------------
 // create the header for the selected workout display area
@@ -357,9 +267,6 @@ function createExerciseRow(exercise){
     workoutContainer.appendChild(newExerciseRow);    
     return newExerciseRow;
 }
-
-
-
 
 
 //-----------------------------------------------------------------------------

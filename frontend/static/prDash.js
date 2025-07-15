@@ -2,43 +2,25 @@
 import { config,DoW, months } from "./config.js";
 import { fillCalendar } from "./calendar.js";
 import { createrWorkoutHeader, getWorkoutFromWokroutID } from "./workout.js";
+import { fillOutExerciseSelectMenu, createExerciseDash } from "./exerciseSelectDash.js";
 import { f } from "./lifterActions.js";
+import { createCursor } from "./cursor.js";
 
-
-const repRange = 20;
+let repRange = 20;
 
 //-----------------------------------------------------------------------------
-// creates the lifetime pr chart and fetches the data to fill in the chart
+// creates the pr chart and fetches the data to fill in the chart
 //-----------------------------------------------------------------------------
 export async function createPrDash(exerciseList, idUser){
-    document.querySelector(".prDash").innerHTML = ``;
+    document.querySelector(".prDash").innerHTML = ``;    // clear any prev dash
     const prDash = initPrDash();
-    for (const liftID of exerciseList) {   // get info for exercises passed in
+    for (const liftID of exerciseList) {    // get info for exercises passed in
         const exerciseInfo = await f.post(config.GET_EXERCISE_INFO, liftID);
         const curLiftRow = buildLiftRow(exerciseInfo, prDash, idUser, liftID);
         f.post(config.GET_PR_DATA_FOR_LIFT, {idUser, "lift" : liftID})//pr data
         .then(prs=>{
             prs.forEach(pr=>{        //iterate prs, get corresponding box by id
-                if(pr.reps > repRange || pr.reps === 0) return;
-                const curLift = exerciseInfo.abbrev;
-                const repBox = curLiftRow.querySelector(`#${curLift}_rep_${pr.reps}`);
-                const date = new Date(pr.date);
-                const formattedDate = date.toLocaleDateString("en-US", {
-                    timeZone: "UTC", // to prevent day changes with 00:00 times
-                    year: "numeric",               // due to earlier time zones
-                    month: "short",
-                    day: "numeric"
-                });
-                repBox.dataset.weight = pr.weight;  // data gets workout for pr
-                repBox.dataset.reps = pr.reps;
-                repBox.dataset.date = formattedDate;
-                repBox.dataset.idUser = idUser;          // and to make tooltip
-                repBox.dataset.idWorkout = pr.idWorkout;// video link in future
-                if (! repBox.innerHTML && pr.weight){
-                    repBox.innerHTML = `<div class="prWeight">${pr.weight}</div>`;
-                    repBox.classList.add("prPresent");
-                    repBox.append(makePrToolTip(exerciseInfo.lift, pr.weight, pr.reps,formattedDate));
-                } 
+                fillInRepPRBoxes(pr, idUser, exerciseInfo, curLiftRow);
             });
         })
         .catch(err=>{
@@ -46,30 +28,43 @@ export async function createPrDash(exerciseList, idUser){
         });
     }
     buildPrDashHeader(prDash);
-    prInfoClick(prDash); // listen for clicks on PRs
+    prInfoClick(prDash);                            // listen for clicks on PRs
+    createCursor(prDash);
 }
 //-----------------------------------------------------------------------------
 // EVENTS for clicking on a PR - load the workout in which PR happened
 //-----------------------------------------------------------------------------
 function prInfoClick(prDash){
-    prDash.addEventListener("click", prClickEvent);
+    prDash.addEventListener("click", prDashClickEvent);
 }
-function prClickEvent(e){
+//-----------------------------------------------------------------------------
+function prDashClickEvent(e){
     if (e.target.classList.contains("prPresent")){
-        const [dateInfo, year, month, prDay, lastday, idWorkout ] = getPRdata(e);
-        fillCalendar(year, month, lastday); // change calendar to match pr date
-        const days = [...document.querySelectorAll(".day")];
-        days.forEach(day=>{                  // match the cal day to the pr day
-            day.classList.remove("daySelected", "prDateHighlighted");
-            if (parseInt(day.dataset.day)   ===  parseInt(prDay) && 
-                parseInt(day.dataset.month) ===  parseInt(month)){
-                day.classList.add("prDateHighlighted");
-            }
-        });
-       createrWorkoutHeader(dateInfo);                           // get workout 
-       getWorkoutFromWokroutID(idWorkout);
+        highlightPRinCalendarAndGetPRworkout(e);
+    }
+    if (e.target.id === "cursorForprDashBoard"){
+        const prDash = document.querySelector(".prDash");
+        prDash.insertAdjacentHTML("beforeend",createExerciseDash("prDash"));
+        fillOutExerciseSelectMenu("prDash");
+        return;
     }
 }
+//-----------------------------------------------------------------------------
+function highlightPRinCalendarAndGetPRworkout(e){
+    const [dateInfo, year, month, prDay, lastday, idWorkout ] = getPRdata(e);
+    fillCalendar(year, month, lastday); // change calendar to match pr date
+    const days = [...document.querySelectorAll(".day")];
+    days.forEach(day=>{                                 // highlight the pr day 
+        day.classList.remove("daySelected", "prDateHighlighted");
+        if (parseInt(day.dataset.day)   ===  parseInt(prDay) && 
+            parseInt(day.dataset.month) ===  parseInt(month)){
+            day.classList.add("prDateHighlighted"); 
+        }
+    });
+    createrWorkoutHeader(dateInfo);           // get workout where pr happened
+    getWorkoutFromWokroutID(idWorkout);
+}
+//-----------------------------------------------------------------------------
 function getPRdata(e){
     const curPR = e.target;      
     const prDate = curPR.dataset.date;
@@ -99,6 +94,7 @@ function initPrDash(){
     buildRepsHeader(repsTitle);                  // build the rows of exercises 
     return prDash;
 }
+//-----------------------------------------------------------------------------
 function buildPrDashHeader(prDash){
     prDash.insertAdjacentHTML("afterbegin",`  
             <div class="prDashHeader">
@@ -111,11 +107,12 @@ function buildPrDashHeader(prDash){
     const miniMizer = document.querySelector(".prDashMinimizer");
     miniMizer.addEventListener("click", minimizePrDash);
 }
+//-----------------------------------------------------------------------------
 function minimizePrDash(){
     const prDash = document.querySelector(".prDash");
     prDash.classList.toggle("prDashVisible");
 }
-
+//-----------------------------------------------------------------------------
 function buildRepsTitle(prDash){
     const repsTitle = document.createElement('div');
     repsTitle.classList.add("prRepsTitle");
@@ -124,16 +121,19 @@ function buildRepsTitle(prDash){
     prDash.append(repsTitle);
     return repsTitle;
 }
+//-----------------------------------------------------------------------------
 function buildRepsHeader(repsTitle){
     for (let i = 0 ; i <= repRange ; i ++ ){
         const repNumberBox = document.createElement('div');
         repNumberBox.setAttribute("id", `repNumberBoxInHeader_${i}`);
         repNumberBox.classList.add("repNumberBoxInHeader");
         repNumberBox.classList.add('prCell');
-        if (i > 0) repNumberBox.innerHTML = `<div class="repNumInHeader">${i}</div>`;
+        if (i > 0) repNumberBox.innerHTML = 
+            `<div class="repNumInHeader">${i}</div>`;
         repsTitle.append(repNumberBox);
     }    
 }
+//-----------------------------------------------------------------------------
 function buildRepPrBox(lift, rep){
     const repPRbox = document.createElement('div');
     if (rep === 0){ // place name of lift at start
@@ -148,6 +148,7 @@ function buildRepPrBox(lift, rep){
     return repPRbox;
 
 }
+//-----------------------------------------------------------------------------
 function buildLiftRow(lift, prDash, idUser, liftID){
     const liftRow = document.createElement('div');
     liftRow.classList.add("prLiftRow");
@@ -158,6 +159,35 @@ function buildLiftRow(lift, prDash, idUser, liftID){
     }
     return liftRow;
 }
+//-----------------------------------------------------------------------------
+function formatBackendDateData(BackendPrDate){
+    const date = new Date(BackendPrDate);
+    const formattedDate = date.toLocaleDateString("en-US", {
+        timeZone: "UTC", // to prevent day changes with 00:00 times
+        year: "numeric",               // due to earlier time zones
+        month: "short",
+        day: "numeric"
+    });
+    return formattedDate
+}
+//-----------------------------------------------------------------------------
+function fillInRepPRBoxes(pr, idUser, exerciseInfo, curLiftRow){ //backend data
+    if(pr.reps > repRange || pr.reps === 0) return;
+    const curLift = exerciseInfo.abbrev;
+    const repBox = curLiftRow.querySelector(`#${curLift}_rep_${pr.reps}`);
+    const formattedDate = formatBackendDateData(pr.date);
+    repBox.dataset.weight = pr.weight;  // data gets workout for pr
+    repBox.dataset.reps = pr.reps;
+    repBox.dataset.date = formattedDate;
+    repBox.dataset.idUser = idUser;          // and to make tooltip
+    repBox.dataset.idWorkout = pr.idWorkout;// video link in future
+    if (! repBox.innerHTML && pr.weight){
+        repBox.innerHTML = `<div class="prWeight">${pr.weight}</div>`;
+        repBox.classList.add("prPresent");
+        repBox.append(makePrToolTip(exerciseInfo.lift,pr.weight,pr.reps,formattedDate));
+    } 
+}
+//-----------------------------------------------------------------------------
 function makePrToolTip(lift, weight, reps, date){
 
     const toolTipWrapper = document.createElement('div');
