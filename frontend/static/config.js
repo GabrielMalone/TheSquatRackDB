@@ -58,26 +58,26 @@ const devConfig = {
   
 
 const prodConfig = {
+                         API_URL : "https://5q3n5f0d-5001.use.devtunnels.ms/", 
+                      DEBUG_MODE : false,
+                LIFTERS_ENDPOINT : "lifters",
+                 LIFTER_ENDPOINT : "lifter",
+                WORKOUT_ENDPOINT : "workout",
+                    SET_ENDPOINT : "createSet",
+               UPDATE_SET_NUMBER : "updateSetNumber",
+           REORDER__SET_ENDPOINT : "reorderSetNumbers",
+          GET_EXERCISES_ENDPOINT : "getExercises",
+    INSERT_NEW_EXERCISE_ENDPOINT : "insertNewExerciseIntoWorkout",
+         CREATE_WORKOUT_ENDPOINT : "createWorkout",
+              DELETE_FROM_EORDER : "ExerciseOrder",
+         CHECK_IF_WORKOUT_EXISTS : "workoutExistCheck",
+               GET_MONTHLY_LIFTS : "monthlyWorkouts",
+                   monthlyVolume : "getMonthlyTrainingVolume",
+               monthlyInetensity : "getMonthlyTrainingInensity",
+                monthlyFrequency : "getMonthlyTrainingFrequency",
+            GET_PR_DATA_FOR_LIFT : "getPRDataForLift",
+               GET_EXERCISE_INFO : "getExerciseInfo",
 
-    API_URL: "https://5q3n5f0d-5001.use.devtunnels.ms/", 
-    DEBUG_MODE: false,
-    LIFTERS_ENDPOINT: "lifters",
-    LIFTER_ENDPOINT: "lifter",
-    WORKOUT_ENDPOINT: "workout",
-    SET_ENDPOINT: "createSet",
-    UPDATE_SET_NUMBER: "updateSetNumber",
-    REORDER__SET_ENDPOINT: "reorderSetNumbers",
-    GET_EXERCISES_ENDPOINT: "getExercises",
-    INSERT_NEW_EXERCISE_ENDPOINT: "insertNewExerciseIntoWorkout",
-    CREATE_WORKOUT_ENDPOINT: "createWorkout",
-    DELETE_FROM_EORDER: "ExerciseOrder",
-    CHECK_IF_WORKOUT_EXISTS: "workoutExistCheck",
-    GET_MONTHLY_LIFTS: "monthlyWorkouts",
-    monthlyVolume: "getMonthlyTrainingVolume",
-    monthlyInetensity: "getMonthlyTrainingInensity",
-    monthlyFrequency: "getMonthlyTrainingFrequency",
-    GET_PR_DATA_FOR_LIFT: "getPRDataForLift",
-    GET_EXERCISE_INFO: "getExerciseInfo"
   };
 
 export const endpoint = window.location.hostname === "localhost" ? 
@@ -86,7 +86,7 @@ export const endpoint = window.location.hostname === "localhost" ?
 // PR DASH VARIABLES
 export const PR_DASH_VARIABLES = {
 
-  prDashClassSelector    : ".prDash",
+  prDashClass            : "prDash",
   prDashMinimizerId      : "prDashMinimizer",
   prDashHeaderClass      : "prDashHeader",
   prDashHeaderTitleClass : "prDashHeaderTitle",
@@ -96,6 +96,10 @@ export const PR_DASH_VARIABLES = {
   prCellClass            : "prCell", 
   prDashMinimizerIcon    : "-",
   prDashNBoxInHeadClass  : "repNumberBoxInHeader",
-  repNumInHeader         : "repNumInHeader"
+  repNumInHeader         : "repNumInHeader",
+  repPRboxClass          : "repPRbox",
+  repPRrowClass          : "prLiftRow",
+  repPRliftNameBoxClass  : "prLiftNameBox",
+  repPRliftNameWrapClass : "prLiftName",
 
 };

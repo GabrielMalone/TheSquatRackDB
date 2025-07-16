@@ -12,7 +12,7 @@ let repRange = 20;
 // creates the pr chart and fetches the data to fill in the chart
 //-----------------------------------------------------------------------------
 export async function createPrDash(exerciseList, idUser){
-    document.querySelector(`${p.prDashClassSelector}`).innerHTML = ``;    
+    document.querySelector(`.${p.prDashClass}`).innerHTML = ``;    
     const prDash = initPrDash(exerciseList.length);    // clear any prev dash ^
     for (const liftID of exerciseList) {    // get info for exercises passed in
         const exerciseInfo = await f.post(c.GET_EXERCISE_INFO, liftID);
@@ -46,7 +46,7 @@ function prDashClickEvent(e){
 //-----------------------------------------------------------------------------
 function createDashFromCursorClick(e){
     if (e.target.id === "cursorForprDashBoard"){
-        const prDash = document.querySelector(`${p.prDashClassSelector}`);
+        const prDash = document.querySelector(`.${p.prDashClass}`);
         prDash.insertAdjacentHTML("beforeend",createExerciseDash(prDash));
         fillOutExerciseSelectMenu(prDash);
         return;
@@ -98,7 +98,7 @@ function getPRdata(e){
 // helper methods for the createPrDash ^
 //-----------------------------------------------------------------------------
 function initPrDash(exerciselistLength){    
-    const prDash = document.querySelector(`${p.prDashClassSelector}`); 
+    const prDash = document.querySelector(`.${p.prDashClass}`); 
     if (exerciselistLength === 0 ) return prDash;   // build the dash headers ^
     const repsTitle = buildRepsTitle(prDash);
     buildRepsHeader(repsTitle);                  // build the rows of exercises 
@@ -119,7 +119,7 @@ function buildPrDashHeader(prDash){
 }
 //-----------------------------------------------------------------------------
 function minimizePrDash(){
-    const prDash = document.querySelector(`${p.prDashClassSelector}`);
+    const prDash = document.querySelector(`.${p.prDashClass}`);
     prDash.classList.toggle(`${p.prDashVisibleClass}`);
 }
 //-----------------------------------------------------------------------------
@@ -147,21 +147,21 @@ function buildRepsHeader(repsTitle){
 function buildRepPrBox(lift, rep){
     const repPRbox = document.createElement('div');
     if (rep === 0){ // place name of lift at start
-        repPRbox.classList.add("prLiftNameBox");
-        repPRbox.innerHTML = `<div class="prLiftName">${lift.abbrev}</div>`;
-        repPRbox.classList.add('prCell');
+        repPRbox.classList.add(`${p.repPRliftNameBoxClass}}`);
+        repPRbox.innerHTML = `<div class="${p.repPRliftNameWrapClass}">${lift.abbrev}</div>`;
+        repPRbox.classList.add(`${p.prCellClass}`);
         return repPRbox;
     }  
-    repPRbox.classList.add("repPRbox"); 
+    repPRbox.classList.add(`${p.repPRboxClass}`); 
     repPRbox.setAttribute("id", `${lift.abbrev}_rep_${rep}`);
-    repPRbox.classList.add('prCell');
+    repPRbox.classList.add(`${p.prCellClass}`);
     return repPRbox;
 
 }
 //-----------------------------------------------------------------------------
 function buildLiftRow(lift, prDash, idUser, liftID){
     const liftRow = document.createElement('div');
-    liftRow.classList.add("prLiftRow");
+    liftRow.classList.add(`${p.repPRrowClass}`);
     liftRow.setAttribute("id", `${lift.abbrev}PR`);
     prDash.append(liftRow);
     for (let i = 0 ; i < repRange + 1 ; i ++ ){
