@@ -14,7 +14,7 @@ export function fillOutExerciseSelectMenu(container){
     }
     if (ExerciseDash.id === "exerciseDashForprDashBoard") {
         const prDash = document.querySelector(".prDash");
-        prDash.scrollIntoView({ behavior: 'smooth' })
+        // prDash.scrollIntoView({ behavior: 'smooth' })
     }
     f.get(e.GET_EXERCISES_ENDPOINT)     // get all the exercises in the db
         .then(exercises=>{

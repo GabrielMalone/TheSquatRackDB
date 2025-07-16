@@ -47,7 +47,7 @@ export async function loadMonthlyCharts(idUser, month, year){
         }
     }  
     buildChartHeader(); 
-    
+  
 }
 //-----------------------------------------------------------------------------
 // create the HTML element that will hold the chart display
@@ -75,7 +75,7 @@ function buildChartHeader(){
             <div class="${c.mChartMinimizerClass}" id="${c.mChartMinimizerId}">${c.mChartMinimizerIcon}</div>
         </div>`);
     const width = chart.offsetWidth;
-    const mChartDashHeader = document.querySelector(`.${c.mChartDashClass}`);
+    const mChartDashHeader = document.getElementById(`${c.mChartDashHeaderId}`);
     mChartDashHeader.style.width = `${width}px`;
     const miniMizer = document.getElementById(c.mChartMinimizerId);
     miniMizer.addEventListener("click", minimizeMchartDash);
@@ -116,7 +116,6 @@ function drawChart(chartTitle, liftsData, graphElement, graphType){
 
     // Create a chart
     const ctx = document.getElementById(`${graphElement}`).getContext('2d');
-    console.log(ctx);
     const chart = new Chart(ctx, {
         type: graphType, 
     
@@ -232,7 +231,6 @@ export function clearCharts(){
     }
     const monthlyChartDash = document.querySelector(".monthlyChartDash"); 
     if(monthlyChartDash){
-        console.log("here?");
         monthlyChartDash.innerHTML = ``;
     }
     const mChartDashHeader = document.getElementById(`${c.mChartMinimizerId}`);

@@ -85,24 +85,25 @@ export const endpoint = window.location.hostname === "localhost" ?
 
 export const DASH_HEADER_VARS = {
 
-	dashHeaderClass      : "dashHeader",
-	dashHeaderTitle		 : "dashHeaderTitle",
-	minimizerClass		 : "minimizer",
-	minimizerIcon	 	 : "-",
+	dashHeaderClass         : "dashHeader",
+	dashHeaderTitle		      : "dashHeaderTitle",
+	minimizerClass		      : "minimizer",
+	minimizerIcon	 	        : "-",
 }
 
 export const PR_DASH_VARIABLES = {
 
   	prDashClass            : "prDash",
-	prDashVisibleClass     : "prDashVisible",
+	  prDashVisibleClass     : "prDashVisible",
   	prRepsTitleClass       : "prRepsTitle",  
   	prCellClass            : "prCell", 
 
   	prDashMinimizerIcon    : DASH_HEADER_VARS.minimizerIcon,
-	prDashHeaderClass      : DASH_HEADER_VARS.dashHeaderClass,
+	  prDashHeaderClass      : DASH_HEADER_VARS.dashHeaderClass,
   	prDashHeaderTitleClass : DASH_HEADER_VARS.dashHeaderTitle,
-	prDashMinimizerClass   : DASH_HEADER_VARS.minimizerClass,
-	prDashMinimizerId      : "prDashMinimizer",
+	  prDashMinimizerClass   : DASH_HEADER_VARS.minimizerClass,
+	  prDashHeaderId		     : "prDashHeader",
+	  prDashMinimizerId      : "prDashMinimizer",
   	prDashText             : "PR DASH",
 
   	prDashNBoxInHeadClass  : "repNumberBoxInHeader",
@@ -110,21 +111,20 @@ export const PR_DASH_VARIABLES = {
   	repPRboxClass          : "repPRbox",
   	repPRrowClass          : "prLiftRow",
   	repPRliftNameBoxClass  : "prLiftNameBox",
-  	repPRliftNameWrapClass : "prLiftName",
+  	repPRliftNameWrapClass : "prLiftName"
 
 };
 
 export const MONTHLY_CHARTS_DASH_VARIABLES = {
 
-	mChartDashClass				: "monthlyChartDash",
-	mChartDashClassVisible		: "monthlyChartDashVisible",
-
-	mChartDashHeaderClass 		: DASH_HEADER_VARS.dashHeaderClass,
-	mChartDashHeaderTitleClass	: DASH_HEADER_VARS.dashHeaderTitle,
-	mChartMinimizerIcon			: DASH_HEADER_VARS.minimizerIcon,
-	mChartMinimizerClass		: DASH_HEADER_VARS.minimizerClass,
-	mChartDashText				: "CHART DASH",
-	mChartDashHeaderId			: "monthChartDashHeader",
-	mChartMinimizerId			: "mChartMinimizer",
+	  mChartDashClass				  : "monthlyChartDash",
+    mChartDashClassVisible	: "monthlyChartDashVisible",
+    mChartDashHeaderClass 	: DASH_HEADER_VARS.dashHeaderClass,
+	  mChartDashHeaderTitleClass : DASH_HEADER_VARS.dashHeaderTitle,
+	  mChartMinimizerIcon			: DASH_HEADER_VARS.minimizerIcon,
+	  mChartMinimizerClass		: DASH_HEADER_VARS.minimizerClass,
+	  mChartDashText				  : "CHART DASH",
+	  mChartDashHeaderId			: "monthChartDashHeader",
+	  mChartMinimizerId			  : "mChartMinimizer"
 
 }

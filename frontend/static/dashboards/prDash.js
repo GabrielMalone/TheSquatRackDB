@@ -12,7 +12,12 @@ let repRange = 20;
 // creates the pr chart and fetches the data to fill in the chart
 //-----------------------------------------------------------------------------
 export async function createPrDash(exerciseList, idUser){
-    document.querySelector(`.${p.prDashClass}`).innerHTML = ``;    
+    document.querySelector(`.${p.prDashClass}`).innerHTML = ``; 
+    const curPrDashHeader = document.getElementById(`${p.prDashHeaderId}`);
+    if (curPrDashHeader){
+        curPrDashHeader.innerHTML = ``;
+        curPrDashHeader.parentNode.removeChild(curPrDashHeader);
+    }
     const prDash = initPrDash(exerciseList.length);    // clear any prev dash ^
     for (const liftID of exerciseList) {    // get info for exercises passed in
         const exerciseInfo = await f.post(c.GET_EXERCISE_INFO, liftID);
@@ -105,14 +110,12 @@ function initPrDash(exerciselistLength){
 }
 //-----------------------------------------------------------------------------
 function buildPrDashHeader(prDash){
-    prDash.insertAdjacentHTML("afterbegin",
-        `<div class="${p.prDashHeaderClass}">
+    prDash.insertAdjacentHTML("beforebegin",
+        `<div class="${p.prDashHeaderClass}", id="${p.prDashHeaderId}">
             <div class="${p.prDashHeaderTitleClass}">${p.prDashText}</div>
             <div class="${p.prDashMinimizerClass}" id="${p.prDashMinimizerId}">${p.prDashMinimizerIcon}</div>
         </div>`);
-    const width = prDash.offsetWidth;
-    const prDashHeader = document.querySelector(`.${p.prDashHeaderClass}`);
-    prDashHeader.style.width = `${width}px`;
+    adjustHeaderSizeToContent(prDash);
     const miniMizer = document.getElementById(p.prDashMinimizerId);
     miniMizer.addEventListener("click", minimizePrDash);
 }
@@ -120,6 +123,16 @@ function buildPrDashHeader(prDash){
 function minimizePrDash(){
     const prDash = document.querySelector(`.${p.prDashClass}`);
     prDash.classList.toggle(`${p.prDashVisibleClass}`);
+    adjustHeaderSizeToContent(prDash);
+}
+//-----------------------------------------------------------------------------
+function adjustHeaderSizeToContent(prDash){
+    prDashHeader = document.getElementById(`${p.prDashHeaderId}`);
+    const width = prDash?.offsetWidth;
+    if (!width){
+        prDashHeader.style.width = `1050px`;
+    }
+    prDashHeader.style.width = `${width}px`;
 }
 //-----------------------------------------------------------------------------
 function buildRepsTitle(prDash){
@@ -146,7 +159,7 @@ function buildRepsHeader(repsTitle){
 function buildRepPrBox(lift, rep){
     const repPRbox = document.createElement('div');
     if (rep === 0){ // place name of lift at start
-        repPRbox.classList.add(`${p.repPRliftNameBoxClass}}`);
+        repPRbox.classList.add(`${p.repPRliftNameBoxClass}`);
         repPRbox.innerHTML = `<div class="${p.repPRliftNameWrapClass}">${lift.abbrev}</div>`;
         repPRbox.classList.add(`${p.prCellClass}`);
         return repPRbox;
