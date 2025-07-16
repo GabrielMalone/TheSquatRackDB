@@ -1,15 +1,19 @@
 
-import { f } from "../lifterSidebar.js";
-import { endpoint as e } from "../config.js";
+import { currLifter, f } from "../lifterSidebar.js";
+import { MONTHLY_CHARTS_DASH_VARIABLES as c, endpoint as e } from "../config.js";
 import { months } from "../config.js";
+
+let curmonth;
+let curyear;
 
 //-----------------------------------------------------------------------------
 // get monthly training volume/intensity/frequency for main compounds/accessory
 //-----------------------------------------------------------------------------
 export async function loadMonthlyCharts(idUser, month, year){
+    curmonth = month;
+    curyear = year;
     let chartNumber = 1;
     clearCharts();
-    
     const types = 
     [ ["monthlyVolume",  `${months[month]} ${year} Volume`,    ["monthly volume", "bar"]], 
     ["monthlyFrequency", `${months[month]} ${year} Frequency`, ["monthly frequency", "doughnut"]], 
@@ -41,7 +45,8 @@ export async function loadMonthlyCharts(idUser, month, year){
         } catch (err) {
             console.error(err);
         }
-    };
+    }  
+    buildChartHeader(); 
     
 }
 //-----------------------------------------------------------------------------
@@ -60,10 +65,29 @@ function createChartElement(chartType, chartTitle, chartNumber){
         </div>
         <canvas class="monthlyChart" id="chart${chartType}"></canvas>`);
         monthlyChartDash.appendChild(chart); 
-    chart.insertAdjacentHTML("beforebegin",
-        `
-        <div class="minimizer" id="monthlyChartMinimizeer"></div>
-        `);
+}
+//-----------------------------------------------------------------------------
+function buildChartHeader(){
+    const chart = document.querySelector(`.monthlyChartDashWrapper`);
+    chart.insertAdjacentHTML("afterbegin",
+        `<div class="${c.mChartDashHeaderClass}" id="${c.mChartDashHeaderId}">
+            <div class="${c.mChartDashHeaderTitleClass}">${c.mChartDashText}</div>
+            <div class="${c.mChartMinimizerClass}" id="${c.mChartMinimizerId}">${c.mChartMinimizerIcon}</div>
+        </div>`);
+    const width = chart.offsetWidth;
+    const mChartDashHeader = document.querySelector(`.${c.mChartDashClass}`);
+    mChartDashHeader.style.width = `${width}px`;
+    const miniMizer = document.getElementById(c.mChartMinimizerId);
+    miniMizer.addEventListener("click", minimizeMchartDash);
+}
+function minimizeMchartDash(){
+    const mChartDash = document.querySelector(`.${c.mChartDashClass}`);
+    mChartDash.classList.toggle(`${c.mChartDashClassVisible}`);
+    // if dont reload after minimize, the charts redraw too small, dunno why
+    if (!mChartDash.classList.contains("monthlyChartDashVisible")){
+        clearCharts();
+        loadMonthlyCharts(currLifter.id, curmonth, curyear);
+    }
 }
 //-----------------------------------------------------------------------------
 // This is the logic for clicking the addLifter button. makes add window appear
@@ -92,6 +116,7 @@ function drawChart(chartTitle, liftsData, graphElement, graphType){
 
     // Create a chart
     const ctx = document.getElementById(`${graphElement}`).getContext('2d');
+    console.log(ctx);
     const chart = new Chart(ctx, {
         type: graphType, 
     
@@ -206,5 +231,12 @@ export function clearCharts(){
         });
     }
     const monthlyChartDash = document.querySelector(".monthlyChartDash"); 
-    if(monthlyChartDash) monthlyChartDash.innerHTML = ``;
+    if(monthlyChartDash){
+        console.log("here?");
+        monthlyChartDash.innerHTML = ``;
+    }
+    const mChartDashHeader = document.getElementById(`${c.mChartMinimizerId}`);
+    if (mChartDashHeader){
+        mChartDashHeader.parentElement.remove(mChartDashHeader);
+    }
 }

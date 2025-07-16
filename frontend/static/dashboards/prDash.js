@@ -19,7 +19,6 @@ export async function createPrDash(exerciseList, idUser){
         const curLiftRow = buildLiftRow(exerciseInfo, prDash, idUser, liftID);
         f.post(c.GET_PR_DATA_FOR_LIFT, {idUser, "lift" : liftID})//pr data
         .then(prs=>{
-            console.log(prs);
             prs.forEach(pr=>{        //iterate prs, get corresponding box by id
                 fillInRepPRBoxes(pr, idUser, exerciseInfo, curLiftRow, liftID);
             });
@@ -109,7 +108,7 @@ function buildPrDashHeader(prDash){
     prDash.insertAdjacentHTML("afterbegin",
         `<div class="${p.prDashHeaderClass}">
             <div class="${p.prDashHeaderTitleClass}">${p.prDashText}</div>
-            <div class="minimizer" id="${p.prDashMinimizerId}">${p.prDashMinimizerIcon}</div>
+            <div class="${p.prDashMinimizerClass}" id="${p.prDashMinimizerId}">${p.prDashMinimizerIcon}</div>
         </div>`);
     const width = prDash.offsetWidth;
     const prDashHeader = document.querySelector(`.${p.prDashHeaderClass}`);

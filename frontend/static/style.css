@@ -103,7 +103,7 @@ li {
 }
 #lifterHeaderName {
     margin-top: 20px;
-    font-size: 2rem;
+    font-size: 3rem;
     color: mintcream;
     /* border-style: solid;
     border-color: white;
@@ -126,9 +126,9 @@ li {
     color: red;
 }
 /*-------------------------------------------------------*/
-/* H LIFTER WINDOW -> PR DASH HEADER
+/* H LIFTER WINDOW -> HEADER FOR THE DASHES
 /*-------------------------------------------------------*/
-.prDashHeader {
+.dashHeader {
     display: flex;
     flex-direction: row;
     position: relative;
@@ -139,8 +139,8 @@ li {
     margin-bottom: 10px;
     user-select: none;
 }
-.prDashHeaderTitle {
-    color:mintcream;
+.dashHeaderTitle {
+    color:palegreen;
     padding-top: 2rem;
     font-size: 1rem;
     flex: 1;
@@ -268,22 +268,33 @@ li {
 /*-------------------------------------------------------*/
 /* LIFTER WINDOW -> CALENDAR DASHBOARD 
 /*-------------------------------------------------------*/
+.monthlyChartDashWrapper{
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    justify-content: center;
+    max-width: 913px;
+    min-width: 913px;
+    padding-bottom: 50px;
+}
 .monthlyChartDash{
-    padding: 0px;
     display: flex;
     flex-direction: row;
-    align-self: center;
+    align-items: center;
+}
+.monthlyChartDashVisible{
+    display: none;
 }
 .monthlyChartWrapper{
     display: none;
 }
 .monthlyChartWrapperVisible{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
+   display: flex;
+   flex-direction: column;
+   align-self: center;
 }
 .monthlyChart{
-    margin-left: 20px;
+    flex: 1;
 }
 .monthlyChartTitle{
     color: mintcream;

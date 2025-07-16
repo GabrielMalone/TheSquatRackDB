@@ -20,12 +20,11 @@ function clickLifterNameEvent(e){
     const config = document.getElementById("lifterConfig");
     const calendar = document.querySelector(".month");
     const workout = document.querySelector(".workout");
-    const prDash = document.querySelector(".prDash");
     const addExerciseDash = document.querySelector(".addExerciseDash");
     const info = JSON.parse(e.target.dataset.lifter);
-
+    // set current lifter
     currLifter = info;
-
+    // reset the various dashes / dash elements
     lifterHeaderName.innerHTML  = `${info.userName}`;
     config.style.visibility     = "visible";
     calendar.style.display      = "flex"
