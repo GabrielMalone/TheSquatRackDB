@@ -1,5 +1,5 @@
 import { f } from "./lifterSidebar.js";
-import { config as c } from "./config.js";
+import { endpoint as c } from "./config.js";
 import { LIFTERS, getLifters } from "./lifterSidebar.js";
 //-----------------------------------------------------------------------------
 // This clears all the input fields for the create new lifter window

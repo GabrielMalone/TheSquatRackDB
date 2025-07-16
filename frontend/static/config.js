@@ -1,11 +1,10 @@
+// sitewide variables
+
 export const date      = new Date();                           
 export const year      = date.getFullYear();
 export const month     = date.getMonth();
 export const lastday   = new Date(year, month + 1, 0).getDate(); 
 export let unit        = "LBS";
-
-
-export const prArgs = [1];
 
 export const DoW = 
 [
@@ -35,6 +34,7 @@ export const months =
 ];
 
 const devConfig = {
+
     API_URL: "http://localhost:5001/",
     DEBUG_MODE: true,
     LIFTERS_ENDPOINT: "lifters",
@@ -58,6 +58,7 @@ const devConfig = {
   
 
 const prodConfig = {
+
     API_URL: "https://5q3n5f0d-5001.use.devtunnels.ms/", 
     DEBUG_MODE: false,
     LIFTERS_ENDPOINT: "lifters",
@@ -79,5 +80,22 @@ const prodConfig = {
     GET_EXERCISE_INFO: "getExerciseInfo"
   };
 
-export const config = window.location.hostname === "localhost" ? 
+export const endpoint = window.location.hostname === "localhost" ? 
   devConfig : prodConfig;
+
+// PR DASH VARIABLES
+export const PR_DASH_VARIABLES = {
+
+  prDashClassSelector    : ".prDash",
+  prDashMinimizerId      : "prDashMinimizer",
+  prDashHeaderClass      : "prDashHeader",
+  prDashHeaderTitleClass : "prDashHeaderTitle",
+  prDashText             : "PR DASH",
+  prDashVisibleClass     : "prDashVisible",
+  prRepsTitleClass       : "prRepsTitle",  
+  prCellClass            : "prCell", 
+  prDashMinimizerIcon    : "-",
+  prDashNBoxInHeadClass  : "repNumberBoxInHeader",
+  repNumInHeader         : "repNumInHeader"
+
+};

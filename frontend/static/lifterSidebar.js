@@ -1,5 +1,5 @@
 import Lifter from "./lifter.js";
-import { config as c, year, month, lastday } from "./config.js";
+import { endpoint as c, year, month, lastday } from "./config.js";
 import fetchWrapper from "./fetchWrapper.js";
 import {fillCalendar } from "./dashboards/calendarDash.js";
 import { createPrDash } from "./dashboards/prDash.js";

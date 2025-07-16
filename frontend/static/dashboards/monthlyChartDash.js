@@ -1,6 +1,6 @@
 
 import { f } from "../lifterSidebar.js";
-import { config } from "../config.js";
+import { endpoint as e } from "../config.js";
 import { months } from "../config.js";
 
 //-----------------------------------------------------------------------------
@@ -21,7 +21,7 @@ export async function loadMonthlyCharts(idUser, month, year){
 
         try {
         
-            const response = await f.post(config[`${type[0]}`], {idUser, ExerciseCategories, month, year});
+            const response = await f.post(e[`${type[0]}`], {idUser, ExerciseCategories, month, year});
             // returns a promise and pauses code until promise resolves. otherwise the order is not guaranteed
             const categories = response;
     
@@ -60,6 +60,10 @@ function createChartElement(chartType, chartTitle, chartNumber){
         </div>
         <canvas class="monthlyChart" id="chart${chartType}"></canvas>`);
         monthlyChartDash.appendChild(chart); 
+    chart.insertAdjacentHTML("beforebegin",
+        `
+        <div class="minimizer" id="monthlyChartMinimizeer"></div>
+        `);
 }
 //-----------------------------------------------------------------------------
 // This is the logic for clicking the addLifter button. makes add window appear

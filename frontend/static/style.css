@@ -58,7 +58,7 @@ li {
 #headerTitle {
     margin-left: 40px;
     margin-top: 20px;
-    color:antiquewhite;
+    color:mintcream;
     font-size: 2rem;
     flex:8;
     letter-spacing: 0.0em;
@@ -137,21 +137,23 @@ li {
     width: 840px;
     border-bottom: 1px solid #222;
     margin-bottom: 10px;
+    user-select: none;
 }
 .prDashHeaderTitle {
     color:mintcream;
     padding-top: 2rem;
     font-size: 1rem;
     flex: 1;
+    user-select: none;
 }
-.prDashMinimizer {
+.minimizer {
     display: flex;
     color: mintcream;
     font-size: 3rem;
     padding-top: 0;
     user-select: none;
 }
-.prDashMinimizer:hover {
+.minimizer:hover {
     color: palegreen;
     cursor: pointer;
 }
@@ -449,8 +451,7 @@ li {
     height: fit-content;
     scrollbar-width: 0px;
     max-width: 80%;
-    border-right: 1px dotted #333;
-    border-left: 1px dotted #333;
+
 }
 .workout > * {
     min-width: max-content; /* or a specific min-width */
@@ -699,7 +700,6 @@ li {
     flex-direction: column;
     position: relative;
     outline: 1px dotted #333;
-    max-width: 840px; 
 }
 .addExerciseBoxHeader {
     display: flex;

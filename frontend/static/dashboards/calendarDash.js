@@ -1,4 +1,4 @@
-import { config, DoW, months } from "../config.js";
+import { endpoint as c, DoW, months } from "../config.js";
 import { currLifter, f } from "../lifterSidebar.js";
 import { loadMonthlyCharts } from "./monthlyChartDash.js";
 import { createCursor } from "../cursor.js";
@@ -40,17 +40,17 @@ function getMonthlyWorkouts(userId, curDate){
     const prev = {"month" : prevDate.getMonth(), "year" : prevDate.getFullYear()};
     const next = {"month" : nextDate.getMonth(), "year" : nextDate.getFullYear()};
     // begin queries 
-    f.post(config.GET_MONTHLY_LIFTS, {userId, curDate}).then(lifts=>{
+    f.post(c.GET_MONTHLY_LIFTS, {userId, curDate}).then(lifts=>{
         lifts.forEach(lift=>{
             fillMiniWorkoutMap(daysThisM, lift);
             });
     });
-    f.post(config.GET_MONTHLY_LIFTS, {userId, "curDate" : prev}).then(lifts=>{
+    f.post(c.GET_MONTHLY_LIFTS, {userId, "curDate" : prev}).then(lifts=>{
         lifts.forEach(lift=>{
             fillMiniWorkoutMap(daysPrevM, lift);
         });
     });
-    f.post(config.GET_MONTHLY_LIFTS, {userId, "curDate" : next}).then(lifts=>{
+    f.post(c.GET_MONTHLY_LIFTS, {userId, "curDate" : next}).then(lifts=>{
         lifts.forEach(lift=>{
             fillMiniWorkoutMap(daysNextM, lift);
         });

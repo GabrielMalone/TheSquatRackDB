@@ -1,5 +1,5 @@
 import { currLifter, f, getLifterObject } from "../lifterSidebar.js";
-import { config } from "../config.js";
+import { endpoint as e } from "../config.js";
 import { checkIfWorkoutExistsOnDate } from "./workoutDash.js";
 import { createPrDash } from "./prDash.js";
 
@@ -16,7 +16,7 @@ export function fillOutExerciseSelectMenu(container){
         const prDash = document.querySelector(".prDash");
         prDash.scrollIntoView({ behavior: 'smooth' })
     }
-    f.get(config.GET_EXERCISES_ENDPOINT)     // get all the exercises in the db
+    f.get(e.GET_EXERCISES_ENDPOINT)     // get all the exercises in the db
         .then(exercises=>{
             fillOutLiftCategoryMenus(exercises, ExerciseDash); // fill out dash
             selectedExerciselistener(ExerciseDash);  // add e-listeners to dash

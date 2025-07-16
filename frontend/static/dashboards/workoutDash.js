@@ -1,9 +1,9 @@
 import { curlastDay, curMonth, curYear, fillCalendar } from "./calendarDash.js";
-import { config } from "../config.js";
+import { endpoint as end } from "../config.js";
 import { setTemplateHTML, setUpdateFormTemplateHTML } from "../htmlTemplates.js";
 import { fillOutExerciseSelectMenu, createExerciseDash } from "./exerciseSelectDash.js";
 import { currLifter, f, getLifterObject } from "../lifterSidebar.js";
-import { unit, prArgs } from "../config.js";
+import { unit } from "../config.js";
 import { createPrDash } from "./prDash.js";
 import { createCursor } from "../cursor.js";
 
@@ -15,7 +15,7 @@ const workoutContainer = document.querySelector(".workout"); // clear container
 //-----------------------------------------------------------------------------
 export function getWorkoutFromWokroutID(idWorkout){
     workoutContainer.dataset.idWorkout = idWorkout;            // for ez access
-    f.post(config.WORKOUT_ENDPOINT, idWorkout)
+    f.post(end.WORKOUT_ENDPOINT, idWorkout)
         .then(lifts=>{  
             lifts.forEach(lift=>{            // will iterate over each exercise
                 fillExerciseRow(lift);       // this will iterate over each set
@@ -116,7 +116,7 @@ function updateSetEvent(e){
 }
 //-----------------------------------------------------------------------------
 function updateSet(idSet, setWeight, setReps, setRPE, idWorkout){
-    f.put(config.WORKOUT_ENDPOINT, {idSet, setWeight, setReps, setRPE})
+    f.put(end.WORKOUT_ENDPOINT, {idSet, setWeight, setReps, setRPE})
         .then(data=>{
             const rawData = (document.querySelector(".trainingDate")).dataset.dateInfo;
             const dateInfo = JSON.parse(decodeURIComponent(rawData)); 
@@ -138,7 +138,7 @@ function createNewDBset(curliftInfo, setNumber, curExerciseRow){
     const SetNumber = setNumber;
     const idExercise = curliftInfo.exerciseID;
     const idWorkout = curliftInfo.idWorkout;
-    f.post(config.SET_ENDPOINT, {SetNumber, idExercise, idWorkout})
+    f.post(end.SET_ENDPOINT, {SetNumber, idExercise, idWorkout})
         .then(newSetInfo=>{
             const liftInfo = updateLiftInfo(curliftInfo, newSetInfo);
             makeNewSetBox({}, liftInfo, setNumber-1, curExerciseRow)
@@ -177,9 +177,9 @@ function removeSetEvent(e){
                                 .dataset.dateInfo;
         const dateInfo       = JSON.parse(decodeURIComponent(rawData)); 
         e.target.closest(".set").remove();    // remove the setBox from the DOM
-        f.delete(config.WORKOUT_ENDPOINT,{idSet,idWorkout,idExercise})
+        f.delete(end.WORKOUT_ENDPOINT,{idSet,idWorkout,idExercise})
             .then(response=>{                            // reorder set numbers
-                f.put(config.REORDER__SET_ENDPOINT, {idWorkout,idExercise})
+                f.put(end.REORDER__SET_ENDPOINT, {idWorkout,idExercise})
             })
             .catch(err=>console.error(err))
             .finally(()=>{
@@ -199,13 +199,13 @@ export function checkIfWorkoutExistsOnDate(selectedExercise){
                                    // but exericse selection box is still open
     const Date = JSON.parse(decodeURIComponent(rawData)); 
 
-    f.put(config.CHECK_IF_WORKOUT_EXISTS, Date, idUser)
+    f.put(end.CHECK_IF_WORKOUT_EXISTS, Date, idUser)
         .then(res=>{
             if (res.success){
                 idWorkout = res.idWorkout;
                 inserNewExerciseIntoWorkout(selectedExercise, idWorkout);
             } else {
-                f.post(config.CREATE_WORKOUT_ENDPOINT,Date)
+                f.post(end.CREATE_WORKOUT_ENDPOINT,Date)
                     .then(newWorkoutId=>{
                         inserNewExerciseIntoWorkout(selectedExercise,newWorkoutId);
                     })
@@ -223,7 +223,7 @@ function inserNewExerciseIntoWorkout(selectedExercise, idWorkout){
     const rawData = (document.querySelector(".trainingDate")).dataset.dateInfo;
     const dateInfo = JSON.parse(decodeURIComponent(rawData)); 
     const SetNumber = 1;
-    f.post(config.INSERT_NEW_EXERCISE_ENDPOINT,{idWorkout, idExercise, SetNumber})
+    f.post(end.INSERT_NEW_EXERCISE_ENDPOINT,{idWorkout, idExercise, SetNumber})
         .then(res=>{
             updateDashesOnChange(dateInfo, idWorkout, curYear, curMonth, curlastDay)
         })
