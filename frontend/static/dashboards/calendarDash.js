@@ -208,16 +208,12 @@ export function calendarListener(){
                 clearCalendar();
                 changeDateUp(curYear,curMonth);
                 days.forEach(day=>day.classList.remove("daySelected"));
-                delete workoutContainer.dataset.idWorkout;
-                workoutContainer.innerHTML = ``;  
                 document.querySelector(".addExerciseDash")?.classList.remove("addExerciseDashVisible"); 
                 break;
             case 'ArrowLeft': 
                 clearCalendar();
                 changeDateDown(curYear,curMonth);
                 days.forEach(day=>day.classList.remove("daySelected"));
-                delete workoutContainer.dataset.idWorkout;
-                workoutContainer.innerHTML = ``;   
                 document.querySelector(".addExerciseDash")?.classList.remove("addExerciseDashVisible"); 
                 break;
             default:

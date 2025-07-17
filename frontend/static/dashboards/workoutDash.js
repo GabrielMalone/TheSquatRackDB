@@ -342,6 +342,6 @@ function createSetUpdateForm(liftInfo){
 //-----------------------------------------------------------------------------
 export function scrollToWorkout(){
     setTimeout(()=>{
-         document.getElementById('workoutDash').scrollIntoView({ top: 0, behavior: 'smooth'});
+         document.getElementById('headerTitle').scrollIntoView({ top: 0, behavior: 'smooth'});
     },300); 
 }

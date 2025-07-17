@@ -90,8 +90,7 @@ li {
     background-color:black; 
     flex: 2;
     padding: 20px;
-    overflow: clip;
-    overflow: hidden;
+    overflow-x: scroll;
 }
 .lifterBoxHeader{
     display: flex;
@@ -102,7 +101,7 @@ li {
 #lifterHeaderName {
     margin-top: 20px;
     font-size: 3rem;
-    color: mintcream;
+    color: rgba(245, 255, 250, 0.711);
     /* border-style: solid;
     border-color: white;
     border-width: 1px; */
@@ -131,7 +130,7 @@ li {
     display: flex;
     flex-direction: row;
     position: relative;
-    align-self: center;
+    align-self: safe center;
     width: fit-content;
     height: fit-content;
     border-bottom: 1px solid #222;
@@ -281,7 +280,7 @@ li {
 .monthlyChartDashWrapper{
     display: flex;
     flex-direction: column;
-    align-self: center;
+    align-self: safe center;
     justify-content: center;
     max-width: 1050px;
     min-width: 1050px;
@@ -343,7 +342,7 @@ li {
     display: flex;
     flex-direction: row;
     position: relative;
-    outline: solid #222 1px;
+    outline: solid #333 1px;
     background-color: #0a0a0a;
     user-select: none;
     padding: 2rem;
@@ -446,6 +445,7 @@ li {
     min-width: min-content;
     align-self: flex-end;
     margin-bottom: 20px;
+    margin-right: 10px;
 }
 .monthTitle{
     font-size: 2rem;
@@ -465,12 +465,12 @@ li {
     display: flex;
     display: none;
     flex-direction: column;
-    flex-wrap: wrap;
     position: relative;
     overflow: visible;
     border-right: 1px solid #222;
     padding: 20px;
     height: 100vh;
+    min-width: min-content;
 }
 .workoutHeader {
     display: flex;
@@ -816,12 +816,12 @@ li {
 /*-------------------------------------------------------*/
 .sidebar {
     display: flex;
-    flex-direction: column; /*for adding buttons*/
-    background-color: black;
+    flex-direction: column;
     flex: .35;
     justify-content: flex-start;
-    overflow: hidden;
     overflow-y: scroll;
+    min-width: min-content;
+    border-right: 1px solid #222;
 }
 .sidebar.visible{
     display:none;
@@ -857,7 +857,7 @@ li {
     display: flex;
     flex: .75;
     flex-direction: column;
-    min-width: 500px;
+    min-width: min-content;
 }
 
 .createLifterBoxHeader, .createExerciseBoxHeader {
