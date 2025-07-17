@@ -30,8 +30,8 @@ li {
     margin-top: 10px;
 }
 .button:hover {
-    background-color: cornflowerblue;
-    color: black;
+    background-color: rgba(199, 21, 134, 0.518);
+    color: mintcream;
 }
 /*-------------------------------------------------------*/
 /* MAIN BROWSER CONTAINER
@@ -57,7 +57,7 @@ li {
 #headerTitle {
     margin-left: 40px;
     margin-top: 20px;
-    color:mintcream;
+    color:rgba(245, 255, 250, 0.643);
     font-size: 2rem;
     flex:8;
     letter-spacing: 0.0em;
@@ -86,7 +86,7 @@ li {
 .lifterBox {
     display: flex;
     flex-direction: column;
-    border-right: 1px solid #333;
+    border-right: 1px solid #222;
     background-color:black; 
     flex: 2;
     padding: 20px;
@@ -464,22 +464,13 @@ li {
 .workout {
     display: flex;
     display: none;
-
     flex-direction: column;
     flex-wrap: wrap;
     position: relative;
     overflow: visible;
-
-    border-left: 1px solid #222;
     border-right: 1px solid #222;
- 
-    align-self: safe center;
-
     padding: 20px;
-
-    height: fit-content;
-    max-width: 75%;
-
+    height: 100vh;
 }
 .workoutHeader {
     display: flex;
@@ -546,7 +537,6 @@ li {
     outline: 1px solid #333;
     background-color: #0a0a0a;
     font-size: .75rem;
-    margin-right: 10px;
     padding-top: 10px;
     padding-left: 1rem;
     cursor: pointer;
@@ -691,21 +681,21 @@ li {
 /* WOKROUT AREA -> EXERCISE ROW  -> ADD SET
 /*-------------------------------------------------------*/
 .addSet{
-    position: relative;
-    color: #888;
+    position: absolute;
+    align-self: center;
+    right: 10px;
+    flex:1;
+    color: rgba(152, 251, 152, 0.799);
 }
 .exercise{
     display: flex;
-    flex-direction: column;
+    flex:9;
+    flex-direction: row;
     justify-content: center;
-    align-items: center;
     position: relative;
     font-size: 1rem;
-    height: 6.5rem;
-    width: 6.5rem;
     outline: 1px solid #222;
-    color:rgba(147, 112, 216, 0.536);
-    margin-right: 20px;
+    color: rgba(245, 255, 250, 0.629);
     cursor: pointer;
     user-select: none;
     -webkit-user-select: none; /* Safari */
@@ -744,7 +734,7 @@ li {
 }
 #exerciseDashForworkoutDash{
     position:fixed;
-    top: 0px;
+    bottom: 0px;
     left: 0px;
     min-width: 100%;
     background-color: #111111f7;
@@ -841,7 +831,7 @@ li {
 /*-------------------------------------------------------*/
 .lifterName {
     border-radius: 0px;
-    color: mintcream;
+    color: rgba(245, 255, 250, 0.751);
     font-size: 1rem;
     cursor: pointer;
     transition: background-color 0.1s ease-in-out;
@@ -850,8 +840,8 @@ li {
     margin-right: 10px;
 }
 .lifterName:hover {
-    background-color: cornflowerblue;
-    color: black;
+    background-color: rgba(199, 21, 134, 0.518);
+    color: mintcream;
 }
 /*-------------------------------------------------------*/
 /* CREATE A LIFTER POP UP BOX
