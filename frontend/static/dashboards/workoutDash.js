@@ -111,8 +111,6 @@ function updateSetEvent(e){
         let setRPE      = setUpdateForm.querySelector(`#rpe${idSet}`).value;
         updateSet(idSet, setWeight, setReps, setRPE, idWorkout);    // query DB
     }
-    const cursor = document.getElementById("cursorForworkoutDash");
-    cursor.scrollIntoView({ behavior: 'smooth' });
 }
 //-----------------------------------------------------------------------------
 function updateSet(idSet, setWeight, setReps, setRPE, idWorkout){
@@ -169,7 +167,6 @@ function updateLiftInfo(curliftInfo, newSetInfo){
 //-----------------------------------------------------------------------------
 function removeSetEvent(e){
     if (e.target.classList.contains("setRemove")){
-        const cursor        = document.getElementById("cursorForworkoutDash");
         const idSet         = e.target.dataset.setID;
         const idWorkout     = e.target.dataset.idWorkout;
         const idExercise    = e.target.dataset.exerciseID;
@@ -185,7 +182,6 @@ function removeSetEvent(e){
             .finally(()=>{
                 updateDashesOnChange(dateInfo, idWorkout, curYear, curMonth, curlastDay)
             });
-        cursor.scrollIntoView({ behavior: 'smooth' });
     }
 }
 //-----------------------------------------------------------------------------
@@ -240,9 +236,9 @@ export function createWorkoutGrid(dateInfo){
     workoutContainer.innerHTML = ``;   
     workoutContainer.addEventListener("click", workoutDashClickEvents);
     workoutContainer.addEventListener("submit", updateSetEvent);
-    fillWorkoutDate(dateInfo);  
+    fillWorkoutDate(dateInfo); 
+    scrollToWorkout();
 }
-
 //-----------------------------------------------------------------------------
 function addExerciseEvent(e){
     if (e.target.id === "cursorForworkoutDash"){
@@ -342,4 +338,13 @@ function createSetUpdateForm(liftInfo){
     updateForm.setAttribute("id",`setUpdateForm${liftInfo.setID}`);
     updateForm.innerHTML = setUpdateFormTemplateHTML(liftInfo, unit);
     return updateForm;
+}
+//-----------------------------------------------------------------------------
+function scrollToWorkout(){
+    setTimeout(()=>{
+        window.scrollTo({
+            top: document.querySelector('.workout').scrollHeight,
+            behavior: 'smooth'
+          });
+    },100); 
 }

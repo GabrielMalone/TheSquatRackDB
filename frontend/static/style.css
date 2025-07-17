@@ -140,7 +140,7 @@ li {
     user-select: none;
 }
 .dashHeaderTitle {
-    color:palegreen;
+    color: #333;
     padding-top: 2rem;
     font-size: 1rem;
     flex: 1;
@@ -169,9 +169,9 @@ li {
     flex-direction: column;
     position: relative;
     align-self: safe center;
-    justify-content: center;
     overflow-x: auto;
     padding: 10px;
+    min-width: min-content;
     margin-top: -50px;
     padding-left: 40px;
     max-width: 90%;
@@ -501,16 +501,11 @@ li {
 .cursor{
     outline: solid rgba(60, 179, 114, 0.261) 1px;
     padding:  1rem;
+    position: relative;
     width: 1rem;
     color: mediumspringgreen;   
     text-align: center;
-    margin-bottom: 20px;
-    margin-top: 10px;
-    margin-left: 0px;;
     cursor: pointer;
-}
-#cursorForprDashBoard{
-    margin-left: 0px;
 }
 .cursor:hover {
     background-color: rgba(60, 179, 114, 0.357);
@@ -521,11 +516,32 @@ li {
     font-size: 3rem;
     color: mintcream;
 }
+#cursorForprDashBoard{
+    margin-top: 20px;
+    align-self: center;
+    justify-self: center;
+}
+#cursorForworkoutDash{
+    position: fixed;
+    bottom: 20px;
+    right: 40px;
+    width: 100px;
+    height: 100px;
+    margin: 0px;
+    align-content: center;
+    justify-content: center;
+    outline: #222;
+    background-color: rgba(152, 251, 152, 0.835);
+    color: black;
+}
+#cursorForworkoutDash:hover{
+    background-color: mediumseagreen;
+}
+
 /*-------------------------------------------------------*/
 /* WORKOUT AREA -> EXERCISE ROW
 /*-------------------------------------------------------*/
 .exerciseRow{
-    padding: 10px;
     padding-left: 0px;
     display: flex;
     position: relative;
@@ -696,7 +712,7 @@ li {
     font-size: 1rem;
     height: 6.5rem;
     width: 6.5rem;
-    outline: 1px solid mintcream;
+    outline: 1px solid #666;
     color:mintcream;
     margin-right: 20px;
     cursor: pointer;
@@ -724,10 +740,23 @@ li {
     display: flex;
     flex-direction: column;
     outline: 1px dotted #333;
-    position: sticky; /* This will make it stay in place while scrolling */
-    top: 0px; /* Adjust as needed */
+    position:relative; /* This will make it stay in place while scrolling */
     background-color: #111;
     z-index: 1000;
+}
+#exerciseDashForprDashBoard{
+    position:fixed;
+    bottom: 0px;
+    left: 0px;
+    min-width: 100%;
+    background-color: #111111f7;
+}
+#exerciseDashForworkoutDash{
+    position:fixed;
+    top: 0px;
+    left: 0px;
+    min-width: 100%;
+    background-color: #111111f7;
 }
 .addExerciseBoxHeader {
     display: flex;

@@ -13,7 +13,7 @@ let repRange = 20;
 //-----------------------------------------------------------------------------
 export async function createPrDash(exerciseList, idUser){
     document.querySelector(`.${p.prDashClass}`).innerHTML = ``; 
-    const curPrDashHeader = document.getElementById(`${p.prDashHeaderId}`);
+    let curPrDashHeader = document.getElementById(`${p.prDashHeaderId}`);
     if (curPrDashHeader){
         curPrDashHeader.innerHTML = ``;
         curPrDashHeader.parentNode.removeChild(curPrDashHeader);
@@ -26,15 +26,17 @@ export async function createPrDash(exerciseList, idUser){
         .then(prs=>{
             prs.forEach(pr=>{        //iterate prs, get corresponding box by id
                 fillInRepPRBoxes(pr, idUser, exerciseInfo, curLiftRow, liftID);
-            });
+            });   
+
         })
         .catch(err=>{
             console.error(err); 
         });
-    }
+        
+    }         // listen for clicks on PRs
     buildPrDashHeader(prDash);
     createCursor(prDash);
-    prInfoClick(prDash);                            // listen for clicks on PRs
+    prInfoClick(prDash);   
 }
 //-----------------------------------------------------------------------------
 // EVENTS for clicking on a PR - load the workout in which PR happened
@@ -76,6 +78,17 @@ function highlightPRinCalendarAndGetPRworkout(e){
     });
     createrWorkoutHeader(dateInfo);           // get workout where pr happened
     getWorkoutFromWokroutID(idWorkout);
+    scrollToCalendar();
+}
+//-----------------------------------------------------------------------------
+
+function scrollToCalendar(){
+    setTimeout(()=>{
+        window.scrollTo({
+            top: document.querySelector('.header').scrollHeight,
+            behavior: 'smooth'
+          });
+    },100); 
 }
 //-----------------------------------------------------------------------------
 function getPRdata(e){
@@ -127,7 +140,7 @@ function minimizePrDash(){
 }
 //-----------------------------------------------------------------------------
 function adjustHeaderSizeToContent(prDash){
-    prDashHeader = document.getElementById(`${p.prDashHeaderId}`);
+    const prDashHeader = document.getElementById(`${p.prDashHeaderId}`);
     const width = prDash?.offsetWidth;
     if (!width){
         prDashHeader.style.width = `1050px`;
