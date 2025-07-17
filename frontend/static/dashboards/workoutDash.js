@@ -85,25 +85,24 @@ function loadSets(newExerciseRow, data){
 // method to create the HTML for a new Set being added to an Exercise Row
 //-----------------------------------------------------------------------------
 function makeNewSetBox(setInfo, liftInfo, setNumber, curExerciseRow){
-
     if (!setInfo.setID){   // if new setbox is being created from the front end
         setInfo = liftInfo;                // there will not be any setInfo yet
     }               // but there will be some setInfo like exercise information
-
     const newSet = document.createElement('div');
     newSet.classList.add("set");
     newSet.classList.add(`${liftInfo.exercise}`);
     newSet.setAttribute("id",`setID${setInfo.setID}`);
-
+    newSet.dataset.idExercise = liftInfo.exerciseID;
     newSet.dataset.liftInfo = JSON.stringify(liftInfo);  
     newSet.dataset.setID = `${setInfo.setID}`;
     newSet.dataset.idWorkout = liftInfo.idWorkout;
-   
     newSet.insertAdjacentHTML("beforeend",CreateSetTemplate(setInfo));
-    newSet.appendChild(createSetUpdateForm(setInfo));
+    newSet.appendChild(createSetUpdateForm(setInfo, liftInfo));
     newSet.appendChild(CreateRemoveSetButton(liftInfo, setInfo));
     newSet.appendChild(addSetNumberToSetBox(setNumber, setInfo));
-
+    if (setInfo.weight > 0 && setInfo.reps > 0){
+        isSetPr(liftInfo.exerciseID, currLifter.id, setInfo.weight, setInfo.reps, newSet);
+    }
     curExerciseRow.appendChild(newSet);
 }
 //-----------------------------------------------------------------------------
@@ -111,20 +110,44 @@ function makeNewSetBox(setInfo, liftInfo, setNumber, curExerciseRow){
 //-----------------------------------------------------------------------------
 function updateSetEvent(e){
     if (e.target.classList.contains("setUpdate")){
-        console.log("attempting update");
         e.preventDefault();
         const setUpdateForm = e.target; // get all the info from the user input
-        const setBox = setUpdateForm.closest(".set");
-        const idWorkout = setBox.dataset.idWorkout;
-        const idSet     = setUpdateForm.dataset.setID;
-        let setWeight   = setUpdateForm.querySelector(`#weight${idSet}`).value;
-        let setReps     = setUpdateForm.querySelector(`#reps${idSet}`).value;
-        let setRPE      = setUpdateForm.querySelector(`#rpe${idSet}`).value;
-        updateSet(idSet, setWeight, setReps, setRPE, idWorkout);    // query DB
+        const setBox     = setUpdateForm.closest(".set");
+        const idWorkout  = setBox.dataset.idWorkout;
+        const idSet      = setUpdateForm.dataset.setID;
+        const idExercise = e.target.parentNode.dataset.idExercise; 
+        let setWeight    = setUpdateForm.querySelector(`#weight${idSet}`).value;
+        let setReps      = setUpdateForm.querySelector(`#reps${idSet}`).value;
+        let setRPE       = setUpdateForm.querySelector(`#rpe${idSet}`).value;
+        updateSet(idSet, setWeight, setReps, setRPE, idWorkout, idExercise, setBox);    
+        // then check to see if the set is a pr
+  
     }
 }
 //-----------------------------------------------------------------------------
-function updateSet(idSet, setWeight, setReps, setRPE, idWorkout){
+function isSetPr(idExercise, idUser, setWeight, setReps, setBox){   // compare this set
+    let maxWeight = setWeight;   // to all sets of this exercise. see if either
+    let bestWeightAtTheseReps = setWeight; // all time weight / all time rep pr
+    f.post(end.GET_PR_DATA_FOR_LIFT, {idUser, "lift" : idExercise})
+        .then(data=>{
+            for (const liftData of data){ 
+                if (parseInt(liftData.weight) > parseInt(maxWeight)){
+                    maxWeight = liftData.weight;             // all time weight
+                } 
+                if (parseInt(liftData.reps) === parseInt(setReps) && 
+                    parseInt(liftData.weight) > parseInt(setWeight)){
+                    bestWeightAtTheseReps = liftData.weight;    // all time rep
+                    break;            // first rep match will be highest weight
+                }
+            }
+            if (setWeight === maxWeight || bestWeightAtTheseReps === setWeight){
+                setBox.classList.add("prSet");
+            }
+        })
+        .catch(err=>console.error(err));
+}
+//-----------------------------------------------------------------------------
+function updateSet(idSet, setWeight, setReps, setRPE, idWorkout, idExercise, setBox){
     f.put(end.WORKOUT_ENDPOINT, {idSet, setWeight, setReps, setRPE})
         .then(data=>{
             const rawData = (document.querySelector(".trainingDate")).dataset.dateInfo;
@@ -133,7 +156,6 @@ function updateSet(idSet, setWeight, setReps, setRPE, idWorkout){
         }) 
         .catch(err=>console.error(err));
 }
-
 //-----------------------------------------------------------------------------
 // this method will add a new set to an exercise row
 //-----------------------------------------------------------------------------
@@ -319,6 +341,7 @@ function createExerciseBox(newExerciseRow, liftInfo){
     newExercise.insertAdjacentHTML("beforeend", 
         `<div class = "addSet">╋</div>`);
     newExercise.dataset.liftInfo = JSON.stringify(liftInfo);
+    newExercise.dataset.idExercise = liftInfo.exerciseID;
     newExercise.addEventListener("click", ()=>{addSet(newExerciseRow, liftInfo)});
     newExerciseRow.appendChild(newExercise);
 }
@@ -343,11 +366,12 @@ function fillWorkoutDate(dateInfo){
 //-----------------------------------------------------------------------------
 // HTML for the form that will be used to update a set
 //-----------------------------------------------------------------------------
-function createSetUpdateForm(liftInfo){
+function createSetUpdateForm(liftInfo, moreLiftInfo){
     const updateForm = document.createElement('div');
     updateForm.classList.add(`setUpdateForm`);
     updateForm.setAttribute("id",`setUpdateForm${liftInfo.setID}`);
     updateForm.innerHTML = setUpdateFormTemplateHTML(liftInfo, unit);
+    updateForm.dataset.idExercise = moreLiftInfo.exerciseID; // might not need
     return updateForm;
 }
 //-----------------------------------------------------------------------------
