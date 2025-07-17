@@ -42,7 +42,17 @@ function workoutDashClickEvents(e){
     removeSetEvent(e);
     addExerciseEvent(e);
     expandSetEvent(e);
+    closeWorkoutDash(e);
 }
+//-----------------------------------------------------------------------------
+function closeWorkoutDash(e){
+    if (e.type === "click" && e.target.id === "workoutDashX"){
+        console.log("here");
+        console.log(workoutContainer.style.display);
+        workoutContainer.style.display = "none";
+    }
+}
+//-----------------------------------------------------------------------------
 function expandSetEvent(e){
     // expand set box and show update form
     if (e.type === "click" && e.target.classList.contains("set") ){
@@ -326,7 +336,8 @@ function fillWorkoutDate(dateInfo){
         ${dateInfo.month} 
         ${dateInfo.day} 
         ${dateInfo.year}
-    </div>`;
+    </div>
+    <div id="workoutDashX">x</div>`;
     workoutContainer.appendChild(workoutHeader);
 }
 //-----------------------------------------------------------------------------

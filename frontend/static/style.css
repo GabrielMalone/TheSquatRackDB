@@ -490,16 +490,22 @@ li {
 .workoutHeader {
     display: flex;
     flex: row;
+    gap: 20px;
 }
 .sessionTitle{
     color: white;
     font-size: 1rem;
-    margin-right: 20px;
-    margin-bottom: 20px;
 }
 .trainingDate{
     color: grey;
     font-size: 1rem;
+}
+#workoutDashX{
+    color: #444;
+    cursor: pointer;
+}
+#workoutDashX:hover{
+    color: mintcream;
 }
 /*-------------------------------------------------------*/
 /* cursor
