@@ -144,7 +144,7 @@ li {
     }
 }
 .dashHeaderTitle {
-    color: #333;
+    color: #777;
     padding-top: 2rem;
     font-size: 1rem;
     flex: 1;
@@ -166,7 +166,7 @@ li {
 /*-------------------------------------------------------*/
 #prDashHeader{
     max-width: 100%;
-    min-width: 1050px;
+    min-width: 950px;
 }
 .prDash {
     display: flex;
@@ -251,7 +251,7 @@ li {
     justify-content: center;
 }
 .prPresent{
-    color: mintcream;
+    color: rgba(152, 251, 152, 0.8);
     /* background-color: #333; */
     align-self: center;
     justify-self: center;
@@ -297,8 +297,8 @@ li {
     flex-direction: column;
     align-self: safe center;
     justify-content: center;
-    max-width: 1050px;
-    min-width: 1050px;
+    max-width: 950px;
+    min-width: 950px;
     padding-bottom: 50px;
 }
 .monthlyChartDash{
@@ -357,7 +357,7 @@ li {
     display: flex;
     flex-direction: row;
     position: relative;
-    outline: solid #333 1px;
+    outline: solid #222 1px;
     background-color: #0a0a0a;
     user-select: none;
     padding: 2rem;
@@ -443,14 +443,15 @@ li {
 .dayName {
     color: #888;
     position: absolute;
-    top: -20px;
-    font-size: 0.5rem;
+    top: -40px;
+    left: 20px;
+    font-size: 1rem;
 }
 .weekNumber {
     color: #444;
     position: absolute;
-    left: -50px;
-    font-size: 0.5rem;
+    left: -80px;
+    font-size: 1rem;
     
 }
 .dateWrapper {
@@ -459,16 +460,17 @@ li {
     position: relative;
     min-width: min-content;
     align-self: flex-end;
-    margin-bottom: 20px;
+    padding-bottom: 50px;
     margin-right: 10px;
 }
 .monthTitle{
-    font-size: 2rem;
+    font-size: 3rem;
     color: #555;
     margin-right: 20px;
 }
 .yearTitle{
-    color: #777;
+    padding-top: 10px;
+    color: #999;
     font-size: 2rem;
 }
 
@@ -558,7 +560,6 @@ li {
     position: relative;
     outline: 1px solid #333;
     background-color: #0a0a0a;
-    font-size: .75rem;
     padding-top: 10px;
     padding-left: 1rem;
     cursor: pointer;
@@ -568,9 +569,10 @@ li {
 .setExpand{
     min-height: min-content;
 }
-.prSet{
-    outline: 1px solid rgba(152, 251, 152, 0.545);
+.prSet {
+    outline: 1px solid #444;
 }
+
 .set:hover{
     outline-color:mediumseagreen;
     .setWeight{
@@ -614,6 +616,7 @@ li {
 .setRPE{
     margin-top: 10px;
     pointer-events: none;  
+    color:rgba(245, 255, 250, 0.7)
 }
 .setNumber{
     position: absolute;
@@ -625,7 +628,7 @@ li {
 }
 .setWeight{
     font-size: 2rem;
-    color:#777;
+    color:rgba(245, 255, 250, 0.8);
     pointer-events: none;    
 }
 .setBy{
@@ -635,7 +638,7 @@ li {
 }
 .setReps{
     font-size: 1.5rem;
-    color:#555;
+    color:rgba(245, 255, 250, 0.7);
     pointer-events: none;  
 }
 .setReps:hover{

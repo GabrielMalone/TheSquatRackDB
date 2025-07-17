@@ -8,9 +8,4 @@ export function createCursor(container){
     cursor.setAttribute("id", `cursorFor${container.id}`);
     cursor.innerHTML = '╋';
     container.appendChild(cursor); 
-    if (container.id === "workoutDash"){
-        setTimeout(()=>{
-            cursor.scrollIntoView({ behavior: 'smooth' });
-        }, 100)
-    }
 }

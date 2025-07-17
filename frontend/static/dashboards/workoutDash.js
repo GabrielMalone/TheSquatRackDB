@@ -93,7 +93,7 @@ function makeNewSetBox(setInfo, liftInfo, setNumber, curExerciseRow){
     newSet.classList.add(`${liftInfo.exercise}`);
     newSet.setAttribute("id",`setID${setInfo.setID}`);
     newSet.dataset.idExercise = liftInfo.exerciseID;
-    newSet.dataset.liftInfo = JSON.stringify(liftInfo);  
+    // newSet.dataset.liftInfo = JSON.stringify(liftInfo);  
     newSet.dataset.setID = `${setInfo.setID}`;
     newSet.dataset.idWorkout = liftInfo.idWorkout;
     newSet.insertAdjacentHTML("beforeend",CreateSetTemplate(setInfo));
@@ -125,7 +125,7 @@ function updateSetEvent(e){
     }
 }
 //-----------------------------------------------------------------------------
-function isSetPr(idExercise, idUser, setWeight, setReps, setBox){   // compare this set
+function isSetPr(idExercise, idUser, setWeight, setReps, setBox){ //compare set
     let maxWeight = setWeight;   // to all sets of this exercise. see if either
     let bestWeightAtTheseReps = setWeight; // all time weight / all time rep pr
     f.post(end.GET_PR_DATA_FOR_LIFT, {idUser, "lift" : idExercise})
@@ -141,7 +141,7 @@ function isSetPr(idExercise, idUser, setWeight, setReps, setBox){   // compare t
                 }
             }
             if (setWeight === maxWeight || bestWeightAtTheseReps === setWeight){
-                setBox.classList.add("prSet");
+                setBox.classList.add("prSet"); // then we have a pr of some sort
             }
         })
         .catch(err=>console.error(err));
@@ -340,7 +340,7 @@ function createExerciseBox(newExerciseRow, liftInfo){
     newExercise.innerHTML += `<p>${liftInfo.exercise}</p>`;
     newExercise.insertAdjacentHTML("beforeend", 
         `<div class = "addSet">╋</div>`);
-    newExercise.dataset.liftInfo = JSON.stringify(liftInfo);
+    // newExercise.dataset.liftInfo = JSON.stringify(liftInfo);
     newExercise.dataset.idExercise = liftInfo.exerciseID;
     newExercise.addEventListener("click", ()=>{addSet(newExerciseRow, liftInfo)});
     newExerciseRow.appendChild(newExercise);
@@ -378,5 +378,5 @@ function createSetUpdateForm(liftInfo, moreLiftInfo){
 export function scrollToWorkout(){
     setTimeout(()=>{
          document.getElementById('headerTitle').scrollIntoView({ top: 0, behavior: 'smooth'});
-    },300); 
+    },200); 
 }
