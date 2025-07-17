@@ -199,6 +199,7 @@ li {
 .repNumberBoxInHeader {
     display: flex;
     flex-direction: column;
+    justify-content: center;
 }
 #repNumberBoxInHeader_0 {
     outline: none;
@@ -206,45 +207,59 @@ li {
 .repNumInHeader {
     display: flex;
     align-self: center;
-    color: mediumaquamarine;
+    justify-self: center;
+    color: #888;
 }
-.prLiftRow{
+.prLiftRow {
     display:flex;
     color: mintcream;
 }
-.prLiftNameBox{
+.prLiftNameBox {
     display: flex;
     position: relative;
     min-width: 120px;
-    flex-direction: column;
     justify-content: center;
 }
-#repNumberBoxInHeader_0{
+#repNumberBoxInHeader_0 {
     min-width:120px;
     outline: none;
 }
-.prLiftName{
+.prLiftName {    
     display: flex;
-    right: 50px;
-    top: 8px;
-    justify-content: center;
+    align-self: center;
     font-size: 1rem;
-    color: rgba(100, 148, 237, 0.618);
+    color: #888;
+}
+.prLiftName:hover {
+    color:rgba(245, 255, 250, 0.747);
+}
+.removePrLift {
+    right: 130px;
+    position: absolute;
+    align-self: center;
+    font-size: 2rem;
+    color: palevioletred;
+}
+.removePrLift:hover {
+    cursor: pointer;
+    color: red;
 }
 .repPRbox{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-content: center;
     justify-content: center;
 }
 .prPresent{
-    color: #888;
+    color: mintcream;
     /* background-color: #333; */
+    align-self: center;
+    justify-self: center;
     cursor: pointer;
 }
 .prPresent:hover{
-    background-color: rgba(152, 251, 152, 0.423);
-    color: black;
+    background-color: rgba(255, 0, 255, 0.334);
+    color: mintcream;
 }
 .prPresent:hover .prToolTip{
     display: flex;
@@ -548,6 +563,18 @@ li {
 }
 .set:hover{
     outline-color:mediumseagreen;
+    .setWeight{
+        color:mintcream;
+    }
+    .setReps{
+        color:mintcream;
+    }
+    .setRPE{
+        color:mintcream;
+    }
+    .setNumber{
+        color:mintcream;
+    }
 }
 .setInfoWrapper{
     display: flex;

@@ -3,7 +3,7 @@ import { endpoint as c, DoW, months, PR_DASH_VARIABLES as p, DASH_HEADER_VARS as
 import { fillCalendar } from "./calendarDash.js";
 import { createrWorkoutHeader, getWorkoutFromWokroutID, scrollToWorkout } from "./workoutDash.js";
 import { fillOutExerciseSelectMenu, createExerciseDash } from "./exerciseSelectDash.js";
-import { f } from "../lifterSidebar.js";
+import { f, getLifterObject } from "../lifterSidebar.js";
 import { createCursor } from "../cursor.js";
 
 let repRange = 20;
@@ -48,6 +48,18 @@ function prInfoClick(prDash){
 function prDashClickEvent(e){
     clickPrEvent(e);
     createDashFromCursorClick(e);
+    removePrLift(e)
+}
+//-----------------------------------------------------------------------------
+function removePrLift(e){
+    if (e.target.classList.contains("removePrLift")){
+        const prLift = e.target;                    // lift clicked for removal
+        const liftId = prLift.dataset.liftId;    // need lift id to remove lift
+        const idUser = prLift.dataset.idUser;                    // and user id
+        const curLifter = getLifterObject(idUser);     // get curlifters object
+        curLifter.removePrDashSelection(liftId); // remove lift from pr selects
+        createPrDash(curLifter.prDashSelection, curLifter.id);  // rebuild dash
+    }
 }
 //-----------------------------------------------------------------------------
 function createDashFromCursorClick(e){
@@ -165,11 +177,15 @@ function buildRepsHeader(repsTitle){
     }    
 }
 //-----------------------------------------------------------------------------
-function buildRepPrBox(lift, rep){
+function buildRepPrBox(lift, rep, idUser, liftId){
     const repPRbox = document.createElement('div');
     if (rep === 0){ // place name of lift at start
         repPRbox.classList.add(`${p.repPRliftNameBoxClass}`);
-        repPRbox.innerHTML = `<div class="${p.repPRliftNameWrapClass}">${lift.abbrev}</div>`;
+        repPRbox.dataset.idUser = idUser;
+        repPRbox.dataset.liftId = liftId;
+        repPRbox.innerHTML = 
+        `<div class="removePrLift" data-lift-id="${liftId}" data-id-user="${idUser}">-</div>
+         <div class="${p.repPRliftNameWrapClass}">${lift.abbrev}</div>`;
         repPRbox.classList.add(`${p.prCellClass}`);
         return repPRbox;
     }  

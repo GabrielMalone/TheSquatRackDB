@@ -81,4 +81,9 @@ export default class Lifter {
         return this.#prDashSelection;
     }
 
+    removePrDashSelection(liftId){
+        const updatedLiftSelection = this.#prDashSelection.filter(lift=>lift !== liftId);
+        this.#prDashSelection = updatedLiftSelection;
+    }
+
 }
