@@ -61,10 +61,6 @@ function getMonthlyWorkouts(userId, curDate){
 //-----------------------------------------------------------------------------
 function fillMiniWorkoutMap(daysThisMonth, lift){
     // flags to make sure we just apply the styling once on the calenar
-    let squat = false;
-    let bench = false;
-    let dead  = false;
-    let accessory = false;
     let liftDayPresent = false;
     // get the calendar day that matches the training day
     let curday = daysThisMonth[0];
@@ -76,7 +72,6 @@ function fillMiniWorkoutMap(daysThisMonth, lift){
             break;
         }
     }
-
     // dont put anything if no workouts present for displayed days
     if (!liftDayPresent) return; 
     // add some more data 
@@ -85,29 +80,33 @@ function fillMiniWorkoutMap(daysThisMonth, lift){
     // squat bench deadlift performed this day ?
     const liftPerformed = lift.ExerciseCategory;
     
-    if (liftPerformed === "squat" && !squat){
+    if (liftPerformed === "squat"){
         const squatBox = document.createElement('div');
-        squatBox.classList.add('squatDay');
-        curday.prepend(squatBox);
-        squat = true;
+        if (curday.querySelectorAll('.squatDay').length === 0){
+            squatBox.classList.add('squatDay');
+            curday.append(squatBox);
+        }
     }
-    if (liftPerformed === "deadlift" && !dead){
+    if (liftPerformed === "deadlift"){
         const deadBox = document.createElement('div');
-        deadBox.classList.add('deadDay');
-        curday.prepend(deadBox);
-        dead = true;
+        if (curday.querySelectorAll('.deadDay').length === 0){
+            deadBox.classList.add('deadDay');
+            curday.append(deadBox);
+        }
     }
-    if (liftPerformed === "bench" && !bench){
+    if (liftPerformed === "bench"){
         const benchBox = document.createElement('div');
-        benchBox.classList.add('benchDay');
-        curday.prepend(benchBox);
-        bench = true;
+        if (curday.querySelectorAll('.benchDay').length === 0){
+            benchBox.classList.add('benchDay');
+            curday.append(benchBox);
+        }
     }
-    if (liftPerformed === "accessory" && !accessory){
+    if (liftPerformed === "accessory"){
         const otherLift = document.createElement('div');
-        otherLift.classList.add("otherLiftDay");
-        curday.prepend(otherLift);
-        accessory = true;
+        if (curday.querySelectorAll('.otherLiftDay').length === 0){
+            otherLift.classList.add('otherLiftDay');
+            curday.append(otherLift);
+        }
     }
 }
 //-----------------------------------------------------------------------------
@@ -232,7 +231,7 @@ export function calendarListener(){
 //-----------------------------------------------------------------------------
 function addMonthAndYear(month, year){
     const calendar =  document.querySelector(".calendarWrapper");
-    calendar.insertAdjacentHTML("beforebegin",
+    calendar.insertAdjacentHTML("afterbegin",
         `<div class="dateWrapper">
             <div class="monthTitle">${months[month]}</div> 
             <div class="yearTitle">${year}</div>

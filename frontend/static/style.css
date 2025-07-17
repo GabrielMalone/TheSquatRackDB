@@ -90,7 +90,6 @@ li {
     border-right: 1px solid #333;
     background-color:black; 
     flex: 2;
-    gap: 30px;
     padding: 20px;
     overflow: clip;
     overflow: hidden;
@@ -109,6 +108,7 @@ li {
     border-color: white;
     border-width: 1px; */
     margin-left:10px;
+    margin-bottom: 100px;
 }
 #lifterConfig {
     margin-top: 34px;
@@ -306,7 +306,7 @@ li {
     flex: 1;
 }
 .monthlyChartTitle{
-    color: mintcream;
+    color: #555;
     display: flex;
     align-self: center;
     margin-bottom: 50px;
@@ -320,7 +320,7 @@ li {
 /*-------------------------------------------------------*/
 .calendarWrapper{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-self: center;
     margin-bottom: 50px;
 }
@@ -339,106 +339,99 @@ li {
 }
 .day {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     position: relative;
-    outline: dotted #444 1px;
+    outline: solid #222 1px;
+    background-color: #0a0a0a;
     user-select: none;
-    padding: 1rem;
-    margin: 3px;
+    padding: 2rem;
+    margin: 7px;
     transition: background-color, outline 100ms ease-in;
     width: 40px;
     height: 40px;
     cursor: pointer;
-    -webkit-user-select: none; /* Safari */
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* IE/Edge */
-    -webkit-touch-callout: none; /* iOS Safari */
+    user-select: none;
 }
 .day:hover {
-    outline: 1px dotted palegreen;
+    outline: 1px solid palegreen;
     .dayNum{
         color: mintcream;
     }
-    /* transition: 1000ms; */
+}
+.dayNum{
+    display: flex;
+    flex-direction: row;
+    align-self: flex-start;
+    font-size: 1rem;
+    pointer-events: none;
+    margin: 4px;
+    color: mintcream
 }
 .daySelected{
     background-color:rgba(186, 85, 211, 0.174);
+    color: mintcream;
 }
 .prDateHighlighted{
     outline: 1px solid palegreen;
 }
-.dayNum{
-    display: flex;
-    gap: 2px;
-    flex-direction: row;
-    font-size: 1rem;
-    color: mintcream;
-    pointer-events: none;
-}
 .dayLifted{
-    /* border-top: 1px solid palegreen; */
-    border-bottom: 1px solid cornflowerblue;
     background-color: none;
 }
 .today {
-    outline: 1px solid mintcream;
+    outline: 1px solid #999;
+    color: mintcream;
 }
 .squatDay{
-    position: absolute;
-    top: 10px;
-    left: 55px;
+    position: relative;
     width: 10px;
     height: 10px;
     min-width: 10px;
     min-height: 10px;
     background-color: palegreen;
     pointer-events: none;
+    margin: 1px;
 }
 .benchDay{
-    position: absolute;
-    top: 30px;
-    left: 55px;
+    position: relative;
     width: 10px;
     height: 10px;
     min-width: 10px;
     min-height: 10px;
     background-color:paleturquoise;
     pointer-events: none;
+    margin: 1px;
 }
 .deadDay{
-    position: absolute;
-    top: 50px;
-    left: 55px;
+    position: relative;
     width: 10px;
     height: 10px;
     min-width: 10px;
     min-height: 10px;
     background-color: palegoldenrod;
     pointer-events: none; 
+    margin: 1px;
 }
 .otherLiftDay{
-    position: absolute;
-    top: 50px;
-    left: 55px;
+    position: relative;
     width: 10px;
     height: 10px;
     min-width: 10px;
     min-height: 10px;
     background-color: palevioletred;
-    pointer-events: none;    
+    pointer-events: none; 
+    margin: 1px;   
 }
 .unfocusedDate {
-    color:gray;
     outline: none;
 }
 .dayName {
-    color: white;
+    color: #888;
     position: absolute;
     top: -20px;
     font-size: 0.5rem;
 }
 .weekNumber {
-    color: white;
+    color: #444;
     position: absolute;
     left: -50px;
     font-size: 0.5rem;
@@ -448,8 +441,9 @@ li {
     display: flex;
     flex-direction: row;
     position: relative;
-    align-self: center;
-    /* transform: rotate(90deg); */
+    min-width: min-content;
+    align-self: flex-end;
+    margin-bottom: 20px;
 }
 .monthTitle{
     font-size: 2rem;
@@ -457,7 +451,7 @@ li {
     margin-right: 20px;
 }
 .yearTitle{
-    color: mintcream;
+    color: #777;
     font-size: 2rem;
 }
 
@@ -530,12 +524,12 @@ li {
     margin: 0px;
     align-content: center;
     justify-content: center;
-    outline: #222;
-    background-color: rgba(152, 251, 152, 0.835);
-    color: black;
+    outline: 1px solid mintcream;
+    background-color: #111;
+    color: mintcream;
 }
 #cursorForworkoutDash:hover{
-    background-color: mediumseagreen;
+    background-color: rgba(152, 251, 152, 0.379);
 }
 
 /*-------------------------------------------------------*/
