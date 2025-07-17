@@ -16,7 +16,6 @@ ul {
 li {
     padding-left: 0%;             /*these indent too much*/
 }
-
 /*-------------------------------------------------------*/
 /* GENERAL BUTTON CLASS
 /*-------------------------------------------------------*/
@@ -139,6 +138,12 @@ li {
     margin-bottom: 40px;
     user-select: none;
 }
+.dashHeader:hover{
+    border-bottom: 1px solid #333;
+    .dashHeaderTitle {
+        color:#444;
+    }
+}
 .dashHeaderTitle {
     color: #333;
     padding-top: 2rem;
@@ -148,7 +153,7 @@ li {
 }
 .minimizer {
     display: flex;
-    color: mintcream;
+    color: #555;
     font-size: 3rem;
     padding-top: 0;
     user-select: none;
@@ -169,12 +174,9 @@ li {
     flex-direction: column;
     position: relative;
     align-self: safe center;
-    overflow-x: auto;
     padding: 10px;
     min-width: min-content;
-    margin-top: -50px;
     padding-left: 40px;
-    max-width: 90%;
     font-size: 1rem;
 }
 .prDashVisible {
@@ -228,7 +230,7 @@ li {
     top: 8px;
     justify-content: center;
     font-size: 1rem;
-    color: cornflowerblue;
+    color: rgba(100, 148, 237, 0.618);
 }
 .repPRbox{
     display: flex;
@@ -237,12 +239,12 @@ li {
     justify-content: center;
 }
 .prPresent{
-    color: mintcream;
+    color: #888;
     /* background-color: #333; */
     cursor: pointer;
 }
 .prPresent:hover{
-    background-color: palegreen;
+    background-color: rgba(152, 251, 152, 0.423);
     color: black;
 }
 .prPresent:hover .prToolTip{
@@ -365,7 +367,7 @@ li {
     font-size: 1rem;
     pointer-events: none;
     margin: 4px;
-    color: mintcream
+    color: #888;
 }
 .daySelected{
     background-color:rgba(186, 85, 211, 0.174);
@@ -461,19 +463,23 @@ li {
 /*-------------------------------------------------------*/
 .workout {
     display: flex;
-    flex-direction: column;
-    position: relative;
-    align-self: safe center;
     display: none;
-    overflow-x: auto;
-    padding: 20px;
-    height: fit-content;
-    scrollbar-width: 0px;
-    max-width: 95%;
 
-}
-.workout > * {
-    min-width: max-content; /* or a specific min-width */
+    flex-direction: column;
+    flex-wrap: wrap;
+    position: relative;
+    overflow: visible;
+
+    border-left: 1px solid #222;
+    border-right: 1px solid #222;
+ 
+    align-self: safe center;
+
+    padding: 20px;
+
+    height: fit-content;
+    max-width: 75%;
+
 }
 .workoutHeader {
     display: flex;
@@ -516,41 +522,29 @@ li {
     justify-self: center;
 }
 #cursorForworkoutDash{
-    position: fixed;
-    bottom: 20px;
-    right: 40px;
-    width: 100px;
-    height: 100px;
-    margin: 0px;
-    align-content: center;
-    justify-content: center;
-    outline: 1px solid mintcream;
-    background-color: #111;
-    color: mintcream;
-}
-#cursorForworkoutDash:hover{
-    background-color: rgba(152, 251, 152, 0.379);
+    margin-top: 20px;
 }
 
 /*-------------------------------------------------------*/
 /* WORKOUT AREA -> EXERCISE ROW
 /*-------------------------------------------------------*/
 .exerciseRow{
-    padding-left: 0px;
     display: flex;
-    position: relative;
-    flex-direction: row;
+    flex-direction: column;
     margin-bottom: 10px;
     user-select: none;
+    gap: 10px;
 }
 /*-------------------------------------------------------*/
 /* EXERCISE -> SET
 /*-------------------------------------------------------*/
 .set{
+    padding: 10px;
     display: flex;
     flex-direction: row;
     position: relative;
     outline: 1px solid #333;
+    background-color: #0a0a0a;
     font-size: .75rem;
     margin-right: 10px;
     padding-top: 10px;
@@ -558,7 +552,6 @@ li {
     cursor: pointer;
     min-width: 7rem;
     overflow: auto;
-    gap: 0;
 }
 .setExpand{
     width: 20rem;
@@ -569,7 +562,7 @@ li {
 .setInfoWrapper{
     display: flex;
     position: relative;
-    flex-direction: column;
+    flex-direction: row;
     pointer-events: none; 
     line-height: 1;
 }
@@ -577,6 +570,7 @@ li {
     display: flex;
     flex-direction: row;
     position: relative;
+    min-width: 100px;
     margin: 0;
     padding: 0;
     gap: 0;    
@@ -584,6 +578,7 @@ li {
 }
 .setRPEwrapper{
     margin-top: 5px;
+    margin-left: 20px;
     display: flex;
     flex-direction: row;
     pointer-events: none;  
@@ -591,20 +586,19 @@ li {
 }
 .setRPE{
     margin-top: 10px;
-    color: mintcream;
     pointer-events: none;  
 }
 .setNumber{
     position: absolute;
-    bottom: 5px;
-    left: 10px;
+    top: 5px;
+    right: 10px;
     font-size: .75rem;
-    color: mintcream;
+    color: #333;
     pointer-events: none;  
 }
 .setWeight{
-    font-size: 1.75rem;
-    color:mintcream;
+    font-size: 2rem;
+    color:#777;
     pointer-events: none;    
 }
 .setBy{
@@ -614,7 +608,7 @@ li {
 }
 .setReps{
     font-size: 1.5rem;
-    color:mintcream;
+    color:#555;
     pointer-events: none;  
 }
 .setReps:hover{
@@ -685,9 +679,12 @@ li {
 /*-------------------------------------------------------*/
 .setRemove{
     position: absolute;
-    color: red;
+    color: rgba(216, 112, 147, 0.469);
     bottom: 5px;
     right: 10px;
+}
+.setRemove:hover {
+  color:palevioletred;
 }
 
 /*-------------------------------------------------------*/
@@ -695,7 +692,7 @@ li {
 /*-------------------------------------------------------*/
 .addSet{
     position: relative;
-    color: mintcream;
+    color: #888;
 }
 .exercise{
     display: flex;
@@ -706,8 +703,8 @@ li {
     font-size: 1rem;
     height: 6.5rem;
     width: 6.5rem;
-    outline: 1px solid #666;
-    color:mintcream;
+    outline: 1px solid #222;
+    color:rgba(147, 112, 216, 0.536);
     margin-right: 20px;
     cursor: pointer;
     user-select: none;
@@ -733,14 +730,14 @@ li {
 .addExerciseDashVisible {
     display: flex;
     flex-direction: column;
-    outline: 1px dotted #333;
+    outline: 1px dotted #0a0a0a;
     position:relative; /* This will make it stay in place while scrolling */
     background-color: #111;
     z-index: 1000;
 }
 #exerciseDashForprDashBoard{
     position:fixed;
-    bottom: 0px;
+    top: 0px;
     left: 0px;
     min-width: 100%;
     background-color: #111111f7;
@@ -765,13 +762,13 @@ li {
     flex: 2;
 }
 #addExerciseX {
-    color: mintcream;
+    color: #777;
     padding: 10px;
     flex: 0;
     cursor: pointer;
 }   
 #addExerciseX:hover {
-    color: brown;
+    color: palevioletred;
 }  
 .exerciseSelectionWrapper{
     display: flex;
@@ -800,7 +797,7 @@ li {
 }
 .exerciseMenuItem {
     font-size: 1rem;
-    color: mintcream;
+    color: #777;
     padding-left: 10px;
     cursor: pointer;
 }

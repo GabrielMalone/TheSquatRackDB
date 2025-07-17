@@ -1,6 +1,6 @@
 
 import { currLifter, f } from "../lifterSidebar.js";
-import { MONTHLY_CHARTS_DASH_VARIABLES as c, endpoint as e } from "../config.js";
+import { MONTHLY_CHARTS_DASH_VARIABLES as c, endpoint as e, DASH_HEADER_VARS as d } from "../config.js";
 import { months } from "../config.js";
 
 let curmonth;
@@ -88,6 +88,12 @@ function minimizeMchartDash(){
         clearCharts();
         loadMonthlyCharts(currLifter.id, curmonth, curyear);
     }
+    const minimizerWrapper = document.getElementById(`${c.mChartMinimizerId}`);
+    if (minimizerWrapper.innerHTML === `${d.minimizerIcon}`){
+        minimizerWrapper.innerHTML = `${d.expanderIcon}`;
+    } else {
+        minimizerWrapper.innerHTML = `${d.minimizerIcon}`;
+    }
 }
 //-----------------------------------------------------------------------------
 // This is the logic for clicking the addLifter button. makes add window appear
@@ -131,16 +137,16 @@ function drawChart(chartTitle, liftsData, graphElement, graphType){
                 data: [squatData, benchData, deadliftData, accessoryData],
         
                 backgroundColor: [
-                    'palegreen',
-                    'paleturquoise',
-                    'palegoldenrod',
-                    'palevioletred',
+                    'rgba(152, 251, 152, 0.7)',
+                    'rgba(175, 238, 238, 0.7)',
+                    'rgba(238, 232, 170, 0.7',
+                    'rgba(216, 112, 147, 0.7)',
                 ],
                 borderColor: [
-                    'palegreen',
-                    'paleturquoise',
-                    'palegoldenrod',
-                    'palevioletred',
+                    // 'palegreen',
+                    // 'paleturquoise',
+                    // 'palegoldenrod',
+                    // 'palevioletred',
                 ],
                 borderWidth: 1
                 }

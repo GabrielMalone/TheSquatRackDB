@@ -88,7 +88,8 @@ export const DASH_HEADER_VARS = {
 	dashHeaderClass         : "dashHeader",
 	dashHeaderTitle		      : "dashHeaderTitle",
 	minimizerClass		      : "minimizer",
-	minimizerIcon	 	        : "-",
+	minimizerIcon	 	        : "_",
+  expanderIcon	 	        : "+"
 }
 
 export const PR_DASH_VARIABLES = {

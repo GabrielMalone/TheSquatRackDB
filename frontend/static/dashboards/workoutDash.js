@@ -21,6 +21,7 @@ export function getWorkoutFromWokroutID(idWorkout){
                 fillExerciseRow(lift);       // this will iterate over each set
             });
             createCursor(workoutContainer);           // place cursor at bottom
+            scrollToWorkout();
         })
         .catch(error=>console.error(error));
 }
@@ -232,7 +233,6 @@ function inserNewExerciseIntoWorkout(selectedExercise, idWorkout){
 //-----------------------------------------------------------------------------
 export function createWorkoutGrid(dateInfo){
     workoutContainer.style.display = "flex";
-    delete workoutContainer.dataset.idWorkout;   // this doesn't look necessary
     workoutContainer.innerHTML = ``;   
     workoutContainer.addEventListener("click", workoutDashClickEvents);
     workoutContainer.addEventListener("submit", updateSetEvent);
@@ -340,11 +340,8 @@ function createSetUpdateForm(liftInfo){
     return updateForm;
 }
 //-----------------------------------------------------------------------------
-function scrollToWorkout(){
+export function scrollToWorkout(){
     setTimeout(()=>{
-        window.scrollTo({
-            top: document.querySelector('.workout').scrollHeight,
-            behavior: 'smooth'
-          });
-    },100); 
+         document.getElementById('workoutDash').scrollIntoView({ top: 0, behavior: 'smooth'});
+    },300); 
 }

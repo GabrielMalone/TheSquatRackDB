@@ -1,7 +1,7 @@
 
-import { endpoint as c, DoW, months, PR_DASH_VARIABLES as p } from "../config.js";
+import { endpoint as c, DoW, months, PR_DASH_VARIABLES as p, DASH_HEADER_VARS as d } from "../config.js";
 import { fillCalendar } from "./calendarDash.js";
-import { createrWorkoutHeader, getWorkoutFromWokroutID } from "./workoutDash.js";
+import { createrWorkoutHeader, getWorkoutFromWokroutID, scrollToWorkout } from "./workoutDash.js";
 import { fillOutExerciseSelectMenu, createExerciseDash } from "./exerciseSelectDash.js";
 import { f } from "../lifterSidebar.js";
 import { createCursor } from "../cursor.js";
@@ -78,17 +78,7 @@ function highlightPRinCalendarAndGetPRworkout(e){
     });
     createrWorkoutHeader(dateInfo);           // get workout where pr happened
     getWorkoutFromWokroutID(idWorkout);
-    scrollToCalendar();
-}
-//-----------------------------------------------------------------------------
-
-function scrollToCalendar(){
-    setTimeout(()=>{
-        window.scrollTo({
-            top: document.querySelector('.header').scrollHeight,
-            behavior: 'smooth'
-          });
-    },100); 
+    scrollToWorkout();
 }
 //-----------------------------------------------------------------------------
 function getPRdata(e){
@@ -136,6 +126,12 @@ function buildPrDashHeader(prDash){
 function minimizePrDash(){
     const prDash = document.querySelector(`.${p.prDashClass}`);
     prDash.classList.toggle(`${p.prDashVisibleClass}`);
+    const prDashMinimizerWrap = document.getElementById(`${p.prDashMinimizerId}`);
+    if (prDashMinimizerWrap.innerHTML === `${d.minimizerIcon}`){
+        prDashMinimizerWrap.innerHTML = `${d.expanderIcon}`;
+    } else {
+        prDashMinimizerWrap.innerHTML = `${d.minimizerIcon}`;
+    }
     adjustHeaderSizeToContent(prDash);
 }
 //-----------------------------------------------------------------------------
