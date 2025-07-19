@@ -7,7 +7,7 @@ export const setUpdateFormTemplateHTML = (liftInfo, unit) =>
         </div>
         <div class="inputWrapper">
             <input class="setInfoField setRepsUpdate" id="reps${liftInfo.setID}" type="text" value="${liftInfo.reps}">
-            <div class="inputTag">reps</div>
+            <div class="inputTag">REP</div>
         </div>
         <div class="inputWrapper">
             <input class="setInfoField setRPEUpdate" id="rpe${liftInfo.setID}" type="text" value="${liftInfo.rpe}">
@@ -17,6 +17,25 @@ export const setUpdateFormTemplateHTML = (liftInfo, unit) =>
             <input class="setInfoField setButton" type="submit" value="○">
         </div>
     </form>
+    <div class="setInfo setQualifiersWrapper">
+        <div class="setInfo setQualifiers"> 
+            <div class="qualifierTitle">working set</div>   
+            <div class="checkbox" id="workingSetCheckBox">□</div>
+        </div>
+        <div class="setInfo setQualifiers">
+            <div class="qualifierTitle">paused</div>       
+            <div class="checkbox" id="pausedSetCheckBox">□</div>
+        </div>
+        <div class="setInfo setQualifiers"> 
+            <div class="qualifierTitle">belted </div>      
+            <div class="checkbox" id="beltedSetCheckBox">□</div>
+        </div>
+        <div class="setInfo setQualifiers"> 
+            <div class="qualifierTitle">unilateral</div>    
+            <div class="checkbox" id="unilateralSetCheckBox">□</div>
+        </div>
+    </div>
+
 `;
 //-----------------------------------------------------------------------------
 export const setTemplateHTML = (liftInfo) => 

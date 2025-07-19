@@ -30,12 +30,7 @@ export async function drawRepPrHistoryChart(dataForPr){
     // create the chart js data structure for every set ever lifted after this rep range
     const dateWeightObjsAllSets = createChartJSDataStructureForPrSets(LiftsOfDesiredRepRange);
     // event lsitener for x
-    const x = document.getElementById(`prChartXforrepHistoryChartFor${reps}of${liftName}`);
-    x.addEventListener("click", (e)=>{
-        // destroy chart on closing
-        const repPrChart = document.getElementById(`prChartWrapperFor${chartName}`);
-        repPrChart.parentNode.removeChild(repPrChart);
-    });
+    addCloseEventListener(reps, liftName);
     const chartCanvas = document.getElementById(`canvasFor${chartName}`);
     new Chart(chartCanvas, {
         type: 'line',
@@ -50,7 +45,7 @@ export async function drawRepPrHistoryChart(dataForPr){
                 {
                     data : dateWeightObjsAllSets,
                     showLine : false,
-                    backgroundColor : 'cyan'
+                    backgroundColor : 'palegreen'
                 }
             ]
         }, 
@@ -69,7 +64,7 @@ export async function drawRepPrHistoryChart(dataForPr){
                 y: {
                     ticks: {
                         padding: 40,
-                        color : 'cyan'
+                        color : 'mintcream'
                     },
                 },
                 x: {
@@ -116,4 +111,13 @@ function createChartJSDataStructureForPrSets(desiredRepRangePrs){
         dateWeightObjs.push(dateWeightObj);
     }   
     return dateWeightObjs;
+}
+function addCloseEventListener(reps, liftName){
+    const x = document.getElementById(`prChartXforrepHistoryChartFor${reps}of${liftName}`);
+    x.addEventListener("click",  closeEventforRepPrChart);
+}
+function closeEventforRepPrChart(){
+    // destroy chart on closing
+    const repPrChart = document.getElementById(`prChartWrapperFor${chartName}`);
+    repPrChart.parentNode.removeChild(repPrChart);
 }

@@ -126,7 +126,7 @@ export const MONTHLY_CHARTS_DASH_VARIABLES = {
 	  mChartDashHeaderTitleClass : DASH_HEADER_VARS.dashHeaderTitle,
 	  mChartMinimizerIcon			: DASH_HEADER_VARS.minimizerIcon,
 	  mChartMinimizerClass		: DASH_HEADER_VARS.minimizerClass,
-	  mChartDashText				  : "CHART DASH",
+	  mChartDashText				  : "TEMPORAL LIFT DATA",
 	  mChartDashHeaderId			: "monthChartDashHeader",
 	  mChartMinimizerId			  : "mChartMinimizer"
 

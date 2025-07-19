@@ -165,7 +165,7 @@ li {
 /* LIFTER WINDOW -> PR DASHBOARD 
 /*-------------------------------------------------------*/
 #prDashHeader{
-    max-width: 100%;
+    max-width: 950px;
     min-width: 950px;
 }
 .prDash {
@@ -304,7 +304,6 @@ li {
 .prChartX{
     color:palevioletred;
     flex: .25;
-    align-self: flex-end;
     cursor: pointer;
 }
 .prChartX:hover{
@@ -314,7 +313,8 @@ li {
     display: flex;
     flex: 9;
     align-self: center;
-    color: #888;
+    color: mintcream;
+    padding-bottom: 20px;
 }
 /*-------------------------------------------------------*/
 /* LIFTER WINDOW -> CALENDAR DASHBOARD 
@@ -589,7 +589,7 @@ li {
 .set{
     padding: 10px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     position: relative;
     outline: 1px solid #333;
     background-color: #0a0a0a;
@@ -624,10 +624,12 @@ li {
 }
 .setInfoWrapper{
     display: flex;
-    position: relative;
     flex-direction: row;
+    position: relative;
     pointer-events: none; 
     line-height: 1;
+    padding: 10px;
+    width: 90%;
 }
 .setWeightRepsWrapper{
     display: flex;
@@ -643,6 +645,7 @@ li {
     margin-top: 5px;
     margin-left: 20px;
     display: flex;
+    flex: 1;
     flex-direction: row;
     pointer-events: none;  
     color: gray;
@@ -658,7 +661,7 @@ li {
     top: 5px;
     right: 10px;
     font-size: .75rem;
-    color: #333;
+    color: #888;
     pointer-events: none;  
 }
 .setWeight{
@@ -680,6 +683,28 @@ li {
     color: aquamarine;
 }
 
+.setQualifiersWrapper{
+    display: flex;
+    flex-direction: column;
+    flex:2;
+    align-items: flex-begin;
+    margin-left: 30px;
+    padding-left: 10px;
+    gap: 5px;
+}
+.setQualifiers{
+    display: flex;
+    gap:10px;
+    color: mintcream;
+}
+.qualifierTitle{
+    min-width: 85px;
+}
+.checkbox{
+    color: mintcream;
+}
+
+
 
 /*-------------------------------------------------------*/
 /* WOKROUT AREA -> EXERCISE ROW -> SET-> UPDATE FORM
@@ -689,28 +714,25 @@ li {
 }
 .setUpdateFormVisible{
     display: flex;
-    min-width: min-content;
+    flex-direction: row;
     position: relative;
-    gap: 0;
-    overflow: visible;
+    min-width: min-content;
+    flex: 1;
+    max-width: 90%;
 }
 .setUpdate{
     display: flex;
     flex-direction: column;
-    margin-top: 5px;
-    margin-bottom: 10px;
-    margin-left: 50px;
 }
 .setInfoField{
-    background-color:black;
-    border: none;    
-    margin-left:20px;
-    font-size: 1;
+    background-color:#111;
+    border: none;
+    padding: 10px;
+    font-size: 1rem;
     color: mintcream;
-    max-width: 50px;
 }
 .setInfoField:focus {
-    background-color: black;
+    background-color: #111;
     border-color: none;
     box-shadow: none;
     outline: none;
@@ -721,11 +743,14 @@ li {
 }
 .setButton{
     position: absolute;
-    top: 30px;
-    left: 150px;
+    top: -90px;
+    left: 365px;
+    background: none;
     color: mintcream;
     cursor: pointer;
     min-width: fit-content;
+    font-size: 4rem;
+    transform: rotate(270deg);
 }
 .setButton:hover{
     color: greenyellow;
@@ -733,11 +758,16 @@ li {
 .inputWrapper{
     display: flex;
     flex-direction: row;
-    max-width: 100px;
+    border-bottom: 1px solid #333;
 }
 .inputTag{
     position: relative;
-    color: grey;
+    align-self: flex-end;
+    align-content: flex-end;
+    background-color: #111;
+    color: mintcream;
+    height: 100%;
+    min-width: 40px;
 }
 
 /*-------------------------------------------------------*/
