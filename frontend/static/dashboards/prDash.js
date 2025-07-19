@@ -22,7 +22,11 @@ export async function createPrDash(exerciseList, idUser){
     //     drawHistoricalChart(prDash, prData)             // move this eventually
     // }
     buildPrDashHeader(prDash);
-    prInfoClick(prDash);  
+    prInfoClick(prDash); 
+    if (prDash.querySelector('.prCell')){     // scroll into view if prs present
+        const prCursor = document.getElementById('cursorForprDashBoard'); 
+        prCursor.scrollIntoView({behavior : "smooth"});
+    }
 }
 //-----------------------------------------------------------------------------
 async function getPrsAndFillinRepPrChart(exerciseList, idUser, prDash){
@@ -82,7 +86,6 @@ function createDashFromCursorClick(e){
         const prDash = document.querySelector(`.${p.prDashClass}`);
         prDash.insertAdjacentHTML("beforeend",createExerciseDash(prDash));
         fillOutExerciseSelectMenu(prDash);
-        return;
     }  
 }
 //-----------------------------------------------------------------------------
@@ -102,6 +105,7 @@ function initDrawRepPrHistoryChart(e){
     const liftName = e.target.parentNode.querySelector('.prLiftName').innerHTML;
     const liftData = {idUser, idExercise, reps, liftName};
     drawRepPrHistoryChart(liftData);   
+
 }
 //-----------------------------------------------------------------------------
 function highlightPRinCalendarAndGetPRworkout(e){
@@ -304,7 +308,7 @@ function makePrToolTip(lift, weight, reps, formattedDate){
     return toolTipWrapper;
 }
 //-----------------------------------------------------------------------------
-export function createChartElement(dashContainer, chartName, chartTitle = ""){
+export function createChartElement(dashContainer, chartName, chartTitle=""){
     // let chartWrapper = document.querySelector('.prChartWrapper');
     // if (chartWrapper){   // all of this to get the chart to redraw in same spot
     //     chartWrapper.innerHTML = ``;
@@ -314,7 +318,10 @@ export function createChartElement(dashContainer, chartName, chartTitle = ""){
     chart.classList.add("prChartWrapperVisible");
     chart.setAttribute("id", `prChartWrapperFor${chartName}`);
     chart.insertAdjacentHTML("beforeend",
-        `<div class="prChartTitle">${chartTitle}</div>
-        <canvas class="${chartName}" id="${chartTitle}"></canvas>`);
+        `<div class ="prChartTitleWrapper">
+            <div class="prChartTitle">${chartTitle}</div>
+            <div class="prChartX" id="prChartXfor${chartName}">x</div>
+        </div>
+        <canvas class="prChartCanvas" id="canvasFor${chartName}"></canvas>`);
         dashContainer.insertAdjacentElement("beforeend", chart); 
 }

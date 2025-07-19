@@ -3,26 +3,108 @@ import { createChartElement, formatBackendDateData } from "../dashboards/prDash.
 import { endpoint as end, colors } from "../config.js";
 import { f } from "../lifterSidebar.js";
 
-
+//-----------------------------------------------------------------------------
+// logic for drawing historical rep pr chart data
+//-----------------------------------------------------------------------------
 export async function drawRepPrHistoryChart(dataForPr){
     // dataForPr :  idUser, idExercise, reps
     const idUser     = dataForPr.idUser;
     const idExercise = dataForPr.idExercise;
     const reps       = dataForPr.reps;
     const liftName   = dataForPr.liftName;
-
-    const prs = await f.post(end.GET_PR_DATA_FOR_LIFT, {idUser, "lift" : idExercise});
-    const desiredRepRangePrs = prs.filter(pr=>pr.reps === parseInt(reps));
-    const chartTitle = `Lift History for ${reps} rep(s) of ${liftName}`;
-    const chartName = 'repHistoryChart';
+    // elements needed for chart creation
     const prDash = document.querySelector('.prDash');
+    const chartTitle = `Lift History for sets of ${reps} on ${liftName}`;
+    const chartName = `repHistoryChartFor${reps}of${liftName}`;
+    createChartElement(prDash, chartName, chartTitle);
+    // get the pr data from DB
+    const liftData = await f.post(end.GET_PR_DATA_FOR_LIFT, {idUser, "lift" : idExercise});
+    // filter lift data for desired rep ranges and for prs
+    const LiftsOfDesiredRepRange = liftData.filter(data=>data.reps === parseInt(reps));
+    // sort by date
+    LiftsOfDesiredRepRange.sort((a, b) => new Date(a.date) - new Date(b.date)); 
+    // get only sets of this rep range that were PRs 
+    const desiredRepRangePrs = filterPRs(LiftsOfDesiredRepRange);
+    // create the chart js data structure for the PR sets
+    const dateWeightObjsPrs = createChartJSDataStructureForPrSets(desiredRepRangePrs);
+    // create the chart js data structure for every set ever lifted after this rep range
+    const dateWeightObjsAllSets = createChartJSDataStructureForPrSets(LiftsOfDesiredRepRange);
+    // event lsitener for x
+    const x = document.getElementById(`prChartXforrepHistoryChartFor${reps}of${liftName}`);
+    x.addEventListener("click", (e)=>{
+        // destroy chart on closing
+        const repPrChart = document.getElementById(`prChartWrapperFor${chartName}`);
+        repPrChart.parentNode.removeChild(repPrChart);
+    });
+    const chartCanvas = document.getElementById(`canvasFor${chartName}`);
+    new Chart(chartCanvas, {
+        type: 'line',
+        data : {
+            datasets: [ 
+                {
+                    data : dateWeightObjsPrs,
+                    showLine : true,
+                    borderColor: 'palegreen',
+                    backgroundColor : 'palegreen'
+                },
+                {
+                    data : dateWeightObjsAllSets,
+                    showLine : false,
+                    backgroundColor : 'cyan'
+                }
+            ]
+        }, 
+        options : {
+            plugins: {
+                legend: {
+                display: false,
+                labels: {
+                    generateLabels: hideLegendBoxes,
+                    color: "mintcream",
+                },
+                align: "center",
+                },
+            },
+            scales: {
+                y: {
+                    ticks: {
+                        padding: 40,
+                        color : 'cyan'
+                    },
+                },
+                x: {
+                    ticks : {
+                        padding: 40,
+                        color : 'mintcream'
+                    }
+                },
+            },
+            layout: {
+                padding: 0
+            }
+        }
+    });
 
-    createChartElement(prDash, chartName ,chartTitle);
-
-    desiredRepRangePrs.sort((a, b) => new Date(a.date) - new Date(b.date)); // sort by date
-
-    const dateLabels = desiredRepRangePrs.map(prs=>formatBackendDateData(prs.date));
-    const prWeightData = desiredRepRangePrs.map(prs=>prs.weight);
+    setTimeout(()=>{chartCanvas.scrollIntoView({behavior : "smooth"})}, 300);
+}
+//-----------------------------------------------------------------------------
+// logic for filtering out only sets that were a PR for this rep range 
+//-----------------------------------------------------------------------------
+function filterPRs(desiredRepRangeLifts){
+    let max = 0;
+    const desiredRepRangePrs = [];
+    for (let i = 0 ; i < desiredRepRangeLifts.length ; i ++ ){
+        if (parseInt(desiredRepRangeLifts[i].weight) > max){
+            max = desiredRepRangeLifts[i].weight;
+            desiredRepRangePrs.push(desiredRepRangeLifts[i]);
+        }
+    }
+    return desiredRepRangePrs;
+}
+//-----------------------------------------------------------------------------
+function createChartJSDataStructureForPrSets(desiredRepRangePrs){
+    const dateLabels = desiredRepRangePrs.map(liftData=>formatBackendDateData(liftData.date));
+    const prWeightData = desiredRepRangePrs.map(liftData=>liftData.weight);
 
     const dateWeightObjs = [];
 
@@ -33,45 +115,5 @@ export async function drawRepPrHistoryChart(dataForPr){
         }
         dateWeightObjs.push(dateWeightObj);
     }   
-    
-    const repPrHistoryChartCanvas = document.getElementById(`${chartTitle}`);
-
-    new Chart(repPrHistoryChartCanvas, {
-        type: 'line',
-        data : {
-            datasets: [ {
-                data : dateWeightObjs,
-                showLine: false
-            }]
-        }, 
-        options : {
-            plugins: {
-                legend: {
-                display: false,
-                labels: {
-                    // remove the little color box next to the title of the chart
-                    generateLabels: hideLegendBoxes,
-                    color: "mintcream",
-                },
-                align: "center",
-                },
-            },
-            scales: {
-                y: {
-                    ticks: {
-                        padding: 40
-                    },
-                },
-                x: {
-                    ticks : {
-                        padding: 40,
-                    }
-                },
-            },
-            layout: {
-                padding: 0
-            }
-        }
-    });
-
+    return dateWeightObjs;
 }
