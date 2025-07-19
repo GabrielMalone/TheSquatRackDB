@@ -3,6 +3,7 @@ import { endpoint as e } from "../config.js";
 import { checkIfWorkoutExistsOnDate } from "./workoutDash.js";
 import { createPrDash } from "./prDash.js";
 
+
 //-----------------------------------------------------------------------------
 // event for clicking on cursor. exercise dashboad visible/ fills out
 //-----------------------------------------------------------------------------
@@ -115,7 +116,8 @@ function addExerciseToPrDash(event){
             // add the exercise to the PR menu
             // will need the exercise ID and the lifter's id
             const lifter = getLifterObject(currLifter.id);
-            lifter.prDashSelection = event.target.dataset.idExercise;
+            const idExercise = event.target.dataset.idExercise;
+            lifter.prDashSelection = idExercise;
             createPrDash(lifter.prDashSelection, lifter.id);
     }
 }

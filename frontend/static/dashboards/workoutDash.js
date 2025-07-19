@@ -47,8 +47,6 @@ function workoutDashClickEvents(e){
 //-----------------------------------------------------------------------------
 function closeWorkoutDash(e){
     if (e.type === "click" && e.target.id === "workoutDashX"){
-        console.log("here");
-        console.log(workoutContainer.style.display);
         workoutContainer.style.display = "none";
     }
 }

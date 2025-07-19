@@ -213,7 +213,7 @@ function drawChart(chartTitle, liftsData, graphElement, graphType){
 //-----------------------------------------------------------------------------
 // This is the logic for clicking the addLifter button. makes add window appear
 //-----------------------------------------------------------------------------
-function hideLegendBoxes(chart) {
+export function hideLegendBoxes(chart) {
     return Chart.defaults.plugins.legend.labels.generateLabels(chart).map(label => (
         {
         ...label,                      // spread all the oringal label properties

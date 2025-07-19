@@ -482,9 +482,9 @@ li {
     display: flex;
     display: none;
     flex-direction: column;
+    align-content: center;
     position: relative;
     overflow: visible;
-    border-right: 1px solid #222;
     padding: 20px;
     height: 100vh;
     min-width: min-content;
@@ -492,18 +492,24 @@ li {
 .workoutHeader {
     display: flex;
     flex: row;
-    gap: 20px;
     margin-bottom: 20px;
+    min-width: 470px;
 }
 .sessionTitle{
+    display: flex;
+    flex:2;
     color: white;
     font-size: 1rem;
 }
 .trainingDate{
+    display: flex;
+    flex: 4;
     color: grey;
     font-size: 1rem;
 }
 #workoutDashX{
+    display: flex;
+    flex: 0.35;
     color: mintcream;
     cursor: pointer;
 }
@@ -562,8 +568,9 @@ li {
     background-color: #0a0a0a;
     padding-top: 10px;
     padding-left: 1rem;
+    gap:30px;
     cursor: pointer;
-    min-width: 7rem;
+    min-width: min-content;
     overflow: auto;
 }
 .setExpand{
@@ -615,6 +622,7 @@ li {
 }
 .setRPE{
     margin-top: 10px;
+    padding-right: 20px;
     pointer-events: none;  
     color:rgba(245, 255, 250, 0.7)
 }
@@ -654,7 +662,7 @@ li {
 }
 .setUpdateFormVisible{
     display: flex;
-    width: fit-content;
+    min-width: min-content;
     position: relative;
     gap: 0;
     overflow: visible;
@@ -664,14 +672,15 @@ li {
     flex-direction: column;
     margin-top: 5px;
     margin-bottom: 10px;
+    margin-left: 50px;
 }
 .setInfoField{
     background-color:black;
     border: none;    
     margin-left:20px;
-    font-size: .75rem;
+    font-size: 1;
     color: mintcream;
-    max-width: 30px;
+    max-width: 50px;
 }
 .setInfoField:focus {
     background-color: black;
@@ -685,8 +694,8 @@ li {
 }
 .setButton{
     position: absolute;
-    top: 20px;
-    left: 80px;
+    top: 30px;
+    left: 150px;
     color: mintcream;
     cursor: pointer;
     min-width: fit-content;
@@ -739,9 +748,7 @@ li {
     color: rgba(245, 255, 250, 0.629);
     cursor: pointer;
     user-select: none;
-    -webkit-user-select: none; /* Safari */
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* IE10+/Edge */
+    margin-top: 20px;
 }
 .exercise:hover{
     outline: 1px solid mediumorchid;
@@ -863,6 +870,7 @@ li {
     overflow-y: scroll;
     min-width: min-content;
     border-right: 1px solid #222;
+    border-left: 1px solid #222;
 }
 .sidebar.visible{
     display:none;
@@ -887,62 +895,53 @@ li {
 /*-------------------------------------------------------*/
 /* CREATE A LIFTER POP UP BOX
 /*-------------------------------------------------------*/
-.createLifterBox, .createExerciseBox {
-    top: 25%;
-    left: 25%;
-    width: 500px;
-    height: 450px;
+.createLifterBox {
     display: none;
 }
-.createLifterBox.visible, .createExerciseBox.visible{
+.createLifterBox.visible{
+    padding: 20px;
     display: flex;
-    flex: .75;
+    flex: 1;
     flex-direction: column;
     min-width: min-content;
 }
 
-.createLifterBoxHeader, .createExerciseBoxHeader {
+.createLifterBoxHeader {
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
 }
 .X {
-    align-content: center;
-    text-align: center;
     font-size: 1rem;
-    color: gray;
-    margin-right: 30px;
+    color: palevioletred;
     margin-top: 20px;
     flex: 1;
+    cursor: pointer;
 }
 .X:hover {
     /* border-color: palegoldenrod; */
-    color:palegreen;
+    color:red;
 }
-#newLifterTitle, #newExerciseTitle {
-    margin-left: 8%;
+#newLifterTitle {
     margin-top: 20px;
     font-size: 1rem;
-    color:mintcream;
     flex: 9;
+    color:mintcream;
 }
 
 .createLifterFields {
     margin-top: 20px;
     display: flex;
-    flex-direction: column;
-    justify-content: center;            
-    align-items: center;         
+    flex-direction: column;  
     gap: 20px;
 }
 .inputField {
     background-color: #111; 
     border: none;
     outline: none;     
-    width: 80%;
     padding: 10px;
     border-radius: 0px;
     font-size: 1rem;
+    max-width: 90%;
     color: black;
 }
 .inputField:focus {
@@ -958,10 +957,12 @@ li {
     color: mintcream;         /* Active text color */
 }
 #submitNewLifter {
+    align-self: center;
     padding: 1.5rem;
     border-style: solid;
     border-width: 1px;
     border-color: black;
+    max-width: 200px;
 }
 #submitNewLifter:hover {
     background-color: palegreen;

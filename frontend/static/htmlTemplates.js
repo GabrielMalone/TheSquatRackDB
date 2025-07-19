@@ -14,7 +14,7 @@ export const setUpdateFormTemplateHTML = (liftInfo, unit) =>
             <div class="inputTag">RPE</div>
         </div>
         <div class="inputWrapper">
-            <input class="setInfoField setButton" type="submit" value="○ update">
+            <input class="setInfoField setButton" type="submit" value="○">
         </div>
     </form>
 `;

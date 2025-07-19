@@ -33,6 +33,8 @@ export const months =
     "DECEMBER",
 ];
 
+export const colors = ['mediumspringgreen', 'orange', 'yellow', 'cyan' ,'darkred' , 'hotpink' , 'white'];
+
 const devConfig = {
 
     API_URL: "http://localhost:5001/",
