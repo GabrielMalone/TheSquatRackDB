@@ -1,65 +1,58 @@
 
-import { endpoint as c, DoW, months, PR_DASH_VARIABLES as p, DASH_HEADER_VARS as d, colors } from "../config.js";
+import { endpoint as c, DoW, months, PR_DASH_VARIABLES as p, DASH_HEADER_VARS as d } from "../config.js";
 import { fillCalendar } from "./calendarDash.js";
 import { createrWorkoutHeader, getWorkoutFromWokroutID, scrollToWorkout } from "./workoutDash.js";
 import { fillOutExerciseSelectMenu, createExerciseDash } from "./exerciseSelectDash.js";
 import { f, getLifterObject } from "../lifterSidebar.js";
 import { createCursor } from "../cursor.js";
-import { hideLegendBoxes } from "./monthlyChartDash.js";
+import { drawHistoricalChart } from "../charts/lifetimeLiftDataChart.js";
+import { drawRepPrHistoryChart } from "../charts/repPrHistoryChart.js";
 
 let repRange = 20;
-let historicalChart = null;
-const PRdatasets = [];
 
 //-----------------------------------------------------------------------------
 // creates the pr chart and fetches the data to fill in the chart
 //-----------------------------------------------------------------------------
 export async function createPrDash(exerciseList, idUser){
-
-    document.querySelector(`.${p.prDashClass}`).innerHTML = ``; 
-    let curPrDashHeader = document.getElementById(`${p.prDashHeaderId}`);
-    if (curPrDashHeader){
-        curPrDashHeader.innerHTML = ``;
-        curPrDashHeader.parentNode.removeChild(curPrDashHeader);
-    }
+    clearPreviousDash();
     const prDash = initPrDash(exerciseList.length);    // clear any prev dash ^
-
+    const prData = await getPrsAndFillinRepPrChart(exerciseList, idUser, prDash);
+    createCursor(prDash);
+    // if (Object.keys(prData).length > 0){     // create the historical datachart
+    //     drawHistoricalChart(prDash, prData)             // move this eventually
+    // }
+    buildPrDashHeader(prDash);
+    prInfoClick(prDash);  
+}
+//-----------------------------------------------------------------------------
+async function getPrsAndFillinRepPrChart(exerciseList, idUser, prDash){
     let prData = {};
 
     for (const liftID of exerciseList) {    // get info for exercises passed in
         const exerciseInfo = await f.post(c.GET_EXERCISE_INFO, liftID);
         const liftName = exerciseInfo.lift;
         const curLiftRow = buildLiftRow(exerciseInfo, prDash, idUser, liftID);
-        const prs = await f.post(c.GET_PR_DATA_FOR_LIFT, {idUser, "lift" : liftID})//pr data
+        const prs = await f.post(c.GET_PR_DATA_FOR_LIFT, {idUser, "lift" : liftID})
         prs.forEach(pr=>{        //iterate prs, get corresponding box by id
             fillInRepPRBoxes(pr, idUser, exerciseInfo, curLiftRow, liftID);
         }); 
         prData[liftName] = prs;
-    }        
-    // create the historical datachart
-    if (Object.keys(prData).length > 0){
-        createChartElement("Historical PR Data", prDash);
-        drawHistoricalPrChart(prData)
     }
-    createCursor(prDash);
-    buildPrDashHeader(prDash);
-     // listen for clicks on PRs 
-    prInfoClick(prDash);  
+    
+    return prData;        
 }
 //-----------------------------------------------------------------------------
-function createChartElement(chartTitle, prDash){
-    let chartWrapper = document.querySelector('.prChartWrapper');
-    if (chartWrapper){   // all of this to get the chart to redraw in same spot
-        chartWrapper.innerHTML = ``;
-    } 
-    const chart = document.createElement("div");
-    chart.classList.add("prChartWrapper");
-    chart.classList.add("prChartWrapperVisible");
-    chart.insertAdjacentHTML("beforeend",
-        `<div class="prChartTitle">  </div>
-        <canvas class="historicalPrChart"></canvas>`);
-        prDash.insertAdjacentElement("beforeend", chart); 
+function clearPreviousDash(){
+    document.querySelector(`.${p.prDashClass}`).innerHTML = ``;   // clear dash
+    let curPrDashHeader = document.getElementById(`${p.prDashHeaderId}`);
+    if (curPrDashHeader){
+        curPrDashHeader.innerHTML = ``;
+        curPrDashHeader.parentNode.removeChild(curPrDashHeader);
+    }
 }
+
+
+
 //-----------------------------------------------------------------------------
 // EVENTS for clicking on a PR - load the workout in which PR happened
 //-----------------------------------------------------------------------------
@@ -96,7 +89,19 @@ function createDashFromCursorClick(e){
 function clickPrEvent(e){
     if (e.target.classList.contains("prPresent")){
         highlightPRinCalendarAndGetPRworkout(e);
+        initDrawRepPrHistoryChart(e)
     }
+}
+//-----------------------------------------------------------------------------
+// methods related to clickPR events ^
+//-----------------------------------------------------------------------------
+function initDrawRepPrHistoryChart(e){
+    const idUser = e.target.dataset.idUser;
+    const idExercise = e.target.dataset.idExercise;
+    const reps = e.target.dataset.reps;
+    const liftName = e.target.parentNode.querySelector('.prLiftName').innerHTML;
+    const liftData = {idUser, idExercise, reps, liftName};
+    drawRepPrHistoryChart(liftData);   
 }
 //-----------------------------------------------------------------------------
 function highlightPRinCalendarAndGetPRworkout(e){
@@ -135,6 +140,9 @@ function getPRdata(e){
     }
     return [dateInfo, year, month, prDay, lastday, idWorkout]
 }
+
+
+
 //-----------------------------------------------------------------------------
 // helper methods for the createPrDash ^
 //-----------------------------------------------------------------------------
@@ -296,125 +304,17 @@ function makePrToolTip(lift, weight, reps, formattedDate){
     return toolTipWrapper;
 }
 //-----------------------------------------------------------------------------
-// logic for drawing historical chart data
-//-----------------------------------------------------------------------------
-function drawHistoricalPrChart(dataforPr){
-    const liftNames = Object.keys(dataforPr);
-    const prData = Object.values(dataforPr);
-    // pr Data is an array of arrays. each array contains pr objects for a lift
-    // {date: "Tue, 01 Jul 2025 00:00:00 GMT", idWorkout: 1, reps: 1, weight: 901}
-    // ....
-    const prDatasets = [];          // array to hold the final chart js objects
-    for (let i = 0 ; i < prData.length ; i ++ ){  // iterate through pr objects
-        const color = colors[i];
-        const prDataSet = prData[i];
-        const liftName = liftNames[i];
-        const weightAtReps = {};                                                // set this up so that weights are on x axis // and reps are on y axis // and frequncy of rep range completed at that weight is r 
-        createWeightRepsObjects(weightAtReps, prDataSet, liftName) ;                      // all the weights a user has lifted for this exercise       
-        const weightLabels = Object.keys(weightAtReps);                         // all reps completed at this weight for this exercise
-        const repDataSets  = Object.values(weightAtReps);                       // set r radius based on how many times rep range hit for this weight
-        setRadius(repDataSets);                                                 // how many times has a weight been done for this lift at these reps
-        const datasetObj = createChartJSdatasetObject(weightLabels, repDataSets, color)// create the object that Chart js wants data : dataset [{},{},{}]  
-        prDatasets.push(datasetObj);
-    }    
-    if (historicalChart){                              // destroy before redraw
-        historicalChart.destroy();
-    }
-
-    historicalChart = new Chart(document.querySelector(`.historicalPrChart`), {
-        type: 'bubble', 
-        data: {     // map can take two arguments: item in arry, and index val
-            datasets: prDatasets.flat() // need just one array of all datasetObjects
-        },
-        options: {
-            aspectRatio: 2,
-            plugins: {
-                legend: {
-                    display: false,
-                    labels: {
-                        generateLabels: hideLegendBoxes,
-                    },
-                },
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            const label = context.dataset.label || '';
-                            const x = `${context.parsed.x} rep(s) x `;
-                            const y = context.parsed.y;
-                            const r = context.raw.date;
-                            const name = context.raw.name;
-                            return `${name} : ${x} ${y} on ${r}`; // No r here
-                        }
-                    }
-                }
-            },
-            scales: {
-                y: {
-                    display: false,
-                    grid: {
-                        display: true,       // ✅ show horizontal grid lines
-                        color: 'rgba(200, 200, 200, 0.2)', // optional: light gray lines
-                        drawTicks: false     // optional: hide small tick marks
-                    },
-                    ticks: {
-                        padding: 10
-                    },
-                },
-                x: {
-                    display: false,
-                    min: 0,
-                    ticks : {
-                        stepSize: 5,
-                        color: "gray",
-                        font: {
-                            size: 10 
-                        },
-                        padding: 0,
-                    }
-                },
-            },
-            layout: {
-                padding: 0
-            }
-        },              
-    }); 
+export function createChartElement(dashContainer, chartName, chartTitle = ""){
+    // let chartWrapper = document.querySelector('.prChartWrapper');
+    // if (chartWrapper){   // all of this to get the chart to redraw in same spot
+    //     chartWrapper.innerHTML = ``;
+    // } 
+    const chart = document.createElement("div");
+    chart.classList.add("prChartWrapper");
+    chart.classList.add("prChartWrapperVisible");
+    chart.setAttribute("id", `prChartWrapperFor${chartName}`);
+    chart.insertAdjacentHTML("beforeend",
+        `<div class="prChartTitle">${chartTitle}</div>
+        <canvas class="${chartName}" id="${chartTitle}"></canvas>`);
+        dashContainer.insertAdjacentElement("beforeend", chart); 
 }
-//-----------------------------------------------------------------------------
-// chart  helpers for formatting the chart data
-//-----------------------------------------------------------------------------
-function setRadius(repDataSets){
-    for (let i = 0 ; i < repDataSets.length ; i ++){
-        for (let j = 0 ; j < repDataSets[i].length ; j ++){
-            repDataSets[i][j].r = repDataSets[i].length * 3; 
-        }
-    }
-}
-//-----------------------------------------------------------------------------
-function createWeightRepsObjects(weightAtReps, prDataSet, liftName){
-    for (let i = 0; i < prDataSet.length ; i ++ ){
-        if (!weightAtReps[prDataSet[i].weight]){ 
-            weightAtReps[prDataSet[i].weight] = [
-                {   x:prDataSet[i].weight,y:prDataSet[i].reps, 
-                    date: formatBackendDateData(prDataSet[i].date), 
-                    name: liftName  }];
-        } else { 
-            weightAtReps[prDataSet[i].weight].push(
-                {   x:prDataSet[i].weight,
-                    y:prDataSet[i].reps, 
-                    date: formatBackendDateData(prDataSet[i].date), 
-                    name: liftName  });
-        }
-    }   
-   
-}
-//-----------------------------------------------------------------------------
-function createChartJSdatasetObject(weightLabels, repDataSets, color){
-    const datasetObj = repDataSets.map((points, idx) => ({
-        label: weightLabels[idx],
-        data: points,
-        backgroundColor: color,
-        borderColor: color
-    }))
-    return datasetObj;
-}
-//-----------------------------------------------------------------------------

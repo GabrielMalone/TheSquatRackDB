@@ -289,6 +289,16 @@ li {
     font-size: 0.75rem;
     pointer-events: none;
 }
+.prChartWrapper{
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+}
+.prChartTitle{
+    display: flex;
+    align-self: center;
+    color: mintcream;
+}
 /*-------------------------------------------------------*/
 /* LIFTER WINDOW -> CALENDAR DASHBOARD 
 /*-------------------------------------------------------*/
