@@ -41,16 +41,16 @@ export function drawMonthlyChart(chartTitle, liftsData, graphElement, graphType)
                     data: [squatData, benchData, deadliftData, accessoryData],
             
                     backgroundColor: [
-                        'yellow',
-                        'darkcyan',
-                        'brown',
-                        'darkorange',
+                        'transparent',
+                        'transparent',
+                        'transparent',
+                        'transparent',
                     ],
                     borderColor: [
-                        // 'palegreen',
-                        // 'paleturquoise',
-                        // 'palegoldenrod',
-                        // 'palevioletred',
+                        'green',
+                        'cyan',
+                        'yellow',
+                        'brown',
                     ],
                     borderWidth: 1
                 }

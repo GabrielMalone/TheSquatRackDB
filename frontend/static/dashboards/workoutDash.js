@@ -53,6 +53,9 @@ function qualifierClickEven(e){
     if (e.type === "click" &&  e.target.classList.contains('qualifierTitle') ){
         checkbox = e.target.parentNode.querySelector('.checkbox');
     }
+    if (e.type === "click" && e.target.classList.contains('UpdatequalifierIcons') ){
+        checkbox = e.target.parentNode.querySelector('.checkbox');
+    }
     if (checkbox){
         checkbox.classList.toggle('checkboxSelected');
     }
@@ -131,8 +134,6 @@ function setQualifiersForSet(setInfo, newSet){
     if (setInfo.workingSet){
         newSet.querySelector('#workingSetCheckBox').classList.add('checkboxSelected');
         newSet.querySelector('#workingSetIcon').classList.add('highlighted');
-    } else {
-        newSet.style.opacity = "50%";
     }
     if (setInfo.unilateral){
         newSet.querySelector('#unilateralSetCheckBox').classList.add('checkboxSelected');
@@ -363,7 +364,7 @@ function CreateRemoveSetButton(liftInfo, setInfo){
     setRemoveButton.dataset.idWorkout = liftInfo.idWorkout; 
     setRemoveButton.dataset.exercise = liftInfo.exercise;
     setRemoveButton.dataset.exerciseID = liftInfo.exerciseID;
-    setRemoveButton.innerHTML = `x`;
+    setRemoveButton.innerHTML = `X`;
     return setRemoveButton;
 }
 //-----------------------------------------------------------------------------
@@ -414,7 +415,7 @@ function fillWorkoutDate(dateInfo){
         ${dateInfo.day} 
         ${dateInfo.year}
     </div>
-    <div id="workoutDashX">☒</div>`;
+    <div id="workoutDashX">X</div>`;
     workoutContainer.appendChild(workoutHeader);
 }
 //-----------------------------------------------------------------------------

@@ -252,7 +252,7 @@ li {
     justify-content: center;
 }
 .prPresent{
-    color: rgba(152, 251, 152, 0.8);
+    color:mintcream;
     /* background-color: #333; */
     align-self: center;
     justify-self: center;
@@ -512,9 +512,9 @@ li {
     flex-direction: column;
     align-content: center;
     position: relative;
-    overflow: visible;
+    overflow: hidden;
     padding: 20px;
-    height: 100vh;
+    height: 100%;
     min-width: min-content;
 }
 .workoutHeader {
@@ -605,11 +605,11 @@ li {
     min-height: min-content;
 }
 .prSet {
-    outline: 1px solid green;
+    outline: 1px solid #212121;
 }
 
 .set:hover{
-    outline-color:mediumseagreen;
+    outline-color:brown;
     .setWeight{
         color:mintcream;
     }
@@ -631,6 +631,7 @@ li {
     line-height: 1;
     padding: 10px;
     width: 90%;
+    overflow: visible;
 }
 .setWeightRepsWrapper{
     display: flex;
@@ -656,6 +657,17 @@ li {
     padding-right: 20px;
     pointer-events: none;  
     color:rgba(245, 255, 250, 0.7)
+}
+.qualifierIconsWrapper{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+.qualifierIcons{
+    color: #444;
+}
+.qualifierIcons.highlighted{
+    color: orangered;
 }
 .setNumber{
     position: absolute;
@@ -686,55 +698,53 @@ li {
 
 .setQualifiersWrapper{
     display: flex;
+    flex: 3;
     flex-direction: column;
-    flex:2;
-    align-items: flex-begin;
-    margin-left: 30px;
-    padding-left: 10px;
     gap: 5px;
     user-select: none;
 }
 .setQualifiers{
     display: flex;
+    flex-direction: row;
     gap:10px;
 }
 .qualifierTitle{
-    min-width: 85px;
-    color: #555;
+    color: #777;
+    width: 100px;
 }
 .qualifierTitle:hover{
-    color: greenyellow;
-}
-
-.checkbox{
-   width: 20px;
-   height: 20px;
-   outline: 1px solid #444;
-   margin-left: 20px;
-}
-.checkbox:hover{
-    outline: 1px solid orange;
-    background-color: orangered; 
-    .qualifierTitle{
-        color: green;
-    }
-}
-.checkboxSelected{
-    border: 1px solid darkorange;
-    background-color: rgba(255, 68, 0, 0.68);
-}
-
-.qualifierIconsWrapper{
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-}
-.qualifierIcons{
     color: mintcream;
 }
-.qualifierIcons.highlighted{
-    color: greenyellow;
+.UpdatequalifierIcons{
+    min-width: 20px;
+    max-width: 20px;
+    color: #777;
 }
+.UpdatequalifierIcons:hover{
+    color: mintcream;
+}
+#UpdatepausedIcon{
+    padding-left: 3px;
+    margin-right: -3px;
+}
+#UpdateunilateralIcon{
+    padding-left: 3px;
+    margin-right: -3px;
+}
+.checkbox{
+    align-self: center;
+    width: 15px;
+    height: 15px;
+    outline: 1px solid darkred;
+}
+.checkbox:hover{
+    background-color: darkred; 
+}
+
+.checkboxSelected{
+    background-color: brown
+}
+
 /*-------------------------------------------------------*/
 /* WOKROUT AREA -> EXERCISE ROW -> SET-> UPDATE FORM
 /*-------------------------------------------------------*/
@@ -742,11 +752,10 @@ li {
     display: none;
 }
 .setUpdateFormVisible{
+    margin-left: 10px;
     display: flex;
     flex-direction: row;
     position: relative;
-    min-width: min-content;
-    flex: 1;
 }
 .setUpdate{
     display: flex;
@@ -755,35 +764,35 @@ li {
 .setInfoField{
     display: flex;
     position: relative;
-    background-color:#111;
+    background-color:#0a0a0a;
     border: none;
     padding: 10px;
     font-size: 1rem;
+    max-width: 75px;
     color: mintcream;
 }
 .setInfoField:focus {
-    background-color: #111;
+    background-color: #0a0a0a;
     border-color: none;
     box-shadow: none;
     outline: none;
 }
 .setInfoField:hover {
     outline: none;
-    color: greenyellow;
+    color: brown;
 }
 .setButton{
-    position: unset;
-    margin-top: 30px;
-    margin-left: 50%;
-    background: none !important;
-    background-color: none !important;
-    border: none !important;
-    color: mintcream;
+    top: 10px;
+    right: 20px;
+    position: absolute;
+    color: brown;
     cursor: pointer;
-    font-size: 2rem;
+    overflow: visible;
+    font-size: 3rem;
+
 }
 .setButton:hover{
-    color: greenyellow;
+    color: lightcoral;
 }
 .inputWrapper{
     display: flex;
@@ -793,8 +802,7 @@ li {
     position: relative;
     align-self: center;
     align-content: center;
-    background-color: #111;
-    color: mintcream;
+    color: #444;
     height: 100%;
     min-width: 40px;
 }
@@ -1027,7 +1035,6 @@ li {
     padding: 10px;
     border-radius: 0px;
     font-size: 1rem;
-    max-width: 90%;
     color: black;
 }
 .inputField:focus {
