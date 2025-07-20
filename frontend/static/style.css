@@ -1,4 +1,5 @@
 
+
 /*-------------------------------------------------------*/
 :root {
     font-family: 'Arial', sans-serif; 
@@ -188,7 +189,7 @@ li {
     min-height: 40px;
     max-width: 40px;
     max-height: 40px;
-    outline: 1px solid #222;
+    outline: 1px solid #111;
     overflow: visible;
     user-select: none;
 } 
@@ -604,7 +605,7 @@ li {
     min-height: min-content;
 }
 .prSet {
-    outline: 1px solid #444;
+    outline: 1px solid green;
 }
 
 .set:hover{
@@ -691,21 +692,49 @@ li {
     margin-left: 30px;
     padding-left: 10px;
     gap: 5px;
+    user-select: none;
 }
 .setQualifiers{
     display: flex;
     gap:10px;
-    color: mintcream;
 }
 .qualifierTitle{
     min-width: 85px;
+    color: #555;
 }
+.qualifierTitle:hover{
+    color: greenyellow;
+}
+
 .checkbox{
+   width: 20px;
+   height: 20px;
+   outline: 1px solid #444;
+   margin-left: 20px;
+}
+.checkbox:hover{
+    outline: 1px solid orange;
+    background-color: orangered; 
+    .qualifierTitle{
+        color: green;
+    }
+}
+.checkboxSelected{
+    border: 1px solid darkorange;
+    background-color: rgba(255, 68, 0, 0.68);
+}
+
+.qualifierIconsWrapper{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+.qualifierIcons{
     color: mintcream;
 }
-
-
-
+.qualifierIcons.highlighted{
+    color: greenyellow;
+}
 /*-------------------------------------------------------*/
 /* WOKROUT AREA -> EXERCISE ROW -> SET-> UPDATE FORM
 /*-------------------------------------------------------*/
@@ -718,13 +747,14 @@ li {
     position: relative;
     min-width: min-content;
     flex: 1;
-    max-width: 90%;
 }
 .setUpdate{
     display: flex;
     flex-direction: column;
 }
 .setInfoField{
+    display: flex;
+    position: relative;
     background-color:#111;
     border: none;
     padding: 10px;
@@ -742,15 +772,15 @@ li {
     color: greenyellow;
 }
 .setButton{
-    position: absolute;
-    top: -90px;
-    left: 365px;
-    background: none;
+    position: unset;
+    margin-top: 30px;
+    margin-left: 50%;
+    background: none !important;
+    background-color: none !important;
+    border: none !important;
     color: mintcream;
     cursor: pointer;
-    min-width: fit-content;
-    font-size: 4rem;
-    transform: rotate(270deg);
+    font-size: 2rem;
 }
 .setButton:hover{
     color: greenyellow;
@@ -758,12 +788,11 @@ li {
 .inputWrapper{
     display: flex;
     flex-direction: row;
-    border-bottom: 1px solid #333;
 }
 .inputTag{
     position: relative;
-    align-self: flex-end;
-    align-content: flex-end;
+    align-self: center;
+    align-content: center;
     background-color: #111;
     color: mintcream;
     height: 100%;

@@ -3,6 +3,7 @@ import { createChartElement, formatBackendDateData } from "../dashboards/prDash.
 import { endpoint as end, colors } from "../config.js";
 import { f } from "../lifterSidebar.js";
 
+
 //-----------------------------------------------------------------------------
 // logic for drawing historical rep pr chart data
 //-----------------------------------------------------------------------------
@@ -30,7 +31,7 @@ export async function drawRepPrHistoryChart(dataForPr){
     // create the chart js data structure for every set ever lifted after this rep range
     const dateWeightObjsAllSets = createChartJSDataStructureForPrSets(LiftsOfDesiredRepRange);
     // event lsitener for x
-    addCloseEventListener(reps, liftName);
+    addCloseEventListener(reps, liftName, chartName);
     const chartCanvas = document.getElementById(`canvasFor${chartName}`);
     new Chart(chartCanvas, {
         type: 'line',
@@ -39,13 +40,13 @@ export async function drawRepPrHistoryChart(dataForPr){
                 {
                     data : dateWeightObjsPrs,
                     showLine : true,
-                    borderColor: 'palegreen',
-                    backgroundColor : 'palegreen'
+                    borderColor: 'orange',
+                    backgroundColor : 'orange'
                 },
                 {
                     data : dateWeightObjsAllSets,
                     showLine : false,
-                    backgroundColor : 'palegreen'
+                    backgroundColor : 'orangered'
                 }
             ]
         }, 
@@ -112,12 +113,10 @@ function createChartJSDataStructureForPrSets(desiredRepRangePrs){
     }   
     return dateWeightObjs;
 }
-function addCloseEventListener(reps, liftName){
+function addCloseEventListener(reps, liftName, chartName){
     const x = document.getElementById(`prChartXforrepHistoryChartFor${reps}of${liftName}`);
-    x.addEventListener("click",  closeEventforRepPrChart);
-}
-function closeEventforRepPrChart(){
-    // destroy chart on closing
-    const repPrChart = document.getElementById(`prChartWrapperFor${chartName}`);
-    repPrChart.parentNode.removeChild(repPrChart);
+    x.addEventListener("click",  ()=>{
+        const repPrChart = document.getElementById(`prChartWrapperFor${chartName}`);
+        repPrChart.parentNode.removeChild(repPrChart);
+    });
 }

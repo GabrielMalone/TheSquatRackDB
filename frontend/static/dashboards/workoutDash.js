@@ -43,6 +43,19 @@ function workoutDashClickEvents(e){
     addExerciseEvent(e);
     expandSetEvent(e);
     closeWorkoutDash(e);
+    qualifierClickEven(e);
+}
+function qualifierClickEven(e){
+    let  checkbox = null;
+    if (e.type === "click" && e.target.classList.contains('checkbox') ){
+        checkbox = e.target;
+    }
+    if (e.type === "click" &&  e.target.classList.contains('qualifierTitle') ){
+        checkbox = e.target.parentNode.querySelector('.checkbox');
+    }
+    if (checkbox){
+        checkbox.classList.toggle('checkboxSelected');
+    }
 }
 //-----------------------------------------------------------------------------
 function closeWorkoutDash(e){
@@ -91,17 +104,41 @@ function makeNewSetBox(setInfo, liftInfo, setNumber, curExerciseRow){
     newSet.classList.add(`${liftInfo.exercise}`);
     newSet.setAttribute("id",`setID${setInfo.setID}`);
     newSet.dataset.idExercise = liftInfo.exerciseID;
-    // newSet.dataset.liftInfo = JSON.stringify(liftInfo);  
     newSet.dataset.setID = `${setInfo.setID}`;
     newSet.dataset.idWorkout = liftInfo.idWorkout;
     newSet.insertAdjacentHTML("beforeend",CreateSetTemplate(setInfo));
     newSet.appendChild(createSetUpdateForm(setInfo, liftInfo));
     newSet.appendChild(CreateRemoveSetButton(liftInfo, setInfo));
     newSet.appendChild(addSetNumberToSetBox(setNumber, setInfo));
+    // check if set is a Pr
     if (setInfo.weight > 0 && setInfo.reps > 0){
         isSetPr(liftInfo.exerciseID, currLifter.id, setInfo.weight, setInfo.reps, newSet);
     }
+    setQualifiersForSet(setInfo, newSet);
     curExerciseRow.appendChild(newSet);
+}
+//-----------------------------------------------------------------------------
+function setQualifiersForSet(setInfo, newSet){
+    //  set the qualifiers 
+    if (setInfo.paused){
+        newSet.querySelector('#pausedSetCheckBox').classList.add('checkboxSelected');
+        newSet.querySelector('#pausedIcon').classList.add('highlighted');
+    }
+    if (setInfo.belt){
+        newSet.querySelector('#beltedSetCheckBox').classList.add('checkboxSelected');
+        newSet.querySelector('#beltIcon').classList.add('highlighted');
+    }
+    if (setInfo.workingSet){
+        newSet.querySelector('#workingSetCheckBox').classList.add('checkboxSelected');
+        newSet.querySelector('#workingSetIcon').classList.add('highlighted');
+    } else {
+        newSet.style.opacity = "50%";
+    }
+    if (setInfo.unilateral){
+        newSet.querySelector('#unilateralSetCheckBox').classList.add('checkboxSelected');
+        newSet.querySelector('#unilateralIcon').classList.add('highlighted');
+    }
+
 }
 //-----------------------------------------------------------------------------
 // if set updated, query the DB
@@ -114,12 +151,28 @@ function updateSetEvent(e){
         const idWorkout  = setBox.dataset.idWorkout;
         const idSet      = setUpdateForm.dataset.setID;
         const idExercise = e.target.parentNode.dataset.idExercise; 
-        let setWeight    = setUpdateForm.querySelector(`#weight${idSet}`).value;
-        let setReps      = setUpdateForm.querySelector(`#reps${idSet}`).value;
-        let setRPE       = setUpdateForm.querySelector(`#rpe${idSet}`).value;
-        updateSet(idSet, setWeight, setReps, setRPE, idWorkout, idExercise, setBox);    
-        // then check to see if the set is a pr
-  
+        const setWeight  = setUpdateForm.querySelector(`#weight${idSet}`).value;
+        const setReps    = setUpdateForm.querySelector(`#reps${idSet}`).value;
+        const setRPE     = setUpdateForm.querySelector(`#rpe${idSet}`).value;
+        // true false checks 
+        const paused     = setBox.querySelector('#pausedSetCheckBox').classList.contains('checkboxSelected');
+        const belt       = setBox.querySelector('#beltedSetCheckBox').classList.contains('checkboxSelected');
+        const workingSet = setBox.querySelector('#workingSetCheckBox').classList.contains('checkboxSelected');
+        const unilateral = setBox.querySelector('#unilateralSetCheckBox').classList.contains('checkboxSelected');
+
+        const updateObj  = {
+                idSet, 
+                setWeight,
+                setReps, 
+                setRPE, 
+                idWorkout, 
+                paused, 
+                belt, 
+                workingSet, 
+                unilateral
+            }
+
+        updateSet(updateObj);    
     }
 }
 //-----------------------------------------------------------------------------
@@ -145,12 +198,12 @@ function isSetPr(idExercise, idUser, setWeight, setReps, setBox){ //compare set
         .catch(err=>console.error(err));
 }
 //-----------------------------------------------------------------------------
-function updateSet(idSet, setWeight, setReps, setRPE, idWorkout, idExercise, setBox){
-    f.put(end.WORKOUT_ENDPOINT, {idSet, setWeight, setReps, setRPE})
+function updateSet(updateObj){
+    f.put(end.WORKOUT_ENDPOINT, updateObj)
         .then(data=>{
             const rawData = (document.querySelector(".trainingDate")).dataset.dateInfo;
             const dateInfo = JSON.parse(decodeURIComponent(rawData)); 
-            updateDashesOnChange(dateInfo, idWorkout, curYear, curMonth, curlastDay)
+            updateDashesOnChange(dateInfo, updateObj.idWorkout, curYear, curMonth, curlastDay)
         }) 
         .catch(err=>console.error(err));
 }
@@ -184,6 +237,9 @@ function updateLiftInfo(curliftInfo, newSetInfo){
         exerciseID  : newSetInfo.idExercise,
         setNumber   : newSetInfo.set,
         paused      : newSetInfo.paused,
+        belt        : newSetInfo.belt,
+        workingSet  : newSetInfo.workingSet,
+        unilateral  : newSetInfo.unilateral,
         reps        : newSetInfo.setReps,
         rpe         : newSetInfo.setRPE,
         setID       : newSetInfo.idSet,
@@ -358,7 +414,7 @@ function fillWorkoutDate(dateInfo){
         ${dateInfo.day} 
         ${dateInfo.year}
     </div>
-    <div id="workoutDashX">x</div>`;
+    <div id="workoutDashX">☒</div>`;
     workoutContainer.appendChild(workoutHeader);
 }
 //-----------------------------------------------------------------------------
@@ -370,6 +426,14 @@ function createSetUpdateForm(liftInfo, moreLiftInfo){
     updateForm.setAttribute("id",`setUpdateForm${liftInfo.setID}`);
     updateForm.innerHTML = setUpdateFormTemplateHTML(liftInfo, unit);
     updateForm.dataset.idExercise = moreLiftInfo.exerciseID; // might not need
+    // set all the qaalifier information here 
+    const belt = liftInfo.belt;
+    const workingSet = liftInfo.workingSet;
+    const unilateral = liftInfo.workingSet;
+    const paused = liftInfo.paused;
+
+    console.log(belt, workingSet, unilateral, paused);
+
     return updateForm;
 }
 //-----------------------------------------------------------------------------

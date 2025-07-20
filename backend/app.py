@@ -49,6 +49,7 @@ def getUpdateWorkout():
         return jsonify(queries.getWorkoutFromID(workoutId))
     if request.method == "PUT": # update a workout
         updateInfo = request.get_json()
+        print(updateInfo)
         result = queries.updateSet(updateInfo) # 1 means an update happened #0 none
         return jsonify(result)
     if request.method == "DELETE":

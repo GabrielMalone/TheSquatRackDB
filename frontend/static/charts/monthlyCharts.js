@@ -16,7 +16,7 @@ export function drawMonthlyChart(chartTitle, liftsData, graphElement, graphType)
             ticks : {
                 align: 'center',
                 padding: 5,
-                color: "gray"
+                color: "mintcream"
             }
         }
 
@@ -41,10 +41,10 @@ export function drawMonthlyChart(chartTitle, liftsData, graphElement, graphType)
                     data: [squatData, benchData, deadliftData, accessoryData],
             
                     backgroundColor: [
-                        'rgba(152, 251, 152, 0.7)',
-                        'rgba(175, 238, 238, 0.7)',
-                        'rgba(238, 232, 170, 0.7',
-                        'rgba(216, 112, 147, 0.7)',
+                        'yellow',
+                        'darkcyan',
+                        'brown',
+                        'darkorange',
                     ],
                     borderColor: [
                         // 'palegreen',

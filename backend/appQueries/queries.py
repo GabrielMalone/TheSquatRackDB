@@ -320,7 +320,11 @@ def updateSet(updateInfo):
     setWeight = updateInfo["setWeight"]
     setReps   = updateInfo["setReps"]
     setRPE    = updateInfo["setRPE"]
-    
+    paused    = updateInfo["paused"]
+    belt      = updateInfo["belt"]
+    workingSet= updateInfo["workingSet"]
+    unilateral= updateInfo["unilateral"]
+
     cnx = connect()
     if (cnx.is_connected()):
         try:
@@ -332,15 +336,29 @@ def updateSet(updateInfo):
             SET
                 setWeight = %s,
                 setReps = %s,
-                setRPE = %s
+                setRPE = %s,
+                paused = %s,
+                belt = %s,
+                workingSet = %s,
+                unilateral = %s
             WHERE 
                 idSet = %s
             ''', 
-                (setWeight, setReps, setRPE,idSet))
+                (setWeight, setReps, setRPE, paused, belt, workingSet, unilateral, idSet) )
             cnx.commit()
             cursor.close()
             cnx.close()
-            return {"setWeight":setWeight, "setReps":setReps, "setRPE":setRPE,"idSet":idSet}
+            returnObj = {
+                    "setWeight":setWeight, 
+                    "setReps":setReps, 
+                    "setRPE":setRPE,
+                    "idSet":idSet,
+                    "paused" : paused,
+                    "belt" : belt, 
+                    "workingSet" : workingSet, 
+                    "unilateral" : unilateral
+                }
+            return returnObj
         except mysql.connector.Error as err:
             print("MySQL Error:", err)     # This will show you the exact error
             print("Error code:", err.errno)                # Numeric error code
@@ -409,6 +427,9 @@ def getWorkoutFromID(idWorkout):
                     s.setReps AS reps,
                     s.setRPE AS rpe,
                     s.paused AS paused,
+                    s.belt AS belt,
+                    s.workingSet AS workingSet,
+                    s.unilateral AS unilateral,
                     s.setComment AS comment,
                     s.setVideo AS videoLink
                 FROM 
@@ -454,6 +475,9 @@ def getWorkoutFromID(idWorkout):
                     "reps"      : lift["reps"],
                     "rpe"       : lift["rpe"],
                     "paused"    : lift["paused"],
+                    "belt"      : lift["belt"],
+                    "workingSet": lift["workingSet"],
+                    "unilateral": lift["unilateral"],
                     "comment"   : lift["comment"],
                     "videoLink" : lift["videoLink"]
                 }

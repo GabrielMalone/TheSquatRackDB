@@ -14,25 +14,25 @@ export const setUpdateFormTemplateHTML = (liftInfo, unit) =>
             <div class="inputTag">RPE</div>
         </div>
         <div class="inputWrapper">
-            <input class="setInfoField setButton" type="submit" value="○">
+            <input class="setInfoField setButton" type="submit" value="○ UPDATE">
         </div>
     </form>
-    <div class="setInfo setQualifiersWrapper">
-        <div class="setInfo setQualifiers"> 
+    <div class="setQualifiersWrapper">
+        <div class="setQualifiers"> 
             <div class="qualifierTitle">working set</div>   
-            <div class="checkbox" id="workingSetCheckBox">□</div>
+            <div class="checkbox" id="workingSetCheckBox"></div>
         </div>
-        <div class="setInfo setQualifiers">
+        <div class="setQualifiers">
             <div class="qualifierTitle">paused</div>       
-            <div class="checkbox" id="pausedSetCheckBox">□</div>
+            <div class="checkbox" id="pausedSetCheckBox"></div>
         </div>
-        <div class="setInfo setQualifiers"> 
-            <div class="qualifierTitle">belted </div>      
-            <div class="checkbox" id="beltedSetCheckBox">□</div>
+        <div class="setQualifiers"> 
+            <div class="qualifierTitle">belt </div>      
+            <div class="checkbox" id="beltedSetCheckBox"></div>
         </div>
-        <div class="setInfo setQualifiers"> 
+        <div class="setQualifiers"> 
             <div class="qualifierTitle">unilateral</div>    
-            <div class="checkbox" id="unilateralSetCheckBox">□</div>
+            <div class="checkbox" id="unilateralSetCheckBox"></div>
         </div>
     </div>
 
@@ -47,6 +47,12 @@ export const setTemplateHTML = (liftInfo) =>
     </div>
     <div class="setRPEwrapper">rpe&nbsp; 
         <div class="setInfo setRPE">${liftInfo.rpe}</div>
+    </div>
+    <div class="qualifierIconsWrapper">
+        <div class="qualifierIcons" id="workingSetIcon"> ⤴ </div>
+        <div class="qualifierIcons" id="beltIcon"> ⊕ </div>
+        <div class="qualifierIcons" id="pausedIcon"> ∥ </div>
+        <div class="qualifierIcons" id="unilateralIcon"> ⋅ </div>
     </div>
 </div>`;
 

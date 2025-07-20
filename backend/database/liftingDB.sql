@@ -110,7 +110,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Set` (
   `setRPE` FLOAT NOT NULL DEFAULT 0,
   `workingSet` TINYINT DEFAULT 0,
   `paused` TINYINT DEFAULT 0,
-  `beltless` TINYINT DEFAULT 0,
+  `belt` TINYINT DEFAULT 0,
   `unilateral` TINYINT DEFAULT 0,
   `setComment` BLOB NULL,
   `setVideo` VARCHAR(45) NULL,
