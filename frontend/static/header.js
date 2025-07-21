@@ -14,7 +14,13 @@ export const addLifterClick = ()=> {
 export function activeLiftersCLick(){
     const activeLifterButton = document.querySelector("#activeLifters");
     const sidebar = document.querySelector(".sidebar");
+    const mainLifterWindow = document.querySelector('.lifterBox');
     activeLifterButton.addEventListener("click", ()=>{
         sidebar.classList.toggle("visible");
+        if (sidebar.classList.contains("visible")){
+            mainLifterWindow.style.width = "100%"; 
+        } else {
+            mainLifterWindow.style.width = "85%";
+        }
     });
 }

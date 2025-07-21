@@ -1,0 +1,327 @@
+/*-------------------------------------------------------*/
+/* WORKOUT AREA
+/*-------------------------------------------------------*/
+.workout {
+    display: none;
+    flex-direction: column;
+    max-width: 20%;
+    min-width: 200px;
+    flex:1;
+    align-content: center;
+    position: relative;
+    padding: 1%;
+    border-left: 1px solid var(--sidebar-border-color);
+    background-color: #0a0a0a;
+}
+/*-------------------------------------------------------*/
+/* WORKOUT AREA -> HEADER
+/*-------------------------------------------------------*/
+.workoutHeader {
+    display: flex;
+    flex: row;
+    margin-bottom: 1%;
+    font-size: 0.75vw;
+    width: 100%;
+    align-content: space-between;
+    gap: 10%;
+    white-space: nowrap;
+}
+.sessionTitle{
+    display: flex;
+    color: white;
+    position: sticky;
+}
+.trainingDate{
+    display: flex;
+    color: mintcream;
+}
+#workoutDashX{
+    display: flex;
+    color: mintcream;
+    cursor: pointer;
+    align-self: flex-end;
+}
+#workoutDashX:hover{
+    color: red;
+}
+
+/*-------------------------------------------------------*/
+/* WORKOUT AREA -> EXERCISE ROW
+/*-------------------------------------------------------*/
+.exerciseRow{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1%;
+    user-select: none;
+    gap: 0.5vw;
+}
+/*-------------------------------------------------------*/
+/* EXERCISE -> SET
+/*-------------------------------------------------------*/
+.set{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    position: relative;
+    outline: 1px solid #333;
+    background-color: #0a0a0a;
+    padding: 1%;
+    gap:10px;
+    cursor: pointer;
+}
+.setExpand{
+    min-height: min-content;
+}
+.prSet {
+    outline: 1px solid #212121;
+}
+
+.set:hover{
+    outline-color:mintcream;
+    .setWeight{
+        color:mintcream;
+    }
+    .setReps{
+        color:mintcream;
+    }
+    .setRPE{
+        color:mintcream;
+    }
+    .setNumber{
+        color:mintcream;
+    }
+}
+.setInfoWrapper{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    position: relative;
+    pointer-events: none; 
+    padding: 3%;
+    width: 90%;
+    font-size: clamp(9px, 1.5vw, 14px);
+}
+.setWeightRepsWrapper{
+    display: flex;
+    flex-direction: row;
+    flex: 0.55;
+    position: relative;  
+    pointer-events: none; 
+}
+.setRPEwrapper{
+    margin-top: 0.5%;
+    margin-left: 2%;
+    display: flex;
+    flex: 0.75;
+    flex-direction: row;
+    pointer-events: none;  
+    color: #444;
+}
+.setRPE{
+    margin-top: 1%;
+    padding-right: 2%;
+    pointer-events: none;  
+    color:#666;
+}
+.qualifierIconsWrapper{
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    gap: 1vw;
+}
+.qualifierIcons{
+    color: #444;
+}
+.qualifierIcons.highlighted{
+    color: orange;
+}
+#workingSetIcon{
+    color: brown;
+}
+#beltIcon{
+    color: rgb(135, 42, 42);
+}
+#pausedIcon{
+    color: rgb(117, 42, 42);
+}
+.setNumber{
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 0.75vw;
+    color: #888;
+    pointer-events: none;  
+}
+.setWeight{
+    color:rgba(245, 255, 250, 0.8);
+    pointer-events: none;    
+}
+.setBy{
+    color:gray;
+    pointer-events: none;    
+}
+.setReps{
+    color:rgba(245, 255, 250, 0.7);
+    pointer-events: none;  
+}
+.setReps:hover{
+    color: aquamarine;
+}
+
+.setQualifiersWrapper{
+    display: flex;
+    flex: 3;
+    flex-direction: column;
+    gap: 5px;
+    user-select: none;
+}
+.setQualifiers{
+    display: flex;
+    flex-direction: row;
+    gap:10px;
+}
+.qualifierTitle{
+    color: #777;
+    width: 100px;
+}
+.qualifierTitle:hover{
+    color: mintcream;
+}
+.UpdatequalifierIcons{
+    min-width: 20px;
+    max-width: 20px;
+    color: #777;
+}
+.UpdatequalifierIcons:hover{
+    color: mintcream;
+}
+#UpdatepausedIcon{
+    padding-left: 3px;
+    margin-right: -3px;
+}
+#UpdateunilateralIcon{
+    padding-left: 3px;
+    margin-right: -3px;
+}
+.checkbox{
+    align-self: center;
+    width: 15px;
+    height: 15px;
+    outline: 1px solid darkgreen;
+}
+.checkbox:hover{
+    background-color: darkgreen; 
+}
+
+.checkboxSelected{
+    background-color: greenyellow
+}
+
+/*-------------------------------------------------------*/
+/* WOKROUT AREA -> EXERCISE ROW -> SET-> UPDATE FORM
+/*-------------------------------------------------------*/
+.setUpdateForm{
+    display: none;
+}
+.setUpdateFormVisible{
+    margin-left: 10px;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    padding-top: 20px;
+    border-top: 1px solid #222;
+}
+.setUpdate{
+    display: flex;
+    flex-direction: column;
+}
+.setInfoField{
+    display: flex;
+    position: relative;
+    background-color:#0a0a0a;
+    border: none;
+    padding: 10px;
+    font-size: 1rem;
+    max-width: 75px;
+    color: mintcream;
+}
+.setInfoField:focus {
+    background-color: #0a0a0a;
+    border-color: none;
+    box-shadow: none;
+    outline: none;
+}
+.setInfoField:hover {
+    outline: none;
+    color: greenyellow;
+}
+.setButton{
+    top: 10px;
+    right: 20px;
+    position: absolute;
+    color: green;
+    cursor: pointer;
+    overflow: visible;
+    font-size: 3rem;
+
+}
+.setButton:hover{
+    color: greenyellow;
+}
+.inputWrapper{
+    display: flex;
+    flex-direction: row;
+}
+.inputTag{
+    position: relative;
+    align-self: center;
+    align-content: center;
+    color: #444;
+    height: 100%;
+    min-width: 40px;
+}
+
+/*-------------------------------------------------------*/
+/* WOKROUT AREA -> EXERCISE ROW -> SET-> UPDATE FORM -> REMOVE SET
+/*-------------------------------------------------------*/
+.setRemove{
+    position: absolute;
+    color: brown;
+    font-size: 0.75vw;
+    bottom: 5px;
+    right: 10px;
+}
+.setRemove:hover {
+  color:red;
+}
+
+/*-------------------------------------------------------*/
+/* WOKROUT AREA -> EXERCISE ROW  -> ADD SET
+/*-------------------------------------------------------*/
+.addSet{
+    position: absolute;
+    align-self: center;
+    right: 10px;
+    flex:1;
+    color: orchid;
+}
+.exercise{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    position: relative;
+    margin-top: 6%;
+    font-size: 1vw;
+    outline: 1px solid #222;
+    background-color: #111;
+    color: mintcream;
+    cursor: pointer;
+    user-select: none;
+}
+.exercise:hover{
+    outline: 1px solid mediumorchid;
+    color: mintcream;
+    .addSet{
+        color:mintcream;
+    }
+}

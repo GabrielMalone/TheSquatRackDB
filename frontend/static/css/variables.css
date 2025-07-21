@@ -1,0 +1,32 @@
+:root{
+
+    --primary-background-color: #0a0a0a;
+    --primary-border-color: rgb(186, 50, 50);
+    --primary-text-color: mintcream;
+    --secondary-text-color: brown;
+
+    --primary-header-color:brown;
+    --primary-button-color: brown;
+    --primary-button-background-color: brown;
+
+    --primary-deadlift-color: brown;
+    --primary-bench-color: brown;
+    --primary-squat-color: brown;
+    --primary-accessory-color: brown;
+   
+    --calendar-number-color: #888;
+    --calendar-today-color: #555;
+    --calendar-liftDay-min-size: 2px;
+    --calendar-liftDay-size: 10%;
+    --calendar-dayOutline-color:brown;
+    --calendar-daySelected-color: mintcream;
+    --calendar-dayHovered-color: red;
+    --calendar-dayBackground-color:rgb(52, 0, 0);
+
+    --sidebar-border-color: rgb(69, 18, 18);
+    --sidebar-names-color: mintcream;
+    --sidebar-names-highlight-color: brown;
+
+    --lifterBoxHeader-text-color: mintcream;
+
+}

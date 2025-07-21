@@ -108,10 +108,9 @@ export const PR_DASH_VARIABLES = {
 	  prDashHeaderId		     : "prDashHeader",
 	  prDashMinimizerId      : "prDashMinimizer",
   	prDashText             : "PR DASH",
-
-  	prDashNBoxInHeadClass  : "repNumberBoxInHeader",
   	repNumInHeader         : "repNumInHeader",
-  	repPRboxClass          : "repPRbox",
+    repNumBox              : "repNumBox",
+   	repPRboxClass          : "repPRbox",
   	repPRrowClass          : "prLiftRow",
   	repPRliftNameBoxClass  : "prLiftNameBox",
   	repPRliftNameWrapClass : "prLiftName"

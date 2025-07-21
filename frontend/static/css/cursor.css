@@ -1,0 +1,35 @@
+/*-------------------------------------------------------*/
+/* cursor
+/*-------------------------------------------------------*/
+.cursor{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    outline: solid green 1px;
+    width: 4.5vw;
+    aspect-ratio: 1/1;
+    color: mediumspringgreen;   
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+}
+.cursor:hover {
+    background-color: darkgreen;
+    color: mintcream;
+    outline: 1px solid darkgreen;
+}
+.cursorPlus{
+    font-size: 2vw;
+    color: mediumspringgreen;
+    pointer-events: none;
+}
+#cursorForprDashBoard{
+    margin-top: 0%;
+    align-self: center;
+}
+#cursorForworkoutDash{
+    margin-top: 1%;
+}
+.cursorVisible{
+    display: none;
+}

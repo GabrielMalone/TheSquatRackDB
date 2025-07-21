@@ -1,0 +1,132 @@
+.prDash {
+    display: flex;
+    flex-direction: column;
+    padding: 1px;
+    margin-bottom: 1%;
+    position: relative;
+    font-size: 1vw;
+}
+.prDashVisible {
+    display: none;
+}
+.prDashRepRow{
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+.prLiftRow {
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+.prCell {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    width: max(10px, 100%/21);
+    aspect-ratio: 1/1;
+    outline: 1px solid rgb(50, 13, 13);
+    justify-content: center;
+    overflow: visible;
+    user-select: none;
+    font-size: 1vw;
+} 
+.blank {
+    outline: 1px solid transparent !important;
+    background-color: transparent !important;
+}
+.repNumInHeader {
+    align-self: center;
+    justify-self: center;
+    color: mintcream;
+}
+.repNumBox{
+    background-color: var(--calendar-dayBackground-color);
+    outline: 1px solid brown;
+}
+.prLiftNameBox {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    outline: 1px solid brown;
+    padding: 0;
+    color: mintcream;
+    overflow: hidden;
+}
+.prLiftName{
+    align-self: center;
+}
+.prLiftName:hover {
+    color:red;
+}
+
+
+.repPRbox{
+    color: mintcream;
+}
+.prPresent{
+    outline: 1px solid brown;
+}
+.prPresent:hover{
+    background-color: var(--primary-border-color);
+    color: mintcream;
+}
+.prPresent:hover .prToolTip{
+    display: flex;
+    position: absolute;
+    opacity: 1;
+    width: 10rem;
+    top: 100%;
+    right: 50%;
+    color: mintcream;
+    background-color: #222222d6;
+    outline: 1px solid #444;
+    z-index: 1000;
+    overflow: visible !important;
+}
+.prToolTip{
+    display: none;
+    opacity: 0;
+    flex-direction: column;
+    z-index: 1000;
+}
+.prToolTipWeightsRepsWrapper{
+    display: flex;
+    flex-direction: row;
+}
+.prWeight{
+    align-self: center;
+    display: flex;
+    pointer-events: none;
+}
+
+
+.prChartWrapper{
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+    margin-bottom: 50px;
+    border-bottom: 1px solid #333;
+}
+.prChartTitleWrapper{
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid #333;
+}
+.prChartX{
+    color:palevioletred;
+    flex: .25;
+    cursor: pointer;
+}
+.prChartX:hover{
+    color: red;
+}
+.prChartTitle{
+    display: flex;
+    flex: 9;
+    align-self: center;
+    color: mintcream;
+    padding-bottom: 20px;
+}

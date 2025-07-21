@@ -1,0 +1,30 @@
+/*-------------------------------------------------------*/
+/* THE SIDEBAR
+/*-------------------------------------------------------*/
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    width: 15%;
+    max-width: 15%;
+    justify-content: flex-start;
+    overflow-y: scroll;
+    border-left: 1px solid var(--sidebar-border-color);
+}
+.sidebar.visible{
+    display:none;
+}
+/*-------------------------------------------------------*/
+/* LIFTER NAME IN THE SIDEBAR
+/*-------------------------------------------------------*/
+.lifterName {
+    color: rgba(245, 255, 250, 0.751);
+    font-size: clamp(8px, 1vw, 16px);
+    cursor: pointer;
+    padding-left: 5%;
+    color: var(--sidebar-names-color);
+}
+.lifterName:hover {
+    background-color: var(--sidebar-names-highlight-color);
+    color: mintcream;
+}

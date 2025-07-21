@@ -47,6 +47,10 @@ async function getPrsAndFillinRepPrChart(exerciseList, idUser, prDash){
 }
 //-----------------------------------------------------------------------------
 function clearPreviousDash(){
+    const cursorPr = document.getElementById('cursorForprDashBoard');
+    if (cursorPr){
+        cursorPr.parentNode.removeChild(cursorPr);
+    }
     document.querySelector(`.${p.prDashClass}`).innerHTML = ``;   // clear dash
     let curPrDashHeader = document.getElementById(`${p.prDashHeaderId}`);
     if (curPrDashHeader){
@@ -55,13 +59,12 @@ function clearPreviousDash(){
     }
 }
 
-
-
 //-----------------------------------------------------------------------------
 // EVENTS for clicking on a PR - load the workout in which PR happened
 //-----------------------------------------------------------------------------
 function prInfoClick(prDash){
-    prDash.addEventListener("click", prDashClickEvent);
+    const workoutContainer = document.querySelector('.lifterBox');
+    workoutContainer.addEventListener("click", prDashClickEvent);
 }
 //-----------------------------------------------------------------------------
 function prDashClickEvent(e){
@@ -71,8 +74,9 @@ function prDashClickEvent(e){
 }
 //-----------------------------------------------------------------------------
 function removePrLift(e){
-    if (e.target.classList.contains("removePrLift")){
-        const prLift = e.target;                    // lift clicked for removal
+    if (e.target.classList.contains("prLiftName")){
+        console.log(e.target.parentNode);
+        const prLift = e.target.parentNode;                    // lift clicked for removal
         const liftId = prLift.dataset.liftId;    // need lift id to remove lift
         const idUser = prLift.dataset.idUser;                    // and user id
         const curLifter = getLifterObject(idUser);     // get curlifters object
@@ -83,6 +87,11 @@ function removePrLift(e){
 //-----------------------------------------------------------------------------
 function createDashFromCursorClick(e){
     if (e.target.id === "cursorForprDashBoard"){
+        const curAddExerciseDash = document.getElementById('exerciseDashForprDashBoard');
+        if (curAddExerciseDash){                    // clear any previous dashes
+            curAddExerciseDash.innerHTML =``;
+            curAddExerciseDash.parentNode.removeChild(curAddExerciseDash);
+        }
         const prDash = document.querySelector(`.${p.prDashClass}`);
         prDash.insertAdjacentHTML("beforeend",createExerciseDash(prDash));
         fillOutExerciseSelectMenu(prDash);
@@ -164,13 +173,14 @@ function buildPrDashHeader(prDash){
             <div class="${p.prDashHeaderTitleClass}">${p.prDashText}</div>
             <div class="${p.prDashMinimizerClass}" id="${p.prDashMinimizerId}">${p.prDashMinimizerIcon}</div>
         </div>`);
-    adjustHeaderSizeToContent(prDash);
     const miniMizer = document.getElementById(p.prDashMinimizerId);
     miniMizer.addEventListener("click", minimizePrDash);
 }
 //-----------------------------------------------------------------------------
 function minimizePrDash(){
     const prDash = document.querySelector(`.${p.prDashClass}`);
+    const prDashCursor = document.getElementById('cursorForprDashBoard');
+    prDashCursor.classList.toggle('cursorVisible');
     prDash.classList.toggle(`${p.prDashVisibleClass}`);
     const prDashMinimizerWrap = document.getElementById(`${p.prDashMinimizerId}`);
     if (prDashMinimizerWrap.innerHTML === `${d.minimizerIcon}`){
@@ -178,22 +188,11 @@ function minimizePrDash(){
     } else {
         prDashMinimizerWrap.innerHTML = `${d.minimizerIcon}`;
     }
-    adjustHeaderSizeToContent(prDash);
-}
-//-----------------------------------------------------------------------------
-function adjustHeaderSizeToContent(prDash){
-    const prDashHeader = document.getElementById(`${p.prDashHeaderId}`);
-    const width = prDash?.offsetWidth;
-    if (!width){
-        prDashHeader.style.width = `1050px`;
-    }
-    prDashHeader.style.width = `${width}px`;
 }
 //-----------------------------------------------------------------------------
 function buildRepsTitle(prDash){
     const repsTitle = document.createElement('div');
-    repsTitle.classList.add(`${p.prRepsTitleClass}`);
-    repsTitle.classList.add(`${p.prCellClass}`);
+    repsTitle.classList.add(`prDashRepRow`);
     repsTitle.innerHTML = ``;
     prDash.append(repsTitle);
     return repsTitle;
@@ -202,9 +201,11 @@ function buildRepsTitle(prDash){
 function buildRepsHeader(repsTitle){
     for (let i = 0 ; i <= repRange ; i ++ ){
         const repNumberBox = document.createElement('div');
-        repNumberBox.setAttribute("id", `${p.prDashNBoxInHeadClass}_${i}`);
-        repNumberBox.classList.add(`${p.prDashNBoxInHeadClass}`);
         repNumberBox.classList.add(`${p.prCellClass}`);
+        repNumberBox.classList.add(`${p.repNumBox}`);
+        if (i === 0){
+            repNumberBox.classList.add('blank');
+        }
         if (i > 0) repNumberBox.innerHTML = 
             `<div class="${p.repNumInHeader}">${i}</div>`;
         repsTitle.append(repNumberBox);
@@ -218,8 +219,7 @@ function buildRepPrBox(lift, rep, idUser, liftId){
         repPRbox.dataset.idUser = idUser;
         repPRbox.dataset.liftId = liftId;
         repPRbox.innerHTML = 
-        `<div class="removePrLift" data-lift-id="${liftId}" data-id-user="${idUser}">-</div>
-         <div class="${p.repPRliftNameWrapClass}">${lift.abbrev}</div>`;
+        `<div class="${p.repPRliftNameWrapClass}">${lift.abbrev}</div>`;
         repPRbox.classList.add(`${p.prCellClass}`);
         return repPRbox;
     }  

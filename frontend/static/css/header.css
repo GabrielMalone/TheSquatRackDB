@@ -1,0 +1,41 @@
+.header{
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid var(--sidebar-border-color);
+}
+#headerTitle {
+    margin-left: 1%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    color:var(--primary-header-color);
+    font-size: 24px;
+    flex:1;
+}
+.headerButtons {
+    display: flex;
+    justify-content: flex-end;
+}
+.button {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    padding: 1%;
+    font-size: clamp(6px, 0.75rem, 12px);
+    cursor: pointer;
+    color:var(--primary-button-color);
+}
+.button:hover {
+    background-color: var(--primary-button-background-color);
+    color: mintcream;
+}
+#activeLifters{
+    padding: 10%;
+    align-self: center;
+}
+#addLifter{
+    align-self: center;
+    padding: 10%;
+}
+.footer{
+    border-top: 1px solid var(--sidebar-border-color);
+}

@@ -1,0 +1,88 @@
+/*-------------------------------------------------------*/
+/* CREATE A LIFTER POP UP BOX
+/*-------------------------------------------------------*/
+.createLifterBox {
+    display: none;
+}
+.createLifterBox.visible{
+    
+    padding: 5%;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-width: min-content;
+    border-left: 1px solid var(--sidebar-border-color);
+}
+
+.createLifterBoxHeader {
+    display: flex;
+    flex-direction: row;
+}
+.X {
+    font-size: 2vmin;
+    color: brown;
+    margin-top: min(3vh, 6vw);
+    flex: 0;
+    cursor: pointer;
+    align-self: flex-end;
+}
+.X:hover {
+    /* border-color: palegoldenrod; */
+    color:red;
+}
+#newLifterTitle {
+    margin-top: min(3vh, 6vw);
+    font-size: 2vmin;
+    flex: 1;
+    color:mintcream;
+}
+
+.createLifterFields {
+    margin-top: 5%;
+    display: flex;
+    flex-direction: column;  
+    gap: 1vw;
+}
+.inputField {
+    background-color: #0a0a0a;
+    border: none;
+    outline: 1px solid rgb(106, 26, 26);     
+    padding:5%;
+    border-radius: 0px;
+    font-size: 2vmin;
+    color: black;
+}
+.inputField:focus {
+    background-color: brown;
+    border-color: none;
+    box-shadow: none;
+    outline: none;
+}
+.inputField:hover {
+    outline: 1px solid red;
+}
+input::placeholder {
+    color: #222; 
+    opacity: .8; 
+  }
+.inputField:not(:placeholder-shown) {
+    color: mintcream;         /* Active text color */
+}
+#submitNewLifter {
+    padding: 3%;
+    align-self: center;
+    aspect-ratio: 2/1;
+    border: 1px solid transparent;
+    background-color: brown;
+    color: mintcream;
+}
+#submitNewLifter:hover {
+    background-color: red;
+    color: mintcream;
+}
+#submitErrorMsg {
+    margin-top: 50px;
+    color: red;
+    font-size: 2vmin;
+    align-self: center;
+}

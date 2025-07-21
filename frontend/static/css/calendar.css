@@ -1,0 +1,140 @@
+/*-------------------------------------------------------*/
+/* LIFTER WINDOW -> CALENDAR DASHBOARD -> CALENDAR 
+/*-------------------------------------------------------*/
+.calendarWrapper{
+    display: flex;
+    flex-direction: column;
+}
+.month {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    display: none;
+}
+.week { 
+    align-self: center;
+    display: flex;
+    width: 70%;
+    max-width: 600px;
+    flex-direction: row;
+}
+.day {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    outline: solid var(--calendar-dayOutline-color) 1px;
+    background-color: var(--calendar-dayBackground-color);
+    user-select: none;
+    padding: 4%;
+    margin: 1%;
+    width: 5%;
+    aspect-ratio: 1/1;
+    min-width: 1rem;
+    min-height: 1rem;
+    cursor: pointer;
+    user-select: none;
+}
+.day:hover {
+    outline: 1px solid var(--calendar-dayHovered-color);
+    .dayNum{
+        color: mintcream;
+    }
+}
+.dayNum{
+    font-size: clamp(6px, 1vmin, 1vw);
+    pointer-events: none;
+    color: mintcream;
+}
+.daySelected{
+    background-color:rgb(18, 0, 0);
+    outline: 1px solid var(--calendar-daySelected-color);
+    color: mintcream;
+}
+.prDateHighlighted{
+    outline: 1px solid var(--calendar-daySelected-color);
+}
+.dayLifted{
+    background-color: none;
+}
+.today {
+    outline: 1px solid var(--calendar-daySelected-color);
+
+}
+.squatDay{
+    position: absolute;
+    top: 25%;
+    right: 3%;
+    aspect-ratio: 1/1;
+    min-width: var(--calendar-liftDay-min-size);
+    min-height: var(--calendar-liftDay-min-size);
+    width: var(--calendar-liftDay-size);
+    background-color: var(--primary-squat-color);
+    pointer-events: none; 
+}
+.benchDay{
+    position: absolute;
+    top: 13%;
+    right: 3%;
+    aspect-ratio: 1/1;
+    min-width: var(--calendar-liftDay-min-size);
+    min-height: var(--calendar-liftDay-min-size);
+    width: var(--calendar-liftDay-size);
+    background-color: var(--primary-bench-color);
+    pointer-events: none; 
+}
+.deadDay{
+    position: absolute;
+    top: 1%;
+    right: 3%;
+    aspect-ratio: 1/1;
+    min-width: var(--calendar-liftDay-min-size);
+    min-height: var(--calendar-liftDay-min-size);
+    width: var(--calendar-liftDay-size);
+    background-color: var(--primary-deadlift-color);
+    pointer-events: none; 
+}
+.otherLiftDay{
+    position: absolute;
+    top: 37.5%;
+    right: 3%;
+    aspect-ratio: 1/1;
+    min-width: var(--calendar-liftDay-min-size);
+    min-height: var(--calendar-liftDay-min-size);
+    width: var(--calendar-liftDay-size);
+    background-color: var(--primary-accessory-color);
+    pointer-events: none;   
+}
+.unfocusedDate {
+    outline: none;
+}
+.dayName {
+    color: var(--secondary-text-color);
+    position: absolute;
+    top: -30%;
+    left: 5%;
+    font-size: clamp(6px, 0.75vw, 12px);
+}
+.weekNumber {
+    display: none;
+    color: var(--secondary-text-color);
+    position: absolute;
+    left: -40%;
+    font-size: 1vw;
+    transform: rotate(270deg);
+}
+.dateWrapper {
+    display: flex;
+    padding: 5%;
+    flex-direction: row;
+    position: relative;
+    align-self: center;
+}
+.monthTitle{
+    font-size: 3vw;
+    color: var(--primary-text-color);
+    margin-right: 1vw;
+}
+.yearTitle{
+    color: var(--secondary-text-color);
+    font-size: 2vw;
+}

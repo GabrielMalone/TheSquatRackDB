@@ -1,0 +1,46 @@
+/*-------------------------------------------------------*/
+/* H LIFTER WINDOW -> HEADER FOR THE DASHES
+/*-------------------------------------------------------*/
+.dashHeader {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    max-width: 100%;
+    min-width: 85%;
+    border-bottom: 1px solid var(--primary-border-color);
+    margin-bottom: 1%;
+    user-select: none;
+}
+.dashHeader:hover{
+    border-bottom: 1px solid red;
+    .dashHeaderTitle {
+        color:red;
+    }
+}
+.dashHeaderTitle {
+    display: flex;
+    align-self: flex-end;
+    color: mintcream;
+    font-size: 1vw;
+    flex: 1;
+    user-select: none;
+}
+.minimizer {
+    display: flex;
+    flex: 0;
+    padding-bottom: 1%;
+    color: var(--primary-text-color);
+    font-size: 2vw;
+    user-select: none;
+    color: brown;
+}
+.minimizer:hover {
+    color: palegreen;
+    cursor: pointer;
+}
+.plus{
+    align-self: center;
+    justify-self: center;
+    font-size: 1vw;
+    color: mintcream;
+}

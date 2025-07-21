@@ -58,8 +58,8 @@ export function drawMonthlyChart(chartTitle, liftsData, graphElement, graphType)
         },
 
         options: {
-
-            aspectRatio: 2,
+            responsive: true,  
+            maintainAspectRatio: false, 
             animations : {
                 tension: {
                     duration: 400,
