@@ -72,7 +72,7 @@
     outline: 1px solid var(--prDash-border-highlighted-color);
 }
 .prPresent:hover{
-    background-color: var(--primary-border-color);
+    background-color: purple;
     color: mintcream;
 }
 .prPresent:hover .prToolTip{

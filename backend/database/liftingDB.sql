@@ -44,6 +44,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Workout` (
   `userWeight` INT NULL,
   `userAge` INT NULL,
   `fatigueRating` INT NULL,
+  `sessionNote`  VARCHAR(1500),
   INDEX `fk_Workout_User_idx` (`idUser` ASC) VISIBLE,
   PRIMARY KEY (`idWorkout`),
   UNIQUE INDEX `idWorkout_UNIQUE` (`idWorkout` ASC) VISIBLE,

@@ -19,7 +19,7 @@
 /*-------------------------------------------------------*/
 .lifterName {
     color: rgba(245, 255, 250, 0.751);
-    font-size: clamp(8px, 1vw, 16px);
+    font-size: clamp(12px, 1vw, 24px);
     cursor: pointer;
     padding-left: 5%;
     color: var(--sidebar-names-color);

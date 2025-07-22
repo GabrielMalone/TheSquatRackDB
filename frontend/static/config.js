@@ -55,7 +55,8 @@ const devConfig = {
     monthlyInetensity: "getMonthlyTrainingInensity",
     monthlyFrequency: "getMonthlyTrainingFrequency",
     GET_PR_DATA_FOR_LIFT: "getPRDataForLift",
-    GET_EXERCISE_INFO: "getExerciseInfo"
+    GET_EXERCISE_INFO: "getExerciseInfo",
+    SAVE_SESSION_NOTE: "saveSessionNote",
   };
   
 
@@ -79,7 +80,7 @@ const prodConfig = {
                 monthlyFrequency : "getMonthlyTrainingFrequency",
             GET_PR_DATA_FOR_LIFT : "getPRDataForLift",
                GET_EXERCISE_INFO : "getExerciseInfo",
-
+               SAVE_SESSION_NOTE: "saveSessionNote",
   };
 
 export const endpoint = window.location.hostname === "localhost" ? 

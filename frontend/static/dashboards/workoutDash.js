@@ -1,9 +1,8 @@
 import { curlastDay, curMonth, curYear, fillCalendar } from "./calendarDash.js";
-import { endpoint as end } from "../config.js";
+import { endpoint as end, unit } from "../config.js";
 import { setTemplateHTML, setUpdateFormTemplateHTML } from "../htmlTemplates.js";
 import { fillOutExerciseSelectMenu, createExerciseDash } from "./exerciseSelectDash.js";
 import { currLifter, f, getLifterObject } from "../lifterSidebar.js";
-import { unit } from "../config.js";
 import { createPrDash } from "./prDash.js";
 import { createCursor } from "../cursor.js";
 
@@ -21,9 +20,31 @@ export function getWorkoutFromWokroutID(idWorkout){
                 fillExerciseRow(lift);       // this will iterate over each set
             });
             createCursor(workoutContainer);           // place cursor at bottom
+            // add notes section
+            createNotesSection(lifts[0].note);
             scrollToWorkout();
         })
         .catch(error=>console.error(error));
+}
+//-----------------------------------------------------------------------------
+// if any notes present, they will appear here
+//-----------------------------------------------
+function createNotesSection(note){
+    console.log(note);
+    if (!note){
+        note = "";
+    }
+    const notesSection = 
+    `
+    <div class="notesSectionWrapper">
+        <div class="notesSectionHeader">Session Notes</div>
+        <div class="notesSectionInput" contenteditable="true">${note}</div>
+        <div class="saveNoteButton">
+            <div class="saveNoteButtonText">save note</div>
+        </div>
+    </div>
+    `
+    workoutContainer.insertAdjacentHTML("beforeend",notesSection);
 }
 //-----------------------------------------------------------------------------
 // if any update/delete/add refresh the various dashes 
@@ -44,7 +65,44 @@ function workoutDashClickEvents(e){
     expandSetEvent(e);
     closeWorkoutDash(e);
     qualifierClickEven(e);
+    saveNoteEvent(e);
 }
+//-----------------------------------------------------------------------------
+function saveNoteEvent(e){
+    if (e.type === "click" && e.target.classList.contains('saveNoteButton') ){
+        const saveNoteButon = e.target;
+        const note = saveNoteButon.parentNode.querySelector('.notesSectionInput').innerHTML;
+        const idWorkout = workoutContainer.dataset.idWorkout;
+        const buttonText = saveNoteButon.querySelector('.saveNoteButtonText');
+        f.post(end.SAVE_SESSION_NOTE, {idWorkout, note})
+            .then(res=>{
+                if (res === "success"){
+                    buttonText.innerText = `note saved`;   
+                    saveNoteButon.classList.add('saved');
+                } else {
+                    buttonText.innerText = `
+                    exceeeds 1500 char limit.`;   
+                    saveNoteButon.classList.add('notSaved');
+                }
+            }
+        ).catch(err=>{
+            console.error(err) ;
+        });
+    }
+    if (e.type === "input" && e.target.classList.contains('notesSectionInput')) {
+        const saveNoteButton = e.target.parentNode.querySelector('.saveNoteButton');
+        const saveNoteButtonText =  e.target.parentNode.querySelector('.saveNoteButtonText');
+        if (saveNoteButton.classList.contains('saved')){
+            saveNoteButton.classList.remove('saved');
+            saveNoteButtonText.innerText = `save note`;
+        }
+        if (saveNoteButton.classList.contains('notSaved')){
+            saveNoteButton.classList.remove('notSaved');
+            saveNoteButtonText.innerText = `save note`;
+        }
+    }
+}
+//-----------------------------------------------------------------------------
 function qualifierClickEven(e){
     if (e.type === "click" && e.target.classList.contains('UpdatequalifierIcons') ){
         e.target.classList.toggle('highlighted')
@@ -312,6 +370,7 @@ export function createWorkoutGrid(dateInfo){
     workoutContainer.innerHTML = ``;   
     workoutContainer.addEventListener("click", workoutDashClickEvents);
     workoutContainer.addEventListener("submit", updateSetEvent);
+    workoutContainer.addEventListener("input", workoutDashClickEvents);
     fillWorkoutDate(dateInfo); 
     scrollToWorkout();
 }
@@ -384,7 +443,6 @@ function createExerciseBox(newExerciseRow, liftInfo){
     newExercise.innerHTML += `<p>${liftInfo.exercise}</p>`;
     newExercise.insertAdjacentHTML("beforeend", 
         `<div class = "addSet">╋</div>`);
-    // newExercise.dataset.liftInfo = JSON.stringify(liftInfo);
     newExercise.dataset.idExercise = liftInfo.exerciseID;
     newExercise.addEventListener("click", ()=>{addSet(newExerciseRow, liftInfo)});
     newExerciseRow.appendChild(newExercise);

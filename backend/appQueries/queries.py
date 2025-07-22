@@ -431,7 +431,8 @@ def getWorkoutFromID(idWorkout):
                     s.workingSet AS workingSet,
                     s.unilateral AS unilateral,
                     s.setComment AS comment,
-                    s.setVideo AS videoLink
+                    s.setVideo AS videoLink,
+                    w.sessionNote AS note
                 FROM 
                     Workout w
                 JOIN 
@@ -447,7 +448,7 @@ def getWorkoutFromID(idWorkout):
             ''', (idWorkout,))
 
             workout = cursor.fetchall()
-    
+            print(workout)
             cursor.close()
             cnx.close()
 
@@ -455,6 +456,7 @@ def getWorkoutFromID(idWorkout):
             unique_lifts_in_workout = {}
 
             for lift in workout:
+                print(lift)
                 lift_id = lift["exerciseID"]
                 if lift_id not in unique_lifts_in_workout:
                     # all non set info
@@ -463,6 +465,7 @@ def getWorkoutFromID(idWorkout):
                         "exerciseID"        : lift_id,
                         "exerciseOrder"     : lift["exerciseOrder"],
                         "idWorkout"         : lift["idWorkout"],
+                        "note"              : lift["note"],
                         "sets"              : [] 
                     }
                     unique_lifts_in_workout[lift_id] = lift_info
@@ -482,7 +485,6 @@ def getWorkoutFromID(idWorkout):
                     "videoLink" : lift["videoLink"]
                 }
                 unique_lifts_in_workout[lift_id]["sets"].append(set_info)
-
             return lifts
 
         
@@ -684,8 +686,33 @@ def getExerciseInfo(idExercise):
                 "success" : False,
                 "message" : f' server error: {err.errno}' 
             } 
-    pass
 #------------------------------------------------------------------------------
-
+def saveSessionNote(idWorkout, note):
+    cnx = connect()
+    if(cnx.is_connected()):
+        try:
+            cursor = cnx.cursor(buffered=True, dictionary=True)
+            cursor.execute('''
+                UPDATE 
+                    `Workout`w
+                SET 
+                    w.sessionNote = %s
+                WHERE idWorkout = %s
+                ''',
+                (note, idWorkout)
+            )
+            cnx.commit()
+            cnx.close()
+            return "success" 
+        except mysql.connector.Error as err:
+            print("MySQL Error:", err)    # This will show you the exact error
+            print("Error code:", err.errno)               # Numeric error code
+            cnx.rollback() 
+            cnx.close()
+            return {
+                "success" : False,
+                "message" : f' server error: {err.errno}' 
+            } 
+#------------------------------------------------------------------------------
 
 load_dotenv()

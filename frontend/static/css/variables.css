@@ -1,7 +1,7 @@
 :root{
 
     --primary-background-color: #0a0a0a;
-    --primary-border-color:rgb(69, 18, 18);
+    --primary-border-color:brown;
     --primary-text-color: mintcream;
     --secondary-text-color: brown;
 
@@ -18,7 +18,7 @@
     --calendar-today-color: #555;
     --calendar-liftDay-min-size: 2px;
     --calendar-liftDay-size: 10%;
-    --calendar-dayOutline-color:brown;
+    --calendar-dayOutline-color:purple;
     --calendar-daySelected-color: mintcream;
     --calendar-dayHovered-color: brown;
     --calendar-dayBackground-color:#111;
@@ -26,7 +26,7 @@
     --prDash-border-highlighted-color: purple;
     --prDash-border-color:rgb(58, 0, 58);
 
-    --sidebar-border-color: rgb(69, 18, 18);
+    --sidebar-border-color: brown;
     --sidebar-names-color: mintcream;
     --sidebar-names-highlight-color: brown;
 

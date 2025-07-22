@@ -1,0 +1,60 @@
+.notesSectionWrapper{
+    display: flex;
+    flex-direction: column;
+}
+.notesSectionHeader{
+    color: violet;
+    font-size: clamp(6pt, 1vw, 16pt);
+    align-self: flex-end;
+}
+.notesSectionInput{
+    outline: none;
+    border: 1px solid #444;
+    padding: 8px;
+    color: #777;
+    min-height: 40px;
+    font-size: clamp(6pt, 1vw, 16pt)
+}
+.saveNoteButton{
+    margin-top: 4%;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    align-content: center;
+    outline: 1px solid purple;
+    padding: 5%;
+}
+.saveNoteButton:hover{
+    background-color: purple;
+    .saveNoteButtonText{
+        color: mintcream;
+    }
+    cursor: pointer;
+}
+.saveNoteButtonText{
+    display: flex;
+    color: violet;
+    font-size: clamp(6pt, 1vw, 16pt);
+    pointer-events: none;
+}
+.saveNoteButton.visible{
+    display: none;
+}
+
+.saveNoteButton.saved{
+    outline: 1px solid greenyellow;
+    .saveNoteButtonText{
+        color: greenyellow;
+    }
+}
+.saveNoteButton.saved:hover{
+    background-color: green;
+}
+
+.saveNoteButton.notSaved{
+    outline: 1px solid brown;
+    .saveNoteButtonText{
+        color: mintcream;
+    }
+}
+

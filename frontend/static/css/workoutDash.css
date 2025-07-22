@@ -20,8 +20,8 @@
     display: flex;
     flex: row;
     margin-bottom: 1%;
-    font-size: 0.75vw;
-    width: 100%;
+    font-size: clamp(6pt, 0.80vw, 16pt);
+    width: 90%;
     align-content: space-between;
     gap: 10%;
     white-space: nowrap;
@@ -132,7 +132,7 @@
     color: var(--icons-inactive-color);
     font-size: clamp(8px, 1vw, 16px);
 }
-#unilateralSetIcon.highlighted{
+#unilateralIcon.highlighted{
     color: var(--icons-active-color);
 }
 #workingSetIcon.highlighted{
@@ -148,7 +148,7 @@
     position: absolute;
     top: 5px;
     right: 10px;
-    font-size: 0.75vw;
+    font-size: clamp(6pt, 0.75vw, 16pt);
     color: #888;
     pointer-events: none;  
 }
@@ -253,12 +253,12 @@
 }
 .setButton{
     top: 0.5vw;
-    left: 92.5%;
+    right: 0;
     position: absolute;
     color: green;
     cursor: pointer;
     overflow: visible;
-    font-size: 1vw;
+    font-size: clamp(6pt, 1vw, 16pt);
 
 }
 .setButton:hover{
@@ -284,7 +284,7 @@
 .setRemove{
     position: absolute;
     color: purple;
-    font-size: 0.75vw;
+    font-size: clamp(5pt, 0.75vw, 16pt);
     bottom: 5px;
     right: 10px;
 }

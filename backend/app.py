@@ -149,8 +149,16 @@ def getPRDataForLift():
 
 @app.route("/getExerciseInfo", methods=["POST"])
 def getExerciseInfo():
-    idExercise = request.get_json();
+    idExercise = request.get_json()
     return jsonify(queries.getExerciseInfo(idExercise))
+#------------------------------------------------------------------------------
+@app.route("/saveSessionNote", methods=["POST"])
+def saveSessionNote():
+    data = request.get_json()
+    idWorkout = data["idWorkout"]
+    note = data["note"]
+    print(idWorkout, note)
+    return jsonify(queries.saveSessionNote(idWorkout, note))
 #------------------------------------------------------------------------------
 if __name__ == "__main__":
     app.run(debug=True, port=5001)
