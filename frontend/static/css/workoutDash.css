@@ -65,9 +65,8 @@
     position: relative;
     outline: 1px solid #333;
     background-color: #0a0a0a;
-    padding: 1%;
-    gap:10px;
     cursor: pointer;
+    align-content: center;
 }
 .setExpand{
     min-height: min-content;
@@ -131,17 +130,18 @@
 }
 .qualifierIcons{
     color: #444;
+    font-size: clamp(8px, 1vw, 16px);
 }
 .qualifierIcons.highlighted{
     color: orange;
 }
-#workingSetIcon{
+#workingSetIcon.highlighted{
     color: brown;
 }
-#beltIcon{
+#beltIcon.highlighted{
     color: rgb(135, 42, 42);
 }
-#pausedIcon{
+#pausedIcon.highlighted{
     color: rgb(117, 42, 42);
 }
 .setNumber{
@@ -168,28 +168,31 @@
     color: aquamarine;
 }
 
+
 .setQualifiersWrapper{
     display: flex;
-    flex: 3;
-    flex-direction: column;
-    gap: 5px;
+    flex: 1;
+    flex-direction: row;
     user-select: none;
 }
 .setQualifiers{
     display: flex;
+    flex:0;
     flex-direction: row;
-    gap:10px;
+    font-size: clamp(10px, 1.5vw, 24px);
+    align-items: center;
+    justify-items: flex-start;
+    padding: 1vw;
 }
 .qualifierTitle{
-    color: #777;
-    width: 100px;
+    display: none;
 }
 .qualifierTitle:hover{
     color: mintcream;
 }
 .UpdatequalifierIcons{
-    min-width: 20px;
-    max-width: 20px;
+    min-width: 1vw;
+    max-width: 1vw;
     color: #777;
 }
 .UpdatequalifierIcons:hover{
@@ -203,20 +206,6 @@
     padding-left: 3px;
     margin-right: -3px;
 }
-.checkbox{
-    align-self: center;
-    width: 15px;
-    height: 15px;
-    outline: 1px solid darkgreen;
-}
-.checkbox:hover{
-    background-color: darkgreen; 
-}
-
-.checkboxSelected{
-    background-color: greenyellow
-}
-
 /*-------------------------------------------------------*/
 /* WOKROUT AREA -> EXERCISE ROW -> SET-> UPDATE FORM
 /*-------------------------------------------------------*/
@@ -224,25 +213,26 @@
     display: none;
 }
 .setUpdateFormVisible{
-    margin-left: 10px;
     display: flex;
     flex-direction: row;
     position: relative;
-    padding-top: 20px;
-    border-top: 1px solid #222;
+    border-top: 1px solid #222; 
 }
 .setUpdate{
+    margin-top: 1%;
+    margin-left: 3%;
     display: flex;
     flex-direction: column;
+    max-width: 50%;
 }
 .setInfoField{
     display: flex;
     position: relative;
-    background-color:#0a0a0a;
+    background-color: transparent;
     border: none;
-    padding: 10px;
-    font-size: 1rem;
-    max-width: 75px;
+    font-size: clamp(8px, 1vw, 14px);
+    max-width: 2.5vw;
+    min-width: 35px;
     color: mintcream;
 }
 .setInfoField:focus {
@@ -256,13 +246,14 @@
     color: greenyellow;
 }
 .setButton{
+    display: none;
     top: 10px;
     right: 20px;
     position: absolute;
     color: green;
     cursor: pointer;
     overflow: visible;
-    font-size: 3rem;
+    font-size: 3vw;
 
 }
 .setButton:hover{
@@ -278,6 +269,7 @@
     align-content: center;
     color: #444;
     height: 100%;
+    font-size: clamp(8px, 1vw, 14px);
     min-width: 40px;
 }
 
@@ -312,7 +304,7 @@
     position: relative;
     margin-top: 6%;
     font-size: 1vw;
-    outline: 1px solid #222;
+    outline: 1px solid brown;
     background-color: #111;
     color: mintcream;
     cursor: pointer;

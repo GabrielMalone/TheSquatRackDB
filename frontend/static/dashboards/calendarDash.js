@@ -195,7 +195,7 @@ function dayListener(e){
         }
         workoutArea.classList.toggle('visible');
         const sideBar = document.querySelector('.sidebar');
-        sideBar.classList.toggle('visible');
+        sideBar.classList.add('visible');
     }
 }
 //-----------------------------------------------------------------------------

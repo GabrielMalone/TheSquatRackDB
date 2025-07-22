@@ -12,7 +12,7 @@
     display: none;
 }
 .week { 
-    align-self: center;
+
     display: flex;
     width: 70%;
     max-width: 600px;
@@ -127,7 +127,6 @@
     padding: 5%;
     flex-direction: row;
     position: relative;
-    align-self: center;
 }
 .monthTitle{
     font-size: 3vw;

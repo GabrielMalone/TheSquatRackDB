@@ -13,9 +13,6 @@
 }
 .dashHeader:hover{
     border-bottom: 1px solid red;
-    .dashHeaderTitle {
-        color:red;
-    }
 }
 .dashHeaderTitle {
     display: flex;

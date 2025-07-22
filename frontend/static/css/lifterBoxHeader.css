@@ -3,7 +3,7 @@
 /*-------------------------------------------------------*/
 .lifterBoxHeader{
     display: flex;
-    max-height: 5%;
+    max-height: min(5%,70px);
     flex:1;
     padding: 1%;
     flex-direction: row;

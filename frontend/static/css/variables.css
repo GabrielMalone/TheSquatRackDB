@@ -21,7 +21,7 @@
     --calendar-dayOutline-color:brown;
     --calendar-daySelected-color: mintcream;
     --calendar-dayHovered-color: red;
-    --calendar-dayBackground-color:rgb(52, 0, 0);
+    --calendar-dayBackground-color:#111;
 
     --sidebar-border-color: rgb(69, 18, 18);
     --sidebar-names-color: mintcream;

@@ -1,6 +1,7 @@
 .prDash {
     display: flex;
     flex-direction: column;
+    flex:0;
     padding: 1px;
     margin-bottom: 1%;
     position: relative;
@@ -31,7 +32,7 @@
     justify-content: center;
     overflow: visible;
     user-select: none;
-    font-size: 1vw;
+    font-size: 1vmin;
 } 
 .blank {
     outline: 1px solid transparent !important;
@@ -43,8 +44,9 @@
     color: mintcream;
 }
 .repNumBox{
-    background-color: var(--calendar-dayBackground-color);
+    background-color: #111;
     outline: 1px solid brown;
+    font-size: 1vmin;
 }
 .prLiftNameBox {
     display: flex;
