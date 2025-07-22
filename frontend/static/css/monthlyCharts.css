@@ -39,7 +39,7 @@
     aspect-ratio: 1/1;
     max-height: 150px;
     padding-bottom: 1%;
-    border-bottom: 1px solid brown;
+    border-bottom: 1px solid #222;
 }
 .monthlyChartTitle{
     padding: 1%;
@@ -48,6 +48,7 @@
     display: flex;
     color: mintcream;
     font-size: 0.75vmin;
+    align-self: center;
 }
 .monthlyVolumeTotal, .monthlyIntensityTotal, .monthlyFrequencyTotal {
     color: mintcream;

@@ -84,7 +84,7 @@ export function drawMonthlyChart(chartTitle, liftsData, graphElement, graphType)
                 x: xAxisConfig,
             },
             layout: {
-                padding: 0
+                padding: 5
             }
         }
     });     

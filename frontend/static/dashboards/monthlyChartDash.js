@@ -16,8 +16,8 @@ export async function loadMonthlyCharts(idUser, month, year){
     let chartNumber = 1;
     clearCharts();
     const types = 
-    [ ["monthlyVolume",  `${months[month]} ${year} Volume`,    ["monthly volume", "bar"]], 
-    ["monthlyFrequency", `${months[month]} ${year} Frequency`, ["monthly frequency", "doughnut"]], 
+    [ ["monthlyVolume",  `${months[month]} ${year} Volume`,    ["monthly volume", "line"]], 
+    ["monthlyFrequency", `${months[month]} ${year} Frequency`, ["monthly frequency", "line"]], 
     ["monthlyInetensity",`${months[month]} ${year} Inetensity`,["monthly intensity", "line"]]]
 
     for (const type of types) {
