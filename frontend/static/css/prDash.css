@@ -28,7 +28,7 @@
     flex-direction: column;
     width: max(10px, 100%/21);
     aspect-ratio: 1/1;
-    outline: 1px solid rgb(50, 13, 13);
+    outline: 1px solid var(--prDash-border-color);
     justify-content: center;
     overflow: visible;
     user-select: none;
@@ -45,14 +45,14 @@
 }
 .repNumBox{
     background-color: #111;
-    outline: 1px solid brown;
+    outline: 1px solid var(--prDash-border-highlighted-color);
     font-size: 1vmin;
 }
 .prLiftNameBox {
     display: flex;
     flex-direction: column;
     position: relative;
-    outline: 1px solid brown;
+    outline: 1px solid var(--prDash-border-highlighted-color);
     padding: 0;
     color: mintcream;
     overflow: hidden;
@@ -69,7 +69,7 @@
     color: mintcream;
 }
 .prPresent{
-    outline: 1px solid brown;
+    outline: 1px solid var(--prDash-border-highlighted-color);
 }
 .prPresent:hover{
     background-color: var(--primary-border-color);

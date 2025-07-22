@@ -3,19 +3,19 @@
 /*-------------------------------------------------------*/
 .calendarWrapper{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
 }
 .month {
     display: flex;
+    flex:1;
     flex-direction: column;
     position: relative;
     display: none;
 }
 .week { 
-
     display: flex;
-    width: 70%;
-    max-width: 600px;
+    width: 100%;
+    max-width: 800px;
     flex-direction: row;
 }
 .day {
@@ -129,7 +129,7 @@
     position: relative;
 }
 .monthTitle{
-    font-size: 3vw;
+    font-size: clamp(10px, 3vw, 36px);
     color: var(--primary-text-color);
     margin-right: 1vw;
 }

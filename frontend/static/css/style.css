@@ -55,50 +55,6 @@ li {
         width: 85%;
     }
 }
-/*-------------------------------------------------------*/
-/* LIFTER WINDOW -> CALENDAR DASHBOARD 
-/*-------------------------------------------------------*/
-.monthlyChartDashWrapper{
-    align-self: center;
-    outline: 1px solid green;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    display:none;
-}
-.monthlyChartDash{
-    display: flex;
-    flex-direction: row;
-}
-.monthlyChartDashVisible{
-    display: none;
-}
-.monthlyChartWrapper{
-    display: none;
-}
-.monthlyChartWrapperVisible{
-   display: flex;
-   flex-direction: column;
-   align-self: center;
-   width: 20vw;
-}
-.monthlyChart{
-    display: flex;
-    position: relative;
-    flex:1;
-    aspect-ratio: 1/1;
-    min-width: 75px;
-}
-.monthlyChartTitle{
-    display: flex;
-    align-self: center;
-    color: #555;
-    font-size: 1.5vmin;
-}
-.monthlyVolumeTotal, .monthlyIntensityTotal, .monthlyFrequencyTotal {
-    color: mintcream;
-    position: relative;
-}
 
 
 

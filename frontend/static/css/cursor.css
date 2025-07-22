@@ -28,7 +28,10 @@
     align-self: flex-start;
 }
 #cursorForworkoutDash{
-    margin-top: 1%;
+    margin-top: 4%;
+}
+#cursorForworkoutDash:hover{
+    background-color: plum;
 }
 .cursorVisible{
     display: none;

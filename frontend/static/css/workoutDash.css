@@ -10,8 +10,8 @@
     align-content: center;
     position: relative;
     padding: 1%;
-    border-left: 1px solid var(--sidebar-border-color);
-    background-color: #0a0a0a;
+    border-left: 1px solid var(--primary-border-color);
+    background-color: var(--workout-background-color);
 }
 /*-------------------------------------------------------*/
 /* WORKOUT AREA -> HEADER
@@ -28,16 +28,16 @@
 }
 .sessionTitle{
     display: flex;
-    color: white;
+    color: var( --primary-text-color);
     position: sticky;
 }
 .trainingDate{
     display: flex;
-    color: mintcream;
+    color: var( --primary-text-color);
 }
 #workoutDashX{
     display: flex;
-    color: mintcream;
+    color: var( --primary-text-color);
     cursor: pointer;
     align-self: flex-end;
 }
@@ -72,22 +72,22 @@
     min-height: min-content;
 }
 .prSet {
-    outline: 1px solid #212121;
+    /* outline: 1px solid green; */
 }
 
 .set:hover{
-    outline-color:mintcream;
+    outline-color: var(--secondary-text-color);
     .setWeight{
-        color:mintcream;
+        color:var(--primary-text-color);
     }
     .setReps{
-        color:mintcream;
+        color:var(--primary-text-color);
     }
     .setRPE{
-        color:mintcream;
+        color:var(--primary-text-color);
     }
     .setNumber{
-        color:mintcream;
+        color:var(--primary-text-color);
     }
 }
 .setInfoWrapper{
@@ -129,20 +129,20 @@
     gap: 1vw;
 }
 .qualifierIcons{
-    color: #444;
+    color: var(--icons-inactive-color);
     font-size: clamp(8px, 1vw, 16px);
 }
-.qualifierIcons.highlighted{
-    color: orange;
+#unilateralSetIcon.highlighted{
+    color: var(--icons-active-color);
 }
 #workingSetIcon.highlighted{
-    color: brown;
+    color: var(--icons-active-color);
 }
 #beltIcon.highlighted{
-    color: rgb(135, 42, 42);
+    color: var(--icons-active-color);
 }
 #pausedIcon.highlighted{
-    color: rgb(117, 42, 42);
+    color: var(--icons-active-color);
 }
 .setNumber{
     position: absolute;
@@ -193,10 +193,16 @@
 .UpdatequalifierIcons{
     min-width: 1vw;
     max-width: 1vw;
-    color: #777;
+    color: var(--icons-inactive-color);
 }
 .UpdatequalifierIcons:hover{
-    color: mintcream;
+    color: var(--icons-highlighted-color);
+}
+.UpdatequalifierIcons.highlighted{
+    color: var(--icons-active-color);
+}
+.UpdatequalifierIcons.highlighted:hover{
+    color: var(--icons-highlighted-color);
 }
 #UpdatepausedIcon{
     padding-left: 3px;
@@ -233,7 +239,7 @@
     font-size: clamp(8px, 1vw, 14px);
     max-width: 2.5vw;
     min-width: 35px;
-    color: mintcream;
+    color: var(--primary-text-color);
 }
 .setInfoField:focus {
     background-color: #0a0a0a;
@@ -246,14 +252,13 @@
     color: greenyellow;
 }
 .setButton{
-    display: none;
-    top: 10px;
-    right: 20px;
+    top: 0.5vw;
+    left: 92.5%;
     position: absolute;
     color: green;
     cursor: pointer;
     overflow: visible;
-    font-size: 3vw;
+    font-size: 1vw;
 
 }
 .setButton:hover{
@@ -278,13 +283,13 @@
 /*-------------------------------------------------------*/
 .setRemove{
     position: absolute;
-    color: brown;
+    color: purple;
     font-size: 0.75vw;
     bottom: 5px;
     right: 10px;
 }
 .setRemove:hover {
-  color:red;
+  color:plum;
 }
 
 /*-------------------------------------------------------*/
@@ -295,7 +300,7 @@
     align-self: center;
     right: 10px;
     flex:1;
-    color: orchid;
+    color: mintcream;
 }
 .exercise{
     display: flex;
@@ -304,7 +309,7 @@
     position: relative;
     margin-top: 6%;
     font-size: 1vw;
-    outline: 1px solid brown;
+    outline: 1px solid purple;
     background-color: #111;
     color: mintcream;
     cursor: pointer;

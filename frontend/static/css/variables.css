@@ -1,7 +1,7 @@
 :root{
 
     --primary-background-color: #0a0a0a;
-    --primary-border-color: rgb(186, 50, 50);
+    --primary-border-color:rgb(69, 18, 18);
     --primary-text-color: mintcream;
     --secondary-text-color: brown;
 
@@ -18,15 +18,24 @@
     --calendar-today-color: #555;
     --calendar-liftDay-min-size: 2px;
     --calendar-liftDay-size: 10%;
-    --calendar-dayOutline-color:brown;
+    --calendar-dayOutline-color:#222;
     --calendar-daySelected-color: mintcream;
-    --calendar-dayHovered-color: red;
+    --calendar-dayHovered-color: brown;
     --calendar-dayBackground-color:#111;
+
+    --prDash-border-highlighted-color: purple;
+    --prDash-border-color:rgb(58, 0, 58);
 
     --sidebar-border-color: rgb(69, 18, 18);
     --sidebar-names-color: mintcream;
     --sidebar-names-highlight-color: brown;
 
     --lifterBoxHeader-text-color: mintcream;
+
+    /* setupdate variables */
+    --workout-background-color:#0a0a0a;
+    --icons-active-color: mediumorchid;
+    --icons-inactive-color:#444;
+    --icons-highlighted-color:plum;
 
 }

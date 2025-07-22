@@ -11,43 +11,43 @@ let curyear;
 // get monthly training volume/intensity/frequency for main compounds/accessory
 //-----------------------------------------------------------------------------
 export async function loadMonthlyCharts(idUser, month, year){
-    // curmonth = month;
-    // curyear = year;
-    // let chartNumber = 1;
-    // clearCharts();
-    // const types = 
-    // [ ["monthlyVolume",  `${months[month]} ${year} Volume`,    ["monthly volume", "bar"]], 
-    // ["monthlyFrequency", `${months[month]} ${year} Frequency`, ["monthly frequency", "bar"]], 
-    // ["monthlyInetensity",`${months[month]} ${year} Inetensity`,["monthly intensity", "bar"]]]
+    curmonth = month;
+    curyear = year;
+    let chartNumber = 1;
+    clearCharts();
+    const types = 
+    [ ["monthlyVolume",  `${months[month]} ${year} Volume`,    ["monthly volume", "bar"]], 
+    ["monthlyFrequency", `${months[month]} ${year} Frequency`, ["monthly frequency", "doughnut"]], 
+    ["monthlyInetensity",`${months[month]} ${year} Inetensity`,["monthly intensity", "line"]]]
 
-    // for (const type of types) {
-    //     // enhanced for loop istead of foreach, foreach will not pause ierations for the async stuff
-    //     const ExerciseCategories = ["squat","bench","deadlift", "accessory"]
+    for (const type of types) {
+        // enhanced for loop istead of foreach, foreach will not pause ierations for the async stuff
+        const ExerciseCategories = ["squat","bench","deadlift", "accessory"]
 
-    //     try {
+        try {
         
-    //         const response = await f.post(e[`${type[0]}`], {idUser, ExerciseCategories, month, year});
-    //         // returns a promise and pauses code until promise resolves. otherwise the order is not guaranteed
-    //         const categories = response;
+            const response = await f.post(e[`${type[0]}`], {idUser, ExerciseCategories, month, year});
+            // returns a promise and pauses code until promise resolves. otherwise the order is not guaranteed
+            const categories = response;
     
-    //         createChartElement(type[0], type[1], chartNumber);
-    //         const data = categories.result.map(data=>data);
-    //         const dataTotals = data.reduce((accumulator, data)=>{
-    //             return accumulator+=data
-    //         },0);
-    //         if (dataTotals === 0) {
-    //             const monthlyChartDash = document.querySelector(".monthlyChartDash");
-    //             monthlyChartDash.innerHTML = ``;
-    //             return;
-    //         }
-    //         drawMonthlyChart(type[1], data, `chart${type[0]}`, type[2][1]);  
-    //         chartNumber ++ ;
+            createChartElement(type[0], type[1], chartNumber);
+            const data = categories.result.map(data=>data);
+            const dataTotals = data.reduce((accumulator, data)=>{
+                return accumulator+=data
+            },0);
+            if (dataTotals === 0) {
+                const monthlyChartDash = document.querySelector(".monthlyChartDash");
+                monthlyChartDash.innerHTML = ``;
+                return;
+            }
+            drawMonthlyChart(type[1], data, `chart${type[0]}`, type[2][1]);  
+            chartNumber ++ ;
   
-    //     } catch (err) {
-    //         console.error(err);
-    //     }
-    // }  
-    // buildChartHeader(); 
+        } catch (err) {
+            console.error(err);
+        }
+    }  
+    buildChartHeader(); 
   
 }
 //-----------------------------------------------------------------------------

@@ -46,18 +46,8 @@ function workoutDashClickEvents(e){
     qualifierClickEven(e);
 }
 function qualifierClickEven(e){
-    let  checkbox = null;
-    if (e.type === "click" && e.target.classList.contains('checkbox') ){
-        checkbox = e.target;
-    }
-    if (e.type === "click" &&  e.target.classList.contains('qualifierTitle') ){
-        checkbox = e.target.parentNode.querySelector('.checkbox');
-    }
     if (e.type === "click" && e.target.classList.contains('UpdatequalifierIcons') ){
-        checkbox = e.target.parentNode.querySelector('.checkbox');
-    }
-    if (checkbox){
-        checkbox.classList.toggle('checkboxSelected');
+        e.target.classList.toggle('highlighted')
     }
 }
 //-----------------------------------------------------------------------------
@@ -122,21 +112,20 @@ function makeNewSetBox(setInfo, liftInfo, setNumber, curExerciseRow){
 }
 //-----------------------------------------------------------------------------
 function setQualifiersForSet(setInfo, newSet){
-    //  set the qualifiers 
     if (setInfo.paused){
-        newSet.querySelector('#pausedSetCheckBox').classList.add('checkboxSelected');
+        newSet.querySelector('#UpdatepausedIcon').classList.add('highlighted');
         newSet.querySelector('#pausedIcon').classList.add('highlighted');
     }
     if (setInfo.belt){
-        newSet.querySelector('#beltedSetCheckBox').classList.add('checkboxSelected');
+        newSet.querySelector('#UpdatebeltIcon').classList.add('highlighted');
         newSet.querySelector('#beltIcon').classList.add('highlighted');
     }
     if (setInfo.workingSet){
-        newSet.querySelector('#workingSetCheckBox').classList.add('checkboxSelected');
+        newSet.querySelector('#UpdateworkingSetIcon').classList.add('highlighted');
         newSet.querySelector('#workingSetIcon').classList.add('highlighted');
     }
     if (setInfo.unilateral){
-        newSet.querySelector('#unilateralSetCheckBox').classList.add('checkboxSelected');
+        newSet.querySelector('#UpdateunilateralIcon').classList.add('highlighted');
         newSet.querySelector('#unilateralIcon').classList.add('highlighted');
     }
 
@@ -156,10 +145,10 @@ function updateSetEvent(e){
         const setReps    = setUpdateForm.querySelector(`#reps${idSet}`).value;
         const setRPE     = setUpdateForm.querySelector(`#rpe${idSet}`).value;
         // true false checks 
-        const paused     = setBox.querySelector('#pausedSetCheckBox').classList.contains('checkboxSelected');
-        const belt       = setBox.querySelector('#beltedSetCheckBox').classList.contains('checkboxSelected');
-        const workingSet = setBox.querySelector('#workingSetCheckBox').classList.contains('checkboxSelected');
-        const unilateral = setBox.querySelector('#unilateralSetCheckBox').classList.contains('checkboxSelected');
+        const paused     = setBox.querySelector('#UpdatepausedIcon').classList.contains('highlighted');
+        const belt       = setBox.querySelector('#UpdatebeltIcon').classList.contains('highlighted');
+        const workingSet = setBox.querySelector('#UpdateworkingSetIcon').classList.contains('highlighted');
+        const unilateral = setBox.querySelector('#UpdateunilateralIcon').classList.contains('highlighted');
 
         const updateObj  = {
                 idSet, 
@@ -432,8 +421,6 @@ function createSetUpdateForm(liftInfo, moreLiftInfo){
     const workingSet = liftInfo.workingSet;
     const unilateral = liftInfo.workingSet;
     const paused = liftInfo.paused;
-
-    console.log(belt, workingSet, unilateral, paused);
 
     return updateForm;
 }

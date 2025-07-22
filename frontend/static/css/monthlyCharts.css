@@ -1,0 +1,55 @@
+/*-------------------------------------------------------*/
+/* LIFTER WINDOW -> CALENDAR DASHBOARD 
+/*-------------------------------------------------------*/
+.monthlyChartDashWrapper{
+    display: flex;
+    flex: 0.5;
+    flex-direction: column;
+    overflow: hidden;
+    margin-left: 10%;
+    margin-right: 5%;
+    margin-top: 2%;
+}
+@media screen and (max-width: 800px) {
+    .monthlyChartDashWrapper {
+      display: none;
+    }
+  }
+
+.monthlyChartDash{
+    display: flex;
+    flex-direction: column;
+}
+.monthlyChartDashVisible{
+    display: none;
+}
+
+.monthlyChartWrapper{
+    display: none;
+}
+.monthlyChartWrapperVisible{
+   display: flex;
+   position: relative;
+   flex-direction: column;
+}
+.monthlyChart{
+    display: flex;
+    position: relative;
+    flex:1;
+    aspect-ratio: 1/1;
+    max-height: 150px;
+    padding-bottom: 1%;
+    border-bottom: 1px solid brown;
+}
+.monthlyChartTitle{
+    padding: 1%;
+    margin: 2%;
+    position: relative;
+    display: flex;
+    color: mintcream;
+    font-size: 0.75vmin;
+}
+.monthlyVolumeTotal, .monthlyIntensityTotal, .monthlyFrequencyTotal {
+    color: mintcream;
+    position: relative;
+}

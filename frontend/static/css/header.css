@@ -1,26 +1,25 @@
 .header{
     display: flex;
     flex-direction: row;
+    flex:1;
     border-bottom: 1px solid var(--sidebar-border-color);
+    overflow: hidden;
 }
 #headerTitle {
-    margin-left: 1%;
-    margin-top: 1%;
-    margin-bottom: 1%;
     color:var(--primary-header-color);
     font-size: 24px;
     flex:1;
+    align-self: center;
+    padding: 2%;
 }
 .headerButtons {
     display: flex;
-    justify-content: flex-end;
 }
 .button {
     display: flex;
     flex-direction: row;
-    flex-wrap: nowrap;
     padding: 1%;
-    font-size: clamp(6px, 0.75rem, 12px);
+    font-size: clamp(6px, 1rem, 20px);
     cursor: pointer;
     color:var(--primary-button-color);
 }
@@ -29,13 +28,20 @@
     color: mintcream;
 }
 #activeLifters{
-    padding: 10%;
+    display: flex;
+    flex-wrap: nowrap;
+    min-width: 100px;
+}
+.buttonContent{
     align-self: center;
 }
 #addLifter{
-    align-self: center;
-    padding: 10%;
+    display: flex;
+    flex-wrap: nowrap;
+    min-width: 100px;
 }
+
+
 .footer{
     border-top: 1px solid var(--sidebar-border-color);
 }

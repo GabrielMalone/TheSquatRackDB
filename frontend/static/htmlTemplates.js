@@ -16,29 +16,21 @@ export const setUpdateFormTemplateHTML = (liftInfo, unit) =>
             <input class="setInfoField setRPEUpdate" id="rpe${liftInfo.setID}" type="text" value="${liftInfo.rpe}">
         </div>
         <div class="inputWrapper">
-            <input class="setInfoField setButton" type="submit" value="☉">
+            <input class="setInfoField setButton" type="submit" value="✓">
         </div>
     </form>
     <div class="setQualifiersWrapper">
         <div class="setQualifiers"> 
-            <div class="qualifierTitle">working set</div> 
             <div class="UpdatequalifierIcons" id="UpdateworkingSetIcon">⇧</div>  
-            <div class="checkbox" id="workingSetCheckBox"></div>
         </div>
         <div class="setQualifiers"> 
-            <div class="qualifierTitle">belt</div>  
             <div class="UpdatequalifierIcons" id="UpdatebeltIcon">◎</div>    
-            <div class="checkbox" id="beltedSetCheckBox"></div>
         </div>
         <div class="setQualifiers">
-            <div class="qualifierTitle">paused</div> 
             <div class="UpdatequalifierIcons" id="UpdatepausedIcon">⏸</div>      
-            <div class="checkbox" id="pausedSetCheckBox"></div>
         </div>
         <div class="setQualifiers"> 
-            <div class="qualifierTitle">unilateral </div>  
             <div class="UpdatequalifierIcons" id="UpdateunilateralIcon">⚋</div>  
-            <div class="checkbox" id="unilateralSetCheckBox"></div>
         </div>
     </div>
    

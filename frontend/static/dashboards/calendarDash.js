@@ -229,7 +229,7 @@ export function calendarListener(){
 // helper methods for filling out the calendar
 //-----------------------------------------------------------------------------
 function addMonthAndYear(month, year){
-    const calendar =  document.querySelector(".calendarWrapper");
+    const calendar =  document.querySelector(".month");
     calendar.insertAdjacentHTML("afterbegin",
         `<div class="dateWrapper">
             <div class="monthTitle">${months[month]}</div> 
