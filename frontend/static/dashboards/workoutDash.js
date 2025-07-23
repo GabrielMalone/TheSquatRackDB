@@ -30,8 +30,7 @@ export function getWorkoutFromWokroutID(idWorkout){
 // if any notes present, they will appear here
 //-----------------------------------------------
 function createNotesSection(note){
-    console.log(note);
-    if (!note){
+    if (!note){ 
         note = "";
     }
     const notesSection = 

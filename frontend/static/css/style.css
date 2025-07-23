@@ -15,22 +15,16 @@ li {
     padding-left: 0%;             /*these indent too much*/
 }
 /*-------------------------------------------------------*/
-/* GENERAL BUTTON CLASS
-/*-------------------------------------------------------*/
-
-/*-------------------------------------------------------*/
 /* MAIN BROWSER CONTAINER
 /*-------------------------------------------------------*/
 .container {                         /*the entire browser*/
-    display: flex;  
+    position: relative;
+    display: flex;
     flex: 1;     
     flex-direction: column; 
+    height: 100%;
     min-height: 99vh;
   }
-/*-------------------------------------------------------*/
-/* HEADER AND FOOTER
-/*-------------------------------------------------------*/
-
 /*-------------------------------------------------------*/
 /* LIFTER WINDOW (main dashboard) AND SIDEBAR
 /*-------------------------------------------------------*/
@@ -54,109 +48,4 @@ li {
     .lifterBox {
         width: 85%;
     }
-}
-
-
-
-
-
-/*-------------------------------------------------------*/
-/* LITER DASH -> ADD EXERCISE
-/*-------------------------------------------------------*/
-.addExerciseDash {
-    display: none;
-}
-.addExerciseDashVisible {
-    display: flex;
-    flex-direction: column;
-    outline: 1px dotted #0a0a0a;
-    position:relative; /* This will make it stay in place while scrolling */
-    background-color: #111;
-    z-index: 1000;
-}
-#exerciseDashForprDashBoard{
-    position:fixed;
-    top: 0px;
-    left: 0px;
-    min-width: 100%;
-    background-color: #111111f7;
-}
-#exerciseDashForworkoutDash{
-    position:fixed;
-    bottom: 0px;
-    left: 0px;
-    min-width: 100%;
-    background-color: #111111f7;
-}
-.addExerciseBoxHeader {
-    display: flex;
-    flex-direction: row;
-    position: relative;
-}
-#addExerciseTitle {
-    font-size: 1rem;
-    color: mintcream;
-    margin-left: 10px;
-    padding: 10px;
-    flex: 2;
-}
-#addExerciseX {
-    color: #777;
-    padding: 10px;
-    flex: 0;
-    cursor: pointer;
-}   
-#addExerciseX:hover {
-    color: palevioletred;
-}  
-.exerciseSelectionWrapper{
-    display: flex;
-    flex-direction: row;
-    position: relative;
-}
-.SquatCategory, .BenchCategory, .DeadliftCategory, .AccessoriesCategory{
-    display: flex;
-    flex-direction: column;
-    border-left: 1px solid #222;
-    font-size: 2rem;
-    flex: 1;
-    padding-left: 10px;
-    color:cornflowerblue;
-}
-.SquatCategory{
-    border: none;
-}
-.CategoryHeader {
-    padding: 10px;
-}
-.exercisesInDB{
-    display: grid;
-    color: mintcream;
-    padding:5px;
-}
-.exerciseMenuItem {
-    font-size: 1rem;
-    color: #777;
-    padding-left: 10px;
-    cursor: pointer;
-}
-.exerciseMenuItem:hover{
-    font-size: 1rem;
-    color: black;
-    background-color: cornflowerblue;
-}
-.exerciseDescriptionWrapper{
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
-}
-.exerciseDescriptionHeader{
-    display: none;
-}
-.exerciseDescription{
-    display: flex;
-    flex-direction: row;
-    color:mediumspringgreen;
-    padding: 20px;
-    border-top:  1px solid #222;
 }

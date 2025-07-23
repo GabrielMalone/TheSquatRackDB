@@ -1,6 +1,11 @@
 /*-------------------------------------------------------*/
 /* WORKOUT AREA
 /*-------------------------------------------------------*/
+@media screen and (max-width: 577px) {
+    /* .monthlyChartDashWrapper {
+        max-width: 100%;
+    } */
+}
 .workout {
     display: none;
     flex-direction: column;
@@ -20,7 +25,7 @@
     display: flex;
     flex: row;
     margin-bottom: 1%;
-    font-size: clamp(6pt, 0.80vw, 16pt);
+    font-size: clamp(8px, 0.80vw, 16pt);
     width: 90%;
     align-content: space-between;
     gap: 10%;
@@ -55,242 +60,7 @@
     user-select: none;
     gap: 0.5vw;
 }
-/*-------------------------------------------------------*/
-/* EXERCISE -> SET
-/*-------------------------------------------------------*/
-.set{
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    position: relative;
-    outline: 1px solid #333;
-    background-color: #0a0a0a;
-    cursor: pointer;
-    align-content: center;
-}
-.setExpand{
-    min-height: min-content;
-}
-.prSet {
-    /* outline: 1px solid green; */
-}
 
-.set:hover{
-    outline-color: var(--secondary-text-color);
-    .setWeight{
-        color:var(--primary-text-color);
-    }
-    .setReps{
-        color:var(--primary-text-color);
-    }
-    .setRPE{
-        color:var(--primary-text-color);
-    }
-    .setNumber{
-        color:var(--primary-text-color);
-    }
-}
-.setInfoWrapper{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    position: relative;
-    pointer-events: none; 
-    padding: 3%;
-    width: 90%;
-    font-size: clamp(9px, 1.5vw, 14px);
-}
-.setWeightRepsWrapper{
-    display: flex;
-    flex-direction: row;
-    flex: 0.55;
-    position: relative;  
-    pointer-events: none; 
-}
-.setRPEwrapper{
-    margin-top: 0.5%;
-    margin-left: 2%;
-    display: flex;
-    flex: 0.75;
-    flex-direction: row;
-    pointer-events: none;  
-    color: #444;
-}
-.setRPE{
-    margin-top: 1%;
-    padding-right: 2%;
-    pointer-events: none;  
-    color:#666;
-}
-.qualifierIconsWrapper{
-    display: flex;
-    flex: 1;
-    flex-direction: row;
-    gap: 1vw;
-}
-.qualifierIcons{
-    color: var(--icons-inactive-color);
-    font-size: clamp(8px, 1vw, 16px);
-}
-#unilateralIcon.highlighted{
-    color: var(--icons-active-color);
-}
-#workingSetIcon.highlighted{
-    color: var(--icons-active-color);
-}
-#beltIcon.highlighted{
-    color: var(--icons-active-color);
-}
-#pausedIcon.highlighted{
-    color: var(--icons-active-color);
-}
-.setNumber{
-    position: absolute;
-    top: 5px;
-    right: 10px;
-    font-size: clamp(6pt, 0.75vw, 16pt);
-    color: #888;
-    pointer-events: none;  
-}
-.setWeight{
-    color:rgba(245, 255, 250, 0.8);
-    pointer-events: none;    
-}
-.setBy{
-    color:gray;
-    pointer-events: none;    
-}
-.setReps{
-    color:rgba(245, 255, 250, 0.7);
-    pointer-events: none;  
-}
-.setReps:hover{
-    color: aquamarine;
-}
-
-
-.setQualifiersWrapper{
-    display: flex;
-    flex: 1;
-    flex-direction: row;
-    user-select: none;
-}
-.setQualifiers{
-    display: flex;
-    flex:0;
-    flex-direction: row;
-    font-size: clamp(10px, 1.5vw, 24px);
-    align-items: center;
-    justify-items: flex-start;
-    padding: 1vw;
-}
-.qualifierTitle{
-    display: none;
-}
-.qualifierTitle:hover{
-    color: mintcream;
-}
-.UpdatequalifierIcons{
-    min-width: 1vw;
-    max-width: 1vw;
-    color: var(--icons-inactive-color);
-}
-.UpdatequalifierIcons:hover{
-    color: var(--icons-highlighted-color);
-}
-.UpdatequalifierIcons.highlighted{
-    color: var(--icons-active-color);
-}
-.UpdatequalifierIcons.highlighted:hover{
-    color: var(--icons-highlighted-color);
-}
-#UpdatepausedIcon{
-    padding-left: 3px;
-    margin-right: -3px;
-}
-#UpdateunilateralIcon{
-    padding-left: 3px;
-    margin-right: -3px;
-}
-/*-------------------------------------------------------*/
-/* WOKROUT AREA -> EXERCISE ROW -> SET-> UPDATE FORM
-/*-------------------------------------------------------*/
-.setUpdateForm{
-    display: none;
-}
-.setUpdateFormVisible{
-    display: flex;
-    flex-direction: row;
-    position: relative;
-    border-top: 1px solid #222; 
-}
-.setUpdate{
-    margin-top: 1%;
-    margin-left: 3%;
-    display: flex;
-    flex-direction: column;
-    max-width: 50%;
-}
-.setInfoField{
-    display: flex;
-    position: relative;
-    background-color: transparent;
-    border: none;
-    font-size: clamp(8px, 1vw, 14px);
-    max-width: 2.5vw;
-    min-width: 35px;
-    color: var(--primary-text-color);
-}
-.setInfoField:focus {
-    background-color: #0a0a0a;
-    border-color: none;
-    box-shadow: none;
-    outline: none;
-}
-.setInfoField:hover {
-    outline: none;
-    color: greenyellow;
-}
-.setButton{
-    top: 0.5vw;
-    right: 0;
-    position: absolute;
-    color: green;
-    cursor: pointer;
-    overflow: visible;
-    font-size: clamp(6pt, 1vw, 16pt);
-
-}
-.setButton:hover{
-    color: greenyellow;
-}
-.inputWrapper{
-    display: flex;
-    flex-direction: row;
-}
-.inputTag{
-    position: relative;
-    align-self: center;
-    align-content: center;
-    color: #444;
-    height: 100%;
-    font-size: clamp(8px, 1vw, 14px);
-    min-width: 40px;
-}
-
-/*-------------------------------------------------------*/
-/* WOKROUT AREA -> EXERCISE ROW -> SET-> UPDATE FORM -> REMOVE SET
-/*-------------------------------------------------------*/
-.setRemove{
-    position: absolute;
-    color: purple;
-    font-size: clamp(5pt, 0.75vw, 16pt);
-    bottom: 5px;
-    right: 10px;
-}
-.setRemove:hover {
-  color:plum;
-}
 
 /*-------------------------------------------------------*/
 /* WOKROUT AREA -> EXERCISE ROW  -> ADD SET
@@ -308,8 +78,8 @@
     justify-content: center;
     position: relative;
     margin-top: 6%;
-    font-size: 1vw;
-    outline: 1px solid purple;
+    font-size: clamp(8px, 0.80vw, 16pt);
+    outline: 1px solid #777;
     background-color: #111;
     color: mintcream;
     cursor: pointer;

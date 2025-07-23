@@ -3,15 +3,17 @@
     flex-direction: column;
 }
 .notesSectionHeader{
-    color: violet;
+    color: #555;
     font-size: clamp(6pt, 1vw, 16pt);
     align-self: flex-end;
+    padding-bottom: 1vw;
 }
 .notesSectionInput{
     outline: none;
-    border: 1px solid #444;
+    border: 1px solid #333;
+    background-color: #111;
     padding: 8px;
-    color: #777;
+    color: lavender;
     min-height: 40px;
     font-size: clamp(6pt, 1vw, 16pt)
 }
@@ -25,9 +27,9 @@
     padding: 5%;
 }
 .saveNoteButton:hover{
-    background-color: purple;
+    background-color: browm;
     .saveNoteButtonText{
-        color: mintcream;
+        color: greenyellow;
     }
     cursor: pointer;
 }

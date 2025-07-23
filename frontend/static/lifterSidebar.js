@@ -88,13 +88,16 @@ export const configEventListener = () => {
     config.addEventListener("click", configClickEvent);
 }
 function configClickEvent(){
+    const sidebar       = document.querySelector('.sidebar');
     const calendar      = document.querySelector(".month");
     const lifterName    = document.getElementById("lifterHeaderName");
     const config        = document.getElementById("lifterConfig");
     const workoutDash   = document.querySelector(".workout");
     const dateWrapper   = document.querySelector(".dateWrapper");
     const prDash        = document.querySelector(".prDash");
-    const prDashHeader  = document.querySelector(".prDashHeader");
+    const prDashHeader  = document.querySelector("#prDashHeader");
+    const monthlyChartDashWrapper = document.querySelector('.monthlyChartDashWrapper');
+    const cursorForPRDash = document.getElementById('cursorForprDashBoard');
     f.delete(c.LIFTERS_ENDPOINT, currLifter.id)    // logic to delete currlifter
     .then(()=>{
         LIFTERS.length = 0;
@@ -105,9 +108,10 @@ function configClickEvent(){
         calendar.style.display    = "none";
         workoutDash.style.display = "none";
         dateWrapper.style.display = "none";
-        const monthlyChartDash = document.querySelectorAll(".monthlyChartDash");
-        monthlyChartDash.forEach(chart=>chart.innerHTML=``);
+        monthlyChartDashWrapper.innerHTML = ``;
         prDash.innerHTML = ``;
+        prDashHeader.innerHTML = ''
+        cursorForPRDash.parentNode.removeChild(cursorForPRDash);
     })
     .catch(err=>console.error(err));
 }

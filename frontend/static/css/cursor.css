@@ -5,33 +5,29 @@
     display: flex;
     flex-direction: column;
     position: relative;
-    outline: solid green 1px;
+    outline: solid purple 1px;
     width: 4.5vw;
     aspect-ratio: 1/1;
-    color: mediumspringgreen;   
     cursor: pointer;
     align-items: center;
     justify-content: center;
 }
 .cursor:hover {
-    background-color: darkgreen;
+    background-color: darkorchid;
     color: mintcream;
-    outline: 1px solid darkgreen;
+    outline: 1px solid purple;
 }
 .cursorPlus{
     font-size: 2vw;
-    color: mediumspringgreen;
+    color: violet;
     pointer-events: none;
 }
 #cursorForprDashBoard{
-    margin-top: 0%;
-    align-self: flex-start;
+    margin-top: 2%;
+    align-self: center;
 }
 #cursorForworkoutDash{
     margin-top: 4%;
-}
-#cursorForworkoutDash:hover{
-    background-color: darkgreen;
 }
 .cursorVisible{
     display: none;

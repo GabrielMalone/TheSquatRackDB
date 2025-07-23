@@ -6,6 +6,7 @@
     margin-bottom: 1%;
     position: relative;
     font-size: 1vw;
+    margin-right: 2%;
 }
 .prDashVisible {
     display: none;
@@ -28,7 +29,9 @@
     flex-direction: column;
     width: max(10px, 100%/21);
     aspect-ratio: 1/1;
-    outline: 1px solid var(--prDash-border-color);
+    /* outline: 1px solid var(--prDash-border-color); */
+    /* border-right: 1px solid var(--prDash-border-color); 
+    border-bottom: 1px solid var(--prDash-border-color);  */
     justify-content: center;
     overflow: visible;
     user-select: none;
@@ -45,14 +48,15 @@
 }
 .repNumBox{
     background-color: #111;
-    outline: 1px solid var(--prDash-border-highlighted-color);
+    /* border-right: 1px solid var(--prDash-border-color); 
+    border-bottom: 1px solid var(--prDash-border-color);  */
     font-size: 1vmin;
 }
 .prLiftNameBox {
     display: flex;
     flex-direction: column;
     position: relative;
-    outline: 1px solid var(--prDash-border-highlighted-color);
+    /* outline: 1px solid var(--prDash-border-highlighted-color); */
     padding: 0;
     color: mintcream;
     overflow: hidden;
@@ -69,7 +73,7 @@
     color: mintcream;
 }
 .prPresent{
-    outline: 1px solid var(--prDash-border-highlighted-color);
+    /* outline: 1px solid var(--prDash-border-highlighted-color); */
 }
 .prPresent:hover{
     background-color: purple;
@@ -84,7 +88,7 @@
     right: 50%;
     color: mintcream;
     background-color: #222222d6;
-    outline: 1px solid #444;
+    /* outline: 1px solid #444; */
     z-index: 1000;
     overflow: visible !important;
 }
@@ -104,31 +108,45 @@
     pointer-events: none;
 }
 
-
 .prChartWrapper{
     display: flex;
     flex-direction: column;
-    margin-top: 30px;
-    margin-bottom: 50px;
-    border-bottom: 1px solid #333;
+    margin-top: 5%;
+    margin-left: 5%;
+    padding-bottom: 5%;
+    max-width: 100%;
 }
 .prChartTitleWrapper{
     display: flex;
     flex-direction: row;
-    border-bottom: 1px solid #333;
+    margin-bottom: 1%;
+    padding: 1%;
+    border-top: 1px solid #222;
+    border-bottom: 1px solid #222;
+    background-color: #111;
 }
 .prChartX{
-    color:palevioletred;
-    flex: .25;
+    color:brown;
+    flex: 0;
     cursor: pointer;
+    align-self: flex-end;
+    justify-self: flex-end;
 }
 .prChartX:hover{
     color: red;
 }
+.prChartCanvas{
+    display: flex;
+    position: relative;
+    flex:1;
+    aspect-ratio: 2/1;
+    max-height: 350px;
+    padding-bottom: 1%;
+}
 .prChartTitle{
     display: flex;
-    flex: 9;
-    align-self: center;
+    flex: 1;
+    padding-left: 30%;
+    font-size: clamp(8pt, 1vw, 24pt);
     color: mintcream;
-    padding-bottom: 20px;
 }

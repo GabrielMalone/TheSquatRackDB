@@ -15,6 +15,9 @@
     .monthlyChartDashWrapper {
         display: none;
     }
+    .prChartWrapper {
+        display: none !important;
+    }
 }
 .monthlyChartDash {
     display: flex;

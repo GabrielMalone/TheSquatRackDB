@@ -17,12 +17,12 @@ export async function createPrDash(exerciseList, idUser){
     clearPreviousDash();
     const prDash = initPrDash(exerciseList.length);    // clear any prev dash ^
     const prData = await getPrsAndFillinRepPrChart(exerciseList, idUser, prDash);
-    createCursor(prDash);
     // if (Object.keys(prData).length > 0){     // create the historical datachart
     //     drawHistoricalChart(prDash, prData)             // move this eventually
     // }
     buildPrDashHeader(prDash);
-    prInfoClick(prDash); 
+    prInfoClick(); 
+    createCursor(prDash);
     if (prDash.querySelector('.prCell')){     // scroll into view if prs present
         const prCursor = document.getElementById('cursorForprDashBoard'); 
         prCursor.scrollIntoView({behavior : "smooth"});
@@ -62,7 +62,7 @@ function clearPreviousDash(){
 //-----------------------------------------------------------------------------
 // EVENTS for clicking on a PR - load the workout in which PR happened
 //-----------------------------------------------------------------------------
-function prInfoClick(prDash){
+function prInfoClick(){
     const workoutContainer = document.querySelector('.lifterBox');
     workoutContainer.addEventListener("click", prDashClickEvent);
 }
@@ -114,7 +114,6 @@ function initDrawRepPrHistoryChart(e){
     const liftName = e.target.parentNode.querySelector('.prLiftName').innerHTML;
     const liftData = {idUser, idExercise, reps, liftName};
     drawRepPrHistoryChart(liftData);   
-
 }
 //-----------------------------------------------------------------------------
 function highlightPRinCalendarAndGetPRworkout(e){
@@ -153,9 +152,6 @@ function getPRdata(e){
     }
     return [dateInfo, year, month, prDay, lastday, idWorkout]
 }
-
-
-
 //-----------------------------------------------------------------------------
 // helper methods for the createPrDash ^
 //-----------------------------------------------------------------------------
@@ -309,10 +305,10 @@ function makePrToolTip(lift, weight, reps, formattedDate){
 }
 //-----------------------------------------------------------------------------
 export function createChartElement(dashContainer, chartName, chartTitle=""){
-    // let chartWrapper = document.querySelector('.prChartWrapper');
-    // if (chartWrapper){   // all of this to get the chart to redraw in same spot
-    //     chartWrapper.innerHTML = ``;
-    // } 
+    let chartWrapper = document.querySelector('.prChartWrapper');
+    if (chartWrapper){   // all of this to get the chart to redraw in same spot
+        chartWrapper.parentNode.removeChild(chartWrapper);
+    }     // later on if want multiple charts to be able to load, change this ^ 
     const chart = document.createElement("div");
     chart.classList.add("prChartWrapper");
     chart.classList.add("prChartWrapperVisible");
@@ -320,7 +316,7 @@ export function createChartElement(dashContainer, chartName, chartTitle=""){
     chart.insertAdjacentHTML("beforeend",
         `<div class ="prChartTitleWrapper">
             <div class="prChartTitle">${chartTitle}</div>
-            <div class="prChartX" id="prChartXfor${chartName}">x</div>
+            <div class="prChartX" id="prChartXfor${chartName}">X</div>
         </div>
         <canvas class="prChartCanvas" id="canvasFor${chartName}"></canvas>`);
         dashContainer.insertAdjacentElement("beforeend", chart); 

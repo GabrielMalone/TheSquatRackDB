@@ -12,6 +12,7 @@
     flex:1;
     align-self: center;
     padding: 2%;
+    padding-left: 1%;
 }
 
 .headerButtons {
@@ -31,12 +32,16 @@
 }
 
 #activeLifters{
+    align-self: center;
+    padding: 1vw;
     display: flex;
     flex-wrap: nowrap;
     min-width: 100px;
     color: mintcream;
 }
 #addLifter{
+    align-self: center;
+    padding: 1vw;
     display: flex;
     flex-wrap: nowrap;
     min-width: 100px;

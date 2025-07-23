@@ -15,7 +15,7 @@ export async function drawRepPrHistoryChart(dataForPr){
     const liftName   = dataForPr.liftName;
     // elements needed for chart creation
     const prDash = document.querySelector('.prDash');
-    const chartTitle = `Lift History for sets of ${reps} on ${liftName}`;
+    const chartTitle = `LIFT HISTORY - SETS OF ( ${reps} ) ON: ${liftName}`;
     const chartName = `repHistoryChartFor${reps}of${liftName}`;
     createChartElement(prDash, chartName, chartTitle);
     // get the pr data from DB
@@ -34,46 +34,29 @@ export async function drawRepPrHistoryChart(dataForPr){
     addCloseEventListener(reps, liftName, chartName);
     const chartCanvas = document.getElementById(`canvasFor${chartName}`);
     new Chart(chartCanvas, {
-        type: 'line',
         data : {
             datasets: [ 
                 {
-                    data : dateWeightObjsPrs,
-                    showLine : true,
-                    borderColor: 'orange',
-                    backgroundColor : 'orange'
+                data : dateWeightObjsPrs,
+                type: 'line',
+                showLine : true,
+                borderColor: 'brown',
+                backgroundColor : 'oranredge',
+                borderWidth: 1
                 },
                 {
-                    data : dateWeightObjsAllSets,
-                    showLine : false,
-                    backgroundColor : 'orangered'
+                data : dateWeightObjsAllSets,
+                type: 'line',
+                showLine : false,
+                backgroundColor : 'purple'
                 }
             ]
         }, 
         options : {
-            plugins: {
-                legend: {
-                display: false,
-                labels: {
-                    generateLabels: hideLegendBoxes,
-                    color: "mintcream",
-                },
-                align: "center",
-                },
-            },
+            plugins: pluginsConfig,
             scales: {
-                y: {
-                    ticks: {
-                        padding: 40,
-                        color : 'mintcream'
-                    },
-                },
-                x: {
-                    ticks : {
-                        padding: 40,
-                        color : 'mintcream'
-                    }
-                },
+                y: yConfig,
+                x: xConfig,
             },
             layout: {
                 padding: 0
@@ -99,11 +82,9 @@ function filterPRs(desiredRepRangeLifts){
 }
 //-----------------------------------------------------------------------------
 function createChartJSDataStructureForPrSets(desiredRepRangePrs){
-    const dateLabels = desiredRepRangePrs.map(liftData=>formatBackendDateData(liftData.date));
+    const dateLabels = desiredRepRangePrs.map(liftData=>new Date(formatBackendDateData(liftData.date)));
     const prWeightData = desiredRepRangePrs.map(liftData=>liftData.weight);
-
     const dateWeightObjs = [];
-
     for (let i = 0 ; i < dateLabels.length ; i ++){
         const dateWeightObj = {
             x: dateLabels[i],
@@ -120,3 +101,40 @@ function addCloseEventListener(reps, liftName, chartName){
         repPrChart.parentNode.removeChild(repPrChart);
     });
 }
+//-----------------------------------------------------------------------------
+// chart setup stuff
+//-----------------------------------------------------------------------------
+const xConfig = {
+    type: 'time',
+    time: {
+        unit: 'day'
+    },
+    ticks : {
+        padding: 4,
+        color : '#555',
+        font: {
+            size: 8,       
+            family: 'Arial', 
+        }
+    }
+};
+const yConfig = {
+    ticks: {
+        padding: 5,
+        color : '#CCC',
+        font: {
+            size: 6,       
+            family: 'Arial', 
+        }
+    },
+};
+const pluginsConfig = {
+    legend: {
+        display: false,
+        labels: {
+            generateLabels: hideLegendBoxes,
+            color: "mintcream",
+        },
+        align: "center",
+    },
+};

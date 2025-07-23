@@ -9,7 +9,27 @@ app = Flask(__name__,
 #------------------------------------------------------------------------------
 @app.route("/")
 def home():
-    return render_template('index.html')
+
+    css_files = [
+
+        'addExerciseDash.css',
+        'notesSection.css',
+        'monthlyCharts.css',
+        'workoutDash.css',
+        'newlifter.css',
+        'cursor.css',
+        'dashHeaders.css',
+        'lifterBoxHeader.css',
+        'sidebar.css',
+        'header.css',
+        'variables.css',
+        'prDash.css',
+        'style.css',
+        'calendar.css',
+        'set.css'
+    ]
+
+    return render_template('index.html', css_files=css_files)
 
 #------------------------------------------------------------------------------
 @app.route("/lifters", methods=["GET", "POST", "DELETE"])

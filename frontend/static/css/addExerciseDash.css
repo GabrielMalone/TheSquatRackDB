@@ -1,0 +1,100 @@
+/*-------------------------------------------------------*/
+/* LITER DASH -> ADD EXERCISE
+/*-------------------------------------------------------*/
+.addExerciseDash {
+    display: none;
+}
+.addExerciseDashVisible {
+    display: flex;
+    flex-direction: column;
+    outline: 1px solid brown;
+    position:relative; 
+    background-color: #130000cc;
+    z-index: 1000;
+}
+#exerciseDashForprDashBoard{
+    position:fixed;
+    top: 0px;
+    left: 0px;
+    min-width: 100%;
+    background-color: #111111f7;
+}
+#exerciseDashForworkoutDash{
+    position:fixed;
+    bottom: 0px;
+    left: 0px;
+    min-width: 100%;
+    background-color: #111111f7;
+}
+.addExerciseBoxHeader {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+}
+#addExerciseTitle {
+    font-size: 2vw;
+    color: mintcream;
+    margin-left: 10px;
+    padding: 10px;
+    flex: 2;
+}
+#addExerciseX {
+    color: brown;
+    padding: 10px;
+    flex: 0;
+    font-size: 2vw;
+    cursor: pointer;
+}   
+#addExerciseX:hover {
+    color: red;
+}  
+.exerciseSelectionWrapper{
+    display: flex;
+    flex-direction: row;
+    position: relative;
+}
+.SquatCategory, .BenchCategory, .DeadliftCategory, .AccessoriesCategory{
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid brown;
+    font-size: 2vw;
+    flex: 1;
+    padding-left: 10px;
+    color:brown;
+}
+.SquatCategory{
+    border: none;
+}
+.CategoryHeader {
+    padding: 10px;
+}
+.exercisesInDB{
+    display: grid;
+    color: mintcream;
+    padding:5px;
+}
+.exerciseMenuItem {
+    font-size: clamp(6pt, 1vw, 16pt);
+    color: #777;
+    padding-left: 10px;
+    cursor: pointer;
+}
+.exerciseMenuItem:hover{
+    color: mintcream;
+    background-color: brown;
+}
+.exerciseDescriptionWrapper{
+    display: flex;
+    flex-direction: column;
+}
+.exerciseDescriptionHeader{
+    display: none;
+}
+.exerciseDescription{
+    display: flex;
+    flex-direction: row;
+    color:mintcream;
+    padding: 1%;
+    font-size: clamp(6pt, 1vw, 16pt);
+    border-top:  1px solid brown;
+}

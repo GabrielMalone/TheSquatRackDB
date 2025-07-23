@@ -4,24 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>testing</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/notesSection.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/monthlyCharts.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/workoutDash.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/newlifter.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/cursor.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/dashHeaders.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/lifterBoxHeader.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/variables.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/prDash.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/calendar.css') }}">
+  {% for file in css_files %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/' ~ file) }}">
+  {% endfor %}
 </head>
-<body class="container">
-    {% include 'partials/header.html' %}
-    {% include 'partials/mainDashboard.html' %}
-    {% include 'partials/footer.html' %}
-  <script type="module" src="{{ url_for('static', filename='index.js') }}" defer></script>
-</body>
+  <body class="container">
+      {% include 'partials/header.html' %}
+      {% include 'partials/mainDashboard.html' %}
+      {% include 'partials/newlifter.html' %}
+      {% include 'partials/footer.html' %}
+      <script type="module" src="{{ url_for('static', filename='index.js') }}"></script>
+      <script src="{{ url_for('static', filename='charts/chart.umd.js') }}"></script>
+      <script src="{{ url_for('static', filename='charts/chartjs-adapter-date-fns.bundle.min.js') }}"></script>
+  </body>
 </html>
