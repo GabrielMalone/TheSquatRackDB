@@ -19,7 +19,7 @@
 } */
 
 .set:hover{
-    outline-color: var(--secondary-text-color);
+    outline-color: green;
     .setWeight{
         color:var(--primary-text-color);
     }

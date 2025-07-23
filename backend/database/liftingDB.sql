@@ -158,3 +158,6 @@ INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDesc
 INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDescription) VALUES ('Bulgarian-Split-Squats', 'Bulgarians', 'accessory', "The thing you do not like to do");
 INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDescription) VALUES ('Pull-ups-wide-grip', 'pullups', 'accessory', "pull-ups done with hands farther apart than medium grip pull-ups");
 INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDescription) VALUES ('Pull-ups-medium-grip', 'pullups', 'accessory', "pull-ups done with hands closer togther than wide grip pull-ups");
+INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDescription) VALUES ('Hamstring-curls', 'Ham-Curls', 'accessory', "bend knees. heels towards butt.");
+INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDescription) VALUES ('Standing-calf-raises', 'S-Calf', 'accessory', "Stand and get on your tippy toes.");
+INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDescription) VALUES ('Belt-Squat', 'B-Squat', 'accessory', "Squat on a belt machine");
