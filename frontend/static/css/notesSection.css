@@ -3,19 +3,21 @@
     flex-direction: column;
 }
 .notesSectionHeader{
-    color: #555;
+    color: var(--primary-text-color);
+    filter: brightness(0.6);
     font-size: clamp(6pt, 1vw, 16pt);
     align-self: flex-end;
     padding-bottom: 1vw;
 }
 .notesSectionInput{
     outline: none;
-    border: 1px solid #333;
-    background-color: #111;
+    border: 1px solid var(--primary-border-color);
+    background-color: var(--primary-background-color);
     padding: 8px;
-    color: lavender;
+    color: var(--primary-text-color);
     min-height: 40px;
-    font-size: clamp(6pt, 1vw, 16pt)
+    font-size: clamp(6pt, 1vw, 10pt);
+    filter: brightness(0.8);
 }
 .saveNoteButton{
     margin-top: 4%;
@@ -23,19 +25,19 @@
     flex-direction: column;
     align-self: center;
     align-content: center;
-    outline: 1px solid purple;
+    outline: 1px solid var(--cursor-outline-color);
     padding: 5%;
 }
 .saveNoteButton:hover{
     background-color: browm;
     .saveNoteButtonText{
-        color: greenyellow;
+        color: var(--cursor-plus-highlight-color);
     }
     cursor: pointer;
 }
 .saveNoteButtonText{
     display: flex;
-    color: violet;
+    color:  var(--cursor-plus-color);
     font-size: clamp(6pt, 1vw, 16pt);
     pointer-events: none;
 }
@@ -54,9 +56,9 @@
 }
 
 .saveNoteButton.notSaved{
-    outline: 1px solid brown;
+    outline: 1px solid var(--cursor-outline-color);
     .saveNoteButtonText{
-        color: mintcream;
+        color: var(--cursor-plus-color);
     }
 }
 

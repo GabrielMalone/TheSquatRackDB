@@ -96,7 +96,7 @@ export const DASH_HEADER_VARS = {
 	dashHeaderClass         : "dashHeader",
 	dashHeaderTitle		      : "dashHeaderTitle",
 	minimizerClass		      : "minimizer",
-	minimizerIcon	 	        : "_",
+	minimizerIcon	 	        : "-",
   expanderIcon	 	        : "+"
   
 }

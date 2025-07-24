@@ -22,8 +22,8 @@
     display: flex;
     flex-direction: row;
     position: relative;
-    outline: solid var(--calendar-dayOutline-color) 1px;
-    background-color: var(--calendar-dayBackground-color);
+    outline: solid var(--secondary-border-color) 1px;
+    background-color: var(--primary-background-color);
     user-select: none;
     padding: 4%;
     margin: 1%;
@@ -35,35 +35,35 @@
     user-select: none;
 }
 .day:hover {
-    outline: 1px solid var(--calendar-dayHovered-color);
+    outline: 1px solid var(--primary-border-hover-color);
     .dayNum{
-        color: mintcream;
+        color: var(--primary-text-color);
     }
 }
 .dayNum{
     font-size: clamp(6px, 1vmin, 1vw);
     pointer-events: none;
-    color: mintcream;
+    color: var(--primary-text-color);
 }
 .daySelected{
-    background-color:rgb(18, 0, 0);
-    outline: 1px solid var(--calendar-daySelected-color);
-    color: mintcream;
+    background-color:var(--secondary-background-color);
+    outline: 1px solid var(--primary-hover-color);
+    color: var(--primary-text-color);
 }
 .prDateHighlighted{
-    outline: 1px solid var(--calendar-daySelected-color);
+    outline: 1px solid var(--primary-hover-color);
 }
 .dayLifted{
     background-color: none;
 }
 .today {
-    outline: 1px solid var(--calendar-daySelected-color);
+    outline: 1px solid var(--primary-hover-color);
 
 }
 .squatDay{
     position: absolute;
     top: 25%;
-    right: 3%;
+    right: 8%;
     aspect-ratio: 1/1;
     min-width: var(--calendar-liftDay-min-size);
     min-height: var(--calendar-liftDay-min-size);
@@ -74,7 +74,7 @@
 .benchDay{
     position: absolute;
     top: 13%;
-    right: 3%;
+    right: 8%;
     aspect-ratio: 1/1;
     min-width: var(--calendar-liftDay-min-size);
     min-height: var(--calendar-liftDay-min-size);
@@ -85,7 +85,7 @@
 .deadDay{
     position: absolute;
     top: 1%;
-    right: 3%;
+    right: 8%;
     aspect-ratio: 1/1;
     min-width: var(--calendar-liftDay-min-size);
     min-height: var(--calendar-liftDay-min-size);
@@ -96,7 +96,7 @@
 .otherLiftDay{
     position: absolute;
     top: 37.5%;
-    right: 3%;
+    right: 8%;
     aspect-ratio: 1/1;
     min-width: var(--calendar-liftDay-min-size);
     min-height: var(--calendar-liftDay-min-size);
@@ -108,7 +108,8 @@
     outline: none;
 }
 .dayName {
-    color: var(--secondary-text-color);
+    color: var(--primary-text-color);
+    filter: brightness(0.3);
     position: absolute;
     top: -30%;
     left: 5%;

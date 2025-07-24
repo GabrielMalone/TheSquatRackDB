@@ -23,10 +23,8 @@ export async function createPrDash(exerciseList, idUser){
     buildPrDashHeader(prDash);
     prInfoClick(); 
     createCursor(prDash);
-    if (prDash.querySelector('.prCell')){     // scroll into view if prs present
-        const prCursor = document.getElementById('cursorForprDashBoard'); 
-        prCursor.scrollIntoView({behavior : "smooth"});
-    }
+    const prCursor = document.getElementById('cursorForprDashBoard'); 
+    prCursor.scrollIntoView({behavior : "smooth"});
 }
 //-----------------------------------------------------------------------------
 async function getPrsAndFillinRepPrChart(exerciseList, idUser, prDash){

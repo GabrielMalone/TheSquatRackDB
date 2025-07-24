@@ -5,7 +5,7 @@
     display: flex;
     flex-direction: column;
     position: relative;
-    outline: solid purple 1px;
+    outline: solid var(--cursor-outline-color) 1px;
     width: 4.5vw;
     aspect-ratio: 1/1;
     cursor: pointer;
@@ -13,13 +13,12 @@
     justify-content: center;
 }
 .cursor:hover {
-    background-color: darkorchid;
-    color: mintcream;
-    outline: 1px solid purple;
+    background-color: var(--cursor-highlight-color);
+    color: var(--cursor-plus-highlight-color);
 }
 .cursorPlus{
     font-size: 2vw;
-    color: violet;
+    color: var(--cursor-plus-color);
     pointer-events: none;
 }
 #cursorForprDashBoard{

@@ -7,19 +7,19 @@
     flex:1;
     padding: 1%;
     flex-direction: row;
-    border-bottom: 1px solid var(--sidebar-border-color);
+    border-bottom: 1px solid var(--primary-border-color);
 }
 #lifterHeaderName {
     align-self: center;
     font-size: 3vw;
-    color: var(--lifterBoxHeader-text-color);
+    color: var(--primary-text-color);
 }
 #lifterConfig {
     font-size: 2vw;
-    color: var(--lifterBoxHeader-text-color);
+    color: var(--primary-remove-color);
     visibility: hidden;
     cursor: pointer;
 }
 #lifterConfig:hover {
-    color: red;
+    color: var(--primary-remove-highlight-color);
 }

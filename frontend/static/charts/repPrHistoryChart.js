@@ -111,7 +111,7 @@ const xConfig = {
     },
     ticks : {
         padding: 4,
-        color : '#555',
+        color : 'mintcream',
         font: {
             size: 8,       
             family: 'Arial', 

@@ -29,9 +29,7 @@
     flex-direction: column;
     width: max(10px, 100%/21);
     aspect-ratio: 1/1;
-    /* outline: 1px solid var(--prDash-border-color); */
-    border-right: 1px solid var(--prDash-border-color); 
-    border-bottom: 1px solid var(--prDash-border-color); 
+    border: 1px solid var(--primary-border-color); 
     justify-content: center;
     overflow: visible;
     user-select: none;
@@ -44,96 +42,101 @@
 .repNumInHeader {
     align-self: center;
     justify-self: center;
-    color: mintcream;
+    color: var(--primary-text-color);
 }
 .repNumBox{
-    background-color: #111;
-    /* border-right: 1px solid var(--prDash-border-color); 
-    border-bottom: 1px solid var(--prDash-border-color);  */
+    background-color: var(--primary-background-color);
+    border: transparent;
     font-size: 1vmin;
 }
 .prLiftNameBox {
+    border: transparent;
     display: flex;
     flex-direction: column;
     position: relative;
-    /* outline: 1px solid var(--prDash-border-highlighted-color); */
+
     padding: 0;
-    color: mintcream;
+    color:var(--primary-text-color);
     overflow: hidden;
 }
 .prLiftName{
     align-self: center;
 }
 .prLiftName:hover {
-    color:red;
+    color:var(--primary-hover-color);
 }
 
 
 .repPRbox{
-    color: mintcream;
+    color: var(--primary-text-color);
 }
 .prPresent{
     /* outline: 1px solid var(--prDash-border-highlighted-color); */
 }
 .prPresent:hover{
-    background-color: purple;
-    color: mintcream;
+    background-color: var(--primary-hover-color);
+    color:var(--primary-text-color);
 }
+
 .prPresent:hover .prToolTip{
     display: flex;
+    flex-direction: column;
+    z-index: 1000;
     position: absolute;
     opacity: 1;
-    width: 10rem;
+    width: 6vw;
+    min-width: 100px;
     top: 100%;
-    right: 50%;
-    color: mintcream;
-    background-color: #222222d6;
-    /* outline: 1px solid #444; */
-    z-index: 1000;
+    left: 0%;
+    color: var(--primary-text-color);
+    background-color: var(--secondary-background-color);
+    outline: 1px solid var(---secondary-border-color);
+    font-size: clamp(8pt, 1vw, 12pt);
     overflow: visible !important;
+    padding: 1vw;
 }
+
 .prToolTip{
     display: none;
     opacity: 0;
-    flex-direction: column;
-    z-index: 1000;
 }
 .prToolTipWeightsRepsWrapper{
     display: flex;
     flex-direction: row;
 }
+
 .prWeight{
     align-self: center;
     display: flex;
     pointer-events: none;
 }
-
 .prChartWrapper{
     display: flex;
     flex-direction: column;
     margin-top: 5%;
     padding-bottom: 5%;
     max-width: 100%;
-    border-bottom: 1px solid #222;
+    border-bottom: 1px solid var(--primary-border-color);
 }
+
 .prChartTitleWrapper{
     display: flex;
     flex-direction: row;
     margin-bottom: 1%;
     padding: 1%;
-    border-top: 1px solid #222;
-    border-bottom: 1px solid #222;
-    background-color: #111;
+    border-top: 1px solid var(--primary-border-color);
+    border-bottom: 1px solid var(--primary-border-color);
+    background-color: var(--primary-background-color);
 }
 .prChartX{
-    color:brown;
+    color:var(--secondary-text-color);
     flex: 0;
     cursor: pointer;
     align-self: flex-end;
     justify-self: flex-end;
 }
 .prChartX:hover{
-    color: red;
+    color: var(--primary-hover-color);
 }
 .prChartCanvas{
     display: flex;
@@ -148,5 +151,5 @@
     flex: 1;
     padding-left: 30%;
     font-size: clamp(8pt, 1vw, 24pt);
-    color: mintcream;
+    color: var(--primary-text-color);
 }

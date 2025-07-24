@@ -447,6 +447,7 @@ def getWorkoutFromID(idWorkout):
                 SELECT 
                     e.abbreviation AS exercise,
                     e.idExercise AS exerciseID,
+                    e.ExerciseCategory AS category,
                     eow.Order AS exerciseOrder,
                     s.idSet AS setID,
                     s.SetNumber AS `set`,
@@ -492,6 +493,7 @@ def getWorkoutFromID(idWorkout):
                         "exerciseOrder"     : lift["exerciseOrder"],
                         "idWorkout"         : lift["idWorkout"],
                         "note"              : lift["note"],
+                        "category"          : lift["category"],
                         "sets"              : [] 
                     }
                     unique_lifts_in_workout[lift_id] = lift_info

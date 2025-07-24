@@ -7,46 +7,50 @@
 .addExerciseDashVisible {
     display: flex;
     flex-direction: column;
-    outline: 1px solid brown;
+    outline: 1px solid var(--primary-border-color);
     position:relative; 
-    background-color: #130000cc;
+    background-color: var(--secondary-background-color);
     z-index: 1000;
+    opacity: 0.95;
 }
 #exerciseDashForprDashBoard{
     position:fixed;
     top: 0px;
     left: 0px;
     min-width: 100%;
-    background-color: #111111f7;
 }
 #exerciseDashForworkoutDash{
     position:fixed;
     bottom: 0px;
     left: 0px;
     min-width: 100%;
-    background-color: #111111f7;
 }
 .addExerciseBoxHeader {
     display: flex;
     flex-direction: row;
+    flex: 1;
     position: relative;
+    border-bottom: 1px solid var(--primary-border-color);
 }
 #addExerciseTitle {
+    display: flex;
     font-size: 2vw;
-    color: mintcream;
+    color: var(--primary-text-color);
+    filter: brightness(0.6);
     margin-left: 10px;
     padding: 10px;
     flex: 2;
 }
 #addExerciseX {
-    color: brown;
-    padding: 10px;
+    color: var(--primary-remove-color);
+    margin-right: 30px;
+    margin-top: 1.5%;
     flex: 0;
-    font-size: 2vw;
+    font-size: 1vw;
     cursor: pointer;
 }   
 #addExerciseX:hover {
-    color: red;
+    color: var(--primary-remove-highlight-color);
 }  
 .exerciseSelectionWrapper{
     display: flex;
@@ -56,11 +60,11 @@
 .SquatCategory, .BenchCategory, .DeadliftCategory, .AccessoriesCategory{
     display: flex;
     flex-direction: column;
-    border-left: 1px solid brown;
+    border-left: 1px solid var(--primary-border-color);
     font-size: 2vw;
     flex: 1;
     padding-left: 10px;
-    color:brown;
+    color:var(--primary-text-color);
 }
 .SquatCategory{
     border: none;
@@ -70,7 +74,7 @@
 }
 .exercisesInDB{
     display: grid;
-    color: mintcream;
+    color: var(--primary-text-color);
     padding:5px;
 }
 .exerciseMenuItem {
@@ -80,8 +84,8 @@
     cursor: pointer;
 }
 .exerciseMenuItem:hover{
-    color: mintcream;
-    background-color: brown;
+    background-color: var(--primary-text-background-hover-color);
+    color: var(--primary-text-color);
 }
 .exerciseDescriptionWrapper{
     display: flex;
@@ -93,8 +97,8 @@
 .exerciseDescription{
     display: flex;
     flex-direction: row;
-    color:mintcream;
+    color:var(--primary-text-color);
     padding: 1%;
     font-size: clamp(6pt, 1vw, 16pt);
-    border-top:  1px solid brown;
+    border-top:  1px solid var(--primary-border-color);
 }

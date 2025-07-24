@@ -203,6 +203,9 @@ function addSetVideo(setElement, videoFileName){
     const setId = setElement.dataset.setID;
     setElement.insertAdjacentHTML("beforeend", 
         `<div class="setVideoWrapper">
+            <div class="videoMenuWrapper">
+             
+            </div>
             <video class="setVideoPlayer" id="videoForSet${setId}" controls>
                 <source src="${videoFileName}" type="video/mp4">
             </video>
@@ -505,7 +508,8 @@ function createExerciseBox(newExerciseRow, liftInfo){
     const newExercise = document.createElement('div');
     newExercise.setAttribute("id",`${liftInfo.exercise}`);
     newExercise.classList.add("exercise");
-    newExercise.innerHTML += `<p>${liftInfo.exercise}</p>`;
+    newExercise.classList.add(`${liftInfo.category}`);
+    newExercise.insertAdjacentHTML("beforeend",`<p>${liftInfo.exercise}</p>`);
     newExercise.insertAdjacentHTML("beforeend", 
         `<div class = "addSet">╋</div>`);
     newExercise.dataset.idExercise = liftInfo.exerciseID;
@@ -550,6 +554,6 @@ function createSetUpdateForm(liftInfo, moreLiftInfo){
 //-----------------------------------------------------------------------------
 export function scrollToWorkout(){
     setTimeout(()=>{
-         document.getElementById('headerTitle').scrollIntoView({ top: 0, behavior: 'smooth'});
+         document.querySelector('.workoutHeader').scrollIntoView({ top: 0, behavior: 'smooth'});
     },200); 
 }

@@ -3,11 +3,11 @@
     flex-direction: row;
     flex:1;
     max-height: 100px;
-    border-bottom: 1px solid var(--sidebar-border-color);
+    border-bottom: 1px solid var(--primary-border-color);
     overflow: hidden;
 }
 #headerTitle {
-    color:var(--primary-header-color);
+    color:var(--secondary-text-color);
     font-size: 24px;
     flex:1;
     align-self: center;
@@ -21,31 +21,15 @@
 .button {
     display: flex;
     flex-direction: row;
-    padding: 1%;
     font-size: clamp(6px, 1rem, 20px);
     cursor: pointer;
-    color:var(--primary-button-color);
+    color:var(--primary-text-color);
+    align-self: center;
+    padding: 1vw;
+    min-width: 100px;
 }
 .button:hover {
-    background-color: var(--primary-button-background-color);
-    color: mintcream;
-}
-
-#activeLifters{
-    align-self: center;
-    padding: 1vw;
-    display: flex;
-    flex-wrap: nowrap;
-    min-width: 100px;
-    color: mintcream;
-}
-#addLifter{
-    align-self: center;
-    padding: 1vw;
-    display: flex;
-    flex-wrap: nowrap;
-    min-width: 100px;
-    color: mintcream;
+    color: var(--secondary-text-color);
 }
 .buttonContent{
     align-self: center;

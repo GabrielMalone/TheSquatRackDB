@@ -6,8 +6,8 @@
     flex-direction: column;
     flex-wrap: nowrap;
     position: relative;
-    outline: 1px solid #333;
-    background-color: #0a0a0a;
+    outline: 1px solid var(--secondary-border-color);
+    background-color: var(--primary-background-color);
     cursor: pointer;
     align-content: center;
     height: min-content;
@@ -20,7 +20,7 @@
 } */
 
 .set:hover{
-    outline-color: green;
+    outline-color: var(--primary-border-hover-color);
     .setWeight{
         color:var(--primary-text-color);
     }
@@ -35,7 +35,7 @@
     }
 }
 .set.videoDrag{
-    outline: 1px solid cyan;
+    outline: 1px solid var(--secondary-border-hover-color);
 }
 .setInfoWrapper{
     display: flex;
@@ -45,7 +45,7 @@
     pointer-events: none; 
     padding: 3%;
     width: 90%;
-    font-size: clamp(12px, 1.5vw, 16px);
+    font-size: clamp(8pt, 1vw, 14pt);
 }
 .setWeightRepsWrapper{
     display: flex;
@@ -58,26 +58,30 @@
     margin-top: 0.5%;
     margin-left: 2%;
     display: flex;
-    flex: 0.75;
+    flex: 0.5;
     flex-direction: row;
     pointer-events: none;  
-    color: #444;
+    color: var(--primary-text-color);
+    filter: brightness(0.5);
 }
 .setRPE{
     margin-top: 1%;
     padding-right: 2%;
     pointer-events: none;  
-    color:#666;
+    color: var(--primary-text-color);
+    font-size: clamp(8pt, 0.75vw, 12pt);
 }
 .qualifierIconsWrapper{
     display: flex;
     flex: 1;
     flex-direction: row;
     gap: 1vw;
+    color: var(--icons-inactive-color);
 }
 .qualifierIcons{
     color: var(--icons-inactive-color);
-    font-size: clamp(8px, 1vw, 16px);
+    font-size: clamp(8pt, 1vw, 16pt);
+    filter: brightness(1.5);
 }
 #unilateralIcon.highlighted{
     color: var(--icons-active-color);
@@ -96,25 +100,24 @@
     top: 5px;
     right: 10px;
     font-size: clamp(6pt, 0.75vw, 16pt);
-    color: #888;
+    color: var(--primary-text-color);
+    filter: brightness(0.9);
     pointer-events: none;  
 }
 .setWeight{
-    color:rgba(245, 255, 250, 0.8);
+    color: var(--primary-text-color);
     pointer-events: none;    
 }
 .setBy{
-    color:gray;
+    color: var(--primary-text-color);
+    filter: brightness(0.8);
     pointer-events: none;    
 }
 .setReps{
-    color:rgba(245, 255, 250, 0.7);
+    color: var(--primary-text-color);
+    filter: brightness(0.7);
     pointer-events: none;  
 }
-.setReps:hover{
-    color: aquamarine;
-}
-
 
 .setQualifiersWrapper{
     display: flex;
@@ -126,16 +129,10 @@
     display: flex;
     flex:0;
     flex-direction: row;
-    font-size: clamp(18px, 1.5vw, 24px);
+    font-size: clamp(18pt, 1.5vw, 24pt);
     align-items: center;
     justify-items: flex-start;
     padding: 6%;
-}
-.qualifierTitle{
-    display: none;
-}
-.qualifierTitle:hover{
-    color: mintcream;
 }
 .UpdatequalifierIcons{
     min-width: 1vw;
@@ -169,7 +166,7 @@
     display: flex;
     flex-direction: row;
     position: relative;
-    border-top: 1px solid #222; 
+    border-top: 1px solid var(--primary-border-color); 
 }
 .setUpdate{
     margin-top: 1%;
@@ -183,31 +180,32 @@
     position: relative;
     background-color: transparent;
     border: none;
-    font-size: clamp(8px, 1vw, 14px);
+    font-size: clamp(8pt, 1vw, 14pt);
     max-width: 2.5vw;
     min-width: 35px;
     color: var(--primary-text-color);
 }
 .setInfoField:focus {
-    background-color: #0a0a0a;
+    background-color: var(--primary-background-color);
     border-color: none;
     box-shadow: none;
     outline: none;
 }
 .setInfoField:hover {
     outline: none;
-    color: greenyellow;
+    color: var(--primary-add-highlight-color);
 }
 .setButton{
     position: relative;
-    color: green;
+    color: var(--primary-add-color);
+    filter: brightness(1.2);
     cursor: pointer;
     overflow: visible;
     font-size: clamp(6pt, 1vw, 16pt);
 
 }
 .setButton:hover{
-    color: greenyellow;
+    color: var(--primary-add-highlight-color);
 }
 .inputWrapper{
     display: flex;
@@ -217,9 +215,10 @@
     position: relative;
     align-self: center;
     align-content: center;
-    color: #444;
+    color: var(--primary-text-color);
+    filter: brightness(0.7);
     height: 100%;
-    font-size: clamp(8px, 1vw, 14px);
+    font-size: clamp(8pt, 1vw, 14pt);
     min-width: 40px;
 }
 
@@ -228,11 +227,11 @@
 /*-------------------------------------------------------*/
 .setRemove{
     position: absolute;
-    color: purple;
+    color: var(--primary-remove-color);
     font-size: clamp(5pt, 0.75vw, 16pt);
     bottom: 5px;
     right: 10px;
 }
 .setRemove:hover {
-  color:plum;
+  color:var(--primary-remove-highlight-color);
 }

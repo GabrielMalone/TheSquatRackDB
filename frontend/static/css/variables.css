@@ -1,41 +1,45 @@
 :root{
 
-    --primary-background-color: #0a0a0a;
-    --primary-border-color:#222;
+    --primary-background-color: #131313;
+    --primary-background-hover-color:#333;
+    --secondary-background-color: #101010;
+
+    --primary-border-color:#444;
+    --primary-border-hover-color: mintcream;
+ 
+    --secondary-border-color:#555;
+    --secondary-border-hover-color:purple;
+    
     --primary-text-color: mintcream;
+    --primary-text-hover-color:orangered;
+    --primary-text-background-hover-color:brown;
     --secondary-text-color: brown;
 
-    --primary-header-color:brown;
-    --primary-button-color: brown;
-    --primary-button-background-color: brown;
+    --tertiary-text-color: orange;
+
+    --primary-remove-color:rgb(187, 46, 46);
+    --primary-remove-highlight-color:red;
+
+    --primary-add-color: green;
+    --primary-add-highlight-color: greenyellow;
+
+    --inactive-text-color:#444;
 
     --primary-deadlift-color: brown;
     --primary-bench-color: purple;
     --primary-squat-color: orange;
     --primary-accessory-color: orangered;
-   
-    --calendar-number-color: #888;
-    --calendar-today-color: #555;
+
     --calendar-liftDay-min-size: 2px;
     --calendar-liftDay-size: 10%;
-    --calendar-dayOutline-color:#222;
-    --calendar-daySelected-color: brown;
-    --calendar-dayHovered-color: brown;
-    --calendar-dayBackground-color:#111;
 
-    --prDash-border-highlighted-color: #666;
-    --prDash-border-color: #222;
+    --icons-active-color: brown;
+    --icons-inactive-color: #555;
+    --icons-highlighted-color:violet;
 
-    --sidebar-border-color: #222;
-    --sidebar-names-color: mintcream;
-    --sidebar-names-highlight-color: brown;
-
-    --lifterBoxHeader-text-color: mintcream;
-
-    /* setupdate variables */
-    --workout-background-color:#0a0a0a;
-    --icons-active-color: mediumorchid;
-    --icons-inactive-color:#444;
-    --icons-highlighted-color:plum;
+    --cursor-outline-color: green;
+    --cursor-highlight-color: limegreen;
+    --cursor-plus-color:green;
+    --cursor-plus-highlight-color: limegreen;
 
 }

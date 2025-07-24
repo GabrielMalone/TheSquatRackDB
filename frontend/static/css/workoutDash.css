@@ -16,7 +16,7 @@
     position: relative;
     padding: 1%;
     border-left: 1px solid var(--primary-border-color);
-    background-color: var(--workout-background-color);
+    background-color: var(--primary-background-color);
 }
 /*-------------------------------------------------------*/
 /* WORKOUT AREA -> HEADER
@@ -24,9 +24,9 @@
 .workoutHeader {
     display: flex;
     flex: row;
+    max-width: 70%;
     margin-bottom: 1%;
     font-size: clamp(8px, 0.80vw, 16pt);
-    width: 90%;
     align-content: space-between;
     gap: 10%;
     white-space: nowrap;
@@ -34,20 +34,20 @@
 .sessionTitle{
     display: flex;
     color: var( --primary-text-color);
-    position: sticky;
 }
 .trainingDate{
     display: flex;
     color: var( --primary-text-color);
+    filter: brightness(0.7);
 }
 #workoutDashX{
     display: flex;
-    color: var( --primary-text-color);
+    color: var( --primary-remove-color);
     cursor: pointer;
     align-self: flex-end;
 }
 #workoutDashX:hover{
-    color: red;
+    color: var(--primary-remove-highlight-color);
 }
 
 /*-------------------------------------------------------*/
@@ -70,7 +70,10 @@
     align-self: center;
     right: 10px;
     flex:1;
-    color: mintcream;
+    color: var(--primary-text-color);
+}
+.addSet:hover{
+    color: var(--primary-add-highlight-color);
 }
 .exercise{
     display: flex;
@@ -79,16 +82,26 @@
     position: relative;
     margin-top: 6%;
     font-size: clamp(8px, 0.80vw, 16pt);
-    outline: 1px solid #777;
-    background-color: #111;
-    color: mintcream;
+    outline: 1px solid var(--secondary-border-color);
+    background-color: var(--secondary-background-color);
+    color: var(--primary-text-color);
     cursor: pointer;
     user-select: none;
 }
+/* .exercise.bench{
+    color: var(--primary-bench-color);
+    filter: brightness(1.5); 
+}
+.exercise.squat{
+    color: var(--primary-squat-color);
+}
+.exercise.deadlift{
+    color: var(--primary-deadlift-color);
+}
+.exercise.accessory{
+    color: var(--primary-accessory-color);
+} */
 .exercise:hover{
-    outline: 1px solid mediumorchid;
-    color: mintcream;
-    .addSet{
-        color:mintcream;
-    }
+    outline: 1px solid var(--primary-border-hover-color);
+    color: var(--primary-text-color)
 }

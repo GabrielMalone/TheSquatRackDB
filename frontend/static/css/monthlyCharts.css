@@ -49,11 +49,11 @@
     margin: 2%;
     position: relative;
     display: flex;
-    color: mintcream;
+    color: var(--primary-text-color);
     font-size: 0.75vmin;
     align-self: center;
 }
 .monthlyVolumeTotal, .monthlyIntensityTotal, .monthlyFrequencyTotal {
-    color: mintcream;
+    color: var(--primary-text-color);
     position: relative;
 }

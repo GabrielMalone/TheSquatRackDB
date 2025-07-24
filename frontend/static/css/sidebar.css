@@ -9,7 +9,7 @@
     max-width: 15%;
     justify-content: flex-start;
     overflow-y: scroll;
-    border-left: 1px solid var(--sidebar-border-color);
+    border-left: 1px solid var(--primary-border-color);
 }
 .sidebar.visible{
     display:none;
@@ -22,9 +22,10 @@
     font-size: clamp(12px, 1vw, 24px);
     cursor: pointer;
     padding-left: max(10px,5%);
-    color: var(--sidebar-names-color);
+    padding: 2%;
+    padding-left: 5%;
+    color: var(--primary-text-color);
 }
 .lifterName:hover {
-    background-color: var(--sidebar-names-highlight-color);
-    color: mintcream;
+    background-color: var(--primary-text-background-hover-color);
 }

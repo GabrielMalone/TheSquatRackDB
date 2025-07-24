@@ -11,33 +11,30 @@
     margin-bottom: 1%;
     user-select: none;
 }
-.dashHeader:hover{
-    border-bottom: 1px solid red;
-}
 .dashHeaderTitle {
     display: flex;
     align-self: flex-end;
-    color: mintcream;
+    color: var(--primary-text-color);
     font-size: 1vw;
     flex: 1;
     user-select: none;
+    padding-bottom: 1%;
 }
 .minimizer {
     display: flex;
     flex: 0;
     padding-bottom: 1%;
-    color: var(--primary-text-color);
     font-size: 2vw;
     user-select: none;
-    color: brown;
+    color: var(--primary-add-color);
 }
 .minimizer:hover {
-    color: palegreen;
+    color: var(--primary-add-highlight-color);
     cursor: pointer;
 }
 .plus{
     align-self: center;
     justify-self: center;
     font-size: 1vw;
-    color: mintcream;
+    color: var(--cursor-plus-color);
 }

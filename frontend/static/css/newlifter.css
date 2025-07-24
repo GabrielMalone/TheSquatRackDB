@@ -13,9 +13,9 @@
     flex-direction: column;
     min-width: max(200px,25%);
     max-height: max(50%, 300px);
-    outline: 1px solid brown;
-    padding: 5%;
-    background-color: #111111ec;
+    outline: 1px solid var(--secondary-border-color);
+    padding: 3%;
+    background-color: var(--secondary-background-color);
     overflow: hidden;
 }
 
@@ -25,21 +25,20 @@
 }
 .X {
     font-size: clamp(8pt, 2vmin, 24pt);
-    color: brown;
+    color: var(--primary-remove-color);
     margin-top: min(3vh, 6vw);
     flex: 0;
     cursor: pointer;
     align-self: flex-end;
 }
 .X:hover {
-    /* border-color: palegoldenrod; */
-    color:red;
+    color:var(--primary-remove-highlight-color);
 }
 #newLifterTitle {
     margin-top: min(3vh, 6vw);
     font-size: clamp(8pt, 2vmin, 24pt);
     flex: 1;
-    color:mintcream;
+    color:var(--primary-text-color);
 }
 
 .createLifterFields {
@@ -49,29 +48,29 @@
     gap: 1vw;
 }
 .inputField {
-    background-color: #0a0a0a;
+    background-color: var(--primary-background-color);
     border: none;
-    outline: 1px solid rgb(106, 26, 26);     
+    outline: 1px solid var(--secondary-border-color);     
     padding:5%;
     border-radius: 0px;
     font-size: clamp(8pt, 2vmin, 24pt);
     color: black;
 }
 .inputField:focus {
-    background-color: brown;
+    background-color: var(--secondary-text-color);
     border-color: none;
     box-shadow: none;
     outline: none;
 }
 .inputField:hover {
-    outline: 1px solid red;
+    outline: 1px solid var(--primary-border-hover-color);
 }
 input::placeholder {
     color: #222; 
     opacity: .8; 
   }
 .inputField:not(:placeholder-shown) {
-    color: mintcream;         /* Active text color */
+    color: var(--primary-text-color);         /* Active text color */
 }
 #submitNewLifter {
     margin-top: 10%;
@@ -79,16 +78,14 @@ input::placeholder {
     align-self: center;
     aspect-ratio: 2/1;
     border: 1px solid transparent;
-    background-color: brown;
-    color: mintcream;
+    background-color: var(--primary-hover-color);
+    color: var(--primary-text-color);
 }
 #submitNewLifter:hover {
-    background-color: red;
-    color: mintcream;
+    background-color: var(--primary-add-color);
 }
 #submitErrorMsg {
-    margin-top: 50px;
-    color: red;
+    color: var(--secondary-text-color);
     font-size: clamp(8pt, 2vmin, 24pt);
     align-self: center;
 }
