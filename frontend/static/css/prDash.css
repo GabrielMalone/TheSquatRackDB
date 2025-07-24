@@ -67,12 +67,8 @@
     color:var(--primary-hover-color);
 }
 
-
 .repPRbox{
     color: var(--primary-text-color);
-}
-.prPresent{
-    /* outline: 1px solid var(--prDash-border-highlighted-color); */
 }
 .prPresent:hover{
     background-color: var(--primary-hover-color);
