@@ -4,7 +4,7 @@ export const date      = new Date();
 export const year      = date.getFullYear();
 export const month     = date.getMonth();
 export const lastday   = new Date(year, month + 1, 0).getDate(); 
-export let unit        = "LBS";
+export let unit        = "WGT";
 
 export const DoW = 
 [

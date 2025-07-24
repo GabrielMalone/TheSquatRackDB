@@ -2,11 +2,10 @@
     display: flex;
     flex-direction: column;
     flex:0;
-    padding: 1px;
     margin-bottom: 1%;
     position: relative;
     font-size: 1vw;
-    margin-right: 2%;
+    margin-right: 1%;
 }
 .prDashVisible {
     display: none;
@@ -21,19 +20,21 @@
     display: flex;
     position: relative;
     flex-direction: row;
-    flex-wrap: nowrap;
+    max-height: min-content;
 }
 .prCell {
+    aspect-ratio: 1/1;
     display: flex;
     position: relative;
     flex-direction: column;
-    width: max(10px, 100%/21);
-    aspect-ratio: 1/1;
+    width: 100%;
+    max-width: 150px;
     border: 1px solid var(--primary-border-color); 
     justify-content: center;
     overflow: visible;
     user-select: none;
-    font-size: 1vmin;
+    font-size: clamp(4pt, 0.75vw, 16pt);
+    margin: 0.25%;
 } 
 .blank {
     outline: 1px solid transparent !important;
@@ -47,7 +48,7 @@
 .repNumBox{
     background-color: var(--primary-background-color);
     border: transparent;
-    font-size: 1vmin;
+    font-size: clamp(6pt, 0.75vw, 16pt);
 }
 .prLiftNameBox {
     border: transparent;
@@ -60,7 +61,7 @@
     overflow: hidden;
 }
 .prLiftName{
-    align-self: center;
+    align-self: flex-end;
 }
 .prLiftName:hover {
     color:var(--primary-hover-color);
@@ -91,7 +92,7 @@
     color: var(--primary-text-color);
     background-color: var(--secondary-background-color);
     outline: 1px solid var(---secondary-border-color);
-    font-size: clamp(8pt, 1vw, 12pt);
+    font-size: clamp(8pt, 1vw, 24pt);
     overflow: visible !important;
     padding: 1vw;
 }
@@ -153,4 +154,10 @@
     font-size: clamp(8pt, 1vw, 24pt);
     color: var(--primary-text-color);
     filter: brightness(0.7);
+}
+.repsInPrChartTitle{
+    color: var(--tertiary-text-color);
+}
+.liftNameInPrChartTitle{
+    color:var(--tertiary-text-color);
 }

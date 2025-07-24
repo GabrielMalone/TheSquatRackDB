@@ -14,6 +14,7 @@ export default class Lifter {
 
     #federation;
     #weightClass;
+    #videoFolder;
 
     constructor({Email = "N/A", idUser = null, userFirst = "N/A", userLast = "N/A", userName = "N/A"} = {}){
         this.#userName  = userName;

@@ -15,7 +15,7 @@ export async function drawRepPrHistoryChart(dataForPr){
     const liftName   = dataForPr.liftName;
     // elements needed for chart creation
     const prDash = document.querySelector('.prDash');
-    const chartTitle = `LIFT HISTORY - SETS OF ( ${reps} ) ON: ${liftName}`;
+    const chartTitle = `LIFT HISTORY - SETS OF <div class="repsInPrChartTitle">&nbsp${reps}&nbsp</div> ON <div class="liftNameInPrChartTitle">&nbsp${liftName}</div>`;
     const chartName = `repHistoryChartFor${reps}of${liftName}`;
     createChartElement(prDash, chartName, chartTitle);
     // get the pr data from DB
