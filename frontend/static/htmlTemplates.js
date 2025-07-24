@@ -1,7 +1,6 @@
 
 export const setUpdateFormTemplateHTML = (liftInfo, unit) => 
     `
-  
     <form class="setUpdate" data-set-i-d="${liftInfo.setID}" data-set-workout-i-d="${liftInfo.workoutID}" data-lift-info='${JSON.stringify(liftInfo)}'>
         <div class="inputWrapper">
             <div class="inputTag">${unit}</div>
@@ -32,9 +31,7 @@ export const setUpdateFormTemplateHTML = (liftInfo, unit) =>
         <div class="setQualifiers"> 
             <div class="UpdatequalifierIcons" id="UpdateunilateralIcon">⚋</div>  
         </div>
-    </div>
-   
-
+    </div>   
 `;
 //-----------------------------------------------------------------------------
 export const setTemplateHTML = (liftInfo) => 

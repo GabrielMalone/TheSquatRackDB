@@ -122,6 +122,15 @@ function expandSetEvent(e){
         const setID = set.dataset.setID; 
         const form = document.querySelector(`#setUpdateForm${setID}`);
         form.classList.toggle("setUpdateFormVisible");
+        const videoWrapper = set.querySelector('.setVideoWrapper');
+        if (videoWrapper){ // if video present and  has already been loaded once
+            videoWrapper.classList.toggle('visible');
+        }
+        else if (set.dataset.videoLink !== 'null'){  // if video not loaded and present...
+            console.log("video link:", set.dataset.videoLink);
+            addSetVideo(set, set.dataset.videoLink);      // make video wrapper 
+            set.querySelector('.setVideoWrapper').classList.toggle('visible');
+        }
         return;
     } 
 }
@@ -156,6 +165,7 @@ function makeNewSetBox(setInfo, liftInfo, setNumber, curExerciseRow){
     newSet.dataset.idExercise = liftInfo.exerciseID;
     newSet.dataset.setID = `${setInfo.setID}`;
     newSet.dataset.idWorkout = liftInfo.idWorkout;
+    newSet.dataset.videoLink = setInfo.videoLink;
     newSet.insertAdjacentHTML("beforeend",CreateSetTemplate(setInfo));
     newSet.appendChild(createSetUpdateForm(setInfo, liftInfo));
     newSet.appendChild(CreateRemoveSetButton(liftInfo, setInfo));
@@ -165,6 +175,7 @@ function makeNewSetBox(setInfo, liftInfo, setNumber, curExerciseRow){
         isSetPr(liftInfo.exerciseID, currLifter.id, setInfo.weight, setInfo.reps, newSet);
     }
     setQualifiersForSet(setInfo, newSet);
+
     curExerciseRow.appendChild(newSet);
 }
 //-----------------------------------------------------------------------------
@@ -186,6 +197,17 @@ function setQualifiersForSet(setInfo, newSet){
         newSet.querySelector('#unilateralIcon').classList.add('highlighted');
     }
 
+}
+//-----------------------------------------------------------------------------
+function addSetVideo(setElement, videoFileName){
+    const setId = setElement.dataset.setID;
+    setElement.insertAdjacentHTML("beforeend", 
+        `<div class="setVideoWrapper">
+            <video class="setVideoPlayer" id="videoForSet${setId}" controls>
+                <source src="${videoFileName}" type="video/mp4">
+            </video>
+        </div>`
+    )
 }
 //-----------------------------------------------------------------------------
 // if set updated, query the DB
@@ -292,7 +314,7 @@ function updateLiftInfo(curliftInfo, newSetInfo){
         setID       : newSetInfo.idSet,
         videoLink   : newSetInfo.setVideo,
         weight      : newSetInfo.setWeight,
-        idWorkout   : newSetInfo.idWorkout
+        idWorkout   : newSetInfo.idWorkout,
     }
 }
 
@@ -355,7 +377,7 @@ function inserNewExerciseIntoWorkout(selectedExercise, idWorkout){
     const SetNumber = 1;
     f.post(end.INSERT_NEW_EXERCISE_ENDPOINT,{idWorkout, idExercise, SetNumber})
         .then(res=>{
-            updateDashesOnChange(dateInfo, idWorkout, curYear, curMonth, curlastDay)
+            updateDashesOnChange(dateInfo, idWorkout, curYear, curMonth, curlastDay);
         })
         .catch(err=>console.error(err));  
 }
@@ -370,8 +392,52 @@ export function createWorkoutGrid(dateInfo){
     workoutContainer.addEventListener("click", workoutDashClickEvents);
     workoutContainer.addEventListener("submit", updateSetEvent);
     workoutContainer.addEventListener("input", workoutDashClickEvents);
+    workoutContainer.addEventListener("dragover", dragOverFileEvent);
+    workoutContainer.addEventListener("dragleave", dragLeaveFileEvent);
+    workoutContainer.addEventListener("drop", dropFileEvent);
     fillWorkoutDate(dateInfo); 
     scrollToWorkout();
+}
+//-----------------------------------------------------------------------------
+function dragOverFileEvent(e){
+    e.preventDefault();
+    if (e.target.classList.contains('set')){
+        const set = e.target;
+        set.classList.add('videoDrag');
+    }
+}
+//-----------------------------------------------------------------------------
+function dragLeaveFileEvent(e){
+    if (e.target.classList.contains('set')){
+        const set = e.target;
+        set.classList.remove('videoDrag');
+    }
+}
+//-----------------------------------------------------------------------------
+function dropFileEvent(e){
+    e.preventDefault();
+    if (e.target.classList.contains('set')){
+        const set = e.target;
+        set.classList.toggle('videoDrag');                      // de-highlight
+        const setId = set.dataset.setID;
+        const video = e.dataTransfer.files[0]; // returns array, get first item
+        const videoObject = new FormData();     // video sent in special format
+        videoObject.append('video', video); // basically a map.create key/value
+        videoObject.append('setId', setId);
+        videoObject.append('userId', currLifter.id);
+        fetch(end.UPLOAD_SET_VIDEO, { //cant use my og fetch wrap, headers diff
+            method: 'POST',
+            body: videoObject
+        })
+        .then(res=>res.json())
+        .then(link=>{                            // get link to video when done 
+            console.log(link);      
+            addSetVideo(set, link);                     // then attach to below 
+            const setVideoWrapper = set.querySelector('.setVideoWrapper');
+            setVideoWrapper.classList.add('visible'); // vid opens when done
+        })
+        .catch(err=>console.error(err));
+    }
 }
 //-----------------------------------------------------------------------------
 function addExerciseEvent(e){

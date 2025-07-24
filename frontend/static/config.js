@@ -57,30 +57,35 @@ const devConfig = {
     GET_PR_DATA_FOR_LIFT: "getPRDataForLift",
     GET_EXERCISE_INFO: "getExerciseInfo",
     SAVE_SESSION_NOTE: "saveSessionNote",
+    UPLOAD_SET_VIDEO: "uploadSetVideo"
+
   };
   
 
 const prodConfig = {
-                         API_URL : "https://5q3n5f0d-5001.use.devtunnels.ms/", 
-                      DEBUG_MODE : false,
-                LIFTERS_ENDPOINT : "lifters",
-                 LIFTER_ENDPOINT : "lifter",
-                WORKOUT_ENDPOINT : "workout",
-                    SET_ENDPOINT : "createSet",
-               UPDATE_SET_NUMBER : "updateSetNumber",
-           REORDER__SET_ENDPOINT : "reorderSetNumbers",
-          GET_EXERCISES_ENDPOINT : "getExercises",
+
+    API_URL : "https://5q3n5f0d-5001.use.devtunnels.ms/", 
+    DEBUG_MODE : false,
+    LIFTERS_ENDPOINT : "lifters",
+    LIFTER_ENDPOINT : "lifter",
+    WORKOUT_ENDPOINT : "workout",
+    SET_ENDPOINT : "createSet",
+    UPDATE_SET_NUMBER : "updateSetNumber",
+    REORDER__SET_ENDPOINT : "reorderSetNumbers",
+    GET_EXERCISES_ENDPOINT : "getExercises",
     INSERT_NEW_EXERCISE_ENDPOINT : "insertNewExerciseIntoWorkout",
-         CREATE_WORKOUT_ENDPOINT : "createWorkout",
-              DELETE_FROM_EORDER : "ExerciseOrder",
-         CHECK_IF_WORKOUT_EXISTS : "workoutExistCheck",
-               GET_MONTHLY_LIFTS : "monthlyWorkouts",
-                   monthlyVolume : "getMonthlyTrainingVolume",
-               monthlyInetensity : "getMonthlyTrainingInensity",
-                monthlyFrequency : "getMonthlyTrainingFrequency",
-            GET_PR_DATA_FOR_LIFT : "getPRDataForLift",
-               GET_EXERCISE_INFO : "getExerciseInfo",
-               SAVE_SESSION_NOTE: "saveSessionNote",
+    CREATE_WORKOUT_ENDPOINT : "createWorkout",
+    DELETE_FROM_EORDER : "ExerciseOrder",
+    CHECK_IF_WORKOUT_EXISTS : "workoutExistCheck",
+    GET_MONTHLY_LIFTS : "monthlyWorkouts",
+    monthlyVolume : "getMonthlyTrainingVolume",
+    monthlyInetensity : "getMonthlyTrainingInensity",
+    monthlyFrequency : "getMonthlyTrainingFrequency",
+    GET_PR_DATA_FOR_LIFT : "getPRDataForLift",
+    GET_EXERCISE_INFO : "getExerciseInfo",
+    SAVE_SESSION_NOTE: "saveSessionNote",
+    UPLOAD_SET_VIDEO: "uploadSetVideo"
+
   };
 
 export const endpoint = window.location.hostname === "localhost" ? 
@@ -93,6 +98,7 @@ export const DASH_HEADER_VARS = {
 	minimizerClass		      : "minimizer",
 	minimizerIcon	 	        : "_",
   expanderIcon	 	        : "+"
+  
 }
 
 export const PR_DASH_VARIABLES = {

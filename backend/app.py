@@ -1,6 +1,7 @@
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, render_template, jsonify, request, send_from_directory
 import appQueries.queries as queries
 import appQueries.chartQueries as chartQueries
+import os
 
 app = Flask(__name__,
             template_folder='../frontend/templates',
@@ -26,12 +27,37 @@ def home():
         'prDash.css',
         'style.css',
         'calendar.css',
-        'set.css'
+        'set.css',
+        'video.css'
     ]
 
     return render_template('index.html', css_files=css_files)
-
 #------------------------------------------------------------------------------
+
+@app.route('/videos/<path:filename>')  # serve a video file from backend folder
+def serveVideo(filename):
+    return send_from_directory('videos', filename)
+#------------------------------------------------------------------------------
+
+def setVideoLink(link, setId):              # helper method for the route below
+    return queries.setVideoLink(link, setId)
+#------------------------------------------------------------------------------
+
+@app.route("/uploadSetVideo", methods=["POST"])
+def uploadSetVideo():
+    video  = request.files['video']
+    setId  = request.form['setId']
+    userId = request.form['userId']
+    if (video):  # create a unique folder for each video / userid / setid / vid
+        folderPath = os.path.join("videos", userId, setId)
+        os.makedirs(folderPath, exist_ok=True) # make any directories that dont exist
+        filePath = os.path.join(folderPath, video.filename)
+        video.save(filePath) #save vid/update set in DB to link to video in backend      
+        return jsonify(setVideoLink(filePath, setId)),  200 
+    else: 
+        return {'status' : 'no file uploaded'}, 400
+#------------------------------------------------------------------------------
+
 @app.route("/lifters", methods=["GET", "POST", "DELETE"])
 def users():
     if request.method == "GET":

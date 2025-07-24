@@ -7,6 +7,9 @@ venv/
 env/
 .venv/
 
+
+backend/videos/
+
 # IDE/editor settings (optional but recommended)
 .vscode/
 .idea/

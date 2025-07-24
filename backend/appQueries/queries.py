@@ -10,6 +10,34 @@ def connect():
         database=os.getenv('DB_NAME'),
         host=os.getenv('DB_HOST', 'localhost') )
 #------------------------------------------------------------------------------
+def setVideoLink(link, setId):
+    try:
+        cnx = connect()
+        cursor = cnx.cursor(dictionary=True, buffered=True)
+        cursor.execute(
+            '''
+            UPDATE
+                `Set` s
+            Set 
+                s.setVideo = %s
+            WHERE
+                s.idSet = %s
+            ''', 
+            (link, setId))
+        cnx.commit()
+        cursor.close()
+        cnx.close()
+        return link
+    except mysql.connector.Error as err:
+        print("MySQL Error:", err)         # This will show you the exact error
+        print("Error code:", err.errno)                    # Numeric error code
+        cnx.rollback() 
+        cnx.close()
+        return {
+            "success" : False,
+            "message" : f' server error: {err.errno}' 
+        } 
+#------------------------------------------------------------------------------
 def workoutExistCheck(idUser, date):
     try:
         cnx = connect()
@@ -448,7 +476,6 @@ def getWorkoutFromID(idWorkout):
             ''', (idWorkout,))
 
             workout = cursor.fetchall()
-            print(workout)
             cursor.close()
             cnx.close()
 
@@ -456,7 +483,6 @@ def getWorkoutFromID(idWorkout):
             unique_lifts_in_workout = {}
 
             for lift in workout:
-                print(lift)
                 lift_id = lift["exerciseID"]
                 if lift_id not in unique_lifts_in_workout:
                     # all non set info

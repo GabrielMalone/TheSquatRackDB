@@ -10,6 +10,7 @@
     background-color: #0a0a0a;
     cursor: pointer;
     align-content: center;
+    height: min-content;
 }
 .setExpand{
     min-height: min-content;
@@ -32,6 +33,9 @@
     .setNumber{
         color:var(--primary-text-color);
     }
+}
+.set.videoDrag{
+    outline: 1px solid cyan;
 }
 .setInfoWrapper{
     display: flex;

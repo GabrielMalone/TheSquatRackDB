@@ -123,7 +123,7 @@ const yConfig = {
         padding: 5,
         color : '#CCC',
         font: {
-            size: 6,       
+            size: 9,       
             family: 'Arial', 
         }
     },

@@ -114,7 +114,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Set` (
   `belt` TINYINT DEFAULT 0,
   `unilateral` TINYINT DEFAULT 0,
   `setComment` BLOB NULL,
-  `setVideo` VARCHAR(45) NULL,
+  `setVideo` VARCHAR(255) NULL,
   `isPR` TINYINT DEFAULT 0,   -- help track historical pr data
   PRIMARY KEY (`idSet`),
   UNIQUE INDEX `idSet_UNIQUE` (`idSet` ASC) VISIBLE,
