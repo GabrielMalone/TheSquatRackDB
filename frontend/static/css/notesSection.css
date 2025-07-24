@@ -1,4 +1,10 @@
 .notesSectionWrapper{
+    border-top: 1px solid var(--primary-border-color);
+    margin-top: 1vw;
+    padding-top:1vw;
+    border-bottom: 1px solid var(--primary-border-color);
+    margin-bottom: 1vw;
+    padding-bottom:1vw;
     display: flex;
     flex-direction: column;
 }
@@ -11,9 +17,10 @@
 }
 .notesSectionInput{
     outline: none;
-    border: 1px solid var(--primary-border-color);
+    border: 1px solid var(--secondary-border-color);
     background-color: var(--primary-background-color);
     padding: 8px;
+    margin-bottom: 2vw;
     color: var(--primary-text-color);
     min-height: 40px;
     font-size: clamp(6pt, 1vw, 10pt);
@@ -23,13 +30,15 @@
     margin-top: 4%;
     display: flex;
     flex-direction: column;
-    align-self: center;
+    align-items: center;
     align-content: center;
+    align-self: center;
+    max-width: 25%;
     outline: 1px solid var(--cursor-outline-color);
     padding: 5%;
 }
 .saveNoteButton:hover{
-    background-color: browm;
+    outline: 1px solid var(--cursor-highlight-color);
     .saveNoteButtonText{
         color: var(--cursor-plus-highlight-color);
     }
@@ -37,9 +46,10 @@
 }
 .saveNoteButtonText{
     display: flex;
-    color:  var(--cursor-plus-color);
-    font-size: clamp(6pt, 1vw, 16pt);
+    color:  var(--primary-text-color);
+    font-size: clamp(6pt, 0.75vw, 12pt);
     pointer-events: none;
+    align-self: center;
 }
 .saveNoteButton.visible{
     display: none;

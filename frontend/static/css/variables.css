@@ -4,7 +4,7 @@
     --primary-background-hover-color:#333;
     --secondary-background-color: #101010;
 
-    --primary-border-color:#444;
+    --primary-border-color:#222;
     --primary-border-hover-color: mintcream;
  
     --secondary-border-color:#555;
@@ -35,9 +35,9 @@
 
     --icons-active-color: brown;
     --icons-inactive-color: #555;
-    --icons-highlighted-color:violet;
+    --icons-highlighted-color:orangered;
 
-    --cursor-outline-color: green;
+    --cursor-outline-color: limegreen;
     --cursor-highlight-color: limegreen;
     --cursor-plus-color:green;
     --cursor-plus-highlight-color: limegreen;

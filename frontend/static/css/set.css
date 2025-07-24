@@ -6,7 +6,7 @@
     flex-direction: column;
     flex-wrap: nowrap;
     position: relative;
-    outline: 1px solid var(--secondary-border-color);
+    outline: 1px solid var(--primary-border-color);
     background-color: var(--primary-background-color);
     cursor: pointer;
     align-content: center;

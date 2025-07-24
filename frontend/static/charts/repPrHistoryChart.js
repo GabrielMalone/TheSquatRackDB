@@ -40,8 +40,8 @@ export async function drawRepPrHistoryChart(dataForPr){
                 data : dateWeightObjsPrs,
                 type: 'line',
                 showLine : true,
-                borderColor: 'brown',
-                backgroundColor : 'oranredge',
+                borderColor: 'orangered',
+                backgroundColor : 'orangered',
                 borderWidth: 1
                 },
                 {
