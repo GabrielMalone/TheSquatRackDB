@@ -107,7 +107,7 @@ function addCloseEventListener(reps, liftName, chartName){
 const xConfig = {
     type: 'time',
     time: {
-        unit: 'day'
+        unit: 'year'
     },
     ticks : {
         padding: 4,

@@ -17,8 +17,8 @@ export async function loadMonthlyCharts(idUser, month, year){
     clearCharts();
     const types = 
     [ ["monthlyVolume",  `${months[month]} ${year} Volume`,    ["monthly volume", "bar"]], 
-    ["monthlyFrequency", `${months[month]} ${year} Frequency`, ["monthly frequency", "doughnut"]], 
-    ["monthlyInetensity",`${months[month]} ${year} Inetensity`,["monthly intensity", "line"]]]
+    ["monthlyFrequency", `${months[month]} ${year} Frequency`, ["monthly frequency", "bar"]], 
+    ["monthlyInetensity",`${months[month]} ${year} Inetensity`,["monthly intensity", "bar"]]]
 
     for (const type of types) {
         // enhanced for loop istead of foreach, foreach will not pause ierations for the async stuff

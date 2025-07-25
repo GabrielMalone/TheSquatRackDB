@@ -18,7 +18,7 @@ export function drawMonthlyChart(chartTitle, liftsData, graphElement, graphType)
                 padding: 1,
                 color: "mintcream",
                 font: {
-                    size: 6,       
+                    size: 8,       
                     family: 'Arial', 
                 }
             }
@@ -39,13 +39,13 @@ export function drawMonthlyChart(chartTitle, liftsData, graphElement, graphType)
                     label: chartTitle,
                     data: [squatData, benchData, deadliftData, accessoryData],
                     backgroundColor: [
+                        'transparent' 
+                    ],
+                    borderColor: [
                         'orange',
                         'purple', 
                         'brown', 
                         'orangered'  
-                    ],
-                    borderColor: [
-                        '#111', 
                     ],
                     borderWidth: 1
                 }
