@@ -28,7 +28,8 @@ def home():
         'style.css',
         'calendar.css',
         'set.css',
-        'video.css'
+        'video.css',
+        'sessionTitle.css'
     ]
 
     return render_template('index.html', css_files=css_files)
@@ -156,6 +157,7 @@ def workoutExistCheck():
     idUser = data["lifterID"]
     return jsonify(queries.workoutExistCheck(idUser, date))
 #------------------------------------------------------------------------------
+
 @app.route("/getMonthlyTrainingVolume", methods=["POST"])
 def getMonthlyTrainingVolume():
     data = request.get_json()
@@ -165,6 +167,7 @@ def getMonthlyTrainingVolume():
     year = data["year"]
     return jsonify(chartQueries.getMonthlyTrainingVolume(idUser, ExerciseCategories, month, year))
 #------------------------------------------------------------------------------
+
 @app.route("/getMonthlyTrainingInensity", methods=["POST"])
 def getMonthlyTrainingInensity():
     data = request.get_json()
@@ -198,6 +201,7 @@ def getExerciseInfo():
     idExercise = request.get_json()
     return jsonify(queries.getExerciseInfo(idExercise))
 #------------------------------------------------------------------------------
+
 @app.route("/saveSessionNote", methods=["POST"])
 def saveSessionNote():
     data = request.get_json()
@@ -205,6 +209,14 @@ def saveSessionNote():
     note = data["note"]
     print(idWorkout, note)
     return jsonify(queries.saveSessionNote(idWorkout, note))
+#------------------------------------------------------------------------------
+
+@app.route("/updateSessionName", methods=["POST"])
+def updateSessionName():
+    data = request.get_json()
+    idWorkout = data["idWorkout"]
+    newTitle = data["newTitle"]
+    return jsonify(queries.updateSessionName(idWorkout, newTitle))
 #------------------------------------------------------------------------------
 if __name__ == "__main__":
     app.run(debug=True, port=5001)

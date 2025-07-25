@@ -1,6 +1,6 @@
 import { curlastDay, curMonth, curYear, fillCalendar } from "./calendarDash.js";
 import { endpoint as end, unit } from "../config.js";
-import { setTemplateHTML, setUpdateFormTemplateHTML } from "../htmlTemplates.js";
+import { setTemplateHTML, setUpdateFormTemplateHTML, sessionTitleFormHTML } from "../htmlTemplates.js";
 import { fillOutExerciseSelectMenu, createExerciseDash } from "./exerciseSelectDash.js";
 import { currLifter, f, getLifterObject } from "../lifterSidebar.js";
 import { createPrDash } from "./prDash.js";
@@ -19,6 +19,7 @@ export function getWorkoutFromWokroutID(idWorkout){
             lifts.forEach(lift=>{            // will iterate over each exercise
                 fillExerciseRow(lift);       // this will iterate over each set
             });
+            nameSession(lifts);
             createCursor(workoutContainer);           // place cursor at bottom
             createNotesSection(lifts[0].note);
             scrollToWorkout();
@@ -126,7 +127,6 @@ function expandSetEvent(e){
             videoWrapper.classList.toggle('visible');
         }
         else if (set.dataset.videoLink !== 'null'){  // if video not loaded and present...
-            console.log("video link:", set.dataset.videoLink);
             addSetVideo(set, set.dataset.videoLink);      // make video wrapper 
             set.querySelector('.setVideoWrapper').classList.toggle('visible');
         }
@@ -216,36 +216,63 @@ function addSetVideo(setElement, videoFileName){
 //-----------------------------------------------------------------------------
 function updateSetEvent(e){
     if (e.target.classList.contains("setUpdate")){
-        e.preventDefault();
-        const setUpdateForm = e.target; // get all the info from the user input
-        const setBox     = setUpdateForm.closest(".set");
-        const idWorkout  = setBox.dataset.idWorkout;
-        const idSet      = setUpdateForm.dataset.setID;
-        const idExercise = e.target.parentNode.dataset.idExercise; 
-        const setWeight  = setUpdateForm.querySelector(`#weight${idSet}`).value;
-        const setReps    = setUpdateForm.querySelector(`#reps${idSet}`).value;
-        const setRPE     = setUpdateForm.querySelector(`#rpe${idSet}`).value;
-        // true false checks 
-        const paused     = setBox.querySelector('#UpdatepausedIcon').classList.contains('highlighted');
-        const belt       = setBox.querySelector('#UpdatebeltIcon').classList.contains('highlighted');
-        const workingSet = setBox.querySelector('#UpdateworkingSetIcon').classList.contains('highlighted');
-        const unilateral = setBox.querySelector('#UpdateunilateralIcon').classList.contains('highlighted');
-
-        const updateObj  = {
-                idSet, 
-                setWeight,
-                setReps, 
-                setRPE, 
-                idWorkout, 
-                paused, 
-                belt, 
-                workingSet, 
-                unilateral
-            }
-
-        updateSet(updateObj);    
+        updateAset(e)
+    }
+    if (e.target.classList.contains('nameSetForm')){
+        updateSessionName(e);
     }
 }
+//-----------------------------------------------------------------------------
+// user clicks the check/update button and triggers this 
+//-----------------------------------------------------------------------------
+function updateAset(e){
+    e.preventDefault();
+    const setUpdateForm = e.target; // get all the info from the user input
+    const setBox     = setUpdateForm.closest(".set");
+    const idWorkout  = setBox.dataset.idWorkout;
+    const idSet      = setUpdateForm.dataset.setID;
+    const idExercise = e.target.parentNode.dataset.idExercise; 
+    const setWeight  = setUpdateForm.querySelector(`#weight${idSet}`).value;
+    const setReps    = setUpdateForm.querySelector(`#reps${idSet}`).value;
+    const setRPE     = setUpdateForm.querySelector(`#rpe${idSet}`).value;
+    // true false checks 
+    const paused     = setBox.querySelector('#UpdatepausedIcon').classList.contains('highlighted');
+    const belt       = setBox.querySelector('#UpdatebeltIcon').classList.contains('highlighted');
+    const workingSet = setBox.querySelector('#UpdateworkingSetIcon').classList.contains('highlighted');
+    const unilateral = setBox.querySelector('#UpdateunilateralIcon').classList.contains('highlighted');
+
+    const updateObj  = {
+            idSet, 
+            setWeight,
+            setReps, 
+            setRPE, 
+            idWorkout, 
+            paused, 
+            belt, 
+            workingSet, 
+            unilateral
+        }
+    updateSet(updateObj);    
+}
+//-----------------------------------------------------------------------------
+// user changes the name of a workout and triggers this
+//-----------------------------------------------------------------------------
+function updateSessionName(e){
+    e.preventDefault();
+    const nameSetForm = document.querySelector('.nameSetForm');
+    const newTitle = nameSetForm.querySelector('.sessionNameInput').value;
+    const idWorkout = nameSetForm.dataset.idWorkout;
+    console.log(idWorkout, newTitle);
+    f.post(end.UPDATE_SESSION_NAME, {idWorkout, newTitle})
+    .then(res=>{
+        console.log("session name successfully updated");
+    })
+    .catch(err=>{
+        console.error(err);
+    });
+}
+//-----------------------------------------------------------------------------
+// check to see if the set being loaded is a PR
 //-----------------------------------------------------------------------------
 function isSetPr(idExercise, idUser, setWeight, setReps, setBox){ //compare set
     let maxWeight = setWeight;   // to all sets of this exercise. see if either
@@ -268,6 +295,8 @@ function isSetPr(idExercise, idUser, setWeight, setReps, setBox){ //compare set
         })
         .catch(err=>console.error(err));
 }
+//-----------------------------------------------------------------------------
+// method updates the database with new set info
 //-----------------------------------------------------------------------------
 function updateSet(updateObj){
     f.put(end.WORKOUT_ENDPOINT, updateObj)
@@ -433,10 +462,9 @@ function dropFileEvent(e){
         })
         .then(res=>res.json())
         .then(link=>{                            // get link to video when done 
-            console.log(link);      
             addSetVideo(set, link);                     // then attach to below 
             const setVideoWrapper = set.querySelector('.setVideoWrapper');
-            setVideoWrapper.classList.add('visible'); // vid opens when done
+            setVideoWrapper.classList.add('visible');    // vid opens when done
         })
         .catch(err=>console.error(err));
     }
@@ -523,14 +551,14 @@ function fillWorkoutDate(dateInfo){
     const workoutHeader = document.createElement('div');
     workoutHeader.classList.add("workoutHeader");
     workoutHeader.innerHTML = `
-    <div class="sessionTitle">Training Session:</div>
+    <div class="sessionTitle">Session:&nbsp</div>
     <div class="trainingDate" data-date-info="${safeData}">
         ${dateInfo.dow.toUpperCase()}
         ${dateInfo.month} 
         ${dateInfo.day} 
         ${dateInfo.year}
     </div>
-    <div id="workoutDashX">X</div>`;
+    <div id="workoutDashX">--</div>`;
     workoutContainer.appendChild(workoutHeader);
 }
 //-----------------------------------------------------------------------------
@@ -555,4 +583,17 @@ export function scrollToWorkout(){
     setTimeout(()=>{
          document.querySelector('.workoutHeader').scrollIntoView({ top: 0, behavior: 'smooth'});
     },200); 
+}
+//-----------------------------------------------------------------------------
+// place to update the workout's name in DB, placed below date in the dash
+//-----------------------------------------------------------------------------
+function nameSession(liftInfo){
+    const sessionNameWrapper = 
+    `
+    <div class="sessionNameWrapper">
+        ${sessionTitleFormHTML(liftInfo)}
+    </div>
+    `
+    const workoutHeader = document.querySelector('.workoutHeader');
+    workoutHeader.insertAdjacentHTML("afterend", sessionNameWrapper);
 }

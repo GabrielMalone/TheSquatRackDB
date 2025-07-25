@@ -163,3 +163,6 @@ INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDesc
 INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDescription) VALUES ('Belt-Squat', 'B_Squat', 'accessory', "Squat on a belt machine");
 INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDescription) VALUES ('Cable-lateral-raise', 'Lat_Raise', 'accessory', "lateral raises with cable machine");
 INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDescription) VALUES ('Cable-tricep-extension', 'Cbl_Tricep', 'accessory', "tricep extensions on cable machine. aka tricep push-down.");
+INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDescription) VALUES ('Cable-AB-Crunch', 'Cbl_Crunch', 'accessory', "Ab crunch on cable machine.");
+
+          

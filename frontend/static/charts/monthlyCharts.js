@@ -42,10 +42,11 @@ export function drawMonthlyChart(chartTitle, liftsData, graphElement, graphType)
                         'transparent' 
                     ],
                     borderColor: [
-                        'orange',
-                        'purple', 
-                        'brown', 
-                        'orangered'  
+                        'limegreen'
+                        // 'orange',
+                        // 'purple', 
+                        // 'brown', 
+                        // 'orangered'  
                     ],
                     borderWidth: 1
                 }

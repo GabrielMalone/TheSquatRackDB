@@ -1,0 +1,30 @@
+.sessionNameWrapper{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border-top: 1px solid var(--primary-border-color);
+    border-bottom: 1px solid var(--primary-border-color);
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+.nameSetForminputWrapper{
+    display: flex;
+    flex:1;
+    flex-direction: row;
+    padding-top: 3%;
+    padding-bottom: 3%;
+}
+.nameSetinputTag{
+    display: flex;
+    color: var(--primary-text-color);
+    font-size: clamp(6pt, 0.8vw, 16pt);
+    flex-wrap: nowrap;
+    align-content: center;
+    padding-top: 1.5%;
+    margin-right: 5%;
+}
+.sessionNameInput{
+    min-width: 
+    74%;
+    font-size: clamp(6pt, 0.8vw, 16pt);
+}

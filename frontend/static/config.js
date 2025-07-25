@@ -57,7 +57,8 @@ const devConfig = {
     GET_PR_DATA_FOR_LIFT: "getPRDataForLift",
     GET_EXERCISE_INFO: "getExerciseInfo",
     SAVE_SESSION_NOTE: "saveSessionNote",
-    UPLOAD_SET_VIDEO: "uploadSetVideo"
+    UPLOAD_SET_VIDEO: "uploadSetVideo",
+    UPDATE_SESSION_NAME: "updateSessionName"
 
   };
   
@@ -84,7 +85,8 @@ const prodConfig = {
     GET_PR_DATA_FOR_LIFT : "getPRDataForLift",
     GET_EXERCISE_INFO : "getExerciseInfo",
     SAVE_SESSION_NOTE: "saveSessionNote",
-    UPLOAD_SET_VIDEO: "uploadSetVideo"
+    UPLOAD_SET_VIDEO: "uploadSetVideo",
+    UPDATE_SESSION_NAME: "updateSessionName"
 
   };
 

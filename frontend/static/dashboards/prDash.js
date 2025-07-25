@@ -21,7 +21,6 @@ export async function createPrDash(exerciseList, idUser){
     prInfoClick(); 
     createCursor(prDash);
     if (Object.keys(prData).length > 0){     // create the historical datachart
-        console.log(prData);
         drawHistoricalChart(prDash, prData)             // move this eventually
     }
     const prCursor = document.getElementById('cursorForprDashBoard'); 

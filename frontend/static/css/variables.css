@@ -13,7 +13,7 @@
     --primary-text-color: mintcream;
     --primary-text-hover-color:orangered;
     --primary-text-background-hover-color:brown;
-    --secondary-text-color: brown;
+    --secondary-text-color: limegreen;
 
     --tertiary-text-color: orange;
 
@@ -33,7 +33,7 @@
     --calendar-liftDay-min-size: 2px;
     --calendar-liftDay-size: 10%;
 
-    --icons-active-color: brown;
+    --icons-active-color: limegreen;
     --icons-inactive-color: #555;
     --icons-highlighted-color:orangered;
 

@@ -21,7 +21,7 @@
     background-color: var(--primary-background-color);
     padding: 8px;
     margin-bottom: 2vw;
-    color: var(--primary-text-color);
+    color: var(--icons-active-color);
     min-height: 40px;
     font-size: clamp(6pt, 1vw, 10pt);
     filter: brightness(0.8);

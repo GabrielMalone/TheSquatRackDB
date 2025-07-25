@@ -448,6 +448,7 @@ def getWorkoutFromID(idWorkout):
                     e.abbreviation AS exercise,
                     e.idExercise AS exerciseID,
                     e.ExerciseCategory AS category,
+                    w.workoutTitle AS sessionTitle,
                     eow.Order AS exerciseOrder,
                     s.idSet AS setID,
                     s.SetNumber AS `set`,
@@ -494,6 +495,7 @@ def getWorkoutFromID(idWorkout):
                         "idWorkout"         : lift["idWorkout"],
                         "note"              : lift["note"],
                         "category"          : lift["category"],
+                        "sessionTitle"      : lift["sessionTitle"],
                         "sets"              : [] 
                     }
                     unique_lifts_in_workout[lift_id] = lift_info
@@ -728,6 +730,33 @@ def saveSessionNote(idWorkout, note):
                 WHERE idWorkout = %s
                 ''',
                 (note, idWorkout)
+            )
+            cnx.commit()
+            cnx.close()
+            return "success" 
+        except mysql.connector.Error as err:
+            print("MySQL Error:", err)    # This will show you the exact error
+            print("Error code:", err.errno)               # Numeric error code
+            cnx.rollback() 
+            cnx.close()
+            return {
+                "success" : False,
+                "message" : f' server error: {err.errno}' 
+            } 
+#------------------------------------------------------------------------------
+def updateSessionName(idWorkout, newTitle):
+    cnx = connect()
+    if(cnx.is_connected()):
+        try:
+            cursor = cnx.cursor(buffered=True, dictionary=True)
+            cursor.execute('''
+                UPDATE 
+                    `Workout`w
+                SET 
+                    w.workoutTitle = %s
+                WHERE idWorkout = %s
+                ''',
+                (newTitle, idWorkout)
             )
             cnx.commit()
             cnx.close()

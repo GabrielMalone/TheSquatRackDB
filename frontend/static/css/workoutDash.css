@@ -32,6 +32,7 @@
 .sessionTitle{
     display: flex;
     color: var( --primary-text-color);
+    margin-right: 5%;
 }
 .trainingDate{
     display: flex;
@@ -42,11 +43,11 @@
 }
 #workoutDashX{
     display: flex;
-    color: var( --primary-remove-color);
+    color: var( --primary-text-color);
     cursor: pointer;
 }
 #workoutDashX:hover{
-    color: var(--primary-remove-highlight-color);
+    color: var(--primary-add-highlight-color);
 }
 
 /*-------------------------------------------------------*/
