@@ -27,4 +27,5 @@
     min-width: 
     74%;
     font-size: clamp(6pt, 0.8vw, 16pt);
+    color: var(--secondary-text-color);
 }

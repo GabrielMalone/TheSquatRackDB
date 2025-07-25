@@ -16,7 +16,7 @@ export function drawMonthlyChart(chartTitle, liftsData, graphElement, graphType)
             ticks : {
                 align: 'center',
                 padding: 1,
-                color: "mintcream",
+                color: "#CCC",
                 font: {
                     size: 8,       
                     family: 'Arial', 
@@ -42,7 +42,7 @@ export function drawMonthlyChart(chartTitle, liftsData, graphElement, graphType)
                         'transparent' 
                     ],
                     borderColor: [
-                        'limegreen'
+                        'orangered'
                         // 'orange',
                         // 'purple', 
                         // 'brown', 

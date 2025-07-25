@@ -81,7 +81,7 @@
 .qualifierIcons{
     color: var(--icons-inactive-color);
     font-size: clamp(8pt, 1vw, 16pt);
-    filter: brightness(1.5);
+    filter: brightness(1);
 }
 #unilateralIcon.highlighted{
     color: var(--icons-active-color);
@@ -138,9 +138,11 @@
     min-width: 1vw;
     max-width: 1vw;
     color: var(--icons-inactive-color);
+    filter: brightness(0.4);
 }
 .UpdatequalifierIcons:hover{
     color: var(--icons-highlighted-color);
+    filter: brightness(1);
 }
 .UpdatequalifierIcons.highlighted{
     color: var(--icons-active-color);

@@ -51,7 +51,7 @@
     margin: 2%;
     position: relative;
     display: flex;
-    color: var(--primary-text-color);
+    color: var(--secondary-text-color);
     font-size: 1vmin;
 }
 .monthlyVolumeTotal, .monthlyIntensityTotal, .monthlyFrequencyTotal {

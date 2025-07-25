@@ -13,7 +13,7 @@
     --primary-text-color: mintcream;
     --primary-text-hover-color:orangered;
     --primary-text-background-hover-color:brown;
-    --secondary-text-color: limegreen;
+    --secondary-text-color: #ccc;
 
     --tertiary-text-color: orange;
 
@@ -35,7 +35,7 @@
 
     --icons-active-color: limegreen;
     --icons-inactive-color: #555;
-    --icons-highlighted-color:orangered;
+    --icons-highlighted-color:limegreen;
 
     --cursor-outline-color: limegreen;
     --cursor-highlight-color: limegreen;
