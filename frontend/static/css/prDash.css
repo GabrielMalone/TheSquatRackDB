@@ -105,6 +105,8 @@
     display: flex;
     pointer-events: none;
 }
+
+
 .prChartWrapper{
     display: flex;
     flex-direction: column;
@@ -119,8 +121,8 @@
     flex-direction: row;
     margin-bottom: 1%;
     padding: 1%;
-    border-top: 1px solid var(--primary-border-color);
-    border-bottom: 1px solid var(--primary-border-color);
+    border-top: 1px solid var(--secondary-border-color);
+    border-bottom: 1px solid var(--secondary-border-color);
     background-color: var(--primary-background-color);
     align-items: center;
 }

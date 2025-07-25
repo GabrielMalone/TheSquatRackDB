@@ -33,7 +33,7 @@ export const months =
     "DECEMBER",
 ];
 
-export const colors = ['mediumspringgreen', 'orange', 'yellow', 'cyan' ,'darkred' , 'hotpink' , 'white'];
+export const colors = ['mediumspringgreen', 'orange', 'purple', 'cyan' ,'yellow' , 'white' , 'violet'];
 
 const devConfig = {
 
