@@ -27,8 +27,7 @@
     display: flex;
     position: relative;
     flex-direction: column;
-    width: 100%;
-    max-width: 150px;
+    width: max(2vw, 100%);
     border: 1px solid var(--primary-border-color); 
     justify-content: center;
     overflow: visible;
@@ -55,16 +54,15 @@
     display: flex;
     flex-direction: column;
     position: relative;
-
-    padding: 0;
     color:var(--primary-text-color);
     overflow: hidden;
 }
 .prLiftName{
     align-self: flex-end;
+    cursor: pointer;
 }
 .prLiftName:hover {
-    color:var(--primary-hover-color);
+    color:var(--primary-remove-color);
 }
 
 .repPRbox{
@@ -127,14 +125,14 @@
     align-items: center;
 }
 .prChartX{
-    color:var(--secondary-text-color);
+    color:var(--primary-remove-color);
     flex: 0;
     cursor: pointer;
     align-self: flex-end;
     justify-self: flex-end;
 }
 .prChartX:hover{
-    color: var(--primary-hover-color);
+    color: var(--primary-remove-highlight-color);
 }
 .prChartCanvas{
     display: flex;

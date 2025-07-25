@@ -17,12 +17,13 @@ export async function createPrDash(exerciseList, idUser){
     clearPreviousDash();
     const prDash = initPrDash(exerciseList.length);    // clear any prev dash ^
     const prData = await getPrsAndFillinRepPrChart(exerciseList, idUser, prDash);
-    // if (Object.keys(prData).length > 0){     // create the historical datachart
-    //     drawHistoricalChart(prDash, prData)             // move this eventually
-    // }
     buildPrDashHeader(prDash);
     prInfoClick(); 
     createCursor(prDash);
+    if (Object.keys(prData).length > 0){     // create the historical datachart
+        console.log(prData);
+        drawHistoricalChart(prDash, prData)             // move this eventually
+    }
     const prCursor = document.getElementById('cursorForprDashBoard'); 
     prCursor.scrollIntoView({behavior : "smooth"});
 }
@@ -304,9 +305,9 @@ function makePrToolTip(lift, weight, reps, formattedDate){
 //-----------------------------------------------------------------------------
 export function createChartElement(dashContainer, chartName, chartTitle=""){
     let chartWrapper = document.querySelector('.prChartWrapper');
-    if (chartWrapper){   // all of this to get the chart to redraw in same spot
-        chartWrapper.parentNode.removeChild(chartWrapper);
-    }     // later on if want multiple charts to be able to load, change this ^ 
+    // if (chartWrapper){   // all of this to get the chart to redraw in same spot
+    //     chartWrapper.parentNode.removeChild(chartWrapper);
+    // }     // later on if want multiple charts to be able to load, change this ^ 
     const chart = document.createElement("div");
     chart.classList.add("prChartWrapper");
     chart.classList.add("prChartWrapperVisible");

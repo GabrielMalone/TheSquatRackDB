@@ -9,7 +9,7 @@ import { createCursor } from "../cursor.js";
 const workoutContainer = document.querySelector(".workout"); // clear container
 
 //-----------------------------------------------------------------------------
-// This method takes a workout from database and formats it into the workout UI
+// This method takes workout from database and formats it into workout DASH UI
 // ExerciseRow class holds the exercise div and an exercise set div
 //-----------------------------------------------------------------------------
 export function getWorkoutFromWokroutID(idWorkout){
@@ -20,30 +20,10 @@ export function getWorkoutFromWokroutID(idWorkout){
                 fillExerciseRow(lift);       // this will iterate over each set
             });
             createCursor(workoutContainer);           // place cursor at bottom
-            // add notes section
             createNotesSection(lifts[0].note);
             scrollToWorkout();
         })
         .catch(error=>console.error(error));
-}
-//-----------------------------------------------------------------------------
-// if any notes present, they will appear here
-//-----------------------------------------------
-function createNotesSection(note){
-    if (!note){ 
-        note = "";
-    }
-    const notesSection = 
-    `
-    <div class="notesSectionWrapper">
-        <div class="notesSectionHeader">Session Notes</div>
-        <div class="notesSectionInput" contenteditable="true">${note}</div>
-        <div class="saveNoteButton">
-            <div class="saveNoteButtonText">save note</div>
-        </div>
-    </div>
-    `
-    workoutContainer.insertAdjacentHTML("beforeend",notesSection);
 }
 //-----------------------------------------------------------------------------
 // if any update/delete/add refresh the various dashes 
@@ -65,6 +45,25 @@ function workoutDashClickEvents(e){
     closeWorkoutDash(e);
     qualifierClickEven(e);
     saveNoteEvent(e);
+}
+//-----------------------------------------------------------------------------
+// if any notes present, they will appear here
+//-----------------------------------------------------------------------------
+function createNotesSection(note){
+    if (!note){ 
+        note = "";
+    }
+    const notesSection = 
+    `
+    <div class="notesSectionWrapper">
+        <div class="notesSectionHeader">Session Notes</div>
+        <div class="notesSectionInput" contenteditable="true">${note}</div>
+        <div class="saveNoteButton">
+            <div class="saveNoteButtonText">save note</div>
+        </div>
+    </div>
+    `
+    workoutContainer.insertAdjacentHTML("beforeend",notesSection);
 }
 //-----------------------------------------------------------------------------
 function saveNoteEvent(e){

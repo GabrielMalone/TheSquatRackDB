@@ -8,7 +8,10 @@ let historicalChart = null;
 //-----------------------------------------------------------------------------
 export function drawHistoricalChart(prDash, dataforPr){
 
-    createChartElement(prDash, "historicalPrChart");
+    // elements needed for chart creation
+    const chartTitle = `LIFT HISTORY - ALL SETS`;
+ 
+    createChartElement(prDash, "historicalPrChart", chartTitle);
 
     const liftNames = Object.keys(dataforPr);
     const prData = Object.values(dataforPr);
@@ -31,63 +34,14 @@ export function drawHistoricalChart(prDash, dataforPr){
     if (historicalChart){                              // destroy before redraw
         historicalChart.destroy();
     }
-
-    historicalChart = new Chart(document.querySelector(`.historicalPrChart`), {
+    historicalChart = new Chart(document.getElementById(`canvasForhistoricalPrChart`), {
         type: 'bubble', 
         data: {     // map can take two arguments: item in arry, and index val
             datasets: prDatasets.flat() // need just one array of all datasetObjects
         },
-        options: {
-            aspectRatio: 2,
-            plugins: {
-                legend: {
-                    display: false,
-                    labels: {
-                        generateLabels: hideLegendBoxes,
-                    },
-                },
-                tooltip: {
-                    callbacks: {
-                        label: function(context) { 
-                            const x = context.parsed.x;
-                            const y = context.parsed.y;
-                            const r = context.raw.date;
-                            const name = context.raw.name;
-                            return `${name} : ${x} rep(s) x ${y} on ${r}`; // No r here
-                        }
-                    }
-                }
-            },
-            scales: {
-                y: {
-                    display: false,
-                    grid: {
-                        display: true,  
-                        color: 'rgba(200, 200, 200, 0.2)',
-                        drawTicks: false    
-                    },
-                    ticks: {
-                        padding: 10
-                    },
-                },
-                x: {
-                    display: false,
-                    min: 0,
-                    ticks : {
-                        stepSize: 5,
-                        color: "gray",
-                        font: {
-                            size: 10 
-                        },
-                        padding: 0,
-                    }
-                },
-            },
-            layout: {
-                padding: 20
-            }
-        },              
+        options: options      
     }); 
+    addCloseEventListener('historicalPrChart');
 }
 //-----------------------------------------------------------------------------
 function setRadius(repDataSets){
@@ -102,18 +56,17 @@ function createWeightRepsObjects(weightAtReps, prDataSet, liftName){
     for (let i = 0; i < prDataSet.length ; i ++ ){
         if (!weightAtReps[prDataSet[i].weight]){ 
             weightAtReps[prDataSet[i].weight] = [
-                {   x:prDataSet[i].weight,y:prDataSet[i].reps, 
+                {   y:prDataSet[i].weight,x:prDataSet[i].reps, 
                     date: formatBackendDateData(prDataSet[i].date), 
                     name: liftName  }];
         } else { 
             weightAtReps[prDataSet[i].weight].push(
-                {   x:prDataSet[i].weight,
-                    y:prDataSet[i].reps, 
+                {   y:prDataSet[i].weight,
+                    x:prDataSet[i].reps, 
                     date: formatBackendDateData(prDataSet[i].date), 
                     name: liftName  });
         }
     }   
-   
 }
 //-----------------------------------------------------------------------------
 function createChartJSdatasetObject(weightLabels, repDataSets, color){
@@ -126,3 +79,73 @@ function createChartJSdatasetObject(weightLabels, repDataSets, color){
     return datasetObj;
 }
 //-----------------------------------------------------------------------------
+function addCloseEventListener(chartName){
+    const x = document.getElementById(`prChartXfor${chartName}`);
+    x.addEventListener("click",  ()=>{
+        const repPrChart = document.getElementById(`prChartWrapperFor${chartName}`);
+        repPrChart.parentNode.removeChild(repPrChart);
+    });
+}
+//-----------------------------------------------------------------------------
+const xConfig = {
+    display: true,
+    grid: {
+        display: false,  
+    },
+    min: 0,
+    ticks : {
+        stepSize: 1,
+        color: "#ccc",
+        font: {
+            size: 10 
+        },
+        padding: 15
+    }
+}
+//-----------------------------------------------------------------------------
+const yConfig = {
+    display: true,
+    grid: {
+        display: false,  
+    },
+    ticks: {
+        padding: 15, 
+        color: "#ccc",
+        stepSize: 5,
+        font: {
+            size: 10 
+        },
+    },
+}
+//-----------------------------------------------------------------------------
+const toolTipLabel = {
+    label: function(context) { 
+        const x = context.parsed.x;
+        const y = context.parsed.y;
+        const r = context.raw.date;
+        const name = context.raw.name;
+        return `${name} : ${x} rep(s) x ${y} on ${r}`; // No r here
+    }
+}
+//-----------------------------------------------------------------------------
+const options = {
+    aspectRatio: 2,
+    plugins: {
+        legend: {
+            display: false,
+            labels: {
+                generateLabels: hideLegendBoxes,
+            },
+        },
+        tooltip: {
+            callbacks: toolTipLabel
+        }
+    },
+    scales: {
+        y: yConfig,
+        x: xConfig
+    },
+    layout: {
+        padding: 0
+    }
+}
