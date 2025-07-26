@@ -1,26 +1,54 @@
 import { clearNewLifterFields } from "./newLifterSideBar.js";
+
 //-----------------------------------------------------------------------------
-// This is the logic for clicking the addLifter button. makes add window appear
+// event listeners and actions for the buttons in the main header
 //-----------------------------------------------------------------------------
-export const addLifterClick = ()=> {
-    const addBUtton     = document.getElementById("addLifter");
-    const addLifterBox  = document.querySelector(".createLifterBox");
-    addBUtton.addEventListener("click", ()=>{
-        clearNewLifterFields();
-        addLifterBox.classList.toggle("visible"); // Toggle a class
-    });
+export function headerListeners(){
+    const body = document.querySelector('.container');
+    body.addEventListener("click", headerListenerEvents)
+}
+function headerListenerEvents(e){
+    if (e.target.id === "activeLifters"){
+        activeLiftersClickEvent();
+    }
+    if (e.target.id === "addLifter" || e.target.id === "newLifterX"){
+        addLifterEvent();
+         //close login if open 
+        const loginBox = document.querySelector('.loginBox');
+        console.log(loginBox);
+        if (loginBox.classList.contains('visible')){
+            loginBox.classList.remove('visible');
+        }
+    }
+    if (e.target.id === "login" || e.target.id === "loginX"){
+        loginClickEvent();
+        //close new user if open 
+        const newUserWindow = document.querySelector('.createLifterBox');
+        if (newUserWindow.classList.contains('visible')){
+            newUserWindow.classList.remove('visible');
+        }
+    }
 }
 //-----------------------------------------------------------------------------
-export function activeLiftersCLick(){
-    const activeLifterButton = document.querySelector("#activeLifters");
+
+function addLifterEvent(){
+    const addLifterBox = document.querySelector(".createLifterBox");
+    clearNewLifterFields();
+    addLifterBox.classList.toggle("visible"); // Toggle a class
+}
+//-----------------------------------------------------------------------------
+function activeLiftersClickEvent(){
     const sidebar = document.querySelector(".sidebar");
     const mainLifterWindow = document.querySelector('.lifterBox');
-    activeLifterButton.addEventListener("click", ()=>{
-        sidebar.classList.toggle("visible");
-        if (sidebar.classList.contains("visible")){
-            mainLifterWindow.style.width = "100%"; 
-        } else {
-            mainLifterWindow.style.width = "85%";
-        }
-    });
+    sidebar.classList.toggle("visible");
+    if (sidebar.classList.contains("visible")){
+        mainLifterWindow.style.width = "100%"; 
+    } else {
+        mainLifterWindow.style.width = "85%";
+    }
+}
+//-----------------------------------------------------------------------------
+function loginClickEvent(){
+    const loginBox = document.querySelector('.loginBox');
+    loginBox.classList.toggle('visible');
 }

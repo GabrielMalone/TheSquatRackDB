@@ -3,8 +3,6 @@
 /*-------------------------------------------------------*/
 .lifterBoxHeader{
     display: flex;
-    max-height: min(5%,70px);
-    flex:1;
     padding: 1%;
     flex-direction: row;
     border-bottom: 1px solid var(--primary-border-color);

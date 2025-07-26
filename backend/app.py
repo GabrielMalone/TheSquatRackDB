@@ -10,9 +10,7 @@ app = Flask(__name__,
 #------------------------------------------------------------------------------
 @app.route("/")
 def home():
-
     css_files = [
-
         'addExerciseDash.css',
         'notesSection.css',
         'monthlyCharts.css',
@@ -29,10 +27,15 @@ def home():
         'calendar.css',
         'set.css',
         'video.css',
-        'sessionTitle.css'
+        'sessionTitle.css',
+        'login.css'
     ]
-
     return render_template('index.html', css_files=css_files)
+#------------------------------------------------------------------------------
+@app.route("/login", methods=["POST"])
+def login():
+    loginData = request.get_json()
+    return jsonify(queries.login(loginData))
 #------------------------------------------------------------------------------
 
 @app.route('/videos/<path:filename>')  # serve a video file from backend folder
@@ -66,8 +69,8 @@ def users():
         return jsonify(lifters), 200
     
     elif request.method == "POST":
-        newLifter = request.get_json()
-        res = queries.postNewLifter(newLifter)
+        newLifterData = request.get_json()
+        res = queries.postNewLifter(newLifterData)
         return jsonify(res)
         
     elif request.method == "DELETE":

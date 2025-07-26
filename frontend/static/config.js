@@ -58,7 +58,8 @@ const devConfig = {
     GET_EXERCISE_INFO: "getExerciseInfo",
     SAVE_SESSION_NOTE: "saveSessionNote",
     UPLOAD_SET_VIDEO: "uploadSetVideo",
-    UPDATE_SESSION_NAME: "updateSessionName"
+    UPDATE_SESSION_NAME: "updateSessionName",
+    LOGIN: "login"
 
   };
   
@@ -86,7 +87,8 @@ const prodConfig = {
     GET_EXERCISE_INFO : "getExerciseInfo",
     SAVE_SESSION_NOTE: "saveSessionNote",
     UPLOAD_SET_VIDEO: "uploadSetVideo",
-    UPDATE_SESSION_NAME: "updateSessionName"
+    UPDATE_SESSION_NAME: "updateSessionName",
+    LOGIN: "login"
 
   };
 

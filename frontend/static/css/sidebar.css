@@ -2,7 +2,7 @@
 /* THE SIDEBAR
 /*-------------------------------------------------------*/
 .sidebar {
-    display: flex;
+    display: none;
     flex-direction: column;
     flex: 1;
     width: 15%;
@@ -12,7 +12,7 @@
     border-left: 1px solid var(--primary-border-color);
 }
 .sidebar.visible{
-    display:none;
+    display:flex;
 }
 /*-------------------------------------------------------*/
 /* LIFTER NAME IN THE SIDEBAR

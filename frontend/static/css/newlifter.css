@@ -3,19 +3,14 @@
 /*-------------------------------------------------------*/
 .createLifterBox {
     display: none;
+    border-bottom: 1px solid var(--primary-border-color);
+    overflow: visible;
 }
 .createLifterBox.visible{
-    position: absolute;
+    position: relative;
     display: flex;
-    top: min(50%, 400px);
-    left: 50%;
-    transform: translate(-50%, -50%);
     flex-direction: column;
-    min-width: max(200px,25%);
-    max-height: max(50%, 300px);
-    outline: 1px solid var(--secondary-border-color);
     padding: 3%;
-    background-color: var(--secondary-background-color);
     overflow: hidden;
 }
 
@@ -51,7 +46,7 @@
     background-color: var(--primary-background-color);
     border: none;
     outline: 1px solid var(--secondary-border-color);     
-    padding:5%;
+    padding:1%;
     border-radius: 0px;
     font-size: clamp(8pt, 2vmin, 24pt);
     color: black;
@@ -66,15 +61,19 @@
     outline: 1px solid var(--primary-border-hover-color);
 }
 input::placeholder {
-    color: #222; 
+    color: var(--secondary-border-color); 
     opacity: .8; 
   }
 .inputField:not(:placeholder-shown) {
-    color: var(--primary-text-color);         /* Active text color */
+    color: black;         /* Active text color */
 }
+.inputField:not(:focus) {
+    color: var(--secondary-border-color);      
+}
+
 #submitNewLifter {
-    margin-top: 10%;
-    padding: 6%;
+    margin-top: 5%;
+    padding: 2%;
     align-self: center;
     aspect-ratio: 2/1;
     border: 1px solid transparent;

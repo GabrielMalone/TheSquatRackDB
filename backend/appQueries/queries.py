@@ -2,6 +2,7 @@
 import mysql.connector
 from dotenv import load_dotenv
 import os
+from werkzeug.security import generate_password_hash, check_password_hash
 #------------------------------------------------------------------------------
 def connect():
     return mysql.connector.connect(
@@ -641,14 +642,16 @@ def postNewLifter(newLifter):
     userFirst   = newLifter["userFirst"]
     userLast    = newLifter["userLast"]
     userName    = newLifter["userName"]
+    password    = newLifter["password"]
+    password    = generate_password_hash(password)
     if(cnx.is_connected()):
         try:
             cursor = cnx.cursor(buffered=True)
             cursor.execute('''
                 INSERT INTO User 
-                (userName, userFirst, userLast, Email)
-                VALUES(%s,%s,%s,%s)''', 
-                (userName, userFirst, userLast, Email)
+                (userName, passwordHash, userFirst, userLast, Email)
+                VALUES(%s,%s,%s,%s,%s)''', 
+                (userName, password, userFirst, userLast, Email)
             )
             cnx.commit()
             cnx.close()
@@ -751,7 +754,7 @@ def updateSessionName(idWorkout, newTitle):
             cursor = cnx.cursor(buffered=True, dictionary=True)
             cursor.execute('''
                 UPDATE 
-                    `Workout`w
+                    `Workout` w
                 SET 
                     w.workoutTitle = %s
                 WHERE idWorkout = %s
@@ -761,6 +764,39 @@ def updateSessionName(idWorkout, newTitle):
             cnx.commit()
             cnx.close()
             return "success" 
+        except mysql.connector.Error as err:
+            print("MySQL Error:", err)    # This will show you the exact error
+            print("Error code:", err.errno)               # Numeric error code
+            cnx.rollback() 
+            cnx.close()
+            return {
+                "success" : False,
+                "message" : f' server error: {err.errno}' 
+            } 
+#------------------------------------------------------------------------------
+def login(loginData):
+    userName = loginData['userName']
+    passWord = loginData['password']
+    cnx = connect()
+    if(cnx.is_connected()):
+        try:
+            cursor = cnx.cursor(buffered=True, dictionary=True)
+            cursor.execute('''
+                SELECT 
+                    u.passwordHash AS pHash
+                FROM
+                    `User` u
+                WHERE 
+                    u.userName = %s
+                ''',
+                (userName,)
+            )
+            cnx.close()
+            hashedPassword = cursor.fetchone()['pHash']
+            valid = check_password_hash(hashedPassword, passWord)
+            if (valid):
+                return {"message" : "success"}
+            return {"message" : "password incorrect"}
         except mysql.connector.Error as err:
             print("MySQL Error:", err)    # This will show you the exact error
             print("Error code:", err.errno)               # Numeric error code

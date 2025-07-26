@@ -3,24 +3,25 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema thesquatrack
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `mydb` ;
+DROP SCHEMA IF EXISTS `thesquatrack` ;
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema thesquatrack
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
-USE `mydb` ;
+CREATE SCHEMA IF NOT EXISTS `thesquatrack` DEFAULT CHARACTER SET utf8 ;
+USE `thesquatrack` ;
 
 -- -----------------------------------------------------
--- Table `mydb`.`User`
+-- Table `thesquatrack`.`User` a
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`User` ;
+DROP TABLE IF EXISTS `thesquatrack`.`User` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`User` (
+CREATE TABLE IF NOT EXISTS `thesquatrack`.`User` (
   `idUser` INT NOT NULL AUTO_INCREMENT,
-  `userName` VARCHAR(255) NOT NULL,
+  `userName` VARCHAR(45) NOT NULL,
+  `passwordHash` VARCHAR(255) NOT NULL,
   `userFirst` VARCHAR(45) NULL,
   `userLast` VARCHAR(45) NULL,
   `Email` VARCHAR(45) NULL,
@@ -29,13 +30,12 @@ CREATE TABLE IF NOT EXISTS `mydb`.`User` (
   UNIQUE INDEX `idUser_UNIQUE` (`idUser` ASC) VISIBLE)
 ENGINE = InnoDB;
 
-
+-- ----------------------------------------------------- 
+-- Table `thesquatrack`.`Workout`
 -- -----------------------------------------------------
--- Table `mydb`.`Workout`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`Workout` ;
+DROP TABLE IF EXISTS `thesquatrack`.`Workout` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`Workout` (
+CREATE TABLE IF NOT EXISTS `thesquatrack`.`Workout` (
   `idWorkout` INT NOT NULL AUTO_INCREMENT,
   `Date` DATETIME NOT NULL,
   `idUser` INT NOT NULL,
@@ -51,17 +51,17 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Workout` (
   UNIQUE INDEX `uq_user_date` (`idUser` ASC, `Date` ASC) VISIBLE,
   CONSTRAINT `fk_Workout_User`
     FOREIGN KEY (`idUser`)
-    REFERENCES `mydb`.`User` (`idUser`)
+    REFERENCES `thesquatrack`.`User` (`idUser`)
     ON DELETE CASCADE  
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `mydb`.`Exercise`
+-- Table `thesquatrack`.`Exercise`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`Exercise` ;
+DROP TABLE IF EXISTS `thesquatrack`.`Exercise` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`Exercise` (
+CREATE TABLE IF NOT EXISTS `thesquatrack`.`Exercise` (
   `idExercise` INT NOT NULL AUTO_INCREMENT,
   `ExerciseName` VARCHAR(45) NULL,
   `abbreviation` VARCHAR(10) NULL,
@@ -72,11 +72,11 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Exercise` (
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `mydb`.`ExerciseOrderInWorkout`
+-- Table `thesquatrack`.`ExerciseOrderInWorkout` 
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`ExerciseOrderInWorkout`;
+DROP TABLE IF EXISTS `thesquatrack`.`ExerciseOrderInWorkout`;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`ExerciseOrderInWorkout` (
+CREATE TABLE IF NOT EXISTS `thesquatrack`.`ExerciseOrderInWorkout` (
   `idExercise` INT NOT NULL,
   `idWorkout` INT NOT NULL,
   `Order` INT NOT NULL,  
@@ -86,22 +86,22 @@ CREATE TABLE IF NOT EXISTS `mydb`.`ExerciseOrderInWorkout` (
   INDEX `fk_Exercise_has_Workout_Exercise1_idx` (`idExercise` ASC) VISIBLE,
   CONSTRAINT `fk_Exercise_has_Workout_Exercise1`
     FOREIGN KEY (`idExercise`)
-    REFERENCES `mydb`.`Exercise` (`idExercise`)
+    REFERENCES `thesquatrack`.`Exercise` (`idExercise`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Exercise_has_Workout_Workout1`
     FOREIGN KEY (`idWorkout`)
-    REFERENCES `mydb`.`Workout` (`idWorkout`)
+    REFERENCES `thesquatrack`.`Workout` (`idWorkout`)
     ON DELETE CASCADE 
     ON UPDATE NO ACTION
 ) ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `mydb`.`Set`
+-- Table `thesquatrack`.`Set`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`Set` ;
+DROP TABLE IF EXISTS `thesquatrack`.`Set` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`Set` (
+CREATE TABLE IF NOT EXISTS `thesquatrack`.`Set` (
   `idSet` INT NOT NULL AUTO_INCREMENT,
   `SetNumber` INT NOT NULL,
   `idExercise` INT NOT NULL,
@@ -123,12 +123,12 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Set` (
   INDEX `fk_Set_Workout1_idx` (`idWorkout` ASC) VISIBLE,
   CONSTRAINT `fk_Set_Exercise1`
     FOREIGN KEY (`idExercise`)
-    REFERENCES `mydb`.`Exercise` (`idExercise`)
+    REFERENCES `thesquatrack`.`Exercise` (`idExercise`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Set_Workout1`
     FOREIGN KEY (`idWorkout`)
-    REFERENCES `mydb`.`Workout` (`idWorkout`)
+    REFERENCES `thesquatrack`.`Workout` (`idWorkout`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION
 ) ENGINE = InnoDB;

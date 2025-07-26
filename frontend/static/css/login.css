@@ -1,0 +1,46 @@
+.loginBox{
+    display: none;
+    position: relative;
+    flex-direction: column;
+    padding: 3%;
+    border-bottom: 1px solid var(--primary-border-color);
+}
+.loginBox.visible{
+    display: flex;
+}
+.loginBoxHeader{
+    margin-top: min(3vh, 6vw);
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    align-items: center;
+    font-size: clamp(8pt, 2vmin, 24pt);
+}
+#loginBoxTitle{
+    display: flex;
+    color: var(--primary-text-color);
+    flex: 1;
+}
+#loginX{
+    margin: 0;
+    padding: 0;
+    justify-self: center;
+}
+.loginBoxFields{
+    margin-top: 5%;
+    display: flex;
+    flex-direction: column;
+    gap: 2vw;
+}
+#loginLifter {
+    margin-top: 2%;
+    padding: 3%;
+    align-self: center;
+    aspect-ratio: 2/1;
+    border: none;
+    color: var(--primary-text-color);
+    background-color: transparent;
+}
+#loginLifter:hover {
+    background-color: var(--primary-add-color);
+}

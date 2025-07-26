@@ -111,7 +111,7 @@ function configClickEvent(){
         monthlyChartDashWrapper.innerHTML = ``;
         prDash.innerHTML = ``;
         prDashHeader.innerHTML = ''
-        cursorForPRDash.parentNode.removeChild(cursorForPRDash);
+        cursorForPRDash.parentNode?.removeChild(cursorForPRDash);
     })
     .catch(err=>console.error(err));
 }

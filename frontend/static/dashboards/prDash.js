@@ -20,11 +20,20 @@ export async function createPrDash(exerciseList, idUser){
     buildPrDashHeader(prDash);
     prInfoClick(); 
     createCursor(prDash);
-    if (Object.keys(prData).length > 0){     // create the historical datachart
-        drawHistoricalChart(prDash, prData)             // move this eventually
-    }
+    ifLiftHistoryDrawChart(prDash, prData);
     const prCursor = document.getElementById('cursorForprDashBoard'); 
     prCursor.scrollIntoView({behavior : "smooth"});
+}
+//-----------------------------------------------------------------------------
+//  Determine if lift history exists for specific lift
+//-----------------------------------------------------------------------------
+function ifLiftHistoryDrawChart(prDash, prData){   // prData comes in as map {}
+    for (let i = 0 ; i < Object.keys(prData).length ; i ++ ){// go through keys
+        if (Object.values(prData)[i].length > 0){       // check values of keys
+            drawHistoricalChart(prDash, prData)// if length val > 0 data exists     
+            break;
+        }
+    }
 }
 //-----------------------------------------------------------------------------
 async function getPrsAndFillinRepPrChart(exerciseList, idUser, prDash){

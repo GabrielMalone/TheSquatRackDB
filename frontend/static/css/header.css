@@ -17,6 +17,9 @@
 
 .headerButtons {
     display: flex;
+    flex-direction: row;
+    gap: 2vw;
+    margin-right: 2vw;
 }
 .button {
     display: flex;
@@ -25,8 +28,6 @@
     cursor: pointer;
     color:var(--primary-text-color);
     align-self: center;
-    padding: 1vw;
-    min-width: 100px;
 }
 .button:hover {
     color: var(--secondary-text-color);
@@ -34,9 +35,6 @@
 .buttonContent{
     align-self: center;
 }
-
-
-
 .footer{
     border-top: 1px solid var(--sidebar-border-color);
 }

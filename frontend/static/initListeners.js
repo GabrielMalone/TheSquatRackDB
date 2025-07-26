@@ -1,7 +1,8 @@
 import { configEventListener, getLifters } from "./lifterSidebar.js";
 import { calendarListener, dayEventListener } from "./dashboards/calendarDash.js";
-import { addLifterClick, activeLiftersCLick } from "./header.js";
-import { xNewLifterWindow, submitNewLifterClick} from "./newLifterSideBar.js";
+import { headerListeners } from "./header.js";
+import { submitNewLifterClick } from "./newLifterSideBar.js";
+import { loginClick } from "./login.js";
 
 //-----------------------------------------------------------------------------
 // all the listeners that need to be loaded for the app to work
@@ -13,12 +14,11 @@ import { xNewLifterWindow, submitNewLifterClick} from "./newLifterSideBar.js";
 export function init() {
     //-------------------------------------------------------------------------
     calendarListener();         // detects key input for changing months in cal
-    activeLiftersCLick();                 // detects click on lifter in sidebar
     dayEventListener();               // detecting click on day in the calendar
     configEventListener();                  // config button in the main window
-    xNewLifterWindow();                    // x button on the new lifter window
-    addLifterClick();                        // add lifter button in the header
-    submitNewLifterClick();            // submit button for new lifter creation
+    headerListeners();                   // detects button clicks in the header
+    submitNewLifterClick();       // detects new lifter button submission click
+    loginClick();                                 // detects login button click
     //-------------------------------------------------------------------------
     getLifters();                             // load lifters from the database
 }

@@ -9,19 +9,10 @@ export const clearNewLifterFields = () => {
     document.getElementById("inputFirst").value = "";
     document.getElementById("inputLast").value = "";
     document.getElementById("inputEmail").value = "";
+    document.getElementById("inputPassword").innerText = "";
     document.getElementById("submitErrorMsg").innerText = "";
 }
-//-----------------------------------------------------------------------------
-// event listener for the X close button on the new lifter window
-//-----------------------------------------------------------------------------
-export const xNewLifterWindow = () => {
-    const x = document.querySelector(".X");
-    const addLifterBox  = document.querySelector(".createLifterBox");
-    x.addEventListener("click", ()=>{
-        clearNewLifterFields();
-        addLifterBox.classList.toggle("visible"); 
-    });
-}
+
 //-----------------------------------------------------------------------------
 // event listener for the new lifter submit button
 //-----------------------------------------------------------------------------
@@ -32,9 +23,10 @@ export const submitNewLifterClick = () => {
 //-----------------------------------------------------------------------------
 // This is the logic for clicking the submit new lifter button.
 //-----------------------------------------------------------------------------
-export const submitNewLifter = (e) => {
+const submitNewLifter = (e) => {
     e.preventDefault();
     let userName    = document.getElementById("inputUserName").value.trim();
+    const password  = document.getElementById("inputPassword").value.trim();
     const firstName = document.getElementById("inputFirst").value.trim();
     const lastName  = document.getElementById("inputLast").value.trim();
     const email     = document.getElementById("inputEmail").value.trim();
@@ -49,7 +41,8 @@ export const submitNewLifter = (e) => {
         Email: email || null,
         userFirst: firstName || null,
         userLast: lastName || null,
-        userName: userName
+        userName: userName,
+        password: password
     };
     postNewLifter(newLifter);           // if all good send datato the database
 }
