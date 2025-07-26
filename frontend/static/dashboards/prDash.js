@@ -8,7 +8,7 @@ import { createCursor } from "../cursor.js";
 import { drawHistoricalChart } from "../charts/lifetimeLiftDataChart.js";
 import { drawRepPrHistoryChart } from "../charts/repPrHistoryChart.js";
 
-let repRange = 20;
+let repRange = 10;
 
 //-----------------------------------------------------------------------------
 // creates the pr chart and fetches the data to fill in the chart
