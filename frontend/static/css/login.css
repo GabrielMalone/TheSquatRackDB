@@ -61,6 +61,12 @@
 #loginLifter:hover {
     color: var(--primary-add-color);
 }
+#loginErrorMsg{
+    display: flex;
+    margin: 2%;
+    align-self: center;
+    color: var(--primary-text-color);
+}
 /*-------------------------------------------------------*/
 /* LOGIN INFO BOX
 /*-------------------------------------------------------*/

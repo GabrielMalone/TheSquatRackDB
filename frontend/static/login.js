@@ -24,24 +24,32 @@ function loginEvent(e){
 }
 //-----------------------------------------------------------------------------
 export function login(userName, password){
-   f.post(end.LOGIN, {userName, password}) // verify pw with hashpw on backend
-    .then(res=>{
-        if (res.message === "success") {
-            toggleLoginCreateBoxVisibility();
-            f.post(end.GET_LIFTER_BY_USER_NAME, userName)
-            .then(data=>{
-                console.log(data);
-                loginLogout("in");
-                admin(data); 
-                loadLifterFromLogin(data)
-            })
-            .catch(err=>console.error(err));
-        } else {
-            console.log(res, "incorrect password");
-            // otherwise give error in the error box
-        }
-    })
-    .catch(err=>console.error(err)); 
+    document.getElementById('loginErrorMsg').innerText = ``;
+    f.post(end.LOGIN, {userName, password}) // verify pw with hashpw on backend
+        .then(res=>{
+            if (res.message === "success") {
+                toggleLoginCreateBoxVisibility();
+                f.post(end.GET_LIFTER_BY_USER_NAME, userName)
+                .then(data=>{
+                    console.log(data);
+                    loginLogout("in");
+                    admin(data); 
+                    loadLifterFromLogin(data)
+                })
+                .catch(err=>console.error(err));
+            } else {
+                const errField = document.getElementById('loginErrorMsg');
+                errField.innerText = "incorrect username or password";
+                // otherwise give error in the error box
+                console.log(errField);
+            }
+        })
+        .catch(err=>{
+            console.error(err);
+            const errField = document.getElementById('loginErrorMsg');
+            errField.innerText = "incorrect username or password";
+            console.log(errField);
+        }); 
 }
 //-----------------------------------------------------------------------------
 // stuff to do if I log in 
