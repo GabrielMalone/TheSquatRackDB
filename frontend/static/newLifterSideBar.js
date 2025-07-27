@@ -32,20 +32,42 @@ const submitNewLifter = (e) => {
     const lastName  = document.getElementById("inputLast").value.trim();
     const email     = document.getElementById("inputEmail").value.trim();
     const errField  = document.getElementById("submitErrorMsg");
-    // can do validation stuff here. 
-    if (userName.length < 4){
-        errField.innerText = "User name must be at leat 4 characters long";
-        return;
-    }
-    userName = userName[0].toUpperCase() + userName.slice(1);
+
+    // email dupilicate check on backend
+    // username duplicate check on backend
+    if (!userNameValid(userName, errField)) return;
+    if (!passwordChecks(password, errField)) return;
+
     const newLifter = {
-        Email: email || null,
+        Email: email,
         userFirst: firstName || null,
         userLast: lastName || null,
         userName: userName,
         password: password
     };
     postNewLifter(newLifter);           // if all good send datato the database
+}
+//-----------------------------------------------------------------------------
+// userName checks
+//-----------------------------------------------------------------------------
+function userNameValid(userName, errField){
+    const usernameRegex = /^[a-zA-Z][a-zA-Z0-9_.-]{2,19}$/;
+    if (! usernameRegex.test(userName)){
+        errField.innerHTML = 
+            `<p>Username must be between 3 and 20 characters</p>
+             <p>Username may not start with a number</p>
+             <p>Username may contain only letters, digits, -, _, .</p>`;
+        return false;
+    }
+    return true;
+}
+//-----------------------------------------------------------------------------
+function passwordChecks(password, errField){
+    if (password.length < 8){
+        errField.innerHTML = `<p>password must be at least 8 characters in length</p>`
+        return false;
+    }
+    return true;
 }
 //-----------------------------------------------------------------------------
 // post method to create new lifter in database
@@ -60,8 +82,25 @@ export const postNewLifter = (newLifter) => {
             getLifters();
             login(newLifter.userName, newLifter.password);
         } else {                                             // 1062 error code
-            errField.innerText = "username already taken"
+            errorMsg(res, errField);
         }
     })
     .catch(err=>console.error(err));
+}
+//-----------------------------------------------------------------------------
+// make a nice message from the sql error code
+//-----------------------------------------------------------------------------
+function errorMsg(res, errField){
+    let token = "";   // all this just pulling out first msg that appears in ''
+    let begin = false;
+    let cnt = 0;
+    for ( let i = 0 ; i < res.message.length ; i ++ ){
+        if (res.message[i] === "'"){
+            begin = !begin;
+            cnt ++;
+        }
+        if (begin) token += res.message[i];
+        if (cnt === 3) break;
+    }
+    errField.innerText = token + " already taken";
 }

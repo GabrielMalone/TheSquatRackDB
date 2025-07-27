@@ -24,10 +24,12 @@ CREATE TABLE IF NOT EXISTS `thesquatrack`.`User` (
   `passwordHash` VARCHAR(255) NOT NULL,
   `userFirst` VARCHAR(45) NULL,
   `userLast` VARCHAR(45) NULL,
-  `Email` VARCHAR(45) NULL,
+  `Email` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idUser`),
   UNIQUE INDEX `userName_UNIQUE` (`userName` ASC) VISIBLE,
-  UNIQUE INDEX `idUser_UNIQUE` (`idUser` ASC) VISIBLE)
+  UNIQUE INDEX `idUser_UNIQUE` (`idUser` ASC) VISIBLE,
+  UNIQUE INDEX `Email_UNIQUE` (`Email` ASC) VISIBLE,
+)
 ENGINE = InnoDB;
 
 -- ----------------------------------------------------- 

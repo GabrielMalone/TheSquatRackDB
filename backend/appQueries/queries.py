@@ -663,7 +663,7 @@ def postNewLifter(newLifter):
             cnx.close()
             return {
                 "success" : False,
-                "message" : f' server error: {err.errno}' 
+                "message" : f' server error: {err}' 
             } 
 #------------------------------------------------------------------------------
 def removeLifter(lifterID):
