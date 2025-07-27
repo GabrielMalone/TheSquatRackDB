@@ -10,6 +10,7 @@
 #lifterHeaderName {
     align-self: center;
     font-size: 3vw;
+    padding-left: 2%;
     color: var(--primary-text-color);
 }
 #lifterConfig {
