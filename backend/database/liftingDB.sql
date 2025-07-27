@@ -25,10 +25,15 @@ CREATE TABLE IF NOT EXISTS `thesquatrack`.`User` (
   `userFirst` VARCHAR(45) NULL,
   `userLast` VARCHAR(45) NULL,
   `Email` VARCHAR(45) NOT NULL,
+  `isAdmin` TINYINT NOT NULL DEFAULT 0,
+  `isCoach` TINYINT NOT NULL DEFAULT 0,
+  `isPublic` TINYINT NOT NULL DEFAULT 1,
+  `isLoggedIn` TINYINT NOT NULL DEFAULT 0,
+  `coachedBy` INT NULL,
   PRIMARY KEY (`idUser`),
   UNIQUE INDEX `userName_UNIQUE` (`userName` ASC) VISIBLE,
   UNIQUE INDEX `idUser_UNIQUE` (`idUser` ASC) VISIBLE,
-  UNIQUE INDEX `Email_UNIQUE` (`Email` ASC) VISIBLE,
+  UNIQUE INDEX `Email_UNIQUE` (`Email` ASC) VISIBLE
 )
 ENGINE = InnoDB;
 
@@ -46,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `thesquatrack`.`Workout` (
   `userWeight` INT NULL,
   `userAge` INT NULL,
   `fatigueRating` INT NULL,
-  `sessionNote`  VARCHAR(1500),
+  `sessionNote`  TEXT,
   INDEX `fk_Workout_User_idx` (`idUser` ASC) VISIBLE,
   PRIMARY KEY (`idWorkout`),
   UNIQUE INDEX `idWorkout_UNIQUE` (`idWorkout` ASC) VISIBLE,
@@ -115,7 +120,7 @@ CREATE TABLE IF NOT EXISTS `thesquatrack`.`Set` (
   `paused` TINYINT DEFAULT 0,
   `belt` TINYINT DEFAULT 0,
   `unilateral` TINYINT DEFAULT 0,
-  `setComment` BLOB NULL,
+  `setComment` TEXT NULL,
   `setVideo` VARCHAR(255) NULL,
   `isPR` TINYINT DEFAULT 0,   -- help track historical pr data
   PRIMARY KEY (`idSet`),
@@ -134,6 +139,58 @@ CREATE TABLE IF NOT EXISTS `thesquatrack`.`Set` (
     ON DELETE CASCADE
     ON UPDATE NO ACTION
 ) ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `thesquatrack`.`UserFollows`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `thesquatrack`.`UserFollows` ;
+
+CREATE TABLE IF NOT EXISTS `thesquatrack`.`UserFollows` (
+  `followerID` INT NOT NULL,
+  `followeeID` INT NOT NULL,
+  `dateFollowed` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`followerID`, `followeeID`),
+  INDEX `fk_User_has_User_User2_idx` (`followeeID` ASC) VISIBLE,
+  INDEX `fk_User_has_User_User1_idx` (`followerID` ASC) VISIBLE,
+  CONSTRAINT `fk_User_has_User_User1`
+    FOREIGN KEY (`followerID`)
+    REFERENCES `thesquatrack`.`User` (`idUser`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_User_has_User_User2`
+    FOREIGN KEY (`followeeID`)
+    REFERENCES `thesquatrack`.`User` (`idUser`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `thesquatrack`.`Chats`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `thesquatrack`.`Chats` ;
+
+CREATE TABLE IF NOT EXISTS `thesquatrack`.`Chats` (
+  `idMessage` INT NOT NULL AUTO_INCREMENT,
+  `idSender` INT NOT NULL,
+  `idRecipient` INT NOT NULL,
+  `msgDate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `message` TEXT NULL,
+  PRIMARY KEY (`idMessage`),
+  INDEX `fk_User_has_User_User4_idx` (`idRecipient` ASC) VISIBLE,
+  INDEX `fk_User_has_User_User3_idx` (`idSender` ASC) VISIBLE,
+  CONSTRAINT `fk_User_has_User_User3`
+    FOREIGN KEY (`idSender`)
+    REFERENCES `thesquatrack`.`User` (`idUser`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_User_has_User_User4`
+    FOREIGN KEY (`idRecipient`)
+    REFERENCES `thesquatrack`.`User` (`idUser`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

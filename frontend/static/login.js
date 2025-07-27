@@ -30,10 +30,10 @@ export function login(userName, password){
             toggleLoginCreateBoxVisibility();
             f.post(end.GET_LIFTER_BY_USER_NAME, userName)
             .then(data=>{
+                console.log(data);
                 loginLogout("in");
-                const idUser = data['idUser'];
-                admin(idUser); 
-                loadLifterFromLogin(data, userName, idUser)
+                admin(data); 
+                loadLifterFromLogin(data)
             })
             .catch(err=>console.error(err));
         } else {
@@ -46,8 +46,8 @@ export function login(userName, password){
 //-----------------------------------------------------------------------------
 // stuff to do if I log in 
 //-----------------------------------------------------------------------------
-export function admin(idUser){
-    if (idUser === 9){
+export function admin(data){
+    if (data.isAdmin){
         console.log("admin present");
         const activeLifters = document.getElementById('activeLifters');
         activeLifters.classList.toggle('visible');
@@ -66,24 +66,21 @@ export function loginLogout(state){
     }
 }
 //-----------------------------------------------------------------------------
-function loadLifterFromLogin(data, userName, id){
+function loadLifterFromLogin(data){
 
     const lifterHeaderName = document.getElementById("lifterHeaderName");
     const config = document.getElementById("lifterConfig");
     const calendar = document.querySelector(".month");
     const workout = document.querySelector(".workout");
     const addExerciseDash = document.querySelector(".addExerciseDash");
-    const info = {userName, id}
-    lifterHeaderName.innerHTML  = `${userName}`;
+    lifterHeaderName.innerHTML  = `${data.userName}`;
     config.style.visibility     = "visible";
     calendar.style.display      = "flex"
     workout.innerHTML           = '';                                 
     addExerciseDash?.classList.remove("addExerciseDashVisible"); 
-    console.log(data);
     // set current lifter
     const cLifter = new Lifter(data);
     setCurrlifter(cLifter);
-    console.log(cLifter);
     fillCalendar(year,month,lastday);    // get this lifter's training sessions
     createPrDash(cLifter.prDashSelection, cLifter.id);    
 }

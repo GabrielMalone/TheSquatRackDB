@@ -15,6 +15,7 @@
 }
 #lifterConfig {
     font-size: 2vw;
+    padding: 2%;
     color: var(--primary-remove-color);
     visibility: hidden;
     cursor: pointer;

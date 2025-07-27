@@ -600,7 +600,13 @@ def getLifterInfo(lifterID):
     if (cnx.is_connected()):
         try:
             cursor = cnx.cursor(dictionary=True, buffered=True)   # dic = format for JSON objects
-            cursor.execute('''SELECT * FROM User WHERE idUser = %s''', (lifterID,))
+            cursor.execute('' \
+            '''SELECT 
+                    idUser, userName, userFirst, userLast, Email, isAdmin, isCoach, coachedBy
+               FROM 
+                    User 
+                WHERE 
+                    idUser = %s''', (lifterID,))
             user = cursor.fetchone()
             cursor.close()
             cnx.close()
@@ -777,8 +783,6 @@ def updateSessionName(idWorkout, newTitle):
 def login(loginData):
     userName = loginData['userName']
     passWord = loginData['password']
-    if (userName == "gabe" and passWord == "Htgopb!23"):  # obvi take this out later
-        return {"message" : "success"}
     cnx = connect()
     if(cnx.is_connected()):
         try:
@@ -815,7 +819,14 @@ def getUserByUserName(userName):
     if (cnx.is_connected()):
         try:
             cursor = cnx.cursor(dictionary=True, buffered=True) 
-            cursor.execute('''SELECT idUser FROM User WHERE userName = %s''', (userName,))
+            cursor.execute(
+                '''
+                    SELECT 
+                        idUser, userName, userFirst, userLast, Email, isAdmin, isCoach, coachedBy
+                    FROM 
+                        User 
+                    WHERE 
+                        userName = %s''', (userName,))
             user = cursor.fetchone()
             cursor.close()
             cnx.close()
