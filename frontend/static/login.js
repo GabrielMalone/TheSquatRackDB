@@ -1,7 +1,8 @@
-import { f , getLifterObject, setCurrlifter, currLifter} from "./lifterSidebar.js";
+import { f , setCurrlifter} from "./lifterSidebar.js";
 import { endpoint as end, year, month, lastday } from "./config.js";
 import { fillCalendar } from "./dashboards/calendarDash.js";
 import { createPrDash } from "./dashboards/prDash.js";
+import Lifter from "./lifter.js";
 
 const loginBox = document.querySelector('.loginBoxWrapper');
 
@@ -29,19 +30,43 @@ export function login(userName, password){
             toggleLoginCreateBoxVisibility();
             f.post(end.GET_LIFTER_BY_USER_NAME, userName)
             .then(data=>{
+                loginLogout("in");
                 const idUser = data['idUser'];
-                loadLifterFromLogin(userName, idUser)
+                admin(idUser); 
+                loadLifterFromLogin(data, userName, idUser)
             })
             .catch(err=>console.error(err));
         } else {
-            console.log("incorrect password");
+            console.log(res, "incorrect password");
             // otherwise give error in the error box
         }
     })
     .catch(err=>console.error(err)); 
 }
 //-----------------------------------------------------------------------------
-function loadLifterFromLogin(userName, id){
+// stuff to do if I log in 
+//-----------------------------------------------------------------------------
+export function admin(idUser){
+    if (idUser === 9){
+        console.log("admin present");
+        const activeLifters = document.getElementById('activeLifters');
+        activeLifters.classList.toggle('visible');
+    }
+}
+//-----------------------------------------------------------------------------
+export function loginLogout(state){
+    const loginButton = document.getElementById("login");
+    const logoutButton = document.getElementById("logout");
+    if (state === "out"){
+        loginButton.classList.remove('visible');
+        logoutButton.classList.remove('visible');
+    } else {
+        loginButton.classList.add('visible');
+        logoutButton.classList.add('visible');
+    }
+}
+//-----------------------------------------------------------------------------
+function loadLifterFromLogin(data, userName, id){
 
     const lifterHeaderName = document.getElementById("lifterHeaderName");
     const config = document.getElementById("lifterConfig");
@@ -49,17 +74,17 @@ function loadLifterFromLogin(userName, id){
     const workout = document.querySelector(".workout");
     const addExerciseDash = document.querySelector(".addExerciseDash");
     const info = {userName, id}
-    // set current lifter
-    setCurrlifter(info);
-    // reset the various dashes / dash elements
     lifterHeaderName.innerHTML  = `${userName}`;
     config.style.visibility     = "visible";
     calendar.style.display      = "flex"
     workout.innerHTML           = '';                                 
     addExerciseDash?.classList.remove("addExerciseDashVisible"); 
-
+    console.log(data);
+    // set current lifter
+    const cLifter = new Lifter(data);
+    setCurrlifter(cLifter);
+    console.log(cLifter);
     fillCalendar(year,month,lastday);    // get this lifter's training sessions
-    const cLifter = getLifterObject(currLifter.id); // holds array pr selection
     createPrDash(cLifter.prDashSelection, cLifter.id);    
 }
 //-----------------------------------------------------------------------------
@@ -73,4 +98,38 @@ function toggleLoginCreateBoxVisibility(){
     if (createLifterBox.classList.contains('visible')){
         createLifterBox.toggle("visible");
     }
+}
+//-----------------------------------------------------------------------------
+// what to do when a user logs out. this is same logic as delete minus delete
+// need to clear all the various dashes
+//-----------------------------------------------------------------------------
+export function logoutEvent(){
+        loginLogout("out");       // need to actually track login/outon backend
+        const sidebar           = document.querySelector('.sidebar');
+        const activeLifters     = document.getElementById('activeLifters');
+        const calendar          = document.querySelector(".month");
+        const lifterName        = document.getElementById("lifterHeaderName");
+        const config            = document.getElementById("lifterConfig");
+        const workoutDash       = document.querySelector(".workout");
+        const dateWrapper       = document.querySelector(".dateWrapper");
+        const prDash            = document.querySelector(".prDash");
+        const prDashHeader      = document.querySelector("#prDashHeader");
+        const monthlyChartDash  = document.querySelector('.monthlyChartDash');
+        const cursorForPRDash   = document.getElementById('cursorForprDashBoard');
+        const dashHeaders       = document.querySelectorAll('.dashHeader');
+        dashHeaders.forEach(header=>header.parentNode.removeChild(header));
+        if (activeLifters.classList.contains('visible')){
+            activeLifters.classList.remove('visible');
+        }
+        setCurrlifter(null);
+        lifterName.innerHTML        = ``; 
+        config.style.visibility     = "hidden";
+        calendar.style.display      = "none";
+        workoutDash.style.display   = "none";
+        dateWrapper.style.display   = "none";
+        monthlyChartDash.innerHTML  = ``;
+        prDash.innerHTML            = ``;
+        prDashHeader.innerHTML      = '';
+        sidebar.classList.remove('visible');
+        cursorForPRDash.parentNode?.removeChild(cursorForPRDash);
 }

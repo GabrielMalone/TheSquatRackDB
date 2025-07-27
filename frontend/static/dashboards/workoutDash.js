@@ -21,7 +21,7 @@ export function getWorkoutFromWokroutID(idWorkout){
             });
             nameSession(lifts);
             createCursor(workoutContainer);           // place cursor at bottom
-            createNotesSection(lifts[0].note);
+            createNotesSection(lifts[0]?.note);
             scrollToWorkout();
         })
         .catch(error=>console.error(error));
@@ -588,6 +588,7 @@ export function scrollToWorkout(){
 // place to update the workout's name in DB, placed below date in the dash
 //-----------------------------------------------------------------------------
 function nameSession(liftInfo){
+    if (liftInfo.length === 0) return;
     const sessionNameWrapper = 
     `
     <div class="sessionNameWrapper">

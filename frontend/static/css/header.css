@@ -35,6 +35,21 @@
 .buttonContent{
     align-self: center;
 }
+#activeLifters{
+    display: none;
+}
+#activeLifters.visible{
+    display: flex;
+}
+#login.visible{
+    display: none;
+}
+#logout{
+    display: none;
+}
+#logout.visible{
+    display: flex;
+}
 .footer{
     border-top: 1px solid var(--sidebar-border-color);
 }

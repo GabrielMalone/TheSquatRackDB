@@ -78,10 +78,10 @@ export const postNewLifter = (newLifter) => {
     .then(res=>{
         if (res===200){                   // close the newLifter window if done
             document.querySelector(".newLifterWrapper").classList.toggle("visible");
-            LIFTERS.length = 0;
-            getLifters();
+            LIFTERS.length = 0; 
+            getLifters();  // basically for admin right now need to change this
             login(newLifter.userName, newLifter.password);
-        } else {                                             // 1062 error code
+        } else {                                   // 1062 duplicate error code
             errorMsg(res, errField);
         }
     })

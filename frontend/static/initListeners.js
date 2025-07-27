@@ -20,5 +20,4 @@ export function init() {
     submitNewLifterClick();       // detects new lifter button submission click
     loginClick();                                 // detects login button click
     //-------------------------------------------------------------------------
-    getLifters();                             // load lifters from the database
 }

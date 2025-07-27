@@ -115,11 +115,9 @@ function addExerciseToPrDash(event){
         && event.target.classList.contains("exerciseMenuItem")) {
             // add the exercise to the PR menu
             // will need the exercise ID and the lifter's id
-            const lifter = getLifterObject(currLifter.id);
             const idExercise = event.target.dataset.idExercise;
-            const prCursor = document.getElementById('cursorForprDashBoard');
-            lifter.prDashSelection = idExercise;
-            createPrDash(lifter.prDashSelection, lifter.id);
+            currLifter.prDashSelection = idExercise;
+            createPrDash(currLifter.prDashSelection, currLifter.id);
     }
 }
 //-----------------------------------------------------------------------------

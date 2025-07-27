@@ -1,4 +1,6 @@
 import { clearNewLifterFields } from "./newLifterSideBar.js";
+import { getLifters } from "./lifterSidebar.js";
+import { logoutEvent } from "./login.js";
 
 //-----------------------------------------------------------------------------
 // event listeners and actions for the buttons in the main header
@@ -27,6 +29,9 @@ function headerListenerEvents(e){
             newUserWindow.classList.remove('visible');
         }
     }
+    if (e.target.id === "logout"){
+        logoutEvent();
+    }
 }
 //-----------------------------------------------------------------------------
 
@@ -37,6 +42,7 @@ function addLifterEvent(){
 }
 //-----------------------------------------------------------------------------
 function activeLiftersClickEvent(){
+    getLifters();                             // load lifters from the database
     const sidebar = document.querySelector(".sidebar");
     const mainLifterWindow = document.querySelector('.lifterBox');
     sidebar.classList.toggle("visible");

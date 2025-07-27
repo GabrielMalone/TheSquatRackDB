@@ -777,7 +777,7 @@ def updateSessionName(idWorkout, newTitle):
 def login(loginData):
     userName = loginData['userName']
     passWord = loginData['password']
-    if (userName == "gabe" and passWord == "pass"):  # obvi take this out later
+    if (userName == "gabe" and passWord == "Htgopb!23"):  # obvi take this out later
         return {"message" : "success"}
     cnx = connect()
     if(cnx.is_connected()):

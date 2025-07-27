@@ -24,7 +24,8 @@ function clickLifterNameEvent(e){
     const addExerciseDash = document.querySelector(".addExerciseDash");
     const info = JSON.parse(e.target.dataset.lifter);
     // set current lifter
-    currLifter = info;
+    const cLifter = getLifterObject(info.id);     // holds array pr selection
+    currLifter = cLifter;       // make sure currlifter is of obj type Lifter
     // reset the various dashes / dash elements
     lifterHeaderName.innerHTML  = `${info.userName}`;
     config.style.visibility     = "visible";
@@ -32,14 +33,13 @@ function clickLifterNameEvent(e){
     workout.innerHTML           = '';                                 
     addExerciseDash?.classList.remove("addExerciseDashVisible"); 
     fillCalendar(year,month,lastday);    // get this lifter's training sessions
-    const cLifter = getLifterObject(currLifter.id); // holds array pr selection
-    createPrDash(cLifter.prDashSelection, cLifter.id);    
-          
+    createPrDash(cLifter.prDashSelection, cLifter.id);  
 }
 //-----------------------------------------------------------------------------
 // This method fetches all the lifters and their info from the databse
 //-----------------------------------------------------------------------------
 export const getLifters = () => {
+    LIFTERS.length = 0;
     f.get(c.LIFTERS_ENDPOINT)
     .then(lifters=>{
         fillLifters(lifters);   // create lifter objects from lifters in the db
