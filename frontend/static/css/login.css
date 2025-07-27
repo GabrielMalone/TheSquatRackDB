@@ -32,6 +32,7 @@
     flex: 1;
 }
 #loginX{
+    display: none;
     margin: 0;
     padding: 0%;
     padding-right: 0;
