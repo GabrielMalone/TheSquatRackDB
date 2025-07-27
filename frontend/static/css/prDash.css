@@ -23,11 +23,12 @@
     max-height: min-content;
 }
 .prCell {
-    aspect-ratio: 1/1;
     display: flex;
     position: relative;
     flex-direction: column;
-    width: max(2vw, 100%);
+    width: 100%;
+    min-width: 2vw;
+    aspect-ratio: 1/1;
     border: 1px solid var(--primary-border-color); 
     justify-content: center;
     overflow: visible;
@@ -71,6 +72,7 @@
 .prPresent:hover{
     background-color: var(--primary-hover-color);
     color:var(--primary-text-color);
+    cursor: pointer;
 }
 
 .prPresent:hover .prToolTip{

@@ -3,6 +3,7 @@
     display: none;
     flex-direction: row;
     position: relative;
+    background-color: var(--secondary-background-color);
 }
 .newLifterWrapper.visible{
     display: flex;

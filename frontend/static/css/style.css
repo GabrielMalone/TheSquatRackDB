@@ -48,7 +48,6 @@ input:-webkit-autofill {
     display: flex;
     flex-direction: column;
     width: 100%;
-    min-height: 100%;
     flex: 1;
 }
 @media (max-width: 800px) {

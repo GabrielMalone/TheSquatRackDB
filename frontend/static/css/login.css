@@ -1,6 +1,7 @@
 
 .loginBoxWrapper{
    display: none;
+   background-color: var(--secondary-background-color);
 }
 .loginBoxWrapper.visible{
     display: flex;
