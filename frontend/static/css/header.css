@@ -30,7 +30,7 @@
     align-self: center;
 }
 .button:hover {
-    color: var(--secondary-text-color);
+    color: var(--primary-add-color);
 }
 .buttonContent{
     align-self: center;

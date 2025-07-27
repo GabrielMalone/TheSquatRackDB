@@ -59,7 +59,8 @@ const devConfig = {
     SAVE_SESSION_NOTE: "saveSessionNote",
     UPLOAD_SET_VIDEO: "uploadSetVideo",
     UPDATE_SESSION_NAME: "updateSessionName",
-    LOGIN: "login"
+    LOGIN: "login",
+    GET_LIFTER_BY_USER_NAME : "lifterByUserName"
 
   };
   
@@ -88,7 +89,8 @@ const prodConfig = {
     SAVE_SESSION_NOTE: "saveSessionNote",
     UPLOAD_SET_VIDEO: "uploadSetVideo",
     UPDATE_SESSION_NAME: "updateSessionName",
-    LOGIN: "login"
+    LOGIN: "login",
+    GET_LIFTER_BY_USER_NAME : "lifterByUserName"
 
   };
 

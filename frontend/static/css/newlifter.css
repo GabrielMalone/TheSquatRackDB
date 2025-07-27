@@ -1,21 +1,29 @@
+
+.newLifterWrapper{
+    display: none;
+    flex-direction: row;
+    position: relative;
+}
+.newLifterWrapper.visible{
+    display: flex;
+}
 /*-------------------------------------------------------*/
 /* CREATE A LIFTER POP UP BOX
 /*-------------------------------------------------------*/
 .createLifterBox {
-    display: none;
-    border-bottom: 1px solid var(--primary-border-color);
-    overflow: visible;
-}
-.createLifterBox.visible{
     position: relative;
     display: flex;
     flex-direction: column;
     padding: 3%;
+    padding-top: 0%;
     overflow: hidden;
+    width: 50%;
+    border-bottom: 1px solid var(--primary-border-color);
+    overflow: visible;
 }
-
 .createLifterBoxHeader {
     display: flex;
+    flex: 1;
     flex-direction: row;
 }
 .X {
@@ -87,4 +95,28 @@ input::placeholder {
     color: var(--secondary-text-color);
     font-size: clamp(8pt, 2vmin, 24pt);
     align-self: center;
+}
+
+/*-------------------------------------------------------*/
+/* CREATE A LIFTER INFO BOX
+/*-------------------------------------------------------*/
+.newLifterInfoBox{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    padding: 3%;
+    padding-top: 0;
+    border-left: 1px solid var(--primary-border-color);
+    border-bottom: 1px solid var(--primary-border-color);
+}
+.newLifterInfoBoxTitle{
+    margin-top: min(3vh, 6vw);
+    font-size: clamp(10pt, 2vw, 48pt);
+    color: var(--secondary-text-color)
+}
+.newLifterInfoBoxMain{
+    font-size: clamp(6pt, 1.25vw, 16pt);
+    color: var(--secondary-text-color); 
+    padding:4%;
+    filter: brightness(0.7);
 }

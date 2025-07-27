@@ -1,13 +1,27 @@
-  <!-- create a lifter box -->
-  <div class="loginBox">
-    <div class="loginBoxHeader">
-      <div id="loginBoxTitle">Login</div>
-      <div class="X" id="loginX">X</div>
-    </div>
-    <form class="loginBoxFields">
-      <input type="text" class="inputField" id="loginUserName"  placeholder="Username ">
-      <input type="password" class="inputField" id="loginPassword"  placeholder="Password">
-      <input type="submit" class="button" id="loginLifter" value="login">
-      <div id="submitErrorMsg"></div>
-    </form>
-  </div>
+<!-- create a lifter box -->
+<div class="loginBoxWrapper">
+	<div class="loginBox">
+		<div class="loginBoxHeader">
+			<div id="loginBoxTitle">Login</div>
+			<div class="X" id="loginX">X</div>
+		</div>
+		<form class="loginBoxFields">
+				<input type="text" class="inputField" id="loginUserName"  placeholder="Username ">
+				<input type="password" class="inputField" id="loginPassword"  placeholder="Password">
+				<input type="submit" class="button" id="loginLifter" value="login">
+				<div id="submitErrorMsg"></div>
+		</form>
+		<div class="loginBoxInfoBox">
+			<div class="loginBoxInfoTitle">Forgot password ?</div>
+			<form class="createLifterFields" id="pwResetForm">
+				<input type="text" class="inputField" id="inputPwReplaceEmail" placeholder="Enter your email" type="email">
+				<input type="submit" class="button" id="submitEmailForReset" value="submit reset">
+				<div id="submitErrorMsgOnEmailForPWreset"></div>
+			</form>
+		</div>
+	</div>
+	<div class="loginWelcomeBox">
+		<div class="loginWelcomeTitle">Welcome to <i>The Squat Rack</i></div>
+		<div class="loginWelcomeText"></div>
+	</div>
+</div> 

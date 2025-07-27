@@ -1,36 +1,54 @@
+
+.loginBoxWrapper{
+   display: none;
+}
+.loginBoxWrapper.visible{
+    display: flex;
+    flex-direction: row;
+}
+
 .loginBox{
-    display: none;
+    display: flex;
     position: relative;
     flex-direction: column;
-    padding: 3%;
     border-bottom: 1px solid var(--primary-border-color);
-}
-.loginBox.visible{
-    display: flex;
+    width: 50%;
+    padding: 3%;
+    padding-top: 0;
+    font-size: clamp(10pt, 2vw, 48pt);
 }
 .loginBoxHeader{
-    margin-top: min(3vh, 6vw);
     display: flex;
     flex-direction: row;
     flex: 1;
+    padding: 3%;
+    padding-right: 0;
     align-items: center;
-    font-size: clamp(8pt, 2vmin, 24pt);
 }
 #loginBoxTitle{
+    margin-top: min(3vh, 6vw);
     display: flex;
-    color: var(--primary-text-color);
+    color: var(--secondary-text-color);
     flex: 1;
 }
 #loginX{
     margin: 0;
-    padding: 0;
+    padding: 1%;
+    padding-right: 0;
     justify-self: center;
 }
 .loginBoxFields{
-    margin-top: 5%;
+    margin-top: 2%;
+    margin-left: 2%;
     display: flex;
     flex-direction: column;
-    gap: 2vw;
+    gap: 1vw;
+}
+#loginUserName{
+    padding: 3%;
+}
+#loginPassword{
+    padding: 3%;
 }
 #loginLifter {
     margin-top: 2%;
@@ -42,5 +60,46 @@
     background-color: transparent;
 }
 #loginLifter:hover {
-    background-color: var(--primary-add-color);
+    color: var(--primary-add-color);
+}
+/*-------------------------------------------------------*/
+/* LOGIN INFO BOX
+/*-------------------------------------------------------*/
+.loginBoxInfoBox{
+    display: flex;
+    flex-direction: column;
+    padding-top: 0;
+    margin-left: 2%;
+}
+.loginBoxInfoTitle{
+    margin-top: min(3vh, 6vw);
+    font-size: clamp(8pt, 1vw, 24pt);
+    color: var(--secondary-text-color)
+}
+#inputPwReplaceEmail{
+    padding: 3%;
+}
+#submitEmailForReset{
+    margin-top: 2%;
+    padding: 3%;
+    align-self: center;
+    aspect-ratio: 2/1;
+    border: none;
+    color: var(--primary-text-color);
+    background-color: transparent;
+}
+#submitEmailForReset:hover{
+    color: var(--primary-add-color);
+}
+.loginWelcomeBox{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    padding: 3%;
+    border-left: 1px solid var(--primary-border-color);
+    border-bottom: 1px solid var(--primary-border-color);
+}
+.loginWelcomeTitle{
+    font-size: clamp(6pt, 2vw, 48pt);
+    color: var(--secondary-text-color);
 }

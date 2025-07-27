@@ -14,8 +14,7 @@ function headerListenerEvents(e){
     if (e.target.id === "addLifter" || e.target.id === "newLifterX"){
         addLifterEvent();
          //close login if open 
-        const loginBox = document.querySelector('.loginBox');
-        console.log(loginBox);
+        const loginBox = document.querySelector('.loginBoxWrapper');
         if (loginBox.classList.contains('visible')){
             loginBox.classList.remove('visible');
         }
@@ -23,7 +22,7 @@ function headerListenerEvents(e){
     if (e.target.id === "login" || e.target.id === "loginX"){
         loginClickEvent();
         //close new user if open 
-        const newUserWindow = document.querySelector('.createLifterBox');
+        const newUserWindow = document.querySelector('.newLifterWrapper');
         if (newUserWindow.classList.contains('visible')){
             newUserWindow.classList.remove('visible');
         }
@@ -32,7 +31,7 @@ function headerListenerEvents(e){
 //-----------------------------------------------------------------------------
 
 function addLifterEvent(){
-    const addLifterBox = document.querySelector(".createLifterBox");
+    const addLifterBox = document.querySelector(".newLifterWrapper");
     clearNewLifterFields();
     addLifterBox.classList.toggle("visible"); // Toggle a class
 }
@@ -49,6 +48,6 @@ function activeLiftersClickEvent(){
 }
 //-----------------------------------------------------------------------------
 function loginClickEvent(){
-    const loginBox = document.querySelector('.loginBox');
+    const loginBox = document.querySelector('.loginBoxWrapper');
     loginBox.classList.toggle('visible');
 }

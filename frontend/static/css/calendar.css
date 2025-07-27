@@ -57,7 +57,7 @@
     background-color: none;
 }
 .today {
-    outline: 1px solid var(--primary-hover-color);
+    outline: 1px solid var(--secondary-border-color);
 
 }
 .squatDay{

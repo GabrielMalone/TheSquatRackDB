@@ -194,8 +194,6 @@ function dayListener(e){
             createCursor(workoutArea);     // setup for starting a new workout
         }
         workoutArea.classList.toggle('visible');
-        const sideBar = document.querySelector('.sidebar');
-        sideBar.classList.add('visible');
     }
 }
 //-----------------------------------------------------------------------------

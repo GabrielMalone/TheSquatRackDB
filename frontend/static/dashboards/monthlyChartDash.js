@@ -65,7 +65,7 @@ function createChartElement(chartType, chartTitle, chartNumber){
             <div class="${chartType}Total"></div>
         </div>
         <canvas class="monthlyChart" id="chart${chartType}"></canvas>`);
-        monthlyChartDash.appendChild(chart); 
+        monthlyChartDash?.appendChild(chart); 
 }
 //-----------------------------------------------------------------------------
 function buildChartHeader(){
@@ -87,9 +87,9 @@ function minimizeMchartDash(){
         loadMonthlyCharts(currLifter.id, curmonth, curyear);
     }
     const minimizerWrapper = document.getElementById(`${c.mChartMinimizerId}`);
-    if (minimizerWrapper.innerHTML === `${d.minimizerIcon}`){
+    if (minimizerWrapper && minimizerWrapper.innerHTML === `${d.minimizerIcon}`){
         minimizerWrapper.innerHTML = `${d.expanderIcon}`;
-    } else {
+    } else if (minimizerWrapper) {
         minimizerWrapper.innerHTML = `${d.minimizerIcon}`;
     }
 }

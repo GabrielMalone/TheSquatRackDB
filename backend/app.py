@@ -86,6 +86,11 @@ def getUser():
     return jsonify(lifterInfo)
 #------------------------------------------------------------------------------
 
+@app.route("/lifterByUserName", methods=["POST"])
+def getUserByUserName():
+    userName = request.get_json();
+    return jsonify(queries.getUserByUserName(userName))
+#------------------------------------------------------------------------------
 @app.route("/monthlyWorkouts", methods=["POST"])
 def monthlyWorkouts():
     data = request.get_json()

@@ -1,6 +1,7 @@
 import { f } from "./lifterSidebar.js";
 import { endpoint as c } from "./config.js";
 import { LIFTERS, getLifters } from "./lifterSidebar.js";
+import { login } from "./login.js";
 //-----------------------------------------------------------------------------
 // This clears all the input fields for the create new lifter window
 //-----------------------------------------------------------------------------
@@ -54,9 +55,10 @@ export const postNewLifter = (newLifter) => {
     f.post(c.LIFTERS_ENDPOINT, newLifter)
     .then(res=>{
         if (res===200){                   // close the newLifter window if done
-            document.querySelector(".createLifterBox").classList.toggle("visible");
+            document.querySelector(".newLifterWrapper").classList.toggle("visible");
             LIFTERS.length = 0;
             getLifters();
+            login(newLifter.userName, newLifter.password);
         } else {                                             // 1062 error code
             errField.innerText = "username already taken"
         }

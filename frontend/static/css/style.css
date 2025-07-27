@@ -14,6 +14,13 @@ ul {
 li {
     padding-left: 0%;             /*these indent too much*/
 }
+input:-webkit-autofill {
+  background-color: var(--primary-background-color) !important;
+  color: black !important;
+  box-shadow: 0 0 0px 1000px white inset !important;
+  -webkit-text-fill-color: black !important;
+  transition: background-color 5000s ease-in-out 0s; /* hack to delay autofill color */
+}
 /*-------------------------------------------------------*/
 /* MAIN BROWSER CONTAINER
 /*-------------------------------------------------------*/

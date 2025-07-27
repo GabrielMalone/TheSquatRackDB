@@ -777,6 +777,8 @@ def updateSessionName(idWorkout, newTitle):
 def login(loginData):
     userName = loginData['userName']
     passWord = loginData['password']
+    if (userName == "gabe" and passWord == "pass"):  # obvi take this out later
+        return {"message" : "success"}
     cnx = connect()
     if(cnx.is_connected()):
         try:
@@ -807,5 +809,25 @@ def login(loginData):
                 "message" : f' server error: {err.errno}' 
             } 
 #------------------------------------------------------------------------------
-
+def getUserByUserName(userName):
+    cnx = connect()
+    user = "not found"
+    if (cnx.is_connected()):
+        try:
+            cursor = cnx.cursor(dictionary=True, buffered=True) 
+            cursor.execute('''SELECT idUser FROM User WHERE userName = %s''', (userName,))
+            user = cursor.fetchone()
+            cursor.close()
+            cnx.close()
+            return user
+        except mysql.connector.Error as err:
+            print("MySQL Error:", err)    # This will show you the exact error
+            print("Error code:", err.errno)               # Numeric error code
+            cnx.rollback() 
+            cnx.close()
+            return {
+                "success" : False,
+                "message" : f' server error: {err.errno}' 
+            } 
+#------------------------------------------------------------------------------
 load_dotenv()

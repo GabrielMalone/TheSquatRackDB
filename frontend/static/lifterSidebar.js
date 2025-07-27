@@ -4,7 +4,8 @@ import fetchWrapper from "./fetchWrapper.js";
 import {fillCalendar } from "./dashboards/calendarDash.js";
 import { createPrDash } from "./dashboards/prDash.js";
 
-export const f = new fetchWrapper(c.API_URL);
+export const f = new fetchWrapper(c.API_URL);  // this should prob be in config
+
 export const LIFTERS = [];               // list to hold all the lifter objects
 export let currLifter = {};        // track current lifter selected by the user
 
@@ -30,12 +31,11 @@ function clickLifterNameEvent(e){
     calendar.style.display      = "flex"
     workout.innerHTML           = '';                                 
     addExerciseDash?.classList.remove("addExerciseDashVisible"); 
-
     fillCalendar(year,month,lastday);    // get this lifter's training sessions
     const cLifter = getLifterObject(currLifter.id); // holds array pr selection
-    createPrDash(cLifter.prDashSelection, cLifter.id);          
+    createPrDash(cLifter.prDashSelection, cLifter.id);    
+          
 }
-
 //-----------------------------------------------------------------------------
 // This method fetches all the lifters and their info from the databse
 //-----------------------------------------------------------------------------
@@ -126,3 +126,6 @@ export function getLifterObject(lifterID){
     }
 }
 //------------------------------------------------------------------------------
+export function setCurrlifter(lifter) {
+  currLifter = lifter;
+}
