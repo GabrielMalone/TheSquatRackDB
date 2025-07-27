@@ -3,6 +3,7 @@ import { endpoint as c, year, month, lastday } from "./config.js";
 import fetchWrapper from "./fetchWrapper.js";
 import {fillCalendar } from "./dashboards/calendarDash.js";
 import { createPrDash } from "./dashboards/prDash.js";
+import { loginLogout } from "./login.js";
 
 export const f = new fetchWrapper(c.API_URL);  // this should prob be in config
 
@@ -82,13 +83,16 @@ export function getLifterListeners(){
 }
 //------------------------------------------------------------------------------
 // the action for clicking on a lifter's config button
+// for now this just deletes the user
 //------------------------------------------------------------------------------
 export const configEventListener = () => {
     const config = document.getElementById("lifterConfig");
     config.addEventListener("click", configClickEvent);
 }
 function configClickEvent(){
-    const sidebar       = document.querySelector('.sidebar');
+    loginLogout("out");    
+    const createLifterButon = document.getElementById('addLifter')
+    const loginBox = document.querySelector('.loginBoxWrapper');  
     const calendar      = document.querySelector(".month");
     const lifterName    = document.getElementById("lifterHeaderName");
     const config        = document.getElementById("lifterConfig");
@@ -98,6 +102,13 @@ function configClickEvent(){
     const prDashHeader  = document.querySelector("#prDashHeader");
     const monthlyChartDashWrapper = document.querySelector('.monthlyChartDashWrapper');
     const cursorForPRDash = document.getElementById('cursorForprDashBoard');
+    const dashHeaders       = document.querySelectorAll('.dashHeader');
+    loginBox.classList.remove('hidden');
+    createLifterButon.classList.remove('hidden');
+    dashHeaders.forEach(header=>header.parentNode.removeChild(header));
+    if (activeLifters.classList.contains('visible')){
+        activeLifters.classList.remove('visible');
+    }
     f.delete(c.LIFTERS_ENDPOINT, currLifter.id)    // logic to delete currlifter
     .then(()=>{
         LIFTERS.length = 0;
