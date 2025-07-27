@@ -16,13 +16,12 @@
     width: 50%;
     padding: 3%;
     padding-top: 0;
-    font-size: clamp(10pt, 2vw, 48pt);
+    font-size: clamp(10pt, 1.5vw, 48pt);
 }
 .loginBoxHeader{
     display: flex;
     flex-direction: row;
     flex: 1;
-    padding: 3%;
     padding-right: 0;
     align-items: center;
 }
@@ -34,26 +33,25 @@
 }
 #loginX{
     margin: 0;
-    padding: 1%;
+    padding: 0%;
     padding-right: 0;
     justify-self: center;
 }
 .loginBoxFields{
     margin-top: 2%;
-    margin-left: 2%;
     display: flex;
     flex-direction: column;
     gap: 1vw;
 }
 #loginUserName{
-    padding: 3%;
+    padding: 2%;
 }
 #loginPassword{
-    padding: 3%;
+    padding: 2%;
 }
 #loginLifter {
     margin-top: 2%;
-    padding: 3%;
+    padding: 2%;
     align-self: center;
     aspect-ratio: 2/1;
     border: none;
@@ -75,14 +73,13 @@
 .loginBoxInfoTitle{
     margin-top: min(3vh, 6vw);
     font-size: clamp(8pt, 1vw, 24pt);
-    color: var(--secondary-text-color)
+    color: var(--secondary-text-color);
 }
 #inputPwReplaceEmail{
-    padding: 3%;
+    padding: 2%;
 }
 #submitEmailForReset{
-    margin-top: 2%;
-    padding: 3%;
+    padding: 2%;
     align-self: center;
     aspect-ratio: 2/1;
     border: none;

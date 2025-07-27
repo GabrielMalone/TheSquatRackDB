@@ -40,7 +40,7 @@
 }
 #newLifterTitle {
     margin-top: min(3vh, 6vw);
-    font-size: clamp(8pt, 2vmin, 24pt);
+    font-size: clamp(8pt, 1.5vw, 24pt);
     flex: 1;
     color:var(--primary-text-color);
 }
