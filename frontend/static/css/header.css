@@ -50,6 +50,9 @@
 #logout.visible{
     display: flex;
 }
+#addLifter.hidden{
+    display: none;
+}
 .footer{
     border-top: 1px solid var(--sidebar-border-color);
 }

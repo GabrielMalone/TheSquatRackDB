@@ -1,13 +1,12 @@
 
 .loginBoxWrapper{
-   display: none;
+   display: flex;
+   flex-direction: row;
    background-color: var(--secondary-background-color);
 }
-.loginBoxWrapper.visible{
-    display: flex;
-    flex-direction: row;
+.loginBoxWrapper.hidden{
+    display: none;
 }
-
 .loginBox{
     display: flex;
     position: relative;
@@ -61,6 +60,7 @@
 }
 #loginLifter:hover {
     color: var(--primary-add-color);
+    cursor: pointer;
 }
 #loginErrorMsg{
     display: flex;

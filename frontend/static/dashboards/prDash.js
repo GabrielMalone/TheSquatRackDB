@@ -3,7 +3,7 @@ import { endpoint as c, DoW, months, PR_DASH_VARIABLES as p, DASH_HEADER_VARS as
 import { fillCalendar } from "./calendarDash.js";
 import { createrWorkoutHeader, getWorkoutFromWokroutID, scrollToWorkout } from "./workoutDash.js";
 import { fillOutExerciseSelectMenu, createExerciseDash } from "./exerciseSelectDash.js";
-import { f, getLifterObject } from "../lifterSidebar.js";
+import { currLifter, f, getLifterObject } from "../lifterSidebar.js";
 import { createCursor } from "../cursor.js";
 import { drawHistoricalChart } from "../charts/lifetimeLiftDataChart.js";
 import { drawRepPrHistoryChart } from "../charts/repPrHistoryChart.js";
@@ -83,12 +83,10 @@ function prDashClickEvent(e){
 function removePrLift(e){
     if (e.target.classList.contains("prLiftName")){
         console.log(e.target.parentNode);
-        const prLift = e.target.parentNode;                    // lift clicked for removal
+        const prLift = e.target.parentNode;         // lift clicked for removal
         const liftId = prLift.dataset.liftId;    // need lift id to remove lift
-        const idUser = prLift.dataset.idUser;                    // and user id
-        const curLifter = getLifterObject(idUser);     // get curlifters object
-        curLifter.removePrDashSelection(liftId); // remove lift from pr selects
-        createPrDash(curLifter.prDashSelection, curLifter.id);  // rebuild dash
+        currLifter.removePrDashSelection(liftId);// remove lift from pr selects
+        createPrDash(currLifter.prDashSelection, currLifter.id) // rebuild dash
     }
 }
 //-----------------------------------------------------------------------------

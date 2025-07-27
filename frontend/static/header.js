@@ -17,8 +17,8 @@ function headerListenerEvents(e){
         addLifterEvent();
          //close login if open 
         const loginBox = document.querySelector('.loginBoxWrapper');
-        if (loginBox.classList.contains('visible')){
-            loginBox.classList.remove('visible');
+        if (!loginBox.classList.contains('hidden')){
+            loginBox.classList.add('hidden');
         }
     }
     if (e.target.id === "login" || e.target.id === "loginX"){
@@ -38,7 +38,7 @@ function headerListenerEvents(e){
 function addLifterEvent(){
     const addLifterBox = document.querySelector(".newLifterWrapper");
     clearNewLifterFields();
-    addLifterBox.classList.toggle("visible"); // Toggle a class
+    addLifterBox.classList.add("visible"); // Toggle a class
 }
 //-----------------------------------------------------------------------------
 function activeLiftersClickEvent(){
@@ -55,5 +55,5 @@ function activeLiftersClickEvent(){
 //-----------------------------------------------------------------------------
 function loginClickEvent(){
     const loginBox = document.querySelector('.loginBoxWrapper');
-    loginBox.classList.toggle('visible');
+    loginBox.classList.remove('hidden');
 }

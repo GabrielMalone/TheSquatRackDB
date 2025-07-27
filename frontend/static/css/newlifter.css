@@ -28,6 +28,7 @@
     flex-direction: row;
 }
 .X {
+    display: none;
     font-size: clamp(8pt, 2vmin, 24pt);
     color: var(--primary-remove-color);
     margin-top: min(3vh, 6vw);
@@ -90,7 +91,7 @@ input::placeholder {
     color: var(--primary-text-color);
 }
 #submitNewLifter:hover {
-    background-color: var(--primary-add-color);
+    color: var(--primary-add-color);
 }
 #submitErrorMsg {
     color: var(--secondary-text-color);

@@ -24,14 +24,13 @@ function loginEvent(e){
 }
 //-----------------------------------------------------------------------------
 export function login(userName, password){
-    document.getElementById('loginErrorMsg').innerText = ``;
+    document.getElementById('loginErrorMsg').innerText = ``; // reset error msg
     f.post(end.LOGIN, {userName, password}) // verify pw with hashpw on backend
         .then(res=>{
             if (res.message === "success") {
                 toggleLoginCreateBoxVisibility();
                 f.post(end.GET_LIFTER_BY_USER_NAME, userName)
                 .then(data=>{
-                    console.log(data);
                     loginLogout("in");
                     admin(data); 
                     loadLifterFromLogin(data)
@@ -40,15 +39,12 @@ export function login(userName, password){
             } else {
                 const errField = document.getElementById('loginErrorMsg');
                 errField.innerText = "incorrect username or password";
-                // otherwise give error in the error box
-                console.log(errField);
             }
         })
         .catch(err=>{
             console.error(err);
             const errField = document.getElementById('loginErrorMsg');
             errField.innerText = "incorrect username or password";
-            console.log(errField);
         }); 
 }
 //-----------------------------------------------------------------------------
@@ -96,13 +92,15 @@ function loadLifterFromLogin(data){
 // toggle the visibility of the create/login boxes at appropriate times
 //-----------------------------------------------------------------------------
 function toggleLoginCreateBoxVisibility(){
-    if (loginBox.classList.contains('visible')){
-        loginBox.classList.toggle('visible');
+    if (!loginBox.classList.contains('hidden')){
+        loginBox.classList.add('hidden');
     }
     const createLifterBox = document.querySelector(".newLifterWrapper")
     if (createLifterBox.classList.contains('visible')){
-        createLifterBox.toggle("visible");
+        createLifterBox.remove("visible");
     }
+    const createLifterButon = document.getElementById('addLifter');
+    createLifterButon.classList.add('hidden');
 }
 //-----------------------------------------------------------------------------
 // what to do when a user logs out. this is same logic as delete minus delete
@@ -110,6 +108,8 @@ function toggleLoginCreateBoxVisibility(){
 //-----------------------------------------------------------------------------
 export function logoutEvent(){
         loginLogout("out");       // need to actually track login/outon backend
+        loginBox.classList.remove('hidden');
+        const createLifterButon = document.getElementById('addLifter')
         const sidebar           = document.querySelector('.sidebar');
         const activeLifters     = document.getElementById('activeLifters');
         const calendar          = document.querySelector(".month");
@@ -122,6 +122,7 @@ export function logoutEvent(){
         const monthlyChartDash  = document.querySelector('.monthlyChartDash');
         const cursorForPRDash   = document.getElementById('cursorForprDashBoard');
         const dashHeaders       = document.querySelectorAll('.dashHeader');
+        createLifterButon.classList.remove('hidden');
         dashHeaders.forEach(header=>header.parentNode.removeChild(header));
         if (activeLifters.classList.contains('visible')){
             activeLifters.classList.remove('visible');
