@@ -126,9 +126,10 @@
 }
 .dateWrapper {
     display: flex;
-    padding: 5%;
     flex-direction: row;
     position: relative;
+    padding-bottom: 6%;
+    padding-top: 3%;
 }
 .monthTitle{
     font-size: clamp(10px, 3vw, 36px);
