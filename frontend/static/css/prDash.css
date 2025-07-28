@@ -1,11 +1,12 @@
 .prDash {
     display: flex;
     flex-direction: column;
-    flex:0;
+    flex: 1;
     margin-bottom: 1%;
     position: relative;
-    font-size: 1vw;
     margin-right: 1%;
+    padding-right: 1%;
+    padding-left: 1%;;
 }
 .prDashVisible {
     display: none;
@@ -20,18 +21,15 @@
     display: flex;
     position: relative;
     flex-direction: row;
-    max-height: min-content;
 }
 .prCell {
     display: flex;
     position: relative;
-    flex-direction: column;
-    width: 100%;
-    min-width: 2vw;
+    flex: 1;
     aspect-ratio: 1/1;
     border: 1px solid var(--primary-border-color); 
     justify-content: center;
-    overflow: visible;
+    overflow: hidden;
     user-select: none;
     font-size: clamp(4pt, 0.75vw, 16pt);
     margin: 0.25%;
@@ -59,7 +57,7 @@
     overflow: hidden;
 }
 .prLiftName{
-    align-self: flex-end;
+    align-self: flex-start;
     cursor: pointer;
 }
 .prLiftName:hover {
