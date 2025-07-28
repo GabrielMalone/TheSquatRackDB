@@ -4,7 +4,7 @@
 .lifterBoxHeader{
     display: flex;
     position: relative;
-    padding: 1.25vw;
+    padding: 2%;
     flex-direction: row;
     border-bottom: 1px solid var(--primary-border-color);
 }

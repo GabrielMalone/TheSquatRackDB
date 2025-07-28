@@ -4,8 +4,10 @@
 .sidebar {
     display: none;
     flex-direction: column;
-    min-width: 30%;
+    position: relative;
+    min-width: 25%;
     max-width: 30%;
+    flex: 1;
     justify-content: flex-start;
     overflow-y: scroll;
     overflow-x: hidden;
@@ -23,19 +25,20 @@
 .lifterSidebarDashWrapper{
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 .findLifterWrapper{
     display: flex;
     border-bottom: 1px solid var(--primary-border-color);
     box-sizing: border-box;
     color: var(--primary-text-color);
-    padding: 1vw;
+    padding: 3%;
 }
 .findLifterForm{
     display: flex;
     flex-direction: row;
     flex: 1;
-    padding: 0;
+    max-width: 95%;
 }
 .findLifterInput{
     display: flex;
@@ -45,7 +48,7 @@
     border-radius: 0px;
     border: none;
     color: var(--secondary-text-color);
-    padding: 1vw;
+    padding: 4%;
 }
 .findLifterInput:hover{
     outline: 1px solid var(--primary-add-color);

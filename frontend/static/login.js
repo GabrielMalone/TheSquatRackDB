@@ -87,6 +87,7 @@ function loadLifterFromLogin(data){
     setCurrlifter(cLifter);
     fillCalendar(year,month,lastday);    // get this lifter's training sessions
     createPrDash(cLifter.prDashSelection, cLifter.id);    
+    setTimeout(()=>{    document.getElementById('headerTitle').scrollIntoView({"behavior" : "smooth"});}, 200);
 }
 //-----------------------------------------------------------------------------
 // toggle the visibility of the create/login boxes at appropriate times

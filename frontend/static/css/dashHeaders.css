@@ -9,6 +9,7 @@
     min-width: 85%;
     border-bottom: 1px solid var(--primary-border-color);
     margin-bottom: 1%;
+    margin-top: 10%;
     user-select: none;
 }
 .dashHeaderTitle {
