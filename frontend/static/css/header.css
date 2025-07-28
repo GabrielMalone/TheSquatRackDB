@@ -15,27 +15,36 @@
     padding-bottom: 2%;
     margin-left: 1%;
 }
-
-.headerButtons {
+.headerButtonsWrapper {
     display: flex;
     flex-direction: row;
-    gap: 2vw;
-    margin-right: 2vw;
+    margin-right: 1vw;
+    gap: 1vw;
 }
+
 .button {
     display: flex;
     flex-direction: row;
-    font-size: clamp(6px, 1rem, 20px);
+    font-size: clamp(6pt, 1vw, 20pt);
     cursor: pointer;
     color:var(--primary-text-color);
-    align-self: center;
 }
 .button:hover {
     color: var(--primary-add-color);
 }
-.buttonContent{
-    align-self: center;
+
+.headerButton{
+    flex-wrap: nowrap;
 }
+.buttonContent{
+    display: flex;
+    flex-wrap: nowrap;
+    align-self: center;
+    flex: 1;
+    user-select: none;
+    pointer-events: none;
+}
+
 #activeLifters{
     display: none;
 }
