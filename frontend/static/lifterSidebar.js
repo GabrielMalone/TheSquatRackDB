@@ -4,6 +4,7 @@ import fetchWrapper from "./fetchWrapper.js";
 import {fillCalendar } from "./dashboards/calendarDash.js";
 import { createPrDash } from "./dashboards/prDash.js";
 import { loginLogout } from "./login.js";
+import { lifterSidebarSearch } from "./htmlTemplates.js";
 
 export const f = new fetchWrapper(c.API_URL);  // this should prob be in config
 
@@ -46,6 +47,7 @@ export const getLifters = () => {
         fillLifters(lifters);   // create lifter objects from lifters in the db
         fillMenu()                     // fill out the menu with active lifters
         getLifterListeners();
+
     })
     .catch(rejection=>{
         console.error(rejection);
@@ -55,18 +57,25 @@ export const getLifters = () => {
 // fills the div id= "main menu" with names from each User object created
 //-----------------------------------------------------------------------------
 export function fillMenu(){
-    let menu = document.getElementById("lifterMenu");
-    menu.innerHTML =
-        `<ul>
-        ${LIFTERS.map(lifter=>
-        `<li class="lifterName" 
-        id="${lifter.userName}"
-        data-lifter='${JSON.stringify({userName:lifter.userName, id:lifter.id})}'>
-        ${lifter.userName}
-        </li>`)
-        .sort()
-        .join("")}
-        </ul>`;
+    const menu = document.getElementById("lifterMenu");
+    menu.innerHTML = '';
+    // insert search menu at top of sidebar
+    menu.insertAdjacentHTML("afterbegin", lifterSidebarSearch);
+    const menuDashWrapper = menu.querySelector('.lifterSidebarDashWrapper');
+    // then fill names of active lifters below
+    menuDashWrapper.insertAdjacentHTML("beforeend",
+        `<div class="activeLifterNamesWrapper">
+            <ul>
+                ${LIFTERS.map(lifter=>
+                `<li class="lifterName" 
+                id="${lifter.userName}"
+                data-lifter='${JSON.stringify({userName:lifter.userName, id:lifter.id})}'>
+                ${lifter.userName}
+                </li>`)
+                .sort()
+                .join("")}
+            </ul>
+        </div>`);
 }
 //------------------------------------------------------------------------------
 // create a LIFTER object from the backend data

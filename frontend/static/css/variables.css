@@ -3,16 +3,17 @@
     --primary-background-color: #131313;
     --primary-background-hover-color:#333;
     --secondary-background-color: #101010;
+    --tertiary-background-color: #121212;
 
-    --primary-border-color:#222;
+    --primary-border-color:#2e2e2e;
     --primary-border-hover-color: mintcream;
  
     --secondary-border-color:#555;
     --secondary-border-hover-color:purple;
     
     --primary-text-color: mintcream;
-    --primary-text-hover-color:orangered;
-    --primary-text-background-hover-color:brown;
+    --primary-text-hover-color:black;
+    --primary-text-background-hover-color:yellowgreen;
     --secondary-text-color: #ccc;
 
     --tertiary-text-color: orange;

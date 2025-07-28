@@ -4,19 +4,65 @@
 .sidebar {
     display: none;
     flex-direction: column;
-    flex: 1;
-    width: 15%;
-    max-width: 15%;
+    min-width: 30%;
+    max-width: 30%;
     justify-content: flex-start;
     overflow-y: scroll;
+    overflow-x: hidden;
     border-left: 1px solid var(--primary-border-color);
+    background-color: var(--secondary-background-color);
+    z-index: 2;
 }
 .sidebar.visible{
     display:flex;
 }
+
+/*-------------------------------------------------------*/
+/* SEACH MENU IN SIDEBAR
+/*-------------------------------------------------------*/
+.lifterSidebarDashWrapper{
+    display: flex;
+    flex-direction: column;
+}
+.findLifterWrapper{
+    display: flex;
+    border-bottom: 1px solid var(--primary-border-color);
+    box-sizing: border-box;
+    color: var(--primary-text-color);
+    padding: 1vw;
+}
+.findLifterForm{
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    padding: 0;
+}
+.findLifterInput{
+    display: flex;
+    flex: 1;
+    outline: 1px solid var(--primary-border-color);   
+    background-color: var(--primary-background-color);
+    border-radius: 0px;
+    border: none;
+    color: var(--secondary-text-color);
+    padding: 1vw;
+}
+.findLifterInput:hover{
+    outline: 1px solid var(--primary-add-color);
+}
+#searchLifterButton{
+    margin-left: 1vw;
+    font-size: clamp(14pt, 2vw, 32pt);
+}
+
 /*-------------------------------------------------------*/
 /* LIFTER NAME IN THE SIDEBAR
 /*-------------------------------------------------------*/
+.activeLifterNamesWrapper{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
 .lifterName {
     color: rgba(245, 255, 250, 0.751);
     font-size: clamp(12px, 1vw, 24px);
@@ -28,4 +74,5 @@
 }
 .lifterName:hover {
     background-color: var(--primary-text-background-hover-color);
+    color: var(--primary-text-hover-color);
 }

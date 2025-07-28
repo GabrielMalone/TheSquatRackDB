@@ -1,6 +1,6 @@
 import { clearNewLifterFields } from "./newLifterSideBar.js";
 import { getLifters } from "./lifterSidebar.js";
-import { logoutEvent } from "./login.js";
+import { logoutEvent, login } from "./login.js";
 
 //-----------------------------------------------------------------------------
 // event listeners and actions for the buttons in the main header
@@ -8,6 +8,7 @@ import { logoutEvent } from "./login.js";
 export function headerListeners(){
     const body = document.querySelector('.container');
     body.addEventListener("click", headerListenerEvents)
+    login("stella", "stellathecat");    // for dev purposes / quick admin login
 }
 function headerListenerEvents(e){
     if (e.target.id === "activeLifters"){

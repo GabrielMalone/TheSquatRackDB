@@ -85,7 +85,7 @@
 }
 .exerciseMenuItem:hover{
     background-color: var(--primary-text-background-hover-color);
-    color: var(--primary-text-color);
+    color: var(--primary-text-hover-color);
 }
 .exerciseDescriptionWrapper{
     display: flex;

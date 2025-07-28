@@ -7,7 +7,7 @@ export const setUpdateFormTemplateHTML = (liftInfo, unit) =>
             <input class="setInfoField setWeightUpdate" id="weight${liftInfo.setID}" type="text" value="${liftInfo.weight}">
         </div>
         <div class="inputWrapper">
-        <div class="inputTag">REP</div>
+            <div class="inputTag">REP</div>
             <input class="setInfoField setRepsUpdate" id="reps${liftInfo.setID}" type="text" value="${liftInfo.reps}">
         </div>
         <div class="inputWrapper">
@@ -62,3 +62,15 @@ export const sessionTitleFormHTML = (liftInfo) =>
     </div>
 </form>
 `
+//-----------------------------------------------------------------------------
+export const lifterSidebarSearch = 
+    `
+    <div class="lifterSidebarDashWrapper">
+        <div class="findLifterWrapper">
+            <form class="findLifterForm">
+                <input class="setInfoField setButton" id="searchLifterButton" "type="submit" value="⌕">
+                <input class="findLifterInput" type="text" placeholder="search by username" value="">
+            </form>
+        </div>
+    </div>
+    `

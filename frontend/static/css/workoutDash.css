@@ -16,7 +16,7 @@
     position: relative;
     padding: 1%;
     border-left: 1px solid var(--primary-border-color);
-    background-color: var(--primary-background-color);
+    background-color: var(--tertiary-background-color);
 }
 /*-------------------------------------------------------*/
 /* WORKOUT AREA -> HEADER
