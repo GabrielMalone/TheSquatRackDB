@@ -11,8 +11,8 @@
 .notesSectionHeader{
     color: var(--primary-text-color);
     filter: brightness(0.6);
-    font-size: clamp(6pt, 1vw, 16pt);
-    align-self: flex-end;
+    font-size: clamp(6pt, 0.8vw, 16pt);
+    align-self: flex-start;
     padding-bottom: 1vw;
 }
 .notesSectionInput{
@@ -20,33 +20,29 @@
     border: 1px solid var(--secondary-border-color);
     background-color: var(--primary-background-color);
     padding: 8px;
-    margin-bottom: 2vw;
     color: var(--primary-text-color);
     min-height: 40px;
     font-size: clamp(6pt, 0.8vw, 10pt);
     filter: brightness(0.8);
 }
 .saveNoteButton{
-    margin-top: 4%;
+    filter: brightness(0.8);
+    margin-top: 3%;
     display: flex;
     flex-direction: column;
     align-items: center;
     align-content: center;
     align-self: center;
-    max-width: 25%;
-    outline: 1px solid var(--cursor-outline-color);
-    padding: 5%;
 }
 .saveNoteButton:hover{
-    outline: 1px solid var(--cursor-highlight-color);
     .saveNoteButtonText{
-        color: var(--cursor-plus-highlight-color);
+        color: var( --primary-text-background-hover-color);
     }
     cursor: pointer;
 }
 .saveNoteButtonText{
     display: flex;
-    color:  var(--primary-text-color);
+    color: var(--primary-add-color);
     font-size: clamp(6pt, 0.75vw, 12pt);
     pointer-events: none;
     align-self: center;
@@ -56,17 +52,11 @@
 }
 
 .saveNoteButton.saved{
-    outline: 1px solid greenyellow;
     .saveNoteButtonText{
         color: greenyellow;
     }
 }
-.saveNoteButton.saved:hover{
-    background-color: green;
-}
-
 .saveNoteButton.notSaved{
-    outline: 1px solid var(--cursor-outline-color);
     .saveNoteButtonText{
         color: var(--cursor-plus-color);
     }
