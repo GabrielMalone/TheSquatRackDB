@@ -22,11 +22,11 @@
     pointer-events: none;
 }
 #cursorForprDashBoard{
-    margin-top: 2%;
+    margin-top: 1vw;
     align-self: center;
 }
 #cursorForworkoutDash{
-    margin-top: 4%;
+    margin-top: 2vw;
 }
 .cursorVisible{
     display: none;

@@ -92,7 +92,8 @@ export const configEventListener = () => {
 function configClickEvent(){
     loginLogout("out");    
     const createLifterButon = document.getElementById('addLifter')
-    const loginBox = document.querySelector('.loginBoxWrapper');  
+    const partnerList       = document.querySelector('.sidebar');
+    const loginBox      = document.querySelector('.loginBoxWrapper');  
     const calendar      = document.querySelector(".month");
     const lifterName    = document.getElementById("lifterHeaderName");
     const config        = document.getElementById("lifterConfig");
@@ -114,6 +115,8 @@ function configClickEvent(){
         LIFTERS.length = 0;
         getLifters();
         currLifter = {};
+        partnerList.innerHTML = ``;
+        partnerList.classList.remove('visible');
         lifterName.innerHTML      = ``; // clear out the main lifter window
         config.style.visibility   = "hidden";
         calendar.style.display    = "none";

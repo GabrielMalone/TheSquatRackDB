@@ -3,23 +3,35 @@
 /*-------------------------------------------------------*/
 .lifterBoxHeader{
     display: flex;
-    padding: 1%;
+    position: relative;
+    padding: 1.25vw;
     flex-direction: row;
     border-bottom: 1px solid var(--primary-border-color);
 }
 #lifterHeaderName {
+    display: flex;
     align-self: center;
     font-size: 3vw;
-    padding-left: 2%;
+    padding-left: 1vw;
     color: var(--primary-text-color);
 }
 #lifterConfig {
+    display: flex;
     font-size: 2vw;
-    padding: 2%;
+    padding: 1vw;
     color: var(--primary-remove-color);
     visibility: hidden;
     cursor: pointer;
 }
 #lifterConfig:hover {
     color: var(--primary-remove-highlight-color);
+}
+#activeLifters{
+    display: none;
+}
+#activeLifters.visible{
+    display: flex;
+    flex-direction: row;
+    user-select: none;
+    justify-self: flex-end;
 }
