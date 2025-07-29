@@ -17,10 +17,11 @@
 }
 #lifterConfig {
     display: flex;
-    font-size: 2vw;
+    font-size: 3vw;
     color: var(--primary-remove-color);
     visibility: hidden;
     cursor: pointer;
+    margin-left: 1vw;
 }
 #lifterConfig:hover {
     color: var(--primary-remove-highlight-color);
