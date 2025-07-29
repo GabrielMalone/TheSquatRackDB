@@ -48,6 +48,4 @@ coverage.xml
 *.local
 
 
-.VSCodeCounter
-
-.gitignore
+.VSCodeCounter/
