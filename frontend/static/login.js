@@ -5,7 +5,6 @@ import { createPrDash } from "./dashboards/prDash.js";
 import Lifter from "./lifter.js";
 
 const loginBox = document.querySelector('.loginBoxWrapper');
-
 export let loggedinLifter = {};
 
 //-----------------------------------------------------------------------------
@@ -92,7 +91,6 @@ function loadLifterFromLogin(data){
     // set current lifter
     const cLifter = new Lifter(data);
     loggedinLifter = cLifter;                // global logged in lifter object
-    console.log(loggedinLifter);
     setCurrlifter(cLifter);
     fillCalendar(year,month,lastday);    // get this lifter's training sessions
     createPrDash(cLifter.prDashSelection, cLifter.id);    
