@@ -605,7 +605,6 @@ export function scrollToWorkout(){
 // place to update the workout's name in DB, placed below date in the dash
 //-----------------------------------------------------------------------------
 function nameSession(liftInfo){
-    if (liftInfo.length === 0) return;
     const sessionNameWrapper = 
     `
     <div class="sessionNameWrapper">
@@ -614,4 +613,10 @@ function nameSession(liftInfo){
     `
     const workoutHeader = document.querySelector('.workoutHeader');
     workoutHeader.insertAdjacentHTML("afterend", sessionNameWrapper);
+    if (currLifter.id !== loggedInUserID){         // prevent unauthorized edits
+        const nameSetButton = document.querySelector('.nameSetButton');
+        const sessionNameInput = document.querySelector('.sessionNameInput');
+        nameSetButton.parentElement.removeChild(nameSetButton);
+        sessionNameInput.readOnly = 'true';
+    }
 }
