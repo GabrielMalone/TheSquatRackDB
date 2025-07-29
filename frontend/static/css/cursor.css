@@ -27,6 +27,7 @@
 }
 #cursorForworkoutDash{
     margin-top: 2vw;
+    align-self: center;
 }
 .cursorVisible{
     display: none;

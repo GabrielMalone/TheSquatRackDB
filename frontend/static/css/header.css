@@ -44,6 +44,12 @@
     user-select: none;
     pointer-events: none;
 }
+#homeButton{
+    display: none;
+}
+#homeButton.visible{
+    display: flex;
+}
 #login.visible{
     display: none;
 }

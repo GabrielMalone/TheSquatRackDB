@@ -5,7 +5,7 @@ import { fillOutExerciseSelectMenu, createExerciseDash } from "./exerciseSelectD
 import { currLifter, f, getLifterObject } from "../lifterSidebar.js";
 import { createPrDash } from "./prDash.js";
 import { createCursor } from "../cursor.js";
-import { loggedInUserID } from "../login.js";
+import { loggedinLifter } from "../login.js";
 
 const workoutContainer = document.querySelector(".workout"); // clear container
 
@@ -21,7 +21,7 @@ export function getWorkoutFromWokroutID(idWorkout){
                 fillExerciseRow(lift);       // this will iterate over each set
             });
             nameSession(lifts);
-            if (currLifter.id === loggedInUserID){
+            if (currLifter.id === loggedinLifter.id){
                 createCursor(workoutContainer);       // place cursor at bottom
             }
             createNotesSection(lifts[0]?.note);
@@ -58,7 +58,7 @@ function createNotesSection(note){
         note = "";
     }
     let button = null;
-    if (currLifter.id === loggedInUserID){
+    if (currLifter.id === loggedinLifter.id){
         button = `<div class="saveNoteButton">
             <div class="saveNoteButtonText">save note</div>
         </div>`
@@ -73,7 +73,7 @@ function createNotesSection(note){
     `
     workoutContainer.insertAdjacentHTML("beforeend",notesSection);
     const notesSectionInput = document.querySelector('.notesSectionInput');
-    if (currLifter.id !== loggedInUserID) notesSectionInput.contentEditable = "false";
+    if (currLifter.id !== loggedinLifter.id) notesSectionInput.contentEditable = "false";
 }
 //-----------------------------------------------------------------------------
 function saveNoteEvent(e){
@@ -124,7 +124,7 @@ function closeWorkoutDash(e){
 }
 //-----------------------------------------------------------------------------
 function expandSetEvent(e){
-    if (currLifter.id !== loggedInUserID) return; 
+    if (currLifter.id !== loggedinLifter.id) return; 
     // expand set box and show update form
     if (e.type === "click" && e.target.classList.contains("set") ){
         const set = e.target;
@@ -177,7 +177,7 @@ function makeNewSetBox(setInfo, liftInfo, setNumber, curExerciseRow){
     newSet.dataset.videoLink = setInfo.videoLink;
     newSet.insertAdjacentHTML("beforeend",CreateSetTemplate(setInfo));
     newSet.appendChild(createSetUpdateForm(setInfo, liftInfo));
-    if (currLifter.id === loggedInUserID){
+    if (currLifter.id === loggedinLifter.id){
         newSet.appendChild(CreateRemoveSetButton(liftInfo, setInfo));
     }
     newSet.appendChild(addSetNumberToSetBox(setNumber, setInfo));
@@ -227,7 +227,7 @@ function addSetVideo(setElement, videoFileName){
 // if set updated, query the DB
 //-----------------------------------------------------------------------------
 function updateSetEvent(e){
-    if (currLifter.id !== loggedInUserID) return;
+    if (currLifter.id !== loggedinLifter.id) return;
     if (e.target.classList.contains("setUpdate")){
         updateAset(e)
     }
@@ -366,7 +366,7 @@ function updateLiftInfo(curliftInfo, newSetInfo){
 // if set remove button clicked, remove set from DB
 //-----------------------------------------------------------------------------
 function removeSetEvent(e){
-    if (currLifter.id !== loggedInUserID) return;
+    if (currLifter.id !== loggedinLifter.id) return;
     if (e.target.classList.contains("setRemove")){
         const idSet         = e.target.dataset.setID;
         const idWorkout     = e.target.dataset.idWorkout;
@@ -445,7 +445,7 @@ export function createWorkoutGrid(dateInfo){
 }
 //-----------------------------------------------------------------------------
 function dragOverFileEvent(e){
-    if (currLifter.id !== loggedInUserID) return;
+    if (currLifter.id !== loggedinLifter.id) return;
     e.preventDefault();
     if (e.target.classList.contains('set')){
         const set = e.target;
@@ -454,7 +454,7 @@ function dragOverFileEvent(e){
 }
 //-----------------------------------------------------------------------------
 function dragLeaveFileEvent(e){
-    if (currLifter.id !== loggedInUserID) return;
+    if (currLifter.id !== loggedinLifter.id) return;
     if (e.target.classList.contains('set')){
         const set = e.target;
         set.classList.remove('videoDrag');
@@ -462,7 +462,7 @@ function dragLeaveFileEvent(e){
 }
 //-----------------------------------------------------------------------------
 function dropFileEvent(e){
-    if (currLifter.id !== loggedInUserID) return;
+    if (currLifter.id !== loggedinLifter.id) return;
     e.preventDefault();
     if (e.target.classList.contains('set')){
         const set = e.target;
@@ -613,7 +613,7 @@ function nameSession(liftInfo){
     `
     const workoutHeader = document.querySelector('.workoutHeader');
     workoutHeader.insertAdjacentHTML("afterend", sessionNameWrapper);
-    if (currLifter.id !== loggedInUserID){         // prevent unauthorized edits
+    if (currLifter.id !== loggedinLifter.id){         // prevent unauthorized edits
         const nameSetButton = document.querySelector('.nameSetButton');
         const sessionNameInput = document.querySelector('.sessionNameInput');
         nameSetButton.parentElement.removeChild(nameSetButton);

@@ -6,7 +6,7 @@ import Lifter from "./lifter.js";
 
 const loginBox = document.querySelector('.loginBoxWrapper');
 
-export let loggedInUserID = null;
+export let loggedinLifter = {};
 
 //-----------------------------------------------------------------------------
 // event for clicking on login. 
@@ -33,8 +33,6 @@ export function login(userName, password){
                 toggleLoginCreateBoxVisibility();
                 f.post(end.GET_LIFTER_BY_USER_NAME, userName)
                 .then(data=>{
-                    loggedInUserID = data.idUser;
-                    console.log("id of user logged in === ", loggedInUserID);
                     loginLogout("in");
                     admin(data); 
                     loadLifterFromLogin(data)
@@ -62,13 +60,18 @@ export function admin(data){
     }
 }
 //-----------------------------------------------------------------------------
+// visual changes for login and logout events
+//-----------------------------------------------------------------------------
 export function loginLogout(state){
+    const homeButton = document.getElementById('homeButton');
     const loginButton = document.getElementById("login");
     const logoutButton = document.getElementById("logout");
     if (state === "out"){
+        homeButton.classList.remove('visible');
         loginButton.classList.remove('visible');
         logoutButton.classList.remove('visible');
     } else {
+        homeButton.classList.add('visible');
         loginButton.classList.add('visible');
         logoutButton.classList.add('visible');
     }
@@ -88,6 +91,8 @@ function loadLifterFromLogin(data){
     addExerciseDash?.classList.remove("addExerciseDashVisible"); 
     // set current lifter
     const cLifter = new Lifter(data);
+    loggedinLifter = cLifter;                // global logged in lifter object
+    console.log(loggedinLifter);
     setCurrlifter(cLifter);
     fillCalendar(year,month,lastday);    // get this lifter's training sessions
     createPrDash(cLifter.prDashSelection, cLifter.id);    

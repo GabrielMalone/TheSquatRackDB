@@ -1,8 +1,8 @@
 import { clearNewLifterFields } from "./newLifterSideBar.js";
 import { lifterSidebarSearch } from "./htmlTemplates.js";
-import { getLifters } from "./lifterSidebar.js";
 import { logoutEvent, login } from "./login.js";
 import { findLifter } from "./searchLifter.js";
+import { loadLifter } from "./lifterSidebar.js";
 
 //-----------------------------------------------------------------------------
 // event listeners and actions for the buttons in the main header
@@ -35,6 +35,9 @@ function headerListenerEvents(e){
     if (e.target.id === "logout"){
         logoutEvent();
     }
+    if (e.target.id === "homeButton"){
+        goHome();
+    }
 }
 //-----------------------------------------------------------------------------
 
@@ -65,4 +68,9 @@ function activeLiftersClickEvent(){
 function loginClickEvent(){
     const loginBox = document.querySelector('.loginBoxWrapper');
     loginBox.classList.remove('hidden');
+}
+
+//-----------------------------------------------------------------------------
+function goHome(){
+    loadLifter();
 }
