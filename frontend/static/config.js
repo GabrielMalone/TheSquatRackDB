@@ -60,7 +60,8 @@ const devConfig = {
     UPLOAD_SET_VIDEO: "uploadSetVideo",
     UPDATE_SESSION_NAME: "updateSessionName",
     LOGIN: "login",
-    GET_LIFTER_BY_USER_NAME : "lifterByUserName"
+    GET_LIFTER_BY_USER_NAME : "lifterByUserName",
+    SEARCH_FOR_LIFTER: "searchForLifter"
 
   };
   
@@ -90,7 +91,8 @@ const prodConfig = {
     UPLOAD_SET_VIDEO: "uploadSetVideo",
     UPDATE_SESSION_NAME: "updateSessionName",
     LOGIN: "login",
-    GET_LIFTER_BY_USER_NAME : "lifterByUserName"
+    GET_LIFTER_BY_USER_NAME : "lifterByUserName",
+    SEARCH_FOR_LIFTER: "searchForLifter"
 
   };
 

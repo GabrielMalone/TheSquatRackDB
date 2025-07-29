@@ -226,5 +226,12 @@ def updateSessionName():
     newTitle = data["newTitle"]
     return jsonify(queries.updateSessionName(idWorkout, newTitle))
 #------------------------------------------------------------------------------
+
+@app.route("/searchForLifter", methods=["POST"])
+def searchForLifter():
+    input = request.get_json()
+    return jsonify(queries.searchForLifter(input));
+#------------------------------------------------------------------------------
+
 if __name__ == "__main__":
     app.run(debug=True, port=5001)

@@ -1,6 +1,8 @@
 import { clearNewLifterFields } from "./newLifterSideBar.js";
+import { lifterSidebarSearch } from "./htmlTemplates.js";
 import { getLifters } from "./lifterSidebar.js";
 import { logoutEvent, login } from "./login.js";
+import { findLifter } from "./searchLifter.js";
 
 //-----------------------------------------------------------------------------
 // event listeners and actions for the buttons in the main header
@@ -42,9 +44,13 @@ function addLifterEvent(){
     addLifterBox.classList.add("visible"); // Toggle a class
 }
 //-----------------------------------------------------------------------------
+
 function activeLiftersClickEvent(){
-    getLifters();                             // load lifters from the database
-    const sidebar = document.querySelector(".sidebar");
+    const sidebar = document.getElementById("lifterMenu");     // build sidebar 
+    sidebar.innerHTML = ``;                        // clear any previous builds
+    sidebar.insertAdjacentHTML("afterbegin", lifterSidebarSearch);//sidebarhtml
+    //getLifters();                       // load ALL lifters from the database
+    const searchBar = document.querySelector('.findLifterInput'); 
     const mainLifterWindow = document.querySelector('.lifterBox');
     sidebar.classList.toggle("visible");
     if (sidebar.classList.contains("visible")){
@@ -52,8 +58,10 @@ function activeLiftersClickEvent(){
     } else {
         mainLifterWindow.style.width = "85%";
     }
+    searchBar.addEventListener("input", findLifter); //listen for search inputs
 }
 //-----------------------------------------------------------------------------
+
 function loginClickEvent(){
     const loginBox = document.querySelector('.loginBoxWrapper');
     loginBox.classList.remove('hidden');

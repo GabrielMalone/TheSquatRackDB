@@ -841,4 +841,33 @@ def getUserByUserName(userName):
                 "message" : f' server error: {err.errno}' 
             } 
 #------------------------------------------------------------------------------
+def searchForLifter(partialInput):
+    cnx = connect()
+    users = "not found"
+    if (cnx.is_connected()):
+        try:
+            cursor = cnx.cursor(dictionary=True, buffered=True) 
+            cursor.execute(
+                '''
+                    SELECT 
+                        idUser, userName, userFirst, userLast, Email, isAdmin, isCoach, coachedBy
+                    FROM 
+                        User 
+                    WHERE 
+                        userName LIKE %s''', (partialInput + '%',))
+            users = cursor.fetchall()
+            cursor.close()
+            cnx.close()
+            return users
+        except mysql.connector.Error as err:
+            print("MySQL Error:", err)    # This will show you the exact error
+            print("Error code:", err.errno)               # Numeric error code
+            cnx.rollback() 
+            cnx.close()
+            return {
+                "success" : False,
+                "message" : f' server error: {err.errno}' 
+            } 
+
+#------------------------------------------------------------------------------
 load_dotenv()

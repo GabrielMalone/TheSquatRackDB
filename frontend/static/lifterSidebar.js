@@ -4,7 +4,6 @@ import fetchWrapper from "./fetchWrapper.js";
 import {fillCalendar } from "./dashboards/calendarDash.js";
 import { createPrDash } from "./dashboards/prDash.js";
 import { loginLogout } from "./login.js";
-import { lifterSidebarSearch } from "./htmlTemplates.js";
 
 export const f = new fetchWrapper(c.API_URL);  // this should prob be in config
 
@@ -41,13 +40,14 @@ function clickLifterNameEvent(e){
 // This method fetches all the lifters and their info from the databse
 //-----------------------------------------------------------------------------
 export const getLifters = () => {
-    LIFTERS.length = 0;
     f.get(c.LIFTERS_ENDPOINT)
     .then(lifters=>{
+        LIFTERS.length = 0;
         fillLifters(lifters);   // create lifter objects from lifters in the db
         fillMenu()                     // fill out the menu with active lifters
         getLifterListeners();
-
+        const activeLifters = document.querySelector('.activeLifterNamesWrapper');
+        activeLifters.innerHTML = ``;
     })
     .catch(rejection=>{
         console.error(rejection);
@@ -58,11 +58,14 @@ export const getLifters = () => {
 //-----------------------------------------------------------------------------
 export function fillMenu(){
     const menu = document.getElementById("lifterMenu");
-    menu.innerHTML = '';
     // insert search menu at top of sidebar
-    menu.insertAdjacentHTML("afterbegin", lifterSidebarSearch);
     const menuDashWrapper = menu.querySelector('.lifterSidebarDashWrapper');
     // then fill names of active lifters below
+    const activeLifters = document.querySelector('.activeLifterNamesWrapper');
+    console.log(activeLifters);
+    if (activeLifters){
+        activeLifters.parentElement.removeChild(activeLifters);
+    }
     menuDashWrapper.insertAdjacentHTML("beforeend",
         `<div class="activeLifterNamesWrapper">
             <ul>
