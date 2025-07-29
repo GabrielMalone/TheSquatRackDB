@@ -232,6 +232,21 @@ def searchForLifter():
     input = request.get_json()
     return jsonify(queries.searchForLifter(input));
 #------------------------------------------------------------------------------
+@app.route("/doIfollow", methods=["POST"])
+def doIfollowLifter():
+    data = request.get_json()
+    followerID = data["followerID"]
+    followeeID = data["followeeID"]
+    return jsonify(queries.doIfollowLifter(followerID, followeeID))
+#------------------------------------------------------------------------------
+
+@app.route("/followLifter", methods=["POST"])
+def followLifter():
+    data = request.get_json()
+    followerID = data["follower"]
+    followeeID = data["followee"]
+    return jsonify(queries.followLifter(followerID, followeeID))
+#------------------------------------------------------------------------------
 
 if __name__ == "__main__":
     app.run(debug=True, port=5001)

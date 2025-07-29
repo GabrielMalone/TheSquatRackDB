@@ -3,7 +3,9 @@ import { endpoint as c, year, month, lastday } from "./config.js";
 import fetchWrapper from "./fetchWrapper.js";
 import { fillCalendar } from "./dashboards/calendarDash.js";
 import { createPrDash } from "./dashboards/prDash.js";
-import { loginLogout, loggedinLifter } from "./login.js";
+import { loggedinLifter } from "./login.js";
+import { Ifollow } from "./follow.js";
+import { lifterDashHeaderContent } from "./htmlTemplates.js";
 
 export const f = new fetchWrapper(c.API_URL);  // this should prob be in config
 
@@ -15,40 +17,11 @@ export let currLifter = {};        // track current lifter selected by the user
 // This method basically controls the starting point for the whole app
 //-----------------------------------------------------------------------------
 export function loadLifter(e){
-
     if (e && ! e.target.classList.contains("lifterName")) return ;
-
-    const lifterHeaderName = document.getElementById("lifterHeaderName");
-    const config = document.getElementById("lifterConfig");
-    const calendar = document.querySelector(".month");
-    const workout = document.querySelector(".workout");
-    const addExerciseDash = document.querySelector(".addExerciseDash");
-    let cLifter = null;
-    let info = null;                          
-    if (e) {                                   // if a name click event do this
-        info = JSON.parse(e.target.dataset.lifter);
-        cLifter = getLifterObject(info.id);   
-    } else {
-        cLifter = loggedinLifter;
-    }
-    currLifter = cLifter;         // make sure currlifter is of obj type Lifter
-                               // then reset the various dashes / dash elements        
-    lifterHeaderName.innerHTML  = `${info?.userName ?? loggedinLifter.userName}`;
-
-    if (currLifter.id !== loggedinLifter.id){ // check to make sure config only
-        config.style.visibility = "hidden";            // available to its user
-    } else {
-        config.style.visibility = "visible";
-    }
-
-    calendar.style.display = "flex"
-    workout.style.display = "none";
-    workout.innerHTML = '';                        
-    addExerciseDash?.classList.remove("addExerciseDashVisible"); 
-    fillCalendar(year,month,lastday);    // get this lifter's training sessions
-    createPrDash(cLifter.prDashSelection, cLifter.id);  
-    setTimeout(()=>{document.getElementById('headerTitle')
-        .scrollIntoView({"behavior" : "smooth"})}, 200);
+    const cLifter = setCurrLifterFromEvent(e);
+    setFollowIcon();    
+    setConfigPermission();
+    resetAndFillDashes(cLifter);
 }
 //-----------------------------------------------------------------------------
 // This method fetches all the lifters and their info from the databse
@@ -59,7 +32,6 @@ export const getLifters = () => {
         LIFTERS.length = 0;
         fillLifters(lifters);   // create lifter objects from lifters in the db
         fillMenu()                     // fill out the menu with active lifters
-        getLifterListeners();
         const activeLifters = document.querySelector('.activeLifterNamesWrapper');
         activeLifters.innerHTML = ``;
     })
@@ -71,6 +43,7 @@ export const getLifters = () => {
 // fills the div id= "main menu" with names from each User object created
 //-----------------------------------------------------------------------------
 export function fillMenu(){
+    if (LIFTERS.length === 0) return;
     const menu = document.getElementById("lifterMenu");
     // insert search menu at top of sidebar
     const menuDashWrapper = menu.querySelector('.lifterSidebarDashWrapper');
@@ -107,57 +80,6 @@ export function getLifterListeners(){
     sidebar.addEventListener("click", loadLifter);
 }
 //------------------------------------------------------------------------------
-// the action for clicking on a lifter's config button
-// for now this just deletes the user
-//------------------------------------------------------------------------------
-export const configEventListener = () => {
-    const config = document.getElementById("lifterConfig");
-    if (currLifter.id !== loggedinLifter.id) {
-        return;
-    }
-    config.addEventListener("click", configClickEvent);
-}
-function configClickEvent(){
-    loginLogout("out");    
-    const createLifterButon = document.getElementById('addLifter')
-    const partnerList       = document.querySelector('.sidebar');
-    const loginBox      = document.querySelector('.loginBoxWrapper');  
-    const calendar      = document.querySelector(".month");
-    const lifterName    = document.getElementById("lifterHeaderName");
-    const config        = document.getElementById("lifterConfig");
-    const workoutDash   = document.querySelector(".workout");
-    const dateWrapper   = document.querySelector(".dateWrapper");
-    const prDash        = document.querySelector(".prDash");
-    const prDashHeader  = document.querySelector("#prDashHeader");
-    const monthlyChartDashWrapper = document.querySelector('.monthlyChartDashWrapper');
-    const cursorForPRDash = document.getElementById('cursorForprDashBoard');
-    const dashHeaders       = document.querySelectorAll('.dashHeader');
-    loginBox.classList.remove('hidden');
-    createLifterButon.classList.remove('hidden');
-    dashHeaders.forEach(header=>header.parentNode.removeChild(header));
-    if (activeLifters.classList.contains('visible')){
-        activeLifters.classList.remove('visible');
-    }
-    f.delete(c.LIFTERS_ENDPOINT, currLifter.id)    // logic to delete currlifter
-    .then(()=>{
-        LIFTERS.length = 0;
-        getLifters();
-        currLifter = {};
-        partnerList.innerHTML = ``;
-        partnerList.classList.remove('visible');
-        lifterName.innerHTML      = ``; // clear out the main lifter window
-        config.style.visibility   = "hidden";
-        calendar.style.display    = "none";
-        workoutDash.style.display = "none";
-        dateWrapper.style.display = "none";
-        monthlyChartDashWrapper.innerHTML = ``;
-        prDash.innerHTML = ``;
-        prDashHeader.innerHTML = ''
-        cursorForPRDash.parentNode?.removeChild(cursorForPRDash);
-    })
-    .catch(err=>console.error(err));
-}
-//------------------------------------------------------------------------------
 // get the lifter class object for a spcific lifter via id
 //------------------------------------------------------------------------------
 export function getLifterObject(lifterID){
@@ -170,4 +92,66 @@ export function getLifterObject(lifterID){
 //------------------------------------------------------------------------------
 export function setCurrlifter(lifter) {
   currLifter = lifter;
+}
+//------------------------------------------------------------------------------
+// load lifter helpers 
+//------------------------------------------------------------------------------
+export async function setFollowIcon(){
+    if (currLifter.id === loggedinLifter.id) return;
+    // reset main dash header
+    const lifterBoxHeader = document.querySelector('.lifterBoxHeader');
+    lifterBoxHeader.innerHTML = lifterDashHeaderContent;
+    const lifterHeaderName = document.getElementById("lifterHeaderName");
+    // follow icon logic 
+    const idoFollow = await Ifollow(loggedinLifter.id, currLifter.id);
+    if (idoFollow){ 
+        lifterBoxHeader.insertAdjacentHTML("beforeend", 
+            `<div id="followIconWrapper">
+                <div id="followText">following</div>
+                <div id="followIcon">↻</div>
+            </div>`)
+    } else {
+        lifterBoxHeader.insertAdjacentHTML("beforeend", 
+        `<div id="followIconWrapper">
+            <div id="followText">follow</div>
+            <div id="followIcon">⋙</div>
+        </div>`)
+    }
+    lifterHeaderName.innerHTML = currLifter.userName;
+}
+//------------------------------------------------------------------------------
+function setCurrLifterFromEvent(e){
+    let cLifter = null;
+    let info = null;                          
+    if (e) {                                  // if a name click event, do this
+        info = JSON.parse(e.target.dataset.lifter);
+        cLifter = getLifterObject(info.id);   
+    } else {
+        cLifter = loggedinLifter;         // otherwise lifter loaded from login
+    }
+    currLifter = cLifter;         // make sure currlifter is of obj type Lifter 
+    return cLifter;
+}
+//------------------------------------------------------------------------------
+function setConfigPermission(){
+    const config = document.getElementById("lifterConfig");
+    if (currLifter.id !== loggedinLifter.id){ // check to make sure config only
+        config.style.visibility = "hidden";            // available to its user
+    } else {
+        config.style.visibility = "visible";
+    }
+}
+//------------------------------------------------------------------------------
+function resetAndFillDashes(cLifter){
+    const calendar = document.querySelector(".month");
+    const workout = document.querySelector(".workout");
+    const addExerciseDash = document.querySelector(".addExerciseDash");
+    calendar.style.display = "flex"
+    workout.style.display = "none";
+    workout.innerHTML = '';                        
+    addExerciseDash?.classList.remove("addExerciseDashVisible"); 
+    fillCalendar(year,month,lastday);    // get this lifter's training sessions
+    createPrDash(cLifter.prDashSelection, cLifter.id);  
+    setTimeout(()=>{document.getElementById('headerTitle')
+        .scrollIntoView({"behavior" : "smooth"})}, 200);
 }

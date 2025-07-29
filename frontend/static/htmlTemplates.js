@@ -74,3 +74,8 @@ export const lifterSidebarSearch =
         </div>
     </div>
     `
+export const lifterDashHeaderContent = `
+    <div id="lifterHeaderName"></div>
+    <div id="lifterConfig">○</div>
+    <div id="space"></div>
+`

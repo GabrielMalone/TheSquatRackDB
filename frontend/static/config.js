@@ -61,7 +61,9 @@ const devConfig = {
     UPDATE_SESSION_NAME: "updateSessionName",
     LOGIN: "login",
     GET_LIFTER_BY_USER_NAME : "lifterByUserName",
-    SEARCH_FOR_LIFTER: "searchForLifter"
+    SEARCH_FOR_LIFTER: "searchForLifter",
+    FOLLOW_LIFTER: "followLifter",
+    DO_I_FOLLOW: "doIfollow"
 
   };
   
@@ -92,7 +94,9 @@ const prodConfig = {
     UPDATE_SESSION_NAME: "updateSessionName",
     LOGIN: "login",
     GET_LIFTER_BY_USER_NAME : "lifterByUserName",
-    SEARCH_FOR_LIFTER: "searchForLifter"
+    SEARCH_FOR_LIFTER: "searchForLifter",
+    FOLLOW_LIFTER: "followLifter",
+    DO_I_FOLLOW: "doIfollow"
 
   };
 

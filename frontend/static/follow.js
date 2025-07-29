@@ -1,0 +1,28 @@
+import { f, setFollowIcon } from "./lifterSidebar.js";
+import { loggedinLifter } from "./login.js";
+import { currLifter } from "./lifterSidebar.js";
+import { endpoint as c  } from "./config.js";
+
+//------------------------------------------------------------------------------
+// method to have one user follow another user 
+//------------------------------------------------------------------------------
+export function followLifterEvent(){
+    // need follower id and followee id 
+    // follower will be currentlogged in lifter
+    // followee (followed) is the currLifter.id
+    f.post(c.FOLLOW_LIFTER, 
+        { "follower" : loggedinLifter.id, 
+          "followee" : currLifter.id })
+        .then(res=>{
+            setFollowIcon();
+        })
+        .catch(err=>console.error(err));
+}
+//------------------------------------------------------------------------------
+// method to check if a user follows another user
+//------------------------------------------------------------------------------
+export async function Ifollow(followerID, followeeID){
+    const res = await f.post(c.DO_I_FOLLOW, {followerID, followeeID});
+    if (res) return true;
+    return false;
+}

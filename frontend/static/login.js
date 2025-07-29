@@ -3,6 +3,7 @@ import { endpoint as end, year, month, lastday } from "./config.js";
 import { fillCalendar } from "./dashboards/calendarDash.js";
 import { createPrDash } from "./dashboards/prDash.js";
 import Lifter from "./lifter.js";
+import { lifterDashHeaderContent } from "./htmlTemplates.js";
 
 const loginBox = document.querySelector('.loginBoxWrapper');
 export let loggedinLifter = {};
@@ -73,11 +74,13 @@ export function loginLogout(state){
         homeButton.classList.add('visible');
         loginButton.classList.add('visible');
         logoutButton.classList.add('visible');
+
     }
 }
 //-----------------------------------------------------------------------------
 function loadLifterFromLogin(data){
-
+    const lifterBoxHeader = document.querySelector('.lifterBoxHeader');
+    lifterBoxHeader.innerHTML = lifterDashHeaderContent;
     const lifterHeaderName = document.getElementById("lifterHeaderName");
     const config = document.getElementById("lifterConfig");
     const calendar = document.querySelector(".month");
@@ -122,7 +125,6 @@ export function logoutEvent(){
         const activeLifters     = document.getElementById('activeLifters');
         const calendar          = document.querySelector(".month");
         const lifterName        = document.getElementById("lifterHeaderName");
-        const config            = document.getElementById("lifterConfig");
         const workoutDash       = document.querySelector(".workout");
         const dateWrapper       = document.querySelector(".dateWrapper");
         const prDash            = document.querySelector(".prDash");
@@ -130,6 +132,10 @@ export function logoutEvent(){
         const monthlyChartDash  = document.querySelector('.monthlyChartDash');
         const cursorForPRDash   = document.getElementById('cursorForprDashBoard');
         const dashHeaders       = document.querySelectorAll('.dashHeader');
+        const lifterBoxHeader = document.querySelector('.lifterBoxHeader');
+
+        lifterBoxHeader.innerHTML = ``;
+
         createLifterButon.classList.remove('hidden');
         dashHeaders.forEach(header=>header.parentNode.removeChild(header));
         if (activeLifters.classList.contains('visible')){
@@ -137,7 +143,6 @@ export function logoutEvent(){
         }
         setCurrlifter(null);
         lifterName.innerHTML        = ``; 
-        config.style.visibility     = "hidden";
         calendar.style.display      = "none";
         workoutDash.style.display   = "none";
         dateWrapper.style.display   = "none";

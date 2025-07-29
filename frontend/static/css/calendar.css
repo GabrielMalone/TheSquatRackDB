@@ -139,4 +139,5 @@
 .yearTitle{
     color: var(--secondary-text-color);
     font-size: 2vw;
+    filter: brightness(0.5);
 }

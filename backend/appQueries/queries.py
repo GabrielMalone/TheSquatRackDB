@@ -659,6 +659,7 @@ def postNewLifter(newLifter):
                 VALUES(%s,%s,%s,%s,%s)''', 
                 (userName, password, userFirst, userLast, Email)
             )
+            cursor.close()
             cnx.commit()
             cnx.close()
             return 200 
@@ -683,6 +684,7 @@ def removeLifter(lifterID):
                 ''',
                 (lifterID,)
             )
+            cursor.close()
             cnx.commit()
             cnx.close()
             return 200 
@@ -713,6 +715,7 @@ def getExerciseInfo(idExercise):
                 (idExercise,)
             )
             exerciseInfo = cursor.fetchone()
+            cursor.close()
             cnx.commit()
             cnx.close()
             return exerciseInfo 
@@ -740,6 +743,7 @@ def saveSessionNote(idWorkout, note):
                 ''',
                 (note, idWorkout)
             )
+            cursor.close()
             cnx.commit()
             cnx.close()
             return "success" 
@@ -767,6 +771,7 @@ def updateSessionName(idWorkout, newTitle):
                 ''',
                 (newTitle, idWorkout)
             )
+            cursor.close()
             cnx.commit()
             cnx.close()
             return "success" 
@@ -859,6 +864,59 @@ def searchForLifter(partialInput):
             cursor.close()
             cnx.close()
             return users
+        except mysql.connector.Error as err:
+            print("MySQL Error:", err)    # This will show you the exact error
+            print("Error code:", err.errno)               # Numeric error code
+            cnx.rollback() 
+            cnx.close()
+            return {
+                "success" : False,
+                "message" : f' server error: {err.errno}' 
+            } 
+#------------------------------------------------------------------------------
+def doIfollowLifter(followerID, followeeID):
+    print (followerID, followeeID)
+    cnx = connect()
+    if (cnx.is_connected()):
+        try:
+            cursor = cnx.cursor(dictionary=True, buffered=True) 
+            cursor.execute(
+                '''
+                    SELECT * FROM `UserFollows` u
+                    WHERE u.followerID = %s AND u.followeeID = %s
+                ''', (followerID, followeeID))
+            follow = cursor.fetchone()
+            cursor.close()
+            cnx.close()
+            print(follow)
+            return follow
+        except mysql.connector.Error as err:
+            print("MySQL Error:", err)    # This will show you the exact error
+            print("Error code:", err.errno)               # Numeric error code
+            cnx.rollback() 
+            cnx.close()
+            return {
+                "success" : False,
+                "message" : f' server error: {err.errno}' 
+            } 
+
+#------------------------------------------------------------------------------
+def followLifter(followerID, followeeID):
+    cnx = connect()
+    if (cnx.is_connected()):
+        try:
+            cursor = cnx.cursor(dictionary=True, buffered=True) 
+            cursor.execute(
+                '''
+                    INSERT INTO 
+                        `UserFollows` (followerID, followeeID)
+                    VALUES  
+                        (%s, %s)
+                ''', (followerID, followeeID))
+            cnx.commit()
+            cursor.close()
+            cnx.close()
+            return { "message" : "success" }
         except mysql.connector.Error as err:
             print("MySQL Error:", err)    # This will show you the exact error
             print("Error code:", err.errno)               # Numeric error code

@@ -14,6 +14,7 @@
     display: flex;
     font-size: 3vw;
     color: var(--primary-text-color);
+    pointer-events: none;
 }
 #lifterConfig {
     display: flex;
@@ -26,6 +27,31 @@
 #lifterConfig:hover {
     color: var(--primary-remove-highlight-color);
 }
+#space{
+    display: flex;
+    flex: 1;
+}
+#followIconWrapper {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+}
+#followIcon {
+    color: var(--primary-text-color);
+    font-size: 2.75vw;
+    cursor: pointer;
+}
+#followText{
+    color: var(--secondary-text-color);
+    font-size: 0.75vw;
+    cursor: pointer;
+    align-self: center;
+}
+
+#followIcon:hover {
+    color: var(--primary-add-color);
+}
+
 #activeLifters{
     display: none;
 }
