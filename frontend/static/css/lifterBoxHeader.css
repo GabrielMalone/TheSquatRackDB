@@ -18,7 +18,6 @@
 #lifterConfig {
     display: flex;
     font-size: 2vw;
-    padding: 1vw;
     color: var(--primary-remove-color);
     visibility: hidden;
     cursor: pointer;

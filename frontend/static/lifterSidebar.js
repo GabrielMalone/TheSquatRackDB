@@ -34,11 +34,13 @@ function clickLifterNameEvent(e){
     } else {
         config.style.visibility = "visible";
     }
-    calendar.style.display      = "flex"
-    workout.innerHTML           = '';                                 
+    calendar.style.display = "flex"
+    workout.innerHTML = '';                                 
     addExerciseDash?.classList.remove("addExerciseDashVisible"); 
     fillCalendar(year,month,lastday);    // get this lifter's training sessions
     createPrDash(cLifter.prDashSelection, cLifter.id);  
+    setTimeout(()=>{document.getElementById('headerTitle')
+        .scrollIntoView({"behavior" : "smooth"})}, 200);
 }
 //-----------------------------------------------------------------------------
 // This method fetches all the lifters and their info from the databse
