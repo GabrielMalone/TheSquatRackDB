@@ -5,6 +5,7 @@ import { fillOutExerciseSelectMenu, createExerciseDash } from "./exerciseSelectD
 import { currLifter, f, getLifterObject } from "../lifterSidebar.js";
 import { createPrDash } from "./prDash.js";
 import { createCursor } from "../cursor.js";
+import { loggedInUserID } from "../login.js";
 
 const workoutContainer = document.querySelector(".workout"); // clear container
 
@@ -20,7 +21,9 @@ export function getWorkoutFromWokroutID(idWorkout){
                 fillExerciseRow(lift);       // this will iterate over each set
             });
             nameSession(lifts);
-            createCursor(workoutContainer);           // place cursor at bottom
+            if (currLifter.id === loggedInUserID){
+                createCursor(workoutContainer);       // place cursor at bottom
+            }
             createNotesSection(lifts[0]?.note);
             scrollToWorkout();
         })
@@ -54,17 +57,23 @@ function createNotesSection(note){
     if (!note){ 
         note = "";
     }
+    let button = null;
+    if (currLifter.id === loggedInUserID){
+        button = `<div class="saveNoteButton">
+            <div class="saveNoteButtonText">save note</div>
+        </div>`
+    }
     const notesSection = 
     `
     <div class="notesSectionWrapper">
         <div class="notesSectionHeader">Session Notes</div>
         <div class="notesSectionInput" contenteditable="true">${note}</div>
-        <div class="saveNoteButton">
-            <div class="saveNoteButtonText">save note</div>
-        </div>
+        ${button}
     </div>
     `
     workoutContainer.insertAdjacentHTML("beforeend",notesSection);
+    const notesSectionInput = document.querySelector('.notesSectionInput');
+    if (currLifter.id !== loggedInUserID) notesSectionInput.contentEditable = "false";
 }
 //-----------------------------------------------------------------------------
 function saveNoteEvent(e){
@@ -115,6 +124,7 @@ function closeWorkoutDash(e){
 }
 //-----------------------------------------------------------------------------
 function expandSetEvent(e){
+    if (currLifter.id !== loggedInUserID) return; 
     // expand set box and show update form
     if (e.type === "click" && e.target.classList.contains("set") ){
         const set = e.target;
@@ -167,7 +177,9 @@ function makeNewSetBox(setInfo, liftInfo, setNumber, curExerciseRow){
     newSet.dataset.videoLink = setInfo.videoLink;
     newSet.insertAdjacentHTML("beforeend",CreateSetTemplate(setInfo));
     newSet.appendChild(createSetUpdateForm(setInfo, liftInfo));
-    newSet.appendChild(CreateRemoveSetButton(liftInfo, setInfo));
+    if (currLifter.id === loggedInUserID){
+        newSet.appendChild(CreateRemoveSetButton(liftInfo, setInfo));
+    }
     newSet.appendChild(addSetNumberToSetBox(setNumber, setInfo));
     // check if set is a Pr
     if (setInfo.weight > 0 && setInfo.reps > 0){
@@ -215,6 +227,7 @@ function addSetVideo(setElement, videoFileName){
 // if set updated, query the DB
 //-----------------------------------------------------------------------------
 function updateSetEvent(e){
+    if (currLifter.id !== loggedInUserID) return;
     if (e.target.classList.contains("setUpdate")){
         updateAset(e)
     }
@@ -353,6 +366,7 @@ function updateLiftInfo(curliftInfo, newSetInfo){
 // if set remove button clicked, remove set from DB
 //-----------------------------------------------------------------------------
 function removeSetEvent(e){
+    if (currLifter.id !== loggedInUserID) return;
     if (e.target.classList.contains("setRemove")){
         const idSet         = e.target.dataset.setID;
         const idWorkout     = e.target.dataset.idWorkout;
@@ -431,6 +445,7 @@ export function createWorkoutGrid(dateInfo){
 }
 //-----------------------------------------------------------------------------
 function dragOverFileEvent(e){
+    if (currLifter.id !== loggedInUserID) return;
     e.preventDefault();
     if (e.target.classList.contains('set')){
         const set = e.target;
@@ -439,6 +454,7 @@ function dragOverFileEvent(e){
 }
 //-----------------------------------------------------------------------------
 function dragLeaveFileEvent(e){
+    if (currLifter.id !== loggedInUserID) return;
     if (e.target.classList.contains('set')){
         const set = e.target;
         set.classList.remove('videoDrag');
@@ -446,6 +462,7 @@ function dragLeaveFileEvent(e){
 }
 //-----------------------------------------------------------------------------
 function dropFileEvent(e){
+    if (currLifter.id !== loggedInUserID) return;
     e.preventDefault();
     if (e.target.classList.contains('set')){
         const set = e.target;
@@ -507,7 +524,7 @@ function CreateRemoveSetButton(liftInfo, setInfo){
     setRemoveButton.dataset.idWorkout = liftInfo.idWorkout; 
     setRemoveButton.dataset.exercise = liftInfo.exercise;
     setRemoveButton.dataset.exerciseID = liftInfo.exerciseID;
-    setRemoveButton.innerHTML = `X`;
+    setRemoveButton.innerHTML = `●`;
     return setRemoveButton;
 }
 //-----------------------------------------------------------------------------

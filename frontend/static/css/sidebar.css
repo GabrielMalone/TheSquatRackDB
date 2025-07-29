@@ -30,11 +30,10 @@
 .findLifterWrapper{
     position: sticky;
     top: 0;
-    border-bottom: 1px solid var(--primary-border-color);
     background-color: var(--primary-background-color);
     box-sizing: border-box;
     color: var(--primary-text-color);
-    padding: 2%;
+    padding: 3%;
     z-index: 3;
 }
 .findLifterForm{

@@ -6,6 +6,8 @@ import Lifter from "./lifter.js";
 
 const loginBox = document.querySelector('.loginBoxWrapper');
 
+export let loggedInUserID = null;
+
 //-----------------------------------------------------------------------------
 // event for clicking on login. 
 //-----------------------------------------------------------------------------
@@ -31,6 +33,8 @@ export function login(userName, password){
                 toggleLoginCreateBoxVisibility();
                 f.post(end.GET_LIFTER_BY_USER_NAME, userName)
                 .then(data=>{
+                    loggedInUserID = data.idUser;
+                    console.log("id of user logged in === ", loggedInUserID);
                     loginLogout("in");
                     admin(data); 
                     loadLifterFromLogin(data)

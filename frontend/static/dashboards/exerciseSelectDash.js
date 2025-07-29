@@ -172,7 +172,7 @@ export function createExerciseDash(container){
     `<div class="addExerciseDash" id="exerciseDashFor${container.id}">
         <div class="addExerciseBoxHeader">
             <div id="addExerciseTitle">Select Exercise</div>
-            <div id="addExerciseX">X</div>
+            <div id="addExerciseX">●</div>
         </div>
         <div class="exerciseSelectionWrapper">
             <div class="SquatCategory">

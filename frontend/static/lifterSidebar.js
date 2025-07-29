@@ -3,7 +3,7 @@ import { endpoint as c, year, month, lastday } from "./config.js";
 import fetchWrapper from "./fetchWrapper.js";
 import {fillCalendar } from "./dashboards/calendarDash.js";
 import { createPrDash } from "./dashboards/prDash.js";
-import { loginLogout } from "./login.js";
+import { loggedInUserID, loginLogout } from "./login.js";
 
 export const f = new fetchWrapper(c.API_URL);  // this should prob be in config
 
@@ -29,7 +29,11 @@ function clickLifterNameEvent(e){
     currLifter = cLifter;       // make sure currlifter is of obj type Lifter
     // reset the various dashes / dash elements
     lifterHeaderName.innerHTML  = `${info.userName}`;
-    config.style.visibility     = "visible";
+    if (currLifter.id !== loggedInUserID){
+        config.style.visibility = "hidden";
+    } else {
+        config.style.visibility = "visible";
+    }
     calendar.style.display      = "flex"
     workout.innerHTML           = '';                                 
     addExerciseDash?.classList.remove("addExerciseDashVisible"); 
@@ -62,7 +66,6 @@ export function fillMenu(){
     const menuDashWrapper = menu.querySelector('.lifterSidebarDashWrapper');
     // then fill names of active lifters below
     const activeLifters = document.querySelector('.activeLifterNamesWrapper');
-    console.log(activeLifters);
     if (activeLifters){
         activeLifters.parentElement.removeChild(activeLifters);
     }
@@ -99,6 +102,9 @@ export function getLifterListeners(){
 //------------------------------------------------------------------------------
 export const configEventListener = () => {
     const config = document.getElementById("lifterConfig");
+    if (currLifter.id !== loggedInUserID) {
+        return;
+    }
     config.addEventListener("click", configClickEvent);
 }
 function configClickEvent(){
