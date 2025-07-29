@@ -3,6 +3,7 @@ import { currLifter, f } from "../lifterSidebar.js";
 import { loadMonthlyCharts } from "./monthlyChartDash.js";
 import { createCursor } from "../cursor.js";
 import { createrWorkoutHeader, getWorkoutFromWokroutID } from "./workoutDash.js";
+import { loggedinLifter } from "../login.js";
 
 export let curYear;
 export let curMonth;
@@ -180,18 +181,25 @@ export function dayEventListener(){     //have main container listen for events
 function dayListener(e){
     const workoutArea = document.querySelector(".workout");
     if (e.target.classList.contains("day")){ 
-        workoutArea.innerHTML =``;                      // clear previous data
+        workoutArea.innerHTML =``;                       // clear previous data
         const days = document.querySelectorAll(".day");
         days.forEach(day=>day.classList.remove("daySelected"));
         e.target.classList.add("daySelected");
         daySelected = {"day" : e.target.dataset.day, "month" : e.target.dataset.month};
-        const dateInfo = JSON.parse(e.target.dataset.info);         //get info
+        const dateInfo = JSON.parse(e.target.dataset.info);          //get info
         if (e.target.dataset.idWorkout) {
             createrWorkoutHeader(dateInfo);
             getWorkoutFromWokroutID(e.target.dataset.idWorkout);
         } else {
+            // prevent outsider from adding workout 
+            if (currLifter.id !== loggedinLifter.id){
+                const workoutContainer = document.querySelector(".workout");
+                workoutContainer.style.display = "none";
+                return; 
+            } 
+            // otherwise add new workout for authorized user
             createrWorkoutHeader(dateInfo);
-            createCursor(workoutArea);     // setup for starting a new workout
+            createCursor(workoutArea);      // setup for starting a new workout
         }
         workoutArea.classList.toggle('visible');
     }
@@ -202,7 +210,6 @@ function dayListener(e){
 export function calendarListener(){
     document.addEventListener("keydown", (event)=>{ //keydowna n
         const calendar = document.querySelector(".month");
-        const workoutContainer = document.querySelector(".workout");
         if (getComputedStyle(calendar).visibility === "hidden") return;
         switch (event.key){
             case 'ArrowRight': 
