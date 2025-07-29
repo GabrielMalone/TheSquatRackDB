@@ -29,7 +29,6 @@
     aspect-ratio: 1/1;
     border: 1px solid var(--primary-border-color); 
     justify-content: center;
-    overflow: hidden;
     user-select: none;
     font-size: clamp(4pt, 0.75vw, 16pt);
     margin: 0.25%;
@@ -85,7 +84,7 @@
     left: 0%;
     color: var(--primary-text-color);
     background-color: var(--secondary-background-color);
-    outline: 1px solid var(---secondary-border-color);
+    outline: 1px solid var(--primary-border-color);
     font-size: clamp(8pt, 1vw, 24pt);
     overflow: visible !important;
     padding: 1vw;

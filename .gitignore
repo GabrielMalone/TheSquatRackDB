@@ -46,3 +46,8 @@ coverage.xml
 
 # Local development configs (optional)
 *.local
+
+
+.VSCodeCounter
+
+.gitignore
