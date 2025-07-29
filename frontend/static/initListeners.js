@@ -1,7 +1,7 @@
 import { configEventListener, getLifters } from "./lifterSidebar.js";
 import { calendarListener, dayEventListener } from "./dashboards/calendarDash.js";
 import { headerListeners } from "./header.js";
-import { submitNewLifterClick } from "./newLifterSideBar.js";
+import { createFakeUsers, submitNewLifterClick } from "./newLifterSideBar.js";
 import { loginClick } from "./login.js";
 
 //-----------------------------------------------------------------------------
@@ -19,5 +19,6 @@ export function init() {
     headerListeners();                   // detects button clicks in the header
     submitNewLifterClick();       // detects new lifter button submission click
     loginClick();                                 // detects login button click
+    // createFakeUsers();
     //-------------------------------------------------------------------------
 }

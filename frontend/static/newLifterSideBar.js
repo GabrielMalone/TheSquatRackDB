@@ -2,6 +2,7 @@ import { f } from "./lifterSidebar.js";
 import { endpoint as c } from "./config.js";
 import { LIFTERS, getLifters } from "./lifterSidebar.js";
 import { login } from "./login.js";
+import { mockUsers } from "./mockUserData.js";
 //-----------------------------------------------------------------------------
 // This clears all the input fields for the create new lifter window
 //-----------------------------------------------------------------------------
@@ -38,6 +39,9 @@ const submitNewLifter = (e) => {
     if (!userNameValid(userName, errField)) return;
     if (!passwordChecks(password, errField)) return;
 
+    // could write a function here to create a bunch of test users
+
+
     const newLifter = {
         Email: email,
         userFirst: firstName || null,
@@ -46,6 +50,19 @@ const submitNewLifter = (e) => {
         password: password
     };
     postNewLifter(newLifter);           // if all good send datato the database
+}
+//-----------------------------------------------------------------------------
+export function createFakeUsers(){
+    mockUsers.forEach(user=>{
+        const newLifter = {
+            Email: user.Email,
+            userFirst: user.userFirst || null,
+            userLast: user.userLast || null,
+            userName: user.userName,
+            password: user.password
+        };
+        postNewLifter(newLifter);
+    })
 }
 //-----------------------------------------------------------------------------
 // userName checks

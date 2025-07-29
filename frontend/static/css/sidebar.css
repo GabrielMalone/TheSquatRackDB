@@ -5,12 +5,9 @@
     display: none;
     flex-direction: column;
     position: relative;
-    min-width: 25%;
+    min-width: 30%;
     max-width: 30%;
-    flex: 1;
     justify-content: flex-start;
-    overflow-y: scroll;
-    overflow-x: hidden;
     border-left: 1px solid var(--primary-border-color);
     background-color: var(--primary-background-color);
     z-index: 2;
@@ -24,20 +21,27 @@
 /*-------------------------------------------------------*/
 .lifterSidebarDashWrapper{
     display: flex;
+    position: relative;
     flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
     width: 100%;
 }
 .findLifterWrapper{
-    display: flex;
+    position: sticky;
+    top: 0;
     border-bottom: 1px solid var(--primary-border-color);
+    background-color: var(--primary-background-color);
     box-sizing: border-box;
     color: var(--primary-text-color);
-    padding: 3%;
+    padding: 2%;
+    z-index: 3;
 }
 .findLifterForm{
     display: flex;
     flex-direction: row;
     flex: 1;
+    padding: 2%;
     max-width: 95%;
 }
 .findLifterInput{
@@ -64,9 +68,10 @@
 .activeLifterNamesWrapper{
     display: flex;
     flex-direction: column;
-    flex: 1;
+    max-height: 90vh;
 }
 .lifterName {
+    filter: brightness(0.8);
     font-size: clamp(12px, 1vw, 24px);
     cursor: pointer;
     padding-left: max(10px,5%);
