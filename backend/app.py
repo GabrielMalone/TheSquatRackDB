@@ -248,5 +248,13 @@ def followLifter():
     return jsonify(queries.followLifter(followerID, followeeID))
 #------------------------------------------------------------------------------
 
+@app.route("/unfollowLifter", methods=["DELETE"])
+def unfollowLifter():
+    data = request.get_json()
+    followerID = data["follower"]
+    followeeID = data["followee"]
+    return jsonify(queries.unfollowLifter(followerID, followeeID))
+#------------------------------------------------------------------------------
+
 if __name__ == "__main__":
     app.run(debug=True, port=5001)

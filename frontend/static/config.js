@@ -63,7 +63,8 @@ const devConfig = {
     GET_LIFTER_BY_USER_NAME : "lifterByUserName",
     SEARCH_FOR_LIFTER: "searchForLifter",
     FOLLOW_LIFTER: "followLifter",
-    DO_I_FOLLOW: "doIfollow"
+    DO_I_FOLLOW: "doIfollow",
+    UNFOLLOW_LIFTER: "unfollowLifter"
 
   };
   
@@ -96,7 +97,8 @@ const prodConfig = {
     GET_LIFTER_BY_USER_NAME : "lifterByUserName",
     SEARCH_FOR_LIFTER: "searchForLifter",
     FOLLOW_LIFTER: "followLifter",
-    DO_I_FOLLOW: "doIfollow"
+    DO_I_FOLLOW: "doIfollow",
+    UNFOLLOW_LIFTER: "unfollowLifter"
 
   };
 

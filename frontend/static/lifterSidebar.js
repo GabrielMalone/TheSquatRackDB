@@ -155,3 +155,8 @@ function resetAndFillDashes(cLifter){
     setTimeout(()=>{document.getElementById('headerTitle')
         .scrollIntoView({"behavior" : "smooth"})}, 200);
 }
+//-----------------------------------------------------------------------------
+export function clearLifters(){
+    const activeLifters = document.querySelector('.activeLifterNamesWrapper');
+    activeLifters?.parentElement.removeChild(activeLifters);
+}

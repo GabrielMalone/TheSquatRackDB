@@ -875,7 +875,6 @@ def searchForLifter(partialInput):
             } 
 #------------------------------------------------------------------------------
 def doIfollowLifter(followerID, followeeID):
-    print (followerID, followeeID)
     cnx = connect()
     if (cnx.is_connected()):
         try:
@@ -888,7 +887,6 @@ def doIfollowLifter(followerID, followeeID):
             follow = cursor.fetchone()
             cursor.close()
             cnx.close()
-            print(follow)
             return follow
         except mysql.connector.Error as err:
             print("MySQL Error:", err)    # This will show you the exact error
@@ -928,4 +926,32 @@ def followLifter(followerID, followeeID):
             } 
 
 #------------------------------------------------------------------------------
+def unfollowLifter(followerID, followeeID):
+    cnx = connect()
+    if (cnx.is_connected()):
+        try:
+            cursor = cnx.cursor(dictionary=True, buffered=True) 
+            cursor.execute(
+                '''
+                    DELETE FROM 
+                        `UserFollows` 
+                    WHERE  
+                        followerID = %s AND followeeID = %s
+                ''', (followerID, followeeID))
+            cnx.commit()
+            cursor.close()
+            cnx.close()
+            return { "message" : "success" }
+        except mysql.connector.Error as err:
+            print("MySQL Error:", err)    # This will show you the exact error
+            print("Error code:", err.errno)               # Numeric error code
+            cnx.rollback() 
+            cnx.close()
+            return {
+                "success" : False,
+                "message" : f' server error: {err.errno}' 
+            } 
+
+#------------------------------------------------------------------------------
+
 load_dotenv()

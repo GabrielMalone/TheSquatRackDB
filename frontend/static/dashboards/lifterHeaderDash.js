@@ -4,7 +4,7 @@ import { loginLogout } from "../login.js";
 import { f } from "../lifterSidebar.js";
 import { endpoint as c } from "../config.js";
 import { lifterDashHeaderContent } from "../htmlTemplates.js";
-import { followLifterEvent } from "../follow.js";
+import { followLifterEvent, Ifollow, unfollowLifterEvent } from "../follow.js";
 
 
 const lifterBoxHeader = document.querySelector('.lifterBoxHeader');
@@ -16,12 +16,14 @@ export function lifterHeaderListener(){
     lifterBoxHeader.innerHTML = lifterDashHeaderContent;
     lifterBoxHeader.addEventListener("click", lifterHeaderEvents);
 }
-function lifterHeaderEvents(e){
+async function lifterHeaderEvents(e){
     if (e.target.id === 'lifterConfig'){
         configClickEvent();
     }
     if (e.target.id === 'followIcon'){
-        followLifterEvent();
+        const IdoFollow = await Ifollow(loggedinLifter.id, currLifter.id);
+        if ( IdoFollow ) unfollowLifterEvent(loggedinLifter.id, currLifter.id);
+        else followLifterEvent(loggedinLifter.id, currLifter.id);
     }
 }
 //------------------------------------------------------------------------------

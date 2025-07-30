@@ -19,6 +19,18 @@ export function followLifterEvent(){
         .catch(err=>console.error(err));
 }
 //------------------------------------------------------------------------------
+// method to have one user unfollow another user 
+//------------------------------------------------------------------------------
+export function unfollowLifterEvent(){
+    f.delete(c.UNFOLLOW_LIFTER,  
+        { "follower" : loggedinLifter.id, 
+          "followee" : currLifter.id })
+        .then(res=>{
+            setFollowIcon();
+        })
+        .catch(err=>console.error(err));
+}
+//------------------------------------------------------------------------------
 // method to check if a user follows another user
 //------------------------------------------------------------------------------
 export async function Ifollow(followerID, followeeID){
