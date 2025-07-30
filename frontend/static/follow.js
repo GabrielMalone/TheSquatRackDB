@@ -1,4 +1,4 @@
-import { f, setFollowIcon } from "./lifterSidebar.js";
+import { f, getLiftersIfollow, setFollowIcon } from "./lifterSidebar.js";
 import { loggedinLifter } from "./login.js";
 import { currLifter } from "./lifterSidebar.js";
 import { endpoint as c  } from "./config.js";
@@ -15,6 +15,7 @@ export function followLifterEvent(){
           "followee" : currLifter.id })
         .then(res=>{
             setFollowIcon();
+            getLiftersIfollow();
         })
         .catch(err=>console.error(err));
 }
@@ -27,6 +28,7 @@ export function unfollowLifterEvent(){
           "followee" : currLifter.id })
         .then(res=>{
             setFollowIcon();
+            getLiftersIfollow();
         })
         .catch(err=>console.error(err));
 }

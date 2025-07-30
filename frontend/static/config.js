@@ -64,7 +64,8 @@ const devConfig = {
     SEARCH_FOR_LIFTER: "searchForLifter",
     FOLLOW_LIFTER: "followLifter",
     DO_I_FOLLOW: "doIfollow",
-    UNFOLLOW_LIFTER: "unfollowLifter"
+    UNFOLLOW_LIFTER: "unfollowLifter",
+    LIFTERS_I_FOLLOW: "liftersIfollow"
 
   };
   
@@ -98,7 +99,8 @@ const prodConfig = {
     SEARCH_FOR_LIFTER: "searchForLifter",
     FOLLOW_LIFTER: "followLifter",
     DO_I_FOLLOW: "doIfollow",
-    UNFOLLOW_LIFTER: "unfollowLifter"
+    UNFOLLOW_LIFTER: "unfollowLifter",
+    LIFTERS_I_FOLLOW: "liftersIfollow"
 
   };
 

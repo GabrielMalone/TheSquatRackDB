@@ -953,5 +953,35 @@ def unfollowLifter(followerID, followeeID):
             } 
 
 #------------------------------------------------------------------------------
+def getLiftersIfollow(idLifter):
+    cnx = connect()
+    if (cnx.is_connected()):
+        try:
+            cursor = cnx.cursor(dictionary=True, buffered=True) 
+            cursor.execute(
+                '''
+                    SELECT 
+                        u.idUser, u.userName, u.userFirst, u.userLast, u.Email, u.isAdmin, u.isCoach, u.coachedBy
+                    FROM
+                        UserFollows uf
+                    JOIN 
+                        User u ON uf.followeeID = u.idUser
+                    WHERE
+                         uf.followerID = %s
+                ''', (idLifter,))
+            cnx.commit()
+            liftersIfollow = cursor.fetchall()
+            cursor.close()
+            cnx.close()
+            return liftersIfollow
+        except mysql.connector.Error as err:
+            print("MySQL Error:", err)    # This will show you the exact error
+            print("Error code:", err.errno)               # Numeric error code
+            cnx.rollback() 
+            cnx.close()
+            return {
+                "success" : False,
+                "message" : f' server error: {err.errno}' 
+            }   
 
 load_dotenv()

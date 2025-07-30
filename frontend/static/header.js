@@ -2,7 +2,7 @@ import { clearNewLifterFields } from "./newLifterSideBar.js";
 import { lifterSidebarSearch } from "./htmlTemplates.js";
 import { logoutEvent, login } from "./login.js";
 import { findLifter } from "./searchLifter.js";
-import { loadLifter } from "./lifterSidebar.js";
+import { getLiftersIfollow, loadLifter } from "./lifterSidebar.js";
 
 //-----------------------------------------------------------------------------
 // event listeners and actions for the buttons in the main header
@@ -52,7 +52,7 @@ function activeLiftersClickEvent(){
     const sidebar = document.getElementById("lifterMenu");     // build sidebar 
     sidebar.innerHTML = ``;                        // clear any previous builds
     sidebar.insertAdjacentHTML("afterbegin", lifterSidebarSearch);//sidebarhtml
-    //getLifters();                       // load ALL lifters from the database
+    getLiftersIfollow();                 
     const searchBar = document.querySelector('.findLifterInput'); 
     const mainLifterWindow = document.querySelector('.lifterBox');
     sidebar.classList.toggle("visible");

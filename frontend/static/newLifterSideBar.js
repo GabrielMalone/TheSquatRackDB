@@ -1,6 +1,5 @@
-import { f } from "./lifterSidebar.js";
+import { f, getLiftersIfollow, LIFTERS } from "./lifterSidebar.js";
 import { endpoint as c } from "./config.js";
-import { LIFTERS, getLifters } from "./lifterSidebar.js";
 import { login } from "./login.js";
 import { mockUsers } from "./mockUserData.js";
 //-----------------------------------------------------------------------------
@@ -96,7 +95,7 @@ export const postNewLifter = (newLifter) => {
         if (res===200){                   // close the newLifter window if done
             document.querySelector(".newLifterWrapper").classList.toggle("visible");
             LIFTERS.length = 0; 
-            getLifters();  // basically for admin right now need to change this
+            getLiftersIfollow(); 
             login(newLifter.userName, newLifter.password);
         } else {                                   // 1062 duplicate error code
             errorMsg(res, errField);

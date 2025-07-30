@@ -55,8 +55,6 @@ export function login(userName, password){
 export function admin(data){
     if (data.isAdmin){
         console.log("admin present");
-        const activeLifters = document.getElementById('activeLifters');
-        activeLifters.classList.toggle('visible');
     }
 }
 //-----------------------------------------------------------------------------
@@ -86,6 +84,8 @@ function loadLifterFromLogin(data){
     const calendar = document.querySelector(".month");
     const workout = document.querySelector(".workout");
     const addExerciseDash = document.querySelector(".addExerciseDash");
+    const activeLifters = document.getElementById('activeLifters');
+    activeLifters.classList.toggle('visible');
     lifterHeaderName.innerHTML  = `${data.userName}`;
     config.style.visibility     = "visible";
     calendar.style.display      = "flex"

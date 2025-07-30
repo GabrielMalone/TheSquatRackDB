@@ -1,4 +1,4 @@
-import { f, fillLifters, fillMenu, LIFTERS, clearLifters } from "./lifterSidebar.js";
+import { f, fillLifters, fillMenu, LIFTERS, clearLifters, getLiftersIfollow } from "./lifterSidebar.js";
 import { endpoint as end  } from "./config.js";
 
 //-----------------------------------------------------------------------------
@@ -9,6 +9,9 @@ export function findLifter(){
     const userInput = searchBar.value;
     if (userInput.length < 2) {
         clearLifters();
+        if (userInput.length === 0){
+            getLiftersIfollow();
+        }
         return;
     }
     f.post(end.SEARCH_FOR_LIFTER, userInput)

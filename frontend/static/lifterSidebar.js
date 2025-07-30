@@ -26,14 +26,12 @@ export function loadLifter(e){
 //-----------------------------------------------------------------------------
 // This method fetches all the lifters and their info from the databse
 //-----------------------------------------------------------------------------
-export const getLifters = () => {
-    f.get(c.LIFTERS_ENDPOINT)
+export function getLiftersIfollow(){
+    f.post(c.LIFTERS_I_FOLLOW, {"idLifter" : loggedinLifter.id})
     .then(lifters=>{
         LIFTERS.length = 0;
         fillLifters(lifters);   // create lifter objects from lifters in the db
         fillMenu()                     // fill out the menu with active lifters
-        const activeLifters = document.querySelector('.activeLifterNamesWrapper');
-        activeLifters.innerHTML = ``;
     })
     .catch(rejection=>{
         console.error(rejection);
