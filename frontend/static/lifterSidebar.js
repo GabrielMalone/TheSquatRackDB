@@ -18,10 +18,10 @@ export let currLifter = {};        // track current lifter selected by the user
 //-----------------------------------------------------------------------------
 export function loadLifter(e){
     if (e && ! e.target.classList.contains("lifterName")) return ;
-    const cLifter = setCurrLifterFromEvent(e);
-    setFollowIcon();    
+    setCurrLifterFromEvent(e);  
     setConfigPermission();
-    resetAndFillDashes(cLifter);
+    resetAndFillDashes();
+    setFollowIcon();  
 }
 //-----------------------------------------------------------------------------
 // This method fetches all the lifters and their info from the databse
@@ -94,12 +94,13 @@ export function setCurrlifter(lifter) {
 //------------------------------------------------------------------------------
 // load lifter helpers 
 //------------------------------------------------------------------------------
-export async function setFollowIcon(){
+export async function setFollowIcon(){   // this is realy reset the whole header
     if (currLifter.id === loggedinLifter.id) return;
     // reset main dash header
     const lifterBoxHeader = document.querySelector('.lifterBoxHeader');
     lifterBoxHeader.innerHTML = lifterDashHeaderContent;
     const lifterHeaderName = document.getElementById("lifterHeaderName");
+    lifterHeaderName.innerHTML = currLifter.userName;//reset name it gets erased
     // follow icon logic 
     const idoFollow = await Ifollow(loggedinLifter.id, currLifter.id);
     if (idoFollow){ 
@@ -115,7 +116,6 @@ export async function setFollowIcon(){
             <div id="followIcon">⋙</div>
         </div>`)
     }
-    lifterHeaderName.innerHTML = currLifter.userName;
 }
 //------------------------------------------------------------------------------
 function setCurrLifterFromEvent(e){
@@ -128,7 +128,6 @@ function setCurrLifterFromEvent(e){
         cLifter = loggedinLifter;         // otherwise lifter loaded from login
     }
     currLifter = cLifter;         // make sure currlifter is of obj type Lifter 
-    return cLifter;
 }
 //------------------------------------------------------------------------------
 function setConfigPermission(){
@@ -140,16 +139,18 @@ function setConfigPermission(){
     }
 }
 //------------------------------------------------------------------------------
-function resetAndFillDashes(cLifter){
+function resetAndFillDashes(){
     const calendar = document.querySelector(".month");
     const workout = document.querySelector(".workout");
     const addExerciseDash = document.querySelector(".addExerciseDash");
+    const lifterHeaderName = document.getElementById("lifterHeaderName");
+    lifterHeaderName.innerHTML = currLifter.userName;
     calendar.style.display = "flex"
     workout.style.display = "none";
     workout.innerHTML = '';                        
     addExerciseDash?.classList.remove("addExerciseDashVisible"); 
     fillCalendar(year,month,lastday);    // get this lifter's training sessions
-    createPrDash(cLifter.prDashSelection, cLifter.id);  
+    createPrDash(currLifter.prDashSelection, currLifter.id);  
     setTimeout(()=>{document.getElementById('headerTitle')
         .scrollIntoView({"behavior" : "smooth"})}, 200);
 }
