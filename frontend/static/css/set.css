@@ -53,21 +53,18 @@
     pointer-events: none; 
 }
 .setRPEwrapper{
-    margin-top: 0.5%;
     margin-left: 2%;
     display: flex;
     flex: 0.5;
     flex-direction: row;
     pointer-events: none;  
-    color: var(--primary-text-color);
-    filter: brightness(0.5);
+    color: #444;
 }
 .setRPE{
-    margin-top: 1%;
     padding-right: 2%;
     pointer-events: none;  
     color: var(--primary-text-color);
-    font-size: clamp(8pt, 0.75vw, 12pt);
+    font-size: clamp(8pt, 1vw, 24pt);
 }
 .qualifierIconsWrapper{
     display: flex;
@@ -105,15 +102,15 @@
 .setWeight{
     color: var(--primary-text-color);
     pointer-events: none;    
+    font-size: clamp(8pt, 1vw, 24pt);
 }
 .setBy{
     color: var(--primary-text-color);
-    filter: brightness(0.8);
+    filter: brightness(0.3);
     pointer-events: none;    
 }
 .setReps{
     color: var(--primary-text-color);
-    filter: brightness(0.7);
     pointer-events: none;  
 }
 
@@ -222,6 +219,7 @@
     height: 100%;
     font-size: clamp(8pt, 0.8vw, 14pt);
     margin-right: 0.4vw;
+    min-width: 50px;
 }
 
 /*-------------------------------------------------------*/
