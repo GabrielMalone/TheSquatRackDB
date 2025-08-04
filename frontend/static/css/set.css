@@ -297,6 +297,8 @@
     padding-bottom: 3%;
 }
 .setMsgSender{
+    display: flex;
+    flex:1;
     color: var(--primary-text-color);
     font-size: clamp(8pt, 0.75vw, 24pt);
     filter: brightness(0.7);
@@ -306,9 +308,21 @@
     font-size: clamp(4pt, 0.5vw, 16pt);
     filter: brightness(0.3);
 }
+.setMsgTextWrapper{
+    display: flex;
+    flex-direction: row;
+}
 .setMsgText{
     color: var(--primary-text-color);
     font-size: clamp(8pt, 0.75vw, 24pt);
     font-style: italic;
     filter: brightness(0.8);
+}
+.removeSetMsg{
+    color: var(--primary-text-color);
+    font-size: 0.5vw;
+    align-self: center;
+}
+.removeSetMsg:hover{
+    color: var(--primary-add-color);
 }

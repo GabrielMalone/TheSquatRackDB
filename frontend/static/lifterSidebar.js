@@ -41,7 +41,6 @@ export function getLiftersIfollow(){
 // fills the div id= "main menu" with names from each User object created
 //-----------------------------------------------------------------------------
 export function fillMenu(){
-    if (LIFTERS.length === 0) return;
     const menu = document.getElementById("lifterMenu");
     // insert search menu at top of sidebar
     const menuDashWrapper = menu.querySelector('.lifterSidebarDashWrapper');

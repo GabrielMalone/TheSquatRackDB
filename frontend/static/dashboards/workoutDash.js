@@ -45,6 +45,7 @@ function updateDashesOnChange(dateInfo, idWorkout, curYear, curMonth, curlastDay
 //-----------------------------------------------------------------------------
 function workoutDashClickEvents(e){
     removeSetEvent(e);
+    removeCommentEvent(e);
     addExerciseEvent(e);
     addCommentToSet(e);
     submitCommentForSet(e);
@@ -135,16 +136,19 @@ function expandSetEvent(e){
         const setID = set.dataset.setID; 
         const form = document.querySelector(`#setUpdateForm${setID}`);
         form.classList.toggle("setUpdateFormVisible");
-        const videoWrapper = set.querySelector('.setVideoWrapper');
-        if (videoWrapper){ // if video present and  has already been loaded once
-            videoWrapper.classList.toggle('visible');
-        }
-        else if (set.dataset.videoLink !== 'null'){  // if video not loaded and present...
-            addSetVideo(set, set.dataset.videoLink);      // make video wrapper 
-            set.querySelector('.setVideoWrapper').classList.toggle('visible');
-        }
         return;
     } 
+}
+//-----------------------------------------------------------------------------
+function showVideo(set){
+    const videoWrapper = set.querySelector('.setVideoWrapper');
+    if (videoWrapper){ // if video present and  has already been loaded once
+        videoWrapper.classList.toggle('visible');
+    }
+    else if (set.dataset.videoLink !== 'null'){  // if video not loaded and present...
+        addSetVideo(set, set.dataset.videoLink);      // make video wrapper 
+        set.querySelector('.setVideoWrapper').classList.toggle('visible');
+    }
 }
 //-----------------------------------------------------------------------------
 // helper method to make the UI exercise Row
@@ -192,11 +196,12 @@ function makeNewSetBox(setInfo, liftInfo, setNumber, curExerciseRow){
     // Set Comment 
     newSet.insertAdjacentHTML("beforeend", 
         `
-        <div class="setCommentWrapper" id="commentsFor${setInfo.setID}">
+        <div class="setCommentWrapper" id="commentsFor${setInfo.setID}" data-id-set="${setInfo.setID}">
             <div class="setCommentButton"> comments</div>
         </div>
         `
     );
+    showVideo(newSet);
     curExerciseRow.appendChild(newSet);
 }
 //-----------------------------------------------------------------------------
@@ -222,7 +227,7 @@ function setQualifiersForSet(setInfo, newSet){
 //-----------------------------------------------------------------------------
 function addSetVideo(setElement, videoFileName){
     const setId = setElement.dataset.setID;
-    setElement.insertAdjacentHTML("beforeend", 
+    setElement.insertAdjacentHTML("afterbegin", 
         `<div class="setVideoWrapper">
             <div class="videoMenuWrapper">
              
@@ -394,6 +399,22 @@ function removeSetEvent(e){
             .finally(()=>{
                 updateDashesOnChange(dateInfo, idWorkout, curYear, curMonth, curlastDay)
             });
+    }
+}
+//-----------------------------------------------------------------------------
+// remove your own comment from a set
+//-----------------------------------------------------------------------------
+function removeCommentEvent(e){
+    if (e.target.classList.contains('removeSetMsg')){
+        const idMessage = e.target.dataset.idMessage;
+        f.post(end.REMOVE_SET_MSG, idMessage)
+        .then(res=>{
+            console.log(res);
+            const setCommentWrapper = document.querySelector('.setCommentWrapper');
+            const idSet = setCommentWrapper.dataset.idSet;
+            getSetNotes(idSet, setCommentWrapper);
+        })
+        .catch(err=>console.error(err));
     }
 }
 //-----------------------------------------------------------------------------
@@ -676,14 +697,11 @@ export async function submitCommentForSet(e){
         const idSet = e.target.closest('.set').dataset.setID;
         const commentSection = e.target.parentNode;//get main comment container
         // can now run quer to save the comment for this set
-        console.log("A");
         f.post(end.SEND_SET_MESSAGE, {idCommenter, commentText, idSet})
         .then(res=>{
-            console.log("B");
             e.target.parentNode.querySelector('.inputComment').innerText = "";
             getSetNotes(idSet,commentSection);
         })
-        console.log("C");
      }
 }
 //-----------------------------------------------------------------------------
@@ -694,15 +712,21 @@ export async function getSetNotes(idSet, commentSection){
     .then(msgs=>{
         clearPrevNotes(idSet);
         msgs.forEach(msg=>{
-            console.log(msg.userName, msg.msgDate, msg.message);
             commentSection.insertAdjacentHTML("beforeend",
-                `
-                <div class="prevMsgWrapper">
+            `
+            <div class="prevMsgWrapper">
+                <div class="setMsgTextWrapper" id="msgWrapperFor${msg.idMessage}">
                     <div class="setMsgSender">${msg.userName}</div>
-                    <div class="setMsgDate">${msg.msgDate}</div>
-                    <div class="setMsgText">${msg.message}</div>
                 </div>
-                `);
+                <div class="setMsgDate">${msg.msgDate}</div>
+                <div class="setMsgText">${msg.message}</div>
+            </div>
+            `);
+            if (msg.idUser === loggedinLifter.id){
+                const setMsgTextWrapper = document.getElementById(`msgWrapperFor${msg.idMessage}`);
+                setMsgTextWrapper.insertAdjacentHTML("beforeend", 
+                `<div class="removeSetMsg" data-id-message="${msg.idMessage}">remove</div>`);
+            }
         });
     })
     .catch(err=>console.error(err));
@@ -710,10 +734,8 @@ export async function getSetNotes(idSet, commentSection){
 //-----------------------------------------------------------------------------
 function clearPrevNotes(idSet){
     const commentSection = document.getElementById(`commentsFor${idSet}`);
-    console.log("is this working?");
     const prevmsgs = commentSection.querySelectorAll('.prevMsgWrapper');
     prevmsgs.forEach(msg=>{
-        console.log("is this working?", msg.parentNode, msg);
         msg.parentNode.removeChild(msg);
     });
 }

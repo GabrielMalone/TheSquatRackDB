@@ -38,9 +38,9 @@ def login():
     return jsonify(queries.login(loginData))
 #------------------------------------------------------------------------------
 
-@app.route('/videos/<path:filename>')  # serve a video file from backend folder
+@app.route("/uploads/videos/<path:filename>")  # serve a video file from backend folder
 def serveVideo(filename):
-    return send_from_directory('videos', filename)
+    return send_from_directory('uploads/videos', filename)
 #------------------------------------------------------------------------------
 
 def setVideoLink(link, setId):              # helper method for the route below
@@ -277,5 +277,13 @@ def getSetMsgs():
     idSet = request.get_json()
     return jsonify(queries.getSetMsgs(idSet))
 #------------------------------------------------------------------------------
+
+@app.route("/removeSetMsg", methods=["POST"])
+def removeSetMsg():
+    idMessage = request.get_json()
+    print(idMessage)
+    return jsonify(queries.removeSetMsg(idMessage))
+#------------------------------------------------------------------------------
+
 if __name__ == "__main__":
     app.run(debug=True, port=5001)

@@ -1020,7 +1020,7 @@ def getSetMsgs(idSet):
             cursor.execute(
                 '''
                     SELECT 
-                        sm.msgDate, sm.message, u.idUser, u.userName, u.userFirst, u.userLast, u.Email, u.isAdmin, u.isCoach, u.coachedBy
+                        sm.idMessage, sm.msgDate, sm.message, u.idUser, u.userName, u.userFirst, u.userLast, u.Email, u.isAdmin, u.isCoach, u.coachedBy
                     FROM
                         setMessages sm
                     JOIN 
@@ -1043,5 +1043,28 @@ def getSetMsgs(idSet):
                 "message" : f' server error: {err.errno}' 
             }   
 #------------------------------------------------------------------------------
+def removeSetMsg(idMessage):
+    cnx = connect()
+    if (cnx.is_connected()):
+        try:
+            cursor = cnx.cursor(buffered=True)
+            cursor.execute(
+                '''
+                DELETE from `setMessages`
+                WHERE idMessage = %s;
+                ''', 
+                (idMessage,))
+            cnx.commit()
+            cursor.close()
+            cnx.close()
+        except mysql.connector.Error as err:
+            print("MySQL Error:", err)     # This will show you the exact error
+            print("Error code:", err.errno)                # Numeric error code
+            cnx.rollback() 
+            cnx.close()
+            return {
+                "success" : False,
+                "message" : f' server error: {err.errno}' 
+            }   
 
 load_dotenv()

@@ -67,7 +67,8 @@ const devConfig = {
     UNFOLLOW_LIFTER: "unfollowLifter",
     LIFTERS_I_FOLLOW: "liftersIfollow",
     SEND_SET_MESSAGE: "sendSetMessage",
-    GET_SET_MSGS: "getSetMsgs"
+    GET_SET_MSGS: "getSetMsgs",
+    REMOVE_SET_MSG: "removeSetMsg"
 
   };
   
@@ -104,7 +105,8 @@ const prodConfig = {
     UNFOLLOW_LIFTER: "unfollowLifter",
     LIFTERS_I_FOLLOW: "liftersIfollow",
     SEND_SET_MESSAGE: "sendSetMessage",
-    GET_SET_MSGS: "getSetMsgs"
+    GET_SET_MSGS: "getSetMsgs",
+    REMOVE_SET_MSG: "removeSetMsg"
 
   };
 
