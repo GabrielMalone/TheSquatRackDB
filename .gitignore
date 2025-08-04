@@ -8,7 +8,7 @@ env/
 .venv/
 
 
-backend/videos/
+backend/uploads/videos/
 
 # IDE/editor settings (optional but recommended)
 .vscode/
