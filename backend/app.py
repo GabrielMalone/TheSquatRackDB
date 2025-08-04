@@ -53,7 +53,7 @@ def uploadSetVideo():
     setId  = request.form['setId']
     userId = request.form['userId']
     if (video):  # create a unique folder for each video / userid / setid / vid
-        folderPath = os.path.join("videos", userId, setId)
+        folderPath = os.path.join("uploads/videos", userId, setId)
         os.makedirs(folderPath, exist_ok=True) # make any directories that dont exist
         filePath = os.path.join(folderPath, video.filename)
         video.save(filePath) #save vid/update set in DB to link to video in backend      
@@ -264,5 +264,18 @@ def getLiftersIfollow():
     return jsonify(queries.getLiftersIfollow(idLifter))
 #------------------------------------------------------------------------------
 
+@app.route("/sendSetMessage", methods=["POST"])
+def sendSetMessage():
+    data = request.get_json()
+    idCommenter = data["idCommenter"]
+    commentText = data["commentText"]
+    idSet = data["idSet"]
+    return jsonify(queries.sendSetMessage(idCommenter, commentText, idSet))
+#------------------------------------------------------------------------------
+@app.route("/getSetMsgs", methods=["POST"])
+def getSetMsgs():
+    idSet = request.get_json()
+    return jsonify(queries.getSetMsgs(idSet))
+#------------------------------------------------------------------------------
 if __name__ == "__main__":
     app.run(debug=True, port=5001)

@@ -194,6 +194,33 @@ CREATE TABLE IF NOT EXISTS `thesquatrack`.`Chats` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table `thesquatrack`.`setMessages`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `thesquatrack`.`setMessages`;
+
+CREATE TABLE IF NOT EXISTS `thesquatrack`.`setMessages` (
+  `idMessage` INT NOT NULL AUTO_INCREMENT,
+  `idSender` INT NOT NULL,
+  `idSet` INT NOT NULL,
+  `msgDate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `message` TEXT NULL,
+  PRIMARY KEY (`idMessage`),
+  INDEX `fk_setMessages_sender_idx` (`idSender` ASC),
+  INDEX `fk_setMessages_set_idx` (`idSet` ASC),
+  CONSTRAINT `fk_setMessages_sender`
+    FOREIGN KEY (`idSender`)
+    REFERENCES `thesquatrack`.`User` (`idUser`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_setMessages_set`
+    FOREIGN KEY (`idSet`)
+    REFERENCES `thesquatrack`.`Set` (`idSet`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION
+)
+ENGINE = InnoDB;
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

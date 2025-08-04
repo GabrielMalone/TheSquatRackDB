@@ -52,16 +52,20 @@ export const setTemplateHTML = (liftInfo) =>
     </div>
 </div>`;
 //-----------------------------------------------------------------------------
-export const sessionTitleFormHTML = (liftInfo) =>
-`
-<form class="nameSetForm" data-id-workout="${liftInfo[0].idWorkout}">
-    <div class="nameSetForminputWrapper">
-        <div class="nameSetinputTag">Title:</div>
-        <input class="setInfoField sessionNameInput" type="text" value="${liftInfo[0].sessionTitle ?? "unnamed"}">
-        <input class="setInfoField setButton nameSetButton" type="submit" value="✓">
-    </div>
-</form>
-`
+export const sessionTitleFormHTML = (liftInfo) => {
+    if (liftInfo.length===0) return "";
+    const html = 
+    `
+    <form class="nameSetForm" data-id-workout="${liftInfo[0].idWorkout}">
+        <div class="nameSetForminputWrapper">
+            <div class="nameSetinputTag">Title:</div>
+            <input class="setInfoField sessionNameInput" type="text" value="${liftInfo[0].sessionTitle ?? "unnamed"}">
+            <input class="setInfoField setButton nameSetButton" type="submit" value="✓">
+        </div>
+    </form>
+    `
+    return html;
+}
 //-----------------------------------------------------------------------------
 export const lifterSidebarSearch = 
     `

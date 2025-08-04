@@ -983,5 +983,65 @@ def getLiftersIfollow(idLifter):
                 "success" : False,
                 "message" : f' server error: {err.errno}' 
             }   
+#------------------------------------------------------------------------------
+def sendSetMessage(idCommenter, commentText, idSet):
+    cnx = connect()
+    if (cnx.is_connected()):
+        try:
+            cursor = cnx.cursor(dictionary=True, buffered=True) 
+            cursor.execute(
+                '''
+                    INSERT INTO 
+                        `setMessages` (idSender, idSet, message)
+                    VALUES  
+                        (%s, %s, %s)
+                ''', (idCommenter, idSet, commentText))
+            cnx.commit()
+            cursor.close()
+            cnx.close()
+            return { "message" : "success" }
+        except mysql.connector.Error as err:
+            print("MySQL Error:", err)    # This will show you the exact error
+            print("Error code:", err.errno)               # Numeric error code
+            cnx.rollback() 
+            cnx.close()
+            return {
+                "success" : False,
+                "message" : f' server error: {err.errno}' 
+            }  
+
+#------------------------------------------------------------------------------
+
+def getSetMsgs(idSet):
+    cnx = connect()
+    if (cnx.is_connected()):
+        try:
+            cursor = cnx.cursor(dictionary=True, buffered=True) 
+            cursor.execute(
+                '''
+                    SELECT 
+                        sm.msgDate, sm.message, u.idUser, u.userName, u.userFirst, u.userLast, u.Email, u.isAdmin, u.isCoach, u.coachedBy
+                    FROM
+                        setMessages sm
+                    JOIN 
+                        User u ON sm.idSender = u.idUser
+                    WHERE
+                        sm.idSet = %s
+                ''', (idSet,))
+            cnx.commit()
+            liftersIfollow = cursor.fetchall()
+            cursor.close()
+            cnx.close()
+            return liftersIfollow
+        except mysql.connector.Error as err:
+            print("MySQL Error:", err)    # This will show you the exact error
+            print("Error code:", err.errno)               # Numeric error code
+            cnx.rollback() 
+            cnx.close()
+            return {
+                "success" : False,
+                "message" : f' server error: {err.errno}' 
+            }   
+#------------------------------------------------------------------------------
 
 load_dotenv()

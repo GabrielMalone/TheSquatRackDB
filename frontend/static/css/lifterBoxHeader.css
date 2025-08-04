@@ -48,6 +48,7 @@
     align-self: center;
 }
 
+
 #followIcon:hover {
     color: var(--primary-add-color);
 }

@@ -21,7 +21,7 @@ export function loadLifter(e){
     setCurrLifterFromEvent(e);  
     setConfigPermission();
     resetAndFillDashes();
-    setFollowIcon();  
+    setFollowIcon();
 }
 //-----------------------------------------------------------------------------
 // This method fetches all the lifters and their info from the databse
@@ -57,7 +57,7 @@ export function fillMenu(){
                 `<li class="lifterName" 
                 id="${lifter.userName}"
                 data-lifter='${JSON.stringify({userName:lifter.userName, id:lifter.id})}'>
-                ${lifter.userName}
+                ${lifter.userName.charAt(0).toUpperCase() + lifter.userName.slice(1)}
                 </li>`)
                 .sort()
                 .join("")}
@@ -159,3 +159,4 @@ export function clearLifters(){
     const activeLifters = document.querySelector('.activeLifterNamesWrapper');
     activeLifters?.parentElement.removeChild(activeLifters);
 }
+//-----------------------------------------------------------------------------

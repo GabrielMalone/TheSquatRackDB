@@ -4,6 +4,8 @@
 .calendarWrapper{
     display: flex;
     flex-direction: row;
+    position: relative;
+    justify-content: safe center;
 }
 .month {
     display: flex;
@@ -12,11 +14,11 @@
     position: relative;
     display: none;
     margin-left: 1%;
+    max-width: 70%;
 }
 .week { 
     display: flex;
     width: 100%;
-    max-width: 600px;
     flex-direction: row;
 }
 .day {
@@ -42,7 +44,7 @@
     }
 }
 .dayNum{
-    font-size: clamp(6px, 1vmin, 1vw);
+    font-size: clamp(6pt, 1vw, 24pt);
     pointer-events: none;
     color: var(--primary-text-color);
 }
@@ -114,7 +116,7 @@
     position: absolute;
     top: -30%;
     left: 5%;
-    font-size: clamp(6px, 0.75vw, 12px);
+    font-size: clamp(6pt, 0.75vw, 12pt);
 }
 .weekNumber {
     display: none;
@@ -132,7 +134,7 @@
     padding-top: 3%;
 }
 .monthTitle{
-    font-size: clamp(10px, 3vw, 36px);
+    font-size: clamp(10pt, 3vw, 36pt);
     color: var(--primary-text-color);
     margin-right: 1vw;
 }

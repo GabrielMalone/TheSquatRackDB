@@ -1,6 +1,7 @@
 .sessionNameWrapper{
     display: flex;
     flex-direction: column;
+    position: relative;
     width: 100%;
     border-top: 1px solid var(--primary-border-color);
     border-bottom: 1px solid var(--primary-border-color);
@@ -16,6 +17,7 @@
 }
 .nameSetinputTag{
     display: flex;
+    display: none;
     color: var(--primary-text-color);
     font-size: clamp(6pt, 0.8vw, 16pt);
     flex-wrap: nowrap;
@@ -24,8 +26,13 @@
     margin-right: 5%;
 }
 .sessionNameInput{
-    min-width: 
-    74%;
+    display: flex;
+    flex: 1;
     font-size: clamp(6pt, 0.8vw, 16pt);
     color: var(--secondary-text-color);
+    max-width: none;
+    min-width: none;
+}
+.nameSetButton{
+    display: none;
 }

@@ -31,11 +31,13 @@
 }
 .sessionTitle{
     display: flex;
+    display: none;
     color: var( --primary-text-color);
     margin-right: 5%;
 }
 .trainingDate{
     display: flex;
+    flex: 1;
     flex-wrap: nowrap;
     color: var( --primary-text-color);
     filter: brightness(0.7);

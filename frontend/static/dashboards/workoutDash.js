@@ -2,7 +2,7 @@ import { curlastDay, curMonth, curYear, fillCalendar } from "./calendarDash.js";
 import { endpoint as end, unit } from "../config.js";
 import { setTemplateHTML, setUpdateFormTemplateHTML, sessionTitleFormHTML } from "../htmlTemplates.js";
 import { fillOutExerciseSelectMenu, createExerciseDash } from "./exerciseSelectDash.js";
-import { currLifter, f, getLifterObject } from "../lifterSidebar.js";
+import { currLifter, f, getLifterObject, LIFTERS} from "../lifterSidebar.js";
 import { createPrDash } from "./prDash.js";
 import { createCursor } from "../cursor.js";
 import { loggedinLifter } from "../login.js";
@@ -37,6 +37,7 @@ function updateDashesOnChange(dateInfo, idWorkout, curYear, curMonth, curlastDay
     getWorkoutFromWokroutID(idWorkout);                    // the workout area
     fillCalendar(curYear, curMonth, curlastDay);           // and the calendar  
     const lifter = getLifterObject(currLifter.id);  
+    console.log(lifter, currLifter.id, LIFTERS);
     createPrDash(lifter.prDashSelection, lifter.id);            // and pr dash
 }
 //-----------------------------------------------------------------------------
@@ -45,6 +46,8 @@ function updateDashesOnChange(dateInfo, idWorkout, curYear, curMonth, curlastDay
 function workoutDashClickEvents(e){
     removeSetEvent(e);
     addExerciseEvent(e);
+    addCommentToSet(e);
+    submitCommentForSet(e);
     expandSetEvent(e);
     closeWorkoutDash(e);
     qualifierClickEven(e);
@@ -57,7 +60,7 @@ function createNotesSection(note){
     if (!note){ 
         note = "";
     }
-    let button = null;
+    let button = "";
     if (currLifter.id === loggedinLifter.id){
         button = `<div class="saveNoteButton">
             <div class="saveNoteButtonText">save note</div>
@@ -186,7 +189,14 @@ function makeNewSetBox(setInfo, liftInfo, setNumber, curExerciseRow){
         isSetPr(liftInfo.exerciseID, currLifter.id, setInfo.weight, setInfo.reps, newSet);
     }
     setQualifiersForSet(setInfo, newSet);
-
+    // Set Comment 
+    newSet.insertAdjacentHTML("beforeend", 
+        `
+        <div class="setCommentWrapper" id="commentsFor${setInfo.setID}">
+            <div class="setCommentButton"> comments</div>
+        </div>
+        `
+    );
     curExerciseRow.appendChild(newSet);
 }
 //-----------------------------------------------------------------------------
@@ -324,6 +334,7 @@ function updateSet(updateObj){
 // this method will add a new set to an exercise row
 //-----------------------------------------------------------------------------
 function addSet(curExerciseRow, liftInfo){
+    if (currLifter.id !== loggedinLifter.id) return;
     // first query the db and create a new set
     const i = document.querySelectorAll(`.${liftInfo.exercise}`).length;
     createNewDBset(liftInfo, i+1, curExerciseRow);
@@ -555,7 +566,7 @@ function createExerciseBox(newExerciseRow, liftInfo){
     newExercise.classList.add(`${liftInfo.category}`);
     newExercise.insertAdjacentHTML("beforeend",`<p>${liftInfo.exercise}</p>`);
     newExercise.insertAdjacentHTML("beforeend", 
-        `<div class = "addSet">╋</div>`);
+        `<div class = "addSet"></div>`);
     newExercise.dataset.idExercise = liftInfo.exerciseID;
     newExercise.addEventListener("click", ()=>{addSet(newExerciseRow, liftInfo)});
     newExerciseRow.appendChild(newExercise);
@@ -575,7 +586,7 @@ function fillWorkoutDate(dateInfo){
         ${dateInfo.day} 
         ${dateInfo.year}
     </div>
-    <div id="workoutDashX">--</div>`;
+    <div id="workoutDashX">●</div>`;
     workoutContainer.appendChild(workoutHeader);
 }
 //-----------------------------------------------------------------------------
@@ -619,4 +630,90 @@ function nameSession(liftInfo){
         nameSetButton.parentElement.removeChild(nameSetButton);
         sessionNameInput.readOnly = 'true';
     }
+}
+//-----------------------------------------------------------------------------
+// add Set note
+//-----------------------------------------------------------------------------
+export function addCommentToSet(e){
+    if ( e.type === "click" && e.target.classList.contains("setCommentButton") ){
+        const idSet = e.target.closest('.set').dataset.setID;
+        const commentSection = e.target.parentNode;//get main comment container
+
+        // toggle visibility of comment section if comment button pressed again
+        if (commentSection.querySelector('.commentWrapper')){
+            commentSection.innerHTML = ``;
+            commentSection.insertAdjacentHTML("beforeend", `<div class="setCommentButton">comments</div>`);
+            return;
+        }
+        // load any previous notes that exist for this set
+        getSetNotes(idSet, commentSection);
+        // create the add new comment section 
+        commentSection.insertAdjacentHTML("beforeend", 
+        `<div class="commentWrapper" id=commentsFrom${loggedinLifter.id}></div>`);
+        const commentWrapper = commentSection.querySelector('.commentWrapper');
+        if (commentWrapper.querySelectorAll('.commenterName').length === 0 ){
+            commentWrapper.insertAdjacentHTML("beforeend",// add commenters name
+                `<div class="commenterName">${loggedinLifter.userName} </div>` 
+            )
+        }
+        commentWrapper.insertAdjacentHTML("beforeend", `
+            <div class="inputComment" contenteditable=true></div>
+            <div class="submitComment" data-comment-from=${loggedinLifter.id}>add comment</div>
+            `);
+    }
+}
+//-----------------------------------------------------------------------------
+// submit Set note
+//-----------------------------------------------------------------------------
+export async function submitCommentForSet(e){
+     if (e.type === "click" && e.target.classList.contains("submitComment")) {
+        const idCommenter =  e.target.dataset.commentFrom;
+        const commentText = e.target.parentNode.querySelector('.inputComment').innerText; 
+        if (commentText === ""){
+            console.log("nothing to post")
+            return; // if nothing to post, return
+        }     
+        const idSet = e.target.closest('.set').dataset.setID;
+        const commentSection = e.target.parentNode;//get main comment container
+        // can now run quer to save the comment for this set
+        console.log("A");
+        f.post(end.SEND_SET_MESSAGE, {idCommenter, commentText, idSet})
+        .then(res=>{
+            console.log("B");
+            e.target.parentNode.querySelector('.inputComment').innerText = "";
+            getSetNotes(idSet,commentSection);
+        })
+        console.log("C");
+     }
+}
+//-----------------------------------------------------------------------------
+// get all the notes that a set has
+//-----------------------------------------------------------------------------
+export async function getSetNotes(idSet, commentSection){
+    f.post(end.GET_SET_MSGS, idSet)
+    .then(msgs=>{
+        clearPrevNotes(idSet);
+        msgs.forEach(msg=>{
+            console.log(msg.userName, msg.msgDate, msg.message);
+            commentSection.insertAdjacentHTML("beforeend",
+                `
+                <div class="prevMsgWrapper">
+                    <div class="setMsgSender">${msg.userName}</div>
+                    <div class="setMsgDate">${msg.msgDate}</div>
+                    <div class="setMsgText">${msg.message}</div>
+                </div>
+                `);
+        });
+    })
+    .catch(err=>console.error(err));
+}
+//-----------------------------------------------------------------------------
+function clearPrevNotes(idSet){
+    const commentSection = document.getElementById(`commentsFor${idSet}`);
+    console.log("is this working?");
+    const prevmsgs = commentSection.querySelectorAll('.prevMsgWrapper');
+    prevmsgs.forEach(msg=>{
+        console.log("is this working?", msg.parentNode, msg);
+        msg.parentNode.removeChild(msg);
+    });
 }

@@ -8,7 +8,6 @@
     position: relative;
     outline: 1px solid var(--primary-border-color);
     cursor: pointer;
-    align-content: center;
     height: min-content;
 }
 .setExpand{
@@ -19,7 +18,7 @@
 } */
 
 .set:hover{
-    outline-color: var(--primary-border-hover-color);
+    /* outline-color: var(--secondary-border-hover-color); */
     .setWeight{
         color:var(--primary-text-color);
     }
@@ -43,7 +42,7 @@
     position: relative;
     pointer-events: none; 
     padding: 3%;
-    width: 90%;
+    width: 100%;
     font-size: clamp(8pt, 1vw, 14pt);
 }
 .setWeightRepsWrapper{
@@ -97,7 +96,7 @@
 .setNumber{
     position: absolute;
     top: 5px;
-    right: 10px;
+    right: 1%;
     font-size: clamp(6pt, 0.75vw, 16pt);
     color: var(--primary-text-color);
     filter: brightness(0.9);
@@ -168,6 +167,7 @@
     flex-direction: row;
     position: relative;
     border-top: 1px solid var(--primary-border-color); 
+    align-items: center;
 }
 .setUpdate{
     margin-top: 1%;
@@ -197,6 +197,7 @@
     color: var(--primary-add-highlight-color);
 }
 .setButton{
+    display: none;
     position: relative;
     color: var(--primary-add-color);
     filter: brightness(1.2);
@@ -219,20 +220,97 @@
     color: var(--primary-text-color);
     filter: brightness(0.7);
     height: 100%;
-    font-size: clamp(8pt, 1vw, 14pt);
-    min-width: 40px;
+    font-size: clamp(8pt, 0.8vw, 14pt);
+    margin-right: 0.4vw;
 }
 
 /*-------------------------------------------------------*/
 /* WOKROUT AREA -> EXERCISE ROW -> SET-> UPDATE FORM -> REMOVE SET
 /*-------------------------------------------------------*/
 .setRemove{
-    position: absolute;
+    position: relative;
+    align-self: flex-end;
     color: var(--primary-remove-color);
     font-size: clamp(5pt, 0.75vw, 16pt);
-    bottom: 5px;
-    right: 10px;
+    margin-right: 1%;
 }
 .setRemove:hover {
   color:var(--primary-remove-highlight-color);
+}
+/*-------------------------------------------------------*/
+/* WOKROUT AREA -> EXERCISE ROW -> SET-> SET COMMENT
+/*-------------------------------------------------------*/
+.setCommentWrapper{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    border-top: 1px solid var(--primary-border-color);
+    padding: 3%;
+    user-select: none;
+}
+.setCommentWrapper.visible {
+    display: none;
+}
+.setCommentButton{
+    color: var(--primary-text-color);
+    font-size: clamp(8pt, 0.75vw, 24pt);
+    border-bottom: 1px solid var(--primary-border-color);
+    padding-top: 2%;
+    padding-bottom: 4%;
+    user-select: none;
+}
+/* make a new set comment */
+.setCommentButton:hover{
+    color:var(--primary-add-color);
+}
+.comment{
+    color: var(--primary-text-color);
+}
+.commenterName{
+    color: var(--primary-text-color);
+    border-bottom: 1px solid var(--primary-border-color);
+    margin-top: 4%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+}
+.inputComment{
+    outline: 1px solid var(--primary-border-color);
+    color: var(--primary-text-color);
+    font-size: 0.75vw;
+    padding: 2%;
+}
+.submitComment{
+    display: flex;
+    justify-content: flex-end;
+    color: var(--primary-add-color);
+    justify-self: flex-end;
+    font-size: 0.75vw;
+    padding: 2%;
+}
+.submitComment:hover{
+    color: var(--primary-add-highlight-color);
+}
+/* previous set comments */
+.prevMsgWrapper{
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid var(--primary-border-color);
+    padding-top: 3%;
+    padding-bottom: 3%;
+}
+.setMsgSender{
+    color: var(--primary-text-color);
+    font-size: clamp(8pt, 0.75vw, 24pt);
+    filter: brightness(0.7);
+}
+.setMsgDate{
+    color: var(--primary-text-color);
+    font-size: clamp(4pt, 0.5vw, 16pt);
+    filter: brightness(0.3);
+}
+.setMsgText{
+    color: var(--primary-text-color);
+    font-size: clamp(8pt, 0.75vw, 24pt);
+    font-style: italic;
+    filter: brightness(0.8);
 }

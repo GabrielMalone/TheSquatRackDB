@@ -1,4 +1,4 @@
-import { f , setCurrlifter} from "./lifterSidebar.js";
+import { f , LIFTERS, setCurrlifter} from "./lifterSidebar.js";
 import { endpoint as end, year, month, lastday } from "./config.js";
 import { fillCalendar } from "./dashboards/calendarDash.js";
 import { createPrDash } from "./dashboards/prDash.js";
@@ -35,7 +35,7 @@ export function login(userName, password){
                 .then(data=>{
                     loginLogout("in");
                     admin(data); 
-                    loadLifterFromLogin(data)
+                    loadLifterFromLogin(data);
                 })
                 .catch(err=>console.error(err));
             } else {
@@ -95,6 +95,7 @@ function loadLifterFromLogin(data){
     const cLifter = new Lifter(data);
     loggedinLifter = cLifter;                // global logged in lifter object
     setCurrlifter(cLifter);
+    LIFTERS.push(cLifter);
     fillCalendar(year,month,lastday);    // get this lifter's training sessions
     createPrDash(cLifter.prDashSelection, cLifter.id);    
     setTimeout(()=>{    document.getElementById('headerTitle').scrollIntoView({"behavior" : "smooth"});}, 200);

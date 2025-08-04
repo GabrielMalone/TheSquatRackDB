@@ -65,7 +65,9 @@ const devConfig = {
     FOLLOW_LIFTER: "followLifter",
     DO_I_FOLLOW: "doIfollow",
     UNFOLLOW_LIFTER: "unfollowLifter",
-    LIFTERS_I_FOLLOW: "liftersIfollow"
+    LIFTERS_I_FOLLOW: "liftersIfollow",
+    SEND_SET_MESSAGE: "sendSetMessage",
+    GET_SET_MSGS: "getSetMsgs"
 
   };
   
@@ -100,7 +102,9 @@ const prodConfig = {
     FOLLOW_LIFTER: "followLifter",
     DO_I_FOLLOW: "doIfollow",
     UNFOLLOW_LIFTER: "unfollowLifter",
-    LIFTERS_I_FOLLOW: "liftersIfollow"
+    LIFTERS_I_FOLLOW: "liftersIfollow",
+    SEND_SET_MESSAGE: "sendSetMessage",
+    GET_SET_MSGS: "getSetMsgs"
 
   };
 

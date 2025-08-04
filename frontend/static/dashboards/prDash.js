@@ -321,7 +321,7 @@ export function createChartElement(dashContainer, chartName, chartTitle=""){
     chart.insertAdjacentHTML("beforeend",
         `<div class ="prChartTitleWrapper">
             <div class="prChartTitle">${chartTitle}</div>
-            <div class="prChartX" id="prChartXfor${chartName}">X</div>
+            <div class="prChartX" id="prChartXfor${chartName}">●</div>
         </div>
         <canvas class="prChartCanvas" id="canvasFor${chartName}"></canvas>`);
         dashContainer.insertAdjacentElement("beforeend", chart); 
