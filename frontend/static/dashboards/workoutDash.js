@@ -201,6 +201,8 @@ function makeNewSetBox(setInfo, liftInfo, setNumber, curExerciseRow){
         </div>
         `
     );
+    const setCommentWrapper = newSet.querySelector('.setCommentWrapper');
+    getNumberOfNotes(setInfo.setID, setCommentWrapper);
     showVideo(newSet);
     curExerciseRow.appendChild(newSet);
 }
@@ -409,8 +411,9 @@ function removeCommentEvent(e){
         const idMessage = e.target.dataset.idMessage;
         f.post(end.REMOVE_SET_MSG, idMessage)
         .then(res=>{
-            console.log(res);
-            const setCommentWrapper = document.querySelector('.setCommentWrapper');
+            console.log(res, "removing a set");
+            const setCommentWrapper = e.target.closest('.setCommentWrapper');
+            console.log(setCommentWrapper);
             const idSet = setCommentWrapper.dataset.idSet;
             getSetNotes(idSet, setCommentWrapper);
         })
@@ -664,6 +667,7 @@ export function addCommentToSet(e){
         if (commentSection.querySelector('.commentWrapper')){
             commentSection.innerHTML = ``;
             commentSection.insertAdjacentHTML("beforeend", `<div class="setCommentButton">comments</div>`);
+            getNumberOfNotes(idSet, commentSection);
             return;
         }
         // load any previous notes that exist for this set
@@ -710,6 +714,7 @@ export async function submitCommentForSet(e){
 export async function getSetNotes(idSet, commentSection){
     f.post(end.GET_SET_MSGS, idSet)
     .then(msgs=>{
+        console.log("we here?", msgs, idSet, commentSection);
         clearPrevNotes(idSet);
         msgs.forEach(msg=>{
             commentSection.insertAdjacentHTML("beforeend",
@@ -728,10 +733,24 @@ export async function getSetNotes(idSet, commentSection){
                 `<div class="removeSetMsg" data-id-message="${msg.idMessage}">remove</div>`);
             }
         });
+        getNumberOfNotes(idSet, commentSection);
     })
     .catch(err=>console.error(err));
 }
 //-----------------------------------------------------------------------------
+function getNumberOfNotes(idSet, commentSection){
+    f.post(end.GET_SET_MSGS, idSet)
+    .then(msgs=>{
+        let commentButton = commentSection.querySelector('.setCommentButton');
+        if (!commentButton){
+            commentButton = commentSection.parentNode.querySelector('.setCommentButton');
+        }
+        commentButton.innerHTML = `comments - ${msgs.length}`;
+    })
+    .catch(err=>console.error(err));
+}
+//-----------------------------------------------------------------------------
+
 function clearPrevNotes(idSet){
     const commentSection = document.getElementById(`commentsFor${idSet}`);
     const prevmsgs = commentSection.querySelectorAll('.prevMsgWrapper');

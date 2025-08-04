@@ -256,6 +256,7 @@
     padding-top: 2%;
     padding-bottom: 4%;
     user-select: none;
+    filter: brightness(0.6);
 }
 /* make a new set comment */
 .setCommentButton:hover{
@@ -274,7 +275,7 @@
 .inputComment{
     outline: 1px solid var(--primary-border-color);
     color: var(--primary-text-color);
-    font-size: 0.75vw;
+    font-size: clamp(8pt, 0.75vw, 24pt);
     padding: 2%;
 }
 .submitComment{
@@ -282,7 +283,7 @@
     justify-content: flex-end;
     color: var(--primary-add-color);
     justify-self: flex-end;
-    font-size: 0.75vw;
+    font-size: clamp(8pt, 0.75vw, 24pt);
     padding: 2%;
 }
 .submitComment:hover{
@@ -320,7 +321,7 @@
 }
 .removeSetMsg{
     color: var(--primary-text-color);
-    font-size: 0.5vw;
+    font-size: clamp(6pt, 0.5vw, 12pt);
     align-self: center;
 }
 .removeSetMsg:hover{

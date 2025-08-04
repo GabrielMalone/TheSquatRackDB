@@ -281,7 +281,6 @@ def getSetMsgs():
 @app.route("/removeSetMsg", methods=["POST"])
 def removeSetMsg():
     idMessage = request.get_json()
-    print(idMessage)
     return jsonify(queries.removeSetMsg(idMessage))
 #------------------------------------------------------------------------------
 

@@ -1057,6 +1057,7 @@ def removeSetMsg(idMessage):
             cnx.commit()
             cursor.close()
             cnx.close()
+            return {"message" : "success"}
         except mysql.connector.Error as err:
             print("MySQL Error:", err)     # This will show you the exact error
             print("Error code:", err.errno)                # Numeric error code

@@ -5,8 +5,8 @@
     display: none;
     flex-direction: column;
     position: relative;
-    min-width: 30%;
-    max-width: 30%;
+    min-width: 20%;
+    max-width: 20%;
     justify-content: flex-start;
     border-left: 1px solid var(--primary-border-color);
     background-color: var(--primary-background-color);
