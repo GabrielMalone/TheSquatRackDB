@@ -41,7 +41,8 @@ export const setTemplateHTML = (liftInfo) =>
         <div class="setInfo setBy">&nbsp;x&nbsp;</div> 
         <div class="setInfo setReps">${liftInfo.reps}</div>
     </div>
-    <div class="setRPEwrapper">rpe&nbsp; 
+    <div class="setRPEwrapper">
+        <div class="setInfo setRPETitle">rpe</div>
         <div class="setInfo setRPE">${liftInfo.rpe}</div>
     </div>
     <div class="qualifierIconsWrapper">
@@ -78,6 +79,7 @@ export const lifterSidebarSearch =
         </div>
     </div>
     `
+//-----------------------------------------------------------------------------
 export const lifterDashHeaderContent = `
     <div id="lifterHeaderName"></div>
     <div id="lifterConfig">○</div>

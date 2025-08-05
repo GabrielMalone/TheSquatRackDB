@@ -197,7 +197,7 @@ function makeNewSetBox(setInfo, liftInfo, setNumber, curExerciseRow){
     newSet.insertAdjacentHTML("beforeend", 
         `
         <div class="setCommentWrapper" id="commentsFor${setInfo.setID}" data-id-set="${setInfo.setID}">
-            <div class="setCommentButton"> comments</div>
+            <div class="setCommentButton">comments</div>
         </div>
         `
     );
@@ -714,7 +714,6 @@ export async function submitCommentForSet(e){
 export async function getSetNotes(idSet, commentSection){
     f.post(end.GET_SET_MSGS, idSet)
     .then(msgs=>{
-        console.log("we here?", msgs, idSet, commentSection);
         clearPrevNotes(idSet);
         msgs.forEach(msg=>{
             commentSection.insertAdjacentHTML("beforeend",
@@ -745,7 +744,7 @@ function getNumberOfNotes(idSet, commentSection){
         if (!commentButton){
             commentButton = commentSection.parentNode.querySelector('.setCommentButton');
         }
-        commentButton.innerHTML = `comments - ${msgs.length}`;
+        commentButton.innerHTML = `comments (${msgs.length})`;
     })
     .catch(err=>console.error(err));
 }

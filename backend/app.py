@@ -284,5 +284,22 @@ def removeSetMsg():
     return jsonify(queries.removeSetMsg(idMessage))
 #------------------------------------------------------------------------------
 
+@app.route("/isMyCoach", methods=["POST"])
+def isMyCoach():
+    data = request.get_json()
+    idUser = data["idUser"]
+    potentialCoachID = data["potentialCoachID"]
+    return jsonify(queries.isMyCoach(idUser, potentialCoachID))
+#------------------------------------------------------------------------------
+@app.route("/setCoach", methods=["POST"])
+def setCoach():
+    data = request.get_json()
+    print(data)
+    clientID = data["clientID"]
+    coachID = data["coachID"]
+    return jsonify(queries.setCoach(clientID, coachID))
+
+#------------------------------------------------------------------------------
+
 if __name__ == "__main__":
     app.run(debug=True, port=5001)

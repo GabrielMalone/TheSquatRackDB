@@ -9,6 +9,7 @@
     outline: 1px solid var(--primary-border-color);
     cursor: pointer;
     height: min-content;
+    background-color: #111;
 }
 .setExpand{
     min-height: min-content;
@@ -48,35 +49,41 @@
 .setWeightRepsWrapper{
     display: flex;
     flex-direction: row;
-    flex: 0.55;
+    flex: 0.25;
     position: relative;  
     pointer-events: none; 
 }
 .setRPEwrapper{
-    margin-left: 2%;
     display: flex;
-    flex: 0.5;
+    flex: 1;
     flex-direction: row;
     pointer-events: none;  
-    color: #444;
+}
+.setRPETitle{
+    pointer-events: none;  
+    color: var(--primary-text-color);
+    font-size: clamp(8pt, 1vw, 12pt);
+    filter: brightness(0.7);
+    margin-right: 0.25vw;
 }
 .setRPE{
     padding-right: 2%;
     pointer-events: none;  
     color: var(--primary-text-color);
-    font-size: clamp(8pt, 1vw, 24pt);
+    font-size: clamp(8pt, 1vw, 12pt);
 }
 .qualifierIconsWrapper{
     display: flex;
-    flex: 1;
+    flex:1;
     flex-direction: row;
-    gap: 1vw;
+    margin-left: 1vw;
     color: var(--icons-inactive-color);
 }
 .qualifierIcons{
     color: var(--icons-inactive-color);
-    font-size: clamp(8pt, 1vw, 16pt);
+    font-size: clamp(6pt, 0.75vw, 10pt);
     filter: brightness(1);
+    padding: 2%;
 }
 #unilateralIcon.highlighted{
     color: var(--icons-active-color);
@@ -102,7 +109,7 @@
 .setWeight{
     color: var(--primary-text-color);
     pointer-events: none;    
-    font-size: clamp(8pt, 1vw, 24pt);
+    font-size: clamp(12pt, 1.25vw, 24pt);
 }
 .setBy{
     color: var(--primary-text-color);
@@ -112,6 +119,7 @@
 .setReps{
     color: var(--primary-text-color);
     pointer-events: none;  
+    margin-right: 1vw;
 }
 
 .setQualifiersWrapper{
@@ -251,8 +259,7 @@
 }
 .setCommentButton{
     color: var(--primary-text-color);
-    font-size: clamp(8pt, 0.75vw, 24pt);
-    border-bottom: 1px solid var(--primary-border-color);
+    font-size: clamp(6pt, 0.5vw, 10pt);
     padding-top: 2%;
     padding-bottom: 4%;
     user-select: none;
@@ -283,7 +290,7 @@
     justify-content: flex-end;
     color: var(--primary-add-color);
     justify-self: flex-end;
-    font-size: clamp(8pt, 0.75vw, 24pt);
+    font-size: clamp(6pt, 0.75vw, 10pt);
     padding: 2%;
 }
 .submitComment:hover{

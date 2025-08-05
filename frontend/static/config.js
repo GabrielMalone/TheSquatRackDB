@@ -68,7 +68,9 @@ const devConfig = {
     LIFTERS_I_FOLLOW: "liftersIfollow",
     SEND_SET_MESSAGE: "sendSetMessage",
     GET_SET_MSGS: "getSetMsgs",
-    REMOVE_SET_MSG: "removeSetMsg"
+    REMOVE_SET_MSG: "removeSetMsg",
+    SET_COACH: "setCoach",
+    IS_MY_COACH: "isMyCoach",
 
   };
   
@@ -106,7 +108,9 @@ const prodConfig = {
     LIFTERS_I_FOLLOW: "liftersIfollow",
     SEND_SET_MESSAGE: "sendSetMessage",
     GET_SET_MSGS: "getSetMsgs",
-    REMOVE_SET_MSG: "removeSetMsg"
+    REMOVE_SET_MSG: "removeSetMsg",
+    SET_COACH: "setCoach",
+    IS_MY_COACH: "isMyCoach",
 
   };
 

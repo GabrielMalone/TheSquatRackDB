@@ -5,6 +5,8 @@ import { f } from "../lifterSidebar.js";
 import { endpoint as c } from "../config.js";
 import { lifterDashHeaderContent } from "../htmlTemplates.js";
 import { followLifterEvent, Ifollow, unfollowLifterEvent } from "../follow.js";
+import { setCoachStatus } from "../coach.js";
+
 
 
 const lifterBoxHeader = document.querySelector('.lifterBoxHeader');
@@ -21,9 +23,12 @@ async function lifterHeaderEvents(e){
         configClickEvent();
     }
     if (e.target.id === 'followIcon'){
-        const IdoFollow = await Ifollow(loggedinLifter.id, currLifter.id);
-        if ( IdoFollow ) unfollowLifterEvent(loggedinLifter.id, currLifter.id);
-        else followLifterEvent(loggedinLifter.id, currLifter.id);
+        const IdoFollow = await Ifollow();
+        if ( IdoFollow ) unfollowLifterEvent();
+        else followLifterEvent();
+    }
+    if (e.target.id === 'coachIcon'){
+        setCoachStatus();
     }
 }
 //------------------------------------------------------------------------------

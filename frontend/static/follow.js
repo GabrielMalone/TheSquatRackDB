@@ -2,6 +2,7 @@ import { f, getLiftersIfollow, setFollowIcon } from "./lifterSidebar.js";
 import { loggedinLifter } from "./login.js";
 import { currLifter } from "./lifterSidebar.js";
 import { endpoint as c  } from "./config.js";
+import { setCoachIcon } from "./coach.js";
 
 //------------------------------------------------------------------------------
 // method to have one user follow another user 
@@ -16,6 +17,7 @@ export function followLifterEvent(){
         .then(res=>{
             setFollowIcon();
             getLiftersIfollow();
+            setCoachIcon();
         })
         .catch(err=>console.error(err));
 }
@@ -28,6 +30,7 @@ export function unfollowLifterEvent(){
           "followee" : currLifter.id })
         .then(res=>{
             setFollowIcon();
+            setCoachIcon();
             getLiftersIfollow();
         })
         .catch(err=>console.error(err));
@@ -35,8 +38,8 @@ export function unfollowLifterEvent(){
 //------------------------------------------------------------------------------
 // method to check if a user follows another user
 //------------------------------------------------------------------------------
-export async function Ifollow(followerID, followeeID){
-    const res = await f.post(c.DO_I_FOLLOW, {followerID, followeeID});
+export async function Ifollow(){
+    const res = await f.post( c.DO_I_FOLLOW, {"followerID" : loggedinLifter.id, "followeeID" : currLifter.id} );
     if (res) return true;
     return false;
 }
