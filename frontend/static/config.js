@@ -1,5 +1,9 @@
 // sitewide variables
 
+import { currLifter } from "./lifterSidebar.js";
+import { loggedinLifter } from "./login.js";
+import { IamTheirCoach } from "./coach.js";
+
 export const date      = new Date();                           
 export const year      = date.getFullYear();
 export const month     = date.getMonth();
@@ -71,6 +75,7 @@ const devConfig = {
     REMOVE_SET_MSG: "removeSetMsg",
     SET_COACH: "setCoach",
     IS_MY_COACH: "isMyCoach",
+    AM_I_COACH: "amItheirCoach"
 
   };
   
@@ -111,6 +116,7 @@ const prodConfig = {
     REMOVE_SET_MSG: "removeSetMsg",
     SET_COACH: "setCoach",
     IS_MY_COACH: "isMyCoach",
+    AM_I_COACH: "amItheirCoach"
 
   };
 
@@ -162,4 +168,10 @@ export const MONTHLY_CHARTS_DASH_VARIABLES = {
 	  mChartDashHeaderId			: "monthChartDashHeader",
 	  mChartMinimizerId			  : "mChartMinimizer"
 
+}
+
+export async function accessLevelValid(){
+  // console.log( await IamTheirCoach() , loggedinLifter.id, currLifter.id);
+  // console.log(  await IamTheirCoach() || loggedinLifter.id === currLifter.id );
+  return ( await IamTheirCoach() || loggedinLifter.id === currLifter.id );
 }

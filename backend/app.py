@@ -301,5 +301,12 @@ def setCoach():
 
 #------------------------------------------------------------------------------
 
+@app.route("/amItheirCoach", methods=["POST"])
+def amItheirCoach():
+    data = request.get_json()
+    idUser = data["idUser"]
+    potentialClientID = data["potentialClientID"]
+    return jsonify(queries.amItheirCoach(idUser, potentialClientID))
+#------------------------------------------------------------------------------
 if __name__ == "__main__":
     app.run(debug=True, port=5001)

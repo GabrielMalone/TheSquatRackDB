@@ -5,9 +5,11 @@ import { endpoint as c  } from "./config.js";
 
 //-----------------------------------------------------------------------------
 export async function isMyCoach(){
-    const res = await f.post(c.IS_MY_COACH, {"idUser" : loggedinLifter.id , "potentialCoachID" : currLifter.id})
-    console.log(res);
-    return res;
+    return await f.post(c.IS_MY_COACH, {"idUser" : loggedinLifter.id , "potentialCoachID" : currLifter.id})
+}
+//-----------------------------------------------------------------------------
+export async function IamTheirCoach(){
+    return await f.post(c.AM_I_COACH, {"idUser" : loggedinLifter.id, "potentialClientID" : currLifter.id})
 }
 //-----------------------------------------------------------------------------
 export async function setCoachIcon(){
@@ -37,4 +39,4 @@ export async function setCoachStatus(){
         await f.post(c.SET_COACH, {"clientID" : loggedinLifter.id, "coachID" : currLifter.id})
         await setCoachIcon();        
     }
-}
+}1

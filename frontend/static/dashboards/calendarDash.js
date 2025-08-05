@@ -1,4 +1,4 @@
-import { endpoint as c, DoW, months } from "../config.js";
+import { accessLevelValid, endpoint as c, DoW, months } from "../config.js";
 import { currLifter, f } from "../lifterSidebar.js";
 import { loadMonthlyCharts } from "./monthlyChartDash.js";
 import { createCursor } from "../cursor.js";
@@ -178,7 +178,7 @@ export function dayEventListener(){     //have main container listen for events
     const calendar = document.querySelector(".month");
     calendar.addEventListener("click", dayListener);
 }
-function dayListener(e){
+async function dayListener(e){
     const workoutArea = document.querySelector(".workout");
     if (e.target.classList.contains("day")){ 
         workoutArea.innerHTML =``;                       // clear previous data
@@ -192,7 +192,7 @@ function dayListener(e){
             getWorkoutFromWokroutID(e.target.dataset.idWorkout);
         } else {
             // prevent outsider from adding workout 
-            if (currLifter.id !== loggedinLifter.id){
+            if (!await accessLevelValid()){
                 const workoutContainer = document.querySelector(".workout");
                 workoutContainer.style.display = "none";
                 return; 

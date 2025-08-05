@@ -1085,7 +1085,6 @@ def isMyCoach(idUser, potentialCoachID):
             res = cursor.fetchone()
             cursor.close()
             cnx.close()
-            print (res['coachedBy'], potentialCoachID)
             return res['coachedBy'] == potentialCoachID
         except mysql.connector.Error as err:
             print("MySQL Error:", err)    # This will show you the exact error
@@ -1126,5 +1125,34 @@ def setCoach(clientID, coachID):
                 "message" : f' server error: {err.errno}' 
             }  
 
+#------------------------------------------------------------------------------
+def amItheirCoach(coachID, potentialClientID):
+    cnx = connect()
+    if (cnx.is_connected()):
+        try:
+            cursor = cnx.cursor(dictionary=True, buffered=True) 
+            cursor.execute(
+                '''
+                    SELECT 
+                        u.coachedBy
+                    FROM
+                        `User` u
+                    WHERE
+                        u.idUser = %s
+                ''', (potentialClientID,))
+            res = cursor.fetchone()
+            cursor.close()
+            cnx.close()
+            print(res['coachedBy'] == coachID)
+            return res['coachedBy'] == coachID
+        except mysql.connector.Error as err:
+            print("MySQL Error:", err)    # This will show you the exact error
+            print("Error code:", err.errno)               # Numeric error code
+            cnx.rollback() 
+            cnx.close()
+            return {
+                "success" : False,
+                "message" : f' server error: {err.errno}' 
+            }     
 #------------------------------------------------------------------------------
 load_dotenv()

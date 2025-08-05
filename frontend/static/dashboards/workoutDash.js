@@ -1,5 +1,5 @@
 import { curlastDay, curMonth, curYear, fillCalendar } from "./calendarDash.js";
-import { endpoint as end, unit } from "../config.js";
+import { accessLevelValid, endpoint as end, unit } from "../config.js";
 import { setTemplateHTML, setUpdateFormTemplateHTML, sessionTitleFormHTML } from "../htmlTemplates.js";
 import { fillOutExerciseSelectMenu, createExerciseDash } from "./exerciseSelectDash.js";
 import { currLifter, f, getLifterObject, LIFTERS} from "../lifterSidebar.js";
@@ -13,21 +13,18 @@ const workoutContainer = document.querySelector(".workout"); // clear container
 // This method takes workout from database and formats it into workout DASH UI
 // ExerciseRow class holds the exercise div and an exercise set div
 //-----------------------------------------------------------------------------
-export function getWorkoutFromWokroutID(idWorkout){
+export async function getWorkoutFromWokroutID(idWorkout){
     workoutContainer.dataset.idWorkout = idWorkout;            // for ez access
-    f.post(end.WORKOUT_ENDPOINT, idWorkout)
-        .then(lifts=>{  
-            lifts.forEach(lift=>{            // will iterate over each exercise
-                fillExerciseRow(lift);       // this will iterate over each set
-            });
-            nameSession(lifts);
-            if (currLifter.id === loggedinLifter.id){
-                createCursor(workoutContainer);       // place cursor at bottom
-            }
-            createNotesSection(lifts[0]?.note);
-            scrollToWorkout();
-        })
-        .catch(error=>console.error(error));
+    const lifts = await f.post(end.WORKOUT_ENDPOINT, idWorkout)
+    lifts.forEach(lift=>{            // will iterate over each exercise
+        fillExerciseRow(lift);       // this will iterate over each set
+    });
+    nameSession(lifts);
+    if ( await accessLevelValid()){
+        createCursor(workoutContainer);       // place cursor at bottom
+    }
+    createNotesSection(lifts[0]?.note);
+    scrollToWorkout();
 }
 //-----------------------------------------------------------------------------
 // if any update/delete/add refresh the various dashes 
@@ -57,12 +54,12 @@ function workoutDashClickEvents(e){
 //-----------------------------------------------------------------------------
 // if any notes present, they will appear here
 //-----------------------------------------------------------------------------
-function createNotesSection(note){
+async function createNotesSection(note){
     if (!note){ 
         note = "";
     }
     let button = "";
-    if (currLifter.id === loggedinLifter.id){
+    if (await accessLevelValid()){
         button = `<div class="saveNoteButton">
             <div class="saveNoteButtonText">save note</div>
         </div>`
@@ -77,7 +74,7 @@ function createNotesSection(note){
     `
     workoutContainer.insertAdjacentHTML("beforeend",notesSection);
     const notesSectionInput = document.querySelector('.notesSectionInput');
-    if (currLifter.id !== loggedinLifter.id) notesSectionInput.contentEditable = "false";
+    if (! await accessLevelValid()) notesSectionInput.contentEditable = "false";
 }
 //-----------------------------------------------------------------------------
 function saveNoteEvent(e){
@@ -127,8 +124,9 @@ function closeWorkoutDash(e){
     }
 }
 //-----------------------------------------------------------------------------
-function expandSetEvent(e){
-    if (currLifter.id !== loggedinLifter.id) return; 
+async function expandSetEvent(e){
+    console.log(await accessLevelValid());
+    if (!await accessLevelValid()) return; 
     // expand set box and show update form
     if (e.type === "click" && e.target.classList.contains("set") ){
         const set = e.target;
@@ -170,7 +168,7 @@ function loadSets(newExerciseRow, data){
 //-----------------------------------------------------------------------------
 // method to create the HTML for a new Set being added to an Exercise Row
 //-----------------------------------------------------------------------------
-function makeNewSetBox(setInfo, liftInfo, setNumber, curExerciseRow){
+async function makeNewSetBox(setInfo, liftInfo, setNumber, curExerciseRow){
     if (!setInfo.setID){   // if new setbox is being created from the front end
         setInfo = liftInfo;                // there will not be any setInfo yet
     }               // but there will be some setInfo like exercise information
@@ -184,7 +182,7 @@ function makeNewSetBox(setInfo, liftInfo, setNumber, curExerciseRow){
     newSet.dataset.videoLink = setInfo.videoLink;
     newSet.insertAdjacentHTML("beforeend",CreateSetTemplate(setInfo));
     newSet.appendChild(createSetUpdateForm(setInfo, liftInfo));
-    if (currLifter.id === loggedinLifter.id){
+    if (await accessLevelValid()){
         newSet.appendChild(CreateRemoveSetButton(liftInfo, setInfo));
     }
     newSet.appendChild(addSetNumberToSetBox(setNumber, setInfo));
@@ -243,8 +241,9 @@ function addSetVideo(setElement, videoFileName){
 //-----------------------------------------------------------------------------
 // if set updated, query the DB
 //-----------------------------------------------------------------------------
-function updateSetEvent(e){
-    if (currLifter.id !== loggedinLifter.id) return;
+async function updateSetEvent(e){
+    e.preventDefault();
+    if (!await accessLevelValid()) return;
     if (e.target.classList.contains("setUpdate")){
         updateAset(e)
     }
@@ -340,8 +339,8 @@ function updateSet(updateObj){
 //-----------------------------------------------------------------------------
 // this method will add a new set to an exercise row
 //-----------------------------------------------------------------------------
-function addSet(curExerciseRow, liftInfo){
-    if (currLifter.id !== loggedinLifter.id) return;
+async function addSet(curExerciseRow, liftInfo){
+    if (!await accessLevelValid()) return;
     // first query the db and create a new set
     const i = document.querySelectorAll(`.${liftInfo.exercise}`).length;
     createNewDBset(liftInfo, i+1, curExerciseRow);
@@ -383,8 +382,8 @@ function updateLiftInfo(curliftInfo, newSetInfo){
 //-----------------------------------------------------------------------------
 // if set remove button clicked, remove set from DB
 //-----------------------------------------------------------------------------
-function removeSetEvent(e){
-    if (currLifter.id !== loggedinLifter.id) return;
+async function removeSetEvent(e){
+    if (!await accessLevelValid()) return;
     if (e.target.classList.contains("setRemove")){
         const idSet         = e.target.dataset.setID;
         const idWorkout     = e.target.dataset.idWorkout;
@@ -479,8 +478,8 @@ export function createWorkoutGrid(dateInfo){
     scrollToWorkout();
 }
 //-----------------------------------------------------------------------------
-function dragOverFileEvent(e){
-    if (currLifter.id !== loggedinLifter.id) return;
+async function dragOverFileEvent(e){
+    if (!await accessLevelValid()) return;
     e.preventDefault();
     if (e.target.classList.contains('set')){
         const set = e.target;
@@ -488,16 +487,16 @@ function dragOverFileEvent(e){
     }
 }
 //-----------------------------------------------------------------------------
-function dragLeaveFileEvent(e){
-    if (currLifter.id !== loggedinLifter.id) return;
+async function dragLeaveFileEvent(e){
+    if (!await accessLevelValid()) return;
     if (e.target.classList.contains('set')){
         const set = e.target;
         set.classList.remove('videoDrag');
     }
 }
 //-----------------------------------------------------------------------------
-function dropFileEvent(e){
-    if (currLifter.id !== loggedinLifter.id) return;
+async function dropFileEvent(e){
+    if (!await accessLevelValid(0)) return;
     e.preventDefault();
     if (e.target.classList.contains('set')){
         const set = e.target;
@@ -639,7 +638,7 @@ export function scrollToWorkout(){
 //-----------------------------------------------------------------------------
 // place to update the workout's name in DB, placed below date in the dash
 //-----------------------------------------------------------------------------
-function nameSession(liftInfo){
+async function nameSession(liftInfo){
     const sessionNameWrapper = 
     `
     <div class="sessionNameWrapper">
@@ -648,7 +647,7 @@ function nameSession(liftInfo){
     `
     const workoutHeader = document.querySelector('.workoutHeader');
     workoutHeader.insertAdjacentHTML("afterend", sessionNameWrapper);
-    if (currLifter.id !== loggedinLifter.id){         // prevent unauthorized edits
+    if (! await accessLevelValid()){         // prevent unauthorized edits
         const nameSetButton = document.querySelector('.nameSetButton');
         const sessionNameInput = document.querySelector('.sessionNameInput');
         nameSetButton.parentElement.removeChild(nameSetButton);
@@ -726,7 +725,7 @@ export async function getSetNotes(idSet, commentSection){
                 <div class="setMsgText">${msg.message}</div>
             </div>
             `);
-            if (msg.idUser === loggedinLifter.id){
+            if (msg.idUser === loggedinLifter.id || loggedinLifter.id === currLifter.id){
                 const setMsgTextWrapper = document.getElementById(`msgWrapperFor${msg.idMessage}`);
                 setMsgTextWrapper.insertAdjacentHTML("beforeend", 
                 `<div class="removeSetMsg" data-id-message="${msg.idMessage}">remove</div>`);
