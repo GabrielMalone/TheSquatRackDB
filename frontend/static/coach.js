@@ -1,6 +1,6 @@
 import { f} from "./lifterSidebar.js";
 import { loggedinLifter } from "./login.js";
-import { currLifter } from "./lifterSidebar.js";
+import { currLifter, LIFTERS, fillLifters, fillMenu } from "./lifterSidebar.js";
 import { endpoint as c  } from "./config.js";
 
 //-----------------------------------------------------------------------------
@@ -13,24 +13,28 @@ export async function IamTheirCoach(){
 }
 //-----------------------------------------------------------------------------
 export async function setCoachIcon(){
-    if (currLifter.id === loggedinLifter.id){
+    if (currLifter.id === loggedinLifter.id) {
         const wrapper = document.getElementById('isCoachWrapper');
         if (wrapper) wrapper.style.display = "none";
     } else {
         const wrapper = document.getElementById('isCoachWrapper');
         if (wrapper) wrapper.style.display = "flex";
     }
-    if (await isMyCoach()){
+    if (await isMyCoach()) {
         const coachText = document.getElementById('coachText');
         if (coachText) coachText.innerText = "my coach";
+        const wrapper = document.getElementById('isCoachWrapper');
+        if (wrapper) wrapper.classList.add('active');
     } else {
         const coachText = document.getElementById('coachText');
         if (coachText) coachText.innerText = "make coach";
+        const wrapper = document.getElementById('isCoachWrapper');
+        if (wrapper) wrapper.classList.remove('active');
     }
 }
 //-----------------------------------------------------------------------------
 export async function setCoachStatus(){
-    if (await isMyCoach()){
+    if (await isMyCoach()) {
         console.log("removing coach");
         await f.post(c.SET_COACH, {"clientID" : loggedinLifter.id, "coachID" : null})
         await setCoachIcon();
@@ -39,4 +43,15 @@ export async function setCoachStatus(){
         await f.post(c.SET_COACH, {"clientID" : loggedinLifter.id, "coachID" : currLifter.id})
         await setCoachIcon();        
     }
-}1
+}
+//-----------------------------------------------------------------------------
+export function getMyAthletes(){
+    f.post(c.GET_MY_ATHLETES, loggedinLifter.id)
+    .then(athletes=>{
+        LIFTERS.length = 0;
+        fillLifters(athletes);  // create lifter objects from lifters in the db
+        fillMenu()                     // fill out the menu with active lifters
+        LIFTERS.push(loggedinLifter);
+    })
+    .catch(err=>console.error(err));
+}

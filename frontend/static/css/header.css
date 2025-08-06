@@ -59,8 +59,15 @@
 }
 #logout.visible{
     display: flex;
+    margin-left: 2vw;
 }
 #addLifter.hidden{
+    display: none;
+}
+#myAthletes{
+    display: flex;
+}
+#myAthletes.hidden{
     display: none;
 }
 .footer{

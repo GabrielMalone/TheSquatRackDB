@@ -75,7 +75,8 @@ const devConfig = {
     REMOVE_SET_MSG: "removeSetMsg",
     SET_COACH: "setCoach",
     IS_MY_COACH: "isMyCoach",
-    AM_I_COACH: "amItheirCoach"
+    AM_I_COACH: "amItheirCoach",
+    GET_MY_ATHLETES: "getMyAthletes"
 
   };
   
@@ -116,7 +117,8 @@ const prodConfig = {
     REMOVE_SET_MSG: "removeSetMsg",
     SET_COACH: "setCoach",
     IS_MY_COACH: "isMyCoach",
-    AM_I_COACH: "amItheirCoach"
+    AM_I_COACH: "amItheirCoach",
+    GET_MY_ATHLETES: "getMyAthletes"
 
   };
 

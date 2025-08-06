@@ -72,7 +72,6 @@ export function loginLogout(state){
         homeButton.classList.add('visible');
         loginButton.classList.add('visible');
         logoutButton.classList.add('visible');
-
     }
 }
 //-----------------------------------------------------------------------------
@@ -98,7 +97,21 @@ function loadLifterFromLogin(data){
     LIFTERS.push(cLifter);
     fillCalendar(year,month,lastday);    // get this lifter's training sessions
     createPrDash(cLifter.prDashSelection, cLifter.id);    
+    checkIfICoach();
     setTimeout(()=>{    document.getElementById('headerTitle').scrollIntoView({"behavior" : "smooth"});}, 200);
+}
+//-----------------------------------------------------------------------------
+export function checkIfICoach() {
+    const myAthletesButton = document.getElementById('myAthletes');
+    f.post(end.GET_MY_ATHLETES, loggedinLifter.id)
+    .then(res=>{
+        if ( res.length === 0 ){  // hide the my athletes button if no athletes
+            myAthletesButton.classList.add('hidden');
+        } else {
+            myAthletesButton.classList.remove('hidden');
+        }
+    })
+    .catch(err=>console.error(err));
 }
 //-----------------------------------------------------------------------------
 // toggle the visibility of the create/login boxes at appropriate times
@@ -133,7 +146,7 @@ export function logoutEvent(){
         const monthlyChartDash  = document.querySelector('.monthlyChartDash');
         const cursorForPRDash   = document.getElementById('cursorForprDashBoard');
         const dashHeaders       = document.querySelectorAll('.dashHeader');
-        const lifterBoxHeader = document.querySelector('.lifterBoxHeader');
+        const lifterBoxHeader   = document.querySelector('.lifterBoxHeader');
 
         lifterBoxHeader.innerHTML = ``;
 

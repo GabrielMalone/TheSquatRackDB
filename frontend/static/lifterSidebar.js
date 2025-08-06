@@ -34,6 +34,7 @@ export function getLiftersIfollow(){
         LIFTERS.length = 0;
         fillLifters(lifters);   // create lifter objects from lifters in the db
         fillMenu()                     // fill out the menu with active lifters
+        LIFTERS.push(loggedinLifter);
     })
     .catch(rejection=>{
         console.error(rejection);

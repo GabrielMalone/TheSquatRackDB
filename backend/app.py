@@ -308,5 +308,12 @@ def amItheirCoach():
     potentialClientID = data["potentialClientID"]
     return jsonify(queries.amItheirCoach(idUser, potentialClientID))
 #------------------------------------------------------------------------------
+
+@app.route("/getMyAthletes", methods=["POST"])
+def getMyAthletes():
+    idUser = request.get_json()
+    return jsonify(queries.getMyAthletes(idUser))
+
+#------------------------------------------------------------------------------
 if __name__ == "__main__":
     app.run(debug=True, port=5001)

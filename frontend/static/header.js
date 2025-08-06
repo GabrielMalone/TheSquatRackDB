@@ -3,6 +3,10 @@ import { lifterSidebarSearch } from "./htmlTemplates.js";
 import { logoutEvent, login } from "./login.js";
 import { findLifter } from "./searchLifter.js";
 import { getLiftersIfollow, loadLifter } from "./lifterSidebar.js";
+import { getMyAthletes } from "./coach.js";
+
+let myAthletesLoaded = false;
+let liftersIfollowLoaded = false;
 
 //-----------------------------------------------------------------------------
 // event listeners and actions for the buttons in the main header
@@ -38,6 +42,10 @@ function headerListenerEvents(e){
     if (e.target.id === "homeButton"){
         goHome();
     }
+    if (e.target.id === "myAthletes"){
+        console.log("my athletes clicked");
+        myAthletesClickEvent();
+    }
 }
 //-----------------------------------------------------------------------------
 
@@ -48,18 +56,39 @@ function addLifterEvent(){
 }
 //-----------------------------------------------------------------------------
 
+function myAthletesClickEvent(){
+    const sidebar = document.getElementById("lifterMenu");     // build sidebar 
+    sidebar.innerHTML = ``;                        // clear any previous builds  
+    sidebar.insertAdjacentHTML("beforeend", 
+    `<div class="lifterSidebarDashWrapper"></div>`);
+    if (!myAthletesLoaded){
+        sidebar.classList.add("visible");
+        sidebar.classList.add('myAthletes')
+        myAthletesLoaded = true;
+        liftersIfollowLoaded = false;
+        getMyAthletes();
+    } else {
+        sidebar.classList.toggle('visible');
+        sidebar.classList.toggle('myAthletes');
+        getMyAthletes();
+    }
+}
+//-----------------------------------------------------------------------------
+
 function activeLiftersClickEvent(){
     const sidebar = document.getElementById("lifterMenu");     // build sidebar 
     sidebar.innerHTML = ``;                        // clear any previous builds
     sidebar.insertAdjacentHTML("afterbegin", lifterSidebarSearch);//sidebarhtml
     getLiftersIfollow();                 
     const searchBar = document.querySelector('.findLifterInput'); 
-    const mainLifterWindow = document.querySelector('.lifterBox');
-    sidebar.classList.toggle("visible");
-    if (sidebar.classList.contains("visible")){
-        mainLifterWindow.style.width = "100%"; 
+    if (!liftersIfollowLoaded){
+        sidebar.classList.add("visible");
+        sidebar.classList.add('liftersIfollow')
+        liftersIfollowLoaded = true;    
+        myAthletesLoaded = false;    
     } else {
-        mainLifterWindow.style.width = "85%";
+        sidebar.classList.toggle('visible');
+        sidebar.classList.toggle('liftersIfollow');        
     }
     searchBar.addEventListener("input", findLifter); //listen for search inputs
 }
