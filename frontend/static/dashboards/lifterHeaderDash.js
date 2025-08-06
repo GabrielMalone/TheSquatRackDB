@@ -27,7 +27,7 @@ async function lifterHeaderEvents(e){
         if ( IdoFollow ) unfollowLifterEvent();
         else followLifterEvent();
     }
-    if (e.target.id === 'coachIcon'){
+    if (e.target.id === 'coachText'){
         setCoachStatus();
     }
 }

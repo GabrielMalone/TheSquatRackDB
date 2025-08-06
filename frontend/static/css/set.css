@@ -9,7 +9,6 @@
     outline: 1px solid var(--primary-border-color);
     cursor: pointer;
     height: min-content;
-    background-color: #111;
 }
 .setExpand{
     min-height: min-content;
@@ -171,7 +170,7 @@
     display: flex;
     flex-direction: row;
     position: relative;
-    border-top: 1px solid var(--primary-border-color); 
+    border-top: 1px solid var(--secondary-border-color); 
     align-items: center;
 }
 .setUpdate{
@@ -250,7 +249,7 @@
     display: flex;
     flex-direction: column;
     position: relative;
-    border-top: 1px solid var(--primary-border-color);
+    border-top: 1px solid var(--secondary-border-color);
     padding: 3%;
     user-select: none;
 }
@@ -274,13 +273,14 @@
 }
 .commenterName{
     color: var(--primary-text-color);
-    border-bottom: 1px solid var(--primary-border-color);
+    border-bottom: 1px solid var(--secondary-border-color);
     margin-top: 4%;
     padding-top: 2%;
     padding-bottom: 2%;
+    filter: brightness(0.5);
 }
 .inputComment{
-    outline: 1px solid var(--primary-border-color);
+    outline: 1px solid var(--secondary-border-color);
     color: var(--primary-text-color);
     font-size: clamp(8pt, 0.75vw, 24pt);
     padding: 2%;

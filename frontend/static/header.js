@@ -64,7 +64,7 @@ function myAthletesClickEvent(){
     if (!myAthletesLoaded){
         sidebar.classList.add("visible");
         sidebar.classList.add('myAthletes')
-        myAthletesLoaded = true;
+        myAthletesLoaded     = true;
         liftersIfollowLoaded = false;
         getMyAthletes();
     } else {
@@ -85,7 +85,7 @@ function activeLiftersClickEvent(){
         sidebar.classList.add("visible");
         sidebar.classList.add('liftersIfollow')
         liftersIfollowLoaded = true;    
-        myAthletesLoaded = false;    
+        myAthletesLoaded     = false;    
     } else {
         sidebar.classList.toggle('visible');
         sidebar.classList.toggle('liftersIfollow');        

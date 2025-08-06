@@ -1,6 +1,6 @@
 import { f, getLiftersIfollow, setFollowIcon } from "./lifterSidebar.js";
 import { loggedinLifter } from "./login.js";
-import { currLifter } from "./lifterSidebar.js";
+import { currLifter, setAthleteStatus } from "./lifterSidebar.js";
 import { endpoint as c  } from "./config.js";
 import { setCoachIcon } from "./coach.js";
 
@@ -18,6 +18,7 @@ export function followLifterEvent(){
             setFollowIcon();
             getLiftersIfollow();
             setCoachIcon();
+            setAthleteStatus();
         })
         .catch(err=>console.error(err));
 }
@@ -32,6 +33,7 @@ export function unfollowLifterEvent(){
             setFollowIcon();
             setCoachIcon();
             getLiftersIfollow();
+            setAthleteStatus();
         })
         .catch(err=>console.error(err));
 }

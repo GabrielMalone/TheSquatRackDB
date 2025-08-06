@@ -2,6 +2,7 @@ import { f} from "./lifterSidebar.js";
 import { loggedinLifter } from "./login.js";
 import { currLifter, LIFTERS, fillLifters, fillMenu } from "./lifterSidebar.js";
 import { endpoint as c  } from "./config.js";
+import { coachWrapperHTML } from "./htmlTemplates.js";
 
 //-----------------------------------------------------------------------------
 export async function isMyCoach(){
@@ -13,33 +14,43 @@ export async function IamTheirCoach(){
 }
 //-----------------------------------------------------------------------------
 export async function setCoachIcon(){
+    createCoachWrapper();
+    const wrapper = document.getElementById('isCoachWrapper');
     if (currLifter.id === loggedinLifter.id) {
-        const wrapper = document.getElementById('isCoachWrapper');
-        if (wrapper) wrapper.style.display = "none";
+        wrapper.style.display = "none";
     } else {
-        const wrapper = document.getElementById('isCoachWrapper');
-        if (wrapper) wrapper.style.display = "flex";
+        wrapper.style.display = "flex";
     }
     if (await isMyCoach()) {
-        const coachText = document.getElementById('coachText');
-        if (coachText) coachText.innerText = "my coach";
-        const wrapper = document.getElementById('isCoachWrapper');
-        if (wrapper) wrapper.classList.add('active');
+        setCoachText("my coach");
     } else {
-        const coachText = document.getElementById('coachText');
-        if (coachText) coachText.innerText = "make coach";
-        const wrapper = document.getElementById('isCoachWrapper');
-        if (wrapper) wrapper.classList.remove('active');
+        setCoachText("make coach");
     }
+}
+//-----------------------------------------------------------------------------
+function createCoachWrapper(){
+    const prevSibling = document.querySelector('#isCoachWrapper')?.previousElementSibling;
+    const coachWrapper = document.querySelector('#isCoachWrapper');
+    if (coachWrapper){
+        coachWrapper.remove();
+        prevSibling.insertAdjacentHTML("afterend",coachWrapperHTML);
+    } else {
+        document.querySelector('#space').insertAdjacentHTML("afterend", coachWrapperHTML);
+    } 
+}
+//-----------------------------------------------------------------------------
+function setCoachText(text){
+    const coachText = document.getElementById('coachText');
+    if (coachText) coachText.innerText = text;
+    const wrapper = document.getElementById('isCoachWrapper');
+    if (wrapper) wrapper.classList.remove('active');
 }
 //-----------------------------------------------------------------------------
 export async function setCoachStatus(){
     if (await isMyCoach()) {
-        console.log("removing coach");
         await f.post(c.SET_COACH, {"clientID" : loggedinLifter.id, "coachID" : null})
         await setCoachIcon();
     } else {
-        console.log("adding coach");
         await f.post(c.SET_COACH, {"clientID" : loggedinLifter.id, "coachID" : currLifter.id})
         await setCoachIcon();        
     }

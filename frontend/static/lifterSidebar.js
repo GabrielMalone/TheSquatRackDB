@@ -6,7 +6,7 @@ import { createPrDash } from "./dashboards/prDash.js";
 import { loggedinLifter } from "./login.js";
 import { Ifollow } from "./follow.js";
 import { lifterDashHeaderContent } from "./htmlTemplates.js";
-import { setCoachIcon } from "./coach.js";
+import { IamTheirCoach, setCoachIcon } from "./coach.js";
 
 export const f = new fetchWrapper(c.API_URL);  // this should prob be in config
 
@@ -24,6 +24,21 @@ export function loadLifter(e){
     resetAndFillDashes();
     setFollowIcon();
     setCoachIcon();
+    setAthleteStatus();
+}
+//-----------------------------------------------------------------------------
+export async function setAthleteStatus(){
+    if (await IamTheirCoach()){
+        const space = document.querySelector('#space');
+        space.insertAdjacentHTML("afterend", 
+        `<div class="myAthleteWrapper">
+            <div id="myAthleteText">my athlete</div>
+            <div id="myAltheteIcon">★</div>
+        </div>`);
+    } else {
+        const myAthleteWrapper = document.querySelector('.myAthleteWrapper');
+        myAthleteWrapper?.parentNode.removeChild(myAthleteWrapper);
+    }
 }
 //-----------------------------------------------------------------------------
 // This method fetches all the lifters and their info from the databse
@@ -106,12 +121,6 @@ export async function setFollowIcon(){   // this is realy reset the whole header
     // follow icon logic 
     const idoFollow = await Ifollow(loggedinLifter.id, currLifter.id);
     if (idoFollow){ 
-        lifterBoxHeader.insertAdjacentHTML("beforeend", 
-        `<div id="isCoachWrapper">
-            <div id="coachText">make coach</div>
-            <div id="coachIcon">♛</div>
-        </div>
-        `);
         lifterBoxHeader.insertAdjacentHTML("beforeend", 
         `<div id="followIconWrapper">
             <div id="followText">following</div>

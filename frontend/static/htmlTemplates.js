@@ -85,3 +85,9 @@ export const lifterDashHeaderContent = `
     <div id="lifterConfig">○</div>
     <div id="space"></div>
 `
+//-----------------------------------------------------------------------------
+export const coachWrapperHTML = 
+   `<div id="isCoachWrapper">
+        <div id="coachText"></div>
+        <div id="coachIcon">♛</div>
+    </div>`;

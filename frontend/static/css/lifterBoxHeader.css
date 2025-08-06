@@ -72,7 +72,7 @@
     color: var(--primary-text-color);
 }
 #isCoachWrapper.active{
-    color: violet;
+    color: var(--primary-text-color)
 }
 #coachText{
     font-size: clamp(6pt, 0.75vw, 10pt);
@@ -81,10 +81,35 @@
     color: var(--primary-text-color);
 }
 #coachIcon{
-    font-size: 2.75vw;
+    font-size: 1.5vw;
     cursor: pointer;
     align-self: center;
+    display: none;
 }
 #coachIcon:hover{
-    color: violet;
+    color: var(--primary-add-color);
+}
+
+
+.myAthleteWrapper{
+    display: flex;
+    flex-direction: column;
+    margin-right: 1vw;
+}
+#myAthleteText{
+    font-size: clamp(6pt, 0.75vw, 10pt);
+    cursor: pointer;
+    align-self: center;  
+    color: var(--primary-text-color);   
+}
+#myAltheteIcon{
+    color: var(--primary-text-color);  
+    font-size: 1vw;
+    cursor: pointer;
+    align-self: center; 
+    justify-self: center;
+    display: none;
+}
+#myAltheteIcon:hover{
+    color: var(--primary-add-color);  
 }
