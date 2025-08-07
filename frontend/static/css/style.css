@@ -46,7 +46,6 @@ input:-webkit-autofill {
 .lifterBox {
     display: flex;
     flex-direction: column;
-    width: 100%;
     flex: 1;
 }
 @media (max-width: 800px) {
