@@ -173,7 +173,5 @@ export const MONTHLY_CHARTS_DASH_VARIABLES = {
 }
 
 export async function accessLevelValid(){
-  // console.log( await IamTheirCoach() , loggedinLifter.id, currLifter.id);
-  // console.log(  await IamTheirCoach() || loggedinLifter.id === currLifter.id );
   return ( await IamTheirCoach() || loggedinLifter.id === currLifter.id );
 }

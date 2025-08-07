@@ -20,36 +20,38 @@ export const setUpdateFormTemplateHTML = (liftInfo, unit) =>
     </form>
     <div class="setQualifiersWrapper">
         <div class="setQualifiers"> 
-            <div class="UpdatequalifierIcons" id="UpdateworkingSetIcon">⇧</div>  
+            <div class="UpdatequalifierIcons" id="UpdateworkingSetIcon">working set</div>  
         </div>
         <div class="setQualifiers"> 
-            <div class="UpdatequalifierIcons" id="UpdatebeltIcon">◎</div>    
+            <div class="UpdatequalifierIcons" id="UpdatebeltIcon">belt</div>    
         </div>
         <div class="setQualifiers">
-            <div class="UpdatequalifierIcons" id="UpdatepausedIcon">⏸</div>      
+            <div class="UpdatequalifierIcons" id="UpdatepausedIcon">paused</div>      
         </div>
         <div class="setQualifiers"> 
-            <div class="UpdatequalifierIcons" id="UpdateunilateralIcon">⚋</div>  
+            <div class="UpdatequalifierIcons" id="UpdateunilateralIcon">unilateral</div>  
         </div>
     </div>   
 `;
 //-----------------------------------------------------------------------------
 export const setTemplateHTML = (liftInfo) => 
 `<div class="setInfoWrapper data-set-i-d="${liftInfo.setID}">
-    <div class="setWeightRepsWrapper">
-        <div class="setInfo setWeight">${liftInfo.weight}</div> 
-        <div class="setInfo setBy">&nbsp;x&nbsp;</div> 
-        <div class="setInfo setReps">${liftInfo.reps}</div>
-    </div>
-    <div class="setRPEwrapper">
-        <div class="setInfo setRPETitle">rpe</div>
-        <div class="setInfo setRPE">${liftInfo.rpe}</div>
+    <div class="weightsANDrpeWrapper">
+        <div class="setWeightRepsWrapper">
+            <div class="setInfo setWeight">${liftInfo.weight}</div> 
+            <div class="setInfo setBy">&nbsp;x&nbsp;</div> 
+            <div class="setInfo setReps">${liftInfo.reps}</div>
+        </div>
+        <div class="setRPEwrapper">
+            <div class="setInfo setRPETitle">RPE</div>
+            <div class="setInfo setRPE">${liftInfo.rpe}</div>
+        </div>
     </div>
     <div class="qualifierIconsWrapper">
-        <div class="qualifierIcons" id="workingSetIcon"> ⇧ </div>
-        <div class="qualifierIcons" id="beltIcon"> ◎ </div>
-        <div class="qualifierIcons" id="pausedIcon"> ⏸ </div>
-        <div class="qualifierIcons" id="unilateralIcon"> ⚋ </div>
+        <div class="qualifierIcons" id="workingSetIcon"> working set </div>
+        <div class="qualifierIcons" id="beltIcon"> belt </div>
+        <div class="qualifierIcons" id="pausedIcon"> paused </div>
+        <div class="qualifierIcons" id="unilateralIcon"> unilateral </div>
     </div>
 </div>`;
 //-----------------------------------------------------------------------------

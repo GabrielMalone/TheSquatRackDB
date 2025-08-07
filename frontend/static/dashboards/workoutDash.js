@@ -16,12 +16,12 @@ const workoutContainer = document.querySelector(".workout"); // clear container
 export async function getWorkoutFromWokroutID(idWorkout){
     workoutContainer.dataset.idWorkout = idWorkout;            // for ez access
     const lifts = await f.post(end.WORKOUT_ENDPOINT, idWorkout)
-    lifts.forEach(lift=>{            // will iterate over each exercise
-        fillExerciseRow(lift);       // this will iterate over each set
-    });
+    for (const lift of lifts){
+        await fillExerciseRow(lift);  
+    }
     nameSession(lifts);
     if ( await accessLevelValid()){
-        createCursor(workoutContainer);       // place cursor at bottom
+        createCursor(workoutContainer);              // place cursor at bottom
     }
     createNotesSection(lifts[0]?.note);
     scrollToWorkout();
@@ -125,7 +125,6 @@ function closeWorkoutDash(e){
 }
 //-----------------------------------------------------------------------------
 async function expandSetEvent(e){
-    console.log(await accessLevelValid());
     if (!await accessLevelValid()) return; 
     // expand set box and show update form
     if (e.type === "click" && e.target.classList.contains("set") ){
@@ -151,19 +150,19 @@ function showVideo(set){
 //-----------------------------------------------------------------------------
 // helper method to make the UI exercise Row
 //-----------------------------------------------------------------------------
-function fillExerciseRow(liftInfo){
+async function fillExerciseRow(liftInfo){
     const newRow = createExerciseRow(liftInfo.exercise);        // new exercise
     createExerciseBox(newRow,liftInfo);               // make a new row with it
-    loadSets(newRow, liftInfo);                 // at least 1 set done, add set
+    await loadSets(newRow, liftInfo);           // at least 1 set done, add set
 }
 //-----------------------------------------------------------------------------
 // load a set into exercise row from the workout loaded form DB 
 //-----------------------------------------------------------------------------
 // data looks like {exercise info{}, sets[setinfo{}]
-function loadSets(newExerciseRow, data){
-    data.sets.forEach(set=>{
-        makeNewSetBox(set, data, set.set, newExerciseRow);
-    });
+async function loadSets(newExerciseRow, data){
+    for (const set of data.sets){
+        await makeNewSetBox(set, data, set.set, newExerciseRow);
+    }
 }
 //-----------------------------------------------------------------------------
 // method to create the HTML for a new Set being added to an Exercise Row
@@ -410,9 +409,7 @@ function removeCommentEvent(e){
         const idMessage = e.target.dataset.idMessage;
         f.post(end.REMOVE_SET_MSG, idMessage)
         .then(res=>{
-            console.log(res, "removing a set");
             const setCommentWrapper = e.target.closest('.setCommentWrapper');
-            console.log(setCommentWrapper);
             const idSet = setCommentWrapper.dataset.idSet;
             getSetNotes(idSet, setCommentWrapper);
         })
@@ -496,7 +493,7 @@ async function dragLeaveFileEvent(e){
 }
 //-----------------------------------------------------------------------------
 async function dropFileEvent(e){
-    if (!await accessLevelValid(0)) return;
+    if (!await accessLevelValid()) return;
     e.preventDefault();
     if (e.target.classList.contains('set')){
         const set = e.target;
@@ -682,7 +679,7 @@ export function addCommentToSet(e){
         }
         commentWrapper.insertAdjacentHTML("beforeend", `
             <div class="inputComment" contenteditable=true></div>
-            <div class="submitComment" data-comment-from=${loggedinLifter.id}>add comment</div>
+            <div class="submitComment" data-comment-from=${loggedinLifter.id}>comment</div>
             `);
     }
 }
@@ -714,7 +711,7 @@ export async function getSetNotes(idSet, commentSection){
     f.post(end.GET_SET_MSGS, idSet)
     .then(msgs=>{
         clearPrevNotes(idSet);
-        msgs.forEach(msg=>{
+        for (const msg of msgs){
             commentSection.insertAdjacentHTML("beforeend",
             `
             <div class="prevMsgWrapper">
@@ -730,7 +727,7 @@ export async function getSetNotes(idSet, commentSection){
                 setMsgTextWrapper.insertAdjacentHTML("beforeend", 
                 `<div class="removeSetMsg" data-id-message="${msg.idMessage}">remove</div>`);
             }
-        });
+        }
         getNumberOfNotes(idSet, commentSection);
     })
     .catch(err=>console.error(err));
@@ -752,7 +749,7 @@ function getNumberOfNotes(idSet, commentSection){
 function clearPrevNotes(idSet){
     const commentSection = document.getElementById(`commentsFor${idSet}`);
     const prevmsgs = commentSection.querySelectorAll('.prevMsgWrapper');
-    prevmsgs.forEach(msg=>{
+    for (const msg of prevmsgs){
         msg.parentNode.removeChild(msg);
-    });
+    }
 }

@@ -45,6 +45,11 @@
     width: 100%;
     font-size: clamp(8pt, 1vw, 14pt);
 }
+.weightsANDrpeWrapper{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
 .setWeightRepsWrapper{
     display: flex;
     flex-direction: row;
@@ -54,22 +59,21 @@
 }
 .setRPEwrapper{
     display: flex;
-    flex: 1;
     flex-direction: row;
     pointer-events: none;  
+    font-size: clamp(8pt, 1.75vw, 20pt);
 }
 .setRPETitle{
     pointer-events: none;  
     color: var(--primary-text-color);
-    font-size: clamp(8pt, 1vw, 12pt);
-    filter: brightness(0.7);
+    filter: brightness(0.2);
     margin-right: 0.25vw;
 }
 .setRPE{
     padding-right: 2%;
     pointer-events: none;  
     color: var(--primary-text-color);
-    font-size: clamp(8pt, 1vw, 12pt);
+    filter: brightness(0.4);
 }
 .qualifierIconsWrapper{
     display: flex;
@@ -80,20 +84,24 @@
 }
 .qualifierIcons{
     color: var(--icons-inactive-color);
-    font-size: clamp(6pt, 0.75vw, 10pt);
-    filter: brightness(1);
+    font-size: clamp(6pt, 0.5vw, 10pt);
     padding: 2%;
+    display: none;
 }
 #unilateralIcon.highlighted{
+    display: flex;
     color: var(--icons-active-color);
 }
 #workingSetIcon.highlighted{
+    display: flex;
     color: var(--icons-active-color);
 }
 #beltIcon.highlighted{
+    display: flex;
     color: var(--icons-active-color);
 }
 #pausedIcon.highlighted{
+    display: flex;
     color: var(--icons-active-color);
 }
 .setNumber{
@@ -108,7 +116,8 @@
 .setWeight{
     color: var(--primary-text-color);
     pointer-events: none;    
-    font-size: clamp(12pt, 1.25vw, 24pt);
+    font-size: clamp(12pt, 2vw, 36pt);
+    filter: brightness(0.7);
 }
 .setBy{
     color: var(--primary-text-color);
@@ -119,46 +128,34 @@
     color: var(--primary-text-color);
     pointer-events: none;  
     margin-right: 1vw;
+    font-size: clamp(6pt, 1.5vw, 24pt);
+    filter: brightness(0.7);
 }
 
 .setQualifiersWrapper{
+    margin-top: 1%;
     display: flex;
-    flex: 1;
-    flex-direction: row;
+    flex: 2;
+    margin-right: 6%;
+    flex-direction: column;
     user-select: none;
 }
 .setQualifiers{
     display: flex;
-    flex:0;
-    flex-direction: row;
-    font-size: clamp(18pt, 1.5vw, 24pt);
-    align-items: center;
-    justify-items: flex-start;
-    padding: 6%;
+    font-size: clamp(6pt, 1vw, 12pt);
+    align-self: flex-end;
 }
 .UpdatequalifierIcons{
-    min-width: 1vw;
-    max-width: 1vw;
     color: var(--icons-inactive-color);
-    filter: brightness(0.4);
 }
 .UpdatequalifierIcons:hover{
-    color: var(--icons-highlighted-color);
-    filter: brightness(1);
+    color: lime !important;
 }
 .UpdatequalifierIcons.highlighted{
     color: var(--icons-active-color);
 }
 .UpdatequalifierIcons.highlighted:hover{
     color: var(--icons-highlighted-color);
-}
-#UpdatepausedIcon{
-    padding-left: 3px;
-    margin-right: -3px;
-}
-#UpdateunilateralIcon{
-    padding-left: 3px;
-    margin-right: -3px;
 }
 /*-------------------------------------------------------*/
 /* WOKROUT AREA -> EXERCISE ROW -> SET-> UPDATE FORM
@@ -171,12 +168,12 @@
     flex-direction: row;
     position: relative;
     border-top: 1px solid var(--secondary-border-color); 
-    align-items: center;
 }
 .setUpdate{
     margin-top: 1%;
     margin-left: 3%;
     display: flex;
+    flex: 1;
     flex-direction: column;
     max-width: 50%;
 }
@@ -222,7 +219,7 @@
     align-self: center;
     align-content: center;
     color: var(--primary-text-color);
-    filter: brightness(0.7);
+    filter: brightness(0.2);
     height: 100%;
     font-size: clamp(8pt, 0.8vw, 14pt);
     margin-right: 0.4vw;
@@ -235,7 +232,7 @@
 .setRemove{
     position: relative;
     align-self: flex-end;
-    color: var(--primary-remove-color);
+    color: var(--primary-text-color);
     font-size: clamp(5pt, 0.75vw, 16pt);
     margin-right: 1%;
 }
@@ -250,6 +247,7 @@
     flex-direction: column;
     position: relative;
     border-top: 1px solid var(--secondary-border-color);
+    font-size: clamp(8pt, 0.75vw, 24pt);
     padding: 3%;
     user-select: none;
 }
@@ -258,11 +256,8 @@
 }
 .setCommentButton{
     color: var(--primary-text-color);
-    font-size: clamp(6pt, 0.5vw, 10pt);
     padding-top: 2%;
-    padding-bottom: 4%;
     user-select: none;
-    filter: brightness(0.6);
 }
 /* make a new set comment */
 .setCommentButton:hover{
@@ -272,26 +267,27 @@
     color: var(--primary-text-color);
 }
 .commenterName{
+    display: none;
     color: var(--primary-text-color);
-    border-bottom: 1px solid var(--secondary-border-color);
     margin-top: 4%;
-    padding-top: 2%;
     padding-bottom: 2%;
     filter: brightness(0.5);
 }
 .inputComment{
-    outline: 1px solid var(--secondary-border-color);
+    outline: 1px solid var(--primary-border-color);
+    border: none;
     color: var(--primary-text-color);
-    font-size: clamp(8pt, 0.75vw, 24pt);
     padding: 2%;
+    margin-top: 6%;
 }
 .submitComment{
     display: flex;
     justify-content: flex-end;
-    color: var(--primary-add-color);
+    color: var(--primary-text-color);
     justify-self: flex-end;
-    font-size: clamp(6pt, 0.75vw, 10pt);
-    padding: 2%;
+    filter: brightness(0.7);
+    padding-top: 2%;
+    margin-bottom: 10%;
 }
 .submitComment:hover{
     color: var(--primary-add-highlight-color);
@@ -308,12 +304,10 @@
     display: flex;
     flex:1;
     color: var(--primary-text-color);
-    font-size: clamp(8pt, 0.75vw, 24pt);
     filter: brightness(0.7);
 }
 .setMsgDate{
     color: var(--primary-text-color);
-    font-size: clamp(4pt, 0.5vw, 16pt);
     filter: brightness(0.3);
 }
 .setMsgTextWrapper{
@@ -322,14 +316,13 @@
 }
 .setMsgText{
     color: var(--primary-text-color);
-    font-size: clamp(8pt, 0.75vw, 24pt);
     font-style: italic;
     filter: brightness(0.8);
 }
 .removeSetMsg{
     color: var(--primary-text-color);
-    font-size: clamp(6pt, 0.5vw, 12pt);
     align-self: center;
+    filter: brightness(0.5);
 }
 .removeSetMsg:hover{
     color: var(--primary-add-color);
