@@ -198,13 +198,11 @@
     color: var(--primary-add-highlight-color);
 }
 .setButton{
-    display: none;
-    position: relative;
     color: var(--primary-add-color);
-    filter: brightness(1.2);
     cursor: pointer;
     overflow: visible;
     font-size: clamp(6pt, 1vw, 16pt);
+    padding: 0;
 
 }
 .setButton:hover{
