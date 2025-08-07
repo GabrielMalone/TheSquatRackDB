@@ -49,7 +49,7 @@
     outline: 1px solid var(--primary-border-color);   
     background-color: var(--primary-background-color);
     border-radius: 0px;
-    font-size: clamp(10pt, 1vw, 24pt);
+    font-size: clamp(8pt, 1vw, 12pt);
     border: none;
     color: var(--secondary-text-color);
     padding: 4%;
@@ -72,7 +72,7 @@
 }
 .lifterName {
     filter: brightness(0.8);
-    font-size: clamp(12px, 1vw, 24px);
+    font-size: clamp(8px, 1vw, 14px);
     cursor: pointer;
     padding-left: max(10px,5%);
     padding: 2%;

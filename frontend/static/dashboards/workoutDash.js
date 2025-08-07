@@ -34,7 +34,6 @@ function updateDashesOnChange(dateInfo, idWorkout, curYear, curMonth, curlastDay
     getWorkoutFromWokroutID(idWorkout);                    // the workout area
     fillCalendar(curYear, curMonth, curlastDay);           // and the calendar  
     const lifter = getLifterObject(currLifter.id);  
-    console.log(lifter, currLifter.id, LIFTERS);
     createPrDash(lifter.prDashSelection, lifter.id);            // and pr dash
 }
 //-----------------------------------------------------------------------------

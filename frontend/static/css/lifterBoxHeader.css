@@ -80,6 +80,9 @@
     align-self: center;  
     color: var(--primary-text-color);
 }
+#coachText:hover{
+    color: var(--primary-add-color);
+}
 #coachIcon{
     font-size: 1.5vw;
     cursor: pointer;
