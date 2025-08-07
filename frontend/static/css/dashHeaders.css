@@ -8,26 +8,26 @@
     max-width: 100%;
     min-width: 85%;
     border-bottom: 1px solid var(--primary-border-color);
-    margin-bottom: 1%;
-    margin-top: 10%;
+    margin-bottom: 0.5vw;
+    margin-top: 3vw;
     user-select: none;
 }
 .dashHeaderTitle {
     display: flex;
     align-self: flex-end;
     color: var(--primary-text-color);
-    font-size: 1vw;
+    font-size: 24pt;
     flex: 1;
     user-select: none;
-    padding-bottom: 1%;
-    margin-left: 1.5%;
+    padding-bottom: 0.5vw;
+    margin-left: 1vw;
 }
 .minimizer {
     display: flex;
     flex: 0;
-    padding-bottom: 1%;
-    margin-right: 1%;
-    font-size: 2vw;
+    padding-bottom: 0.5vw;
+    margin-right: 0.5vw;
+    font-size: 24pt;
     user-select: none;
     color: var(--primary-add-color);
 }

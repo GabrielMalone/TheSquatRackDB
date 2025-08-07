@@ -41,7 +41,7 @@
     flex-wrap: wrap;
     position: relative;
     pointer-events: none; 
-    padding: 3%;
+    padding: 1vw;
     width: 100%;
     font-size: clamp(8pt, 1vw, 14pt);
 }
@@ -184,7 +184,6 @@
     background-color: transparent;
     border: none;
     font-size: clamp(8pt, 1vw, 14pt);
-    max-width: 2.5vw;
     min-width: 35px;
     color: var(--primary-text-color);
 }

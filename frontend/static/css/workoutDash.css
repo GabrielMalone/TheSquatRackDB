@@ -9,10 +9,9 @@
 .workout {
     display: none;
     flex-direction: column;
-    max-width: 20%;
-    min-width: 200px;
-    flex:1;
     align-content: center;
+    min-width: 25%;
+    max-width: 25%;
     position: relative;
     padding: 1%;
     border-left: 1px solid var(--primary-border-color);
