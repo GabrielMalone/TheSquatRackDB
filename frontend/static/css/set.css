@@ -168,6 +168,7 @@
     flex-direction: row;
     position: relative;
     border-top: 1px solid var(--secondary-border-color); 
+    padding-top: 1vw;
 }
 .setUpdate{
     margin-top: 1%;
@@ -233,6 +234,7 @@
     color: var(--primary-text-color);
     font-size: clamp(5pt, 0.75vw, 16pt);
     margin-right: 1%;
+    filter: brightness(0.4);
 }
 .setRemove:hover {
   color:var(--primary-remove-highlight-color);

@@ -42,19 +42,20 @@ function configClickEvent(){
     loginLogout("out");    
     const createLifterButon = document.getElementById('addLifter')
     const partnerList       = document.querySelector('.sidebar');
-    const loginBox      = document.querySelector('.loginBoxWrapper');  
-    const calendar      = document.querySelector(".month");
-    const lifterName    = document.getElementById("lifterHeaderName");
-    const workoutDash   = document.querySelector(".workout");
-    const dateWrapper   = document.querySelector(".dateWrapper");
-    const prDash        = document.querySelector(".prDash");
-    const prDashHeader  = document.querySelector("#prDashHeader");
+    const loginBox          = document.querySelector('.loginBoxWrapper');  
+    const calendar          = document.querySelector(".month");
+    const lifterName        = document.getElementById("lifterHeaderName");
+    const workoutDash       = document.querySelector(".workout");
+    const dateWrapper       = document.querySelector(".dateWrapper");
+    const prDash            = document.querySelector(".prDash");
+    const prDashHeader      = document.querySelector("#prDashHeader");
     const monthlyChartDashWrapper = document.querySelector('.monthlyChartDashWrapper');
-    const cursorForPRDash = document.getElementById('cursorForprDashBoard');
+    const cursorForPRDash   = document.getElementById('cursorForprDashBoard');
     const dashHeaders       = document.querySelectorAll('.dashHeader');
+    const myAthleteButton   = document.getElementById('myAthletes');
     
     lifterBoxHeader.innerHTML = ``;
-
+    myAthleteButton.classList.remove('visible');
     loginBox.classList.remove('hidden');
     createLifterButon.classList.remove('hidden');
     dashHeaders.forEach(header=>header.parentNode.removeChild(header));

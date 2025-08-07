@@ -65,10 +65,10 @@
     display: none;
 }
 #myAthletes{
-    display: flex;
-}
-#myAthletes.hidden{
     display: none;
+}
+#myAthletes.visible{
+    display: flex;
 }
 .footer{
     border-top: 1px solid var(--sidebar-border-color);

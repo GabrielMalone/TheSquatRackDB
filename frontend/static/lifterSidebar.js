@@ -17,7 +17,7 @@ export let currLifter = {};        // track current lifter selected by the user
 //-----------------------------------------------------------------------------
 // This method basically controls the starting point for the whole app
 //-----------------------------------------------------------------------------
-export function loadLifter(e){
+export function loadLifter(e) {
     if (e && ! e.target.classList.contains("lifterName")) return ;
     setCurrLifterFromEvent(e);  
     setConfigPermission();
@@ -27,7 +27,7 @@ export function loadLifter(e){
     setAthleteStatus();
 }
 //-----------------------------------------------------------------------------
-export async function setAthleteStatus(){
+export async function setAthleteStatus() {
     if (await IamTheirCoach()){
         const space = document.querySelector('#space');
         space.insertAdjacentHTML("afterend", 
@@ -112,8 +112,11 @@ export function setCurrlifter(lifter) {
 // load lifter helpers 
 //------------------------------------------------------------------------------
 export async function setFollowIcon(){   // this is realy reset the whole header
-    if (currLifter.id === loggedinLifter.id) return;
     // reset main dash header
+    if (currLifter.id === loggedinLifter.id){
+        document.getElementById('followIconWrapper')?.remove();
+        return;
+    };
     const lifterBoxHeader = document.querySelector('.lifterBoxHeader');
     lifterBoxHeader.innerHTML = lifterDashHeaderContent;
     const lifterHeaderName = document.getElementById("lifterHeaderName");

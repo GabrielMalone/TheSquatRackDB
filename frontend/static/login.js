@@ -28,26 +28,26 @@ function loginEvent(e){
 export function login(userName, password){
     document.getElementById('loginErrorMsg').innerText = ``; // reset error msg
     f.post(end.LOGIN, {userName, password}) // verify pw with hashpw on backend
-        .then(res=>{
-            if (res.message === "success") {
-                toggleLoginCreateBoxVisibility();
-                f.post(end.GET_LIFTER_BY_USER_NAME, userName)
-                .then(data=>{
-                    loginLogout("in");
-                    admin(data); 
-                    loadLifterFromLogin(data);
-                })
-                .catch(err=>console.error(err));
-            } else {
-                const errField = document.getElementById('loginErrorMsg');
-                errField.innerText = "incorrect username or password";
-            }
-        })
-        .catch(err=>{
-            console.error(err);
+    .then(res=>{
+        if (res.message === "success") {
+            toggleLoginCreateBoxVisibility();
+            f.post(end.GET_LIFTER_BY_USER_NAME, userName)
+            .then(data=>{
+                loginLogout("in");
+                admin(data); 
+                loadLifterFromLogin(data);
+            })
+            .catch(err=>console.error(err));
+        } else {
             const errField = document.getElementById('loginErrorMsg');
             errField.innerText = "incorrect username or password";
-        }); 
+        }
+    })
+    .catch(err=>{
+        console.error(err);
+        const errField = document.getElementById('loginErrorMsg');
+        errField.innerText = "incorrect username or password";
+    }); 
 }
 //-----------------------------------------------------------------------------
 // stuff to do if I log in 
@@ -98,7 +98,7 @@ function loadLifterFromLogin(data){
     fillCalendar(year,month,lastday);    // get this lifter's training sessions
     createPrDash(cLifter.prDashSelection, cLifter.id);    
     checkIfICoach();
-    setTimeout(()=>{    document.getElementById('headerTitle').scrollIntoView({"behavior" : "smooth"});}, 200);
+    setTimeout(()=>{document.getElementById('headerTitle').scrollIntoView({"behavior" : "smooth"})}, 200);
 }
 //-----------------------------------------------------------------------------
 export function checkIfICoach() {
@@ -106,9 +106,9 @@ export function checkIfICoach() {
     f.post(end.GET_MY_ATHLETES, loggedinLifter.id)
     .then(res=>{
         if ( res.length === 0 ){  // hide the my athletes button if no athletes
-            myAthletesButton.classList.add('hidden');
+            myAthletesButton.classList.remove('visible');
         } else {
-            myAthletesButton.classList.remove('hidden');
+            myAthletesButton.classList.add('visible');
         }
     })
     .catch(err=>console.error(err));
@@ -147,6 +147,7 @@ export function logoutEvent(){
         const cursorForPRDash   = document.getElementById('cursorForprDashBoard');
         const dashHeaders       = document.querySelectorAll('.dashHeader');
         const lifterBoxHeader   = document.querySelector('.lifterBoxHeader');
+        const myAtlhetesButton  = document.getElementById('myAthletes');
 
         lifterBoxHeader.innerHTML = ``;
 
@@ -164,5 +165,6 @@ export function logoutEvent(){
         prDash.innerHTML            = ``;
         prDashHeader.innerHTML      = '';
         sidebar.classList.remove('visible');
+        myAtlhetesButton.classList.remove('visible');
         cursorForPRDash.parentNode?.removeChild(cursorForPRDash);
 }

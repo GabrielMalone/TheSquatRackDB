@@ -476,7 +476,6 @@ export function createWorkoutGrid(dateInfo){
 }
 //-----------------------------------------------------------------------------
 async function dragOverFileEvent(e){
-    if (!await accessLevelValid()) return;
     e.preventDefault();
     if (e.target.classList.contains('set')){
         const set = e.target;
@@ -485,7 +484,7 @@ async function dragOverFileEvent(e){
 }
 //-----------------------------------------------------------------------------
 async function dragLeaveFileEvent(e){
-    if (!await accessLevelValid()) return;
+    e.preventDefault();
     if (e.target.classList.contains('set')){
         const set = e.target;
         set.classList.remove('videoDrag');
@@ -493,28 +492,27 @@ async function dragLeaveFileEvent(e){
 }
 //-----------------------------------------------------------------------------
 async function dropFileEvent(e){
-    if (!await accessLevelValid()) return;
     e.preventDefault();
+    // put this here otherwise the await makes the data clear and video is null
+    const video = e.dataTransfer.files[0]; // returns array, get first item
+    if (! await accessLevelValid()) return;
     if (e.target.classList.contains('set')){
         const set = e.target;
         set.classList.toggle('videoDrag');                      // de-highlight
         const setId = set.dataset.setID;
-        const video = e.dataTransfer.files[0]; // returns array, get first item
         const videoObject = new FormData();     // video sent in special format
         videoObject.append('video', video); // basically a map.create key/value
         videoObject.append('setId', setId);
         videoObject.append('userId', currLifter.id);
-        fetch(end.UPLOAD_SET_VIDEO, { //cant use my og fetch wrap, headers diff
+        const res = await fetch(end.UPLOAD_SET_VIDEO, { 
             method: 'POST',
             body: videoObject
         })
-        .then(res=>res.json())
-        .then(link=>{                            // get link to video when done 
-            addSetVideo(set, link);                     // then attach to below 
-            const setVideoWrapper = set.querySelector('.setVideoWrapper');
-            setVideoWrapper.classList.add('visible');    // vid opens when done
-        })
-        .catch(err=>console.error(err));
+        const link = await res.json();
+                                // get link to video when done 
+        addSetVideo(set, link);                     // then attach to below 
+        const setVideoWrapper = set.querySelector('.setVideoWrapper');
+        setVideoWrapper.classList.add('visible');    // vid opens when done
     }
 }
 //-----------------------------------------------------------------------------
