@@ -75,7 +75,7 @@ export const lifterSidebarSearch =
     <div class="lifterSidebarDashWrapper">
         <div class="findLifterWrapper">
             <form class="findLifterForm">
-                <input class="setInfoField setButton" id="searchLifterButton" "type="submit" value="⌕">
+                <div id="searchLifterButton">⌕</div>
                 <input class="findLifterInput" type="text" placeholder="search by username" value="">
             </form>
         </div>

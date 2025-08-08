@@ -5,8 +5,8 @@
     display: none;
     flex-direction: column;
     position: relative;
-    min-width: 20%;
-    max-width: 20%;
+    min-width: 15%;
+    max-width: 15%;
     justify-content: flex-start;
     border-left: 1px solid var(--primary-border-color);
     background-color: var(--primary-background-color);
@@ -58,7 +58,7 @@
     outline: 1px solid var(--primary-add-color);
 }
 #searchLifterButton{
-    margin-left: 1vw;
+    margin-right: 1vw;
     font-size: clamp(14pt, 2vw, 32pt);
 }
 
