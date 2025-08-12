@@ -179,30 +179,54 @@ export function dayEventListener(){     //have main container listen for events
     calendar.addEventListener("click", dayListener);
 }
 async function dayListener(e){
-    const workoutArea = document.querySelector(".workout");
     if (e.target.classList.contains("day")){ 
-        workoutArea.innerHTML =``;                       // clear previous data
-        const days = document.querySelectorAll(".day");
-        days.forEach(day=>day.classList.remove("daySelected"));
-        e.target.classList.add("daySelected");
-        daySelected = {"day" : e.target.dataset.day, "month" : e.target.dataset.month};
-        const dateInfo = JSON.parse(e.target.dataset.info);          //get info
-        if (e.target.dataset.idWorkout) {
-            createrWorkoutHeader(dateInfo);
-            getWorkoutFromWokroutID(e.target.dataset.idWorkout);
-        } else {
-            // prevent outsider from adding workout 
-            if (!await accessLevelValid()){
-                const workoutContainer = document.querySelector(".workout");
-                workoutContainer.style.display = "none";
-                return; 
-            } 
-            // otherwise add new workout for authorized user
-            createrWorkoutHeader(dateInfo);
-            createCursor(workoutArea);      // setup for starting a new workout
-        }
-        workoutArea.classList.toggle('visible');
+        dayClickEvent();
     }
+    if (e.target.id === "backMonth"){
+        backMonth();
+    }
+    if (e.target.id === "forwardMonth"){
+        forwardMonth();
+    }
+}
+//-----------------------------------------------------------------------------
+function backMonth(){
+    clearCalendar();
+    changeDateDown(curYear,curMonth);
+    days.forEach(day=>day.classList.remove("daySelected"));
+    document.querySelector(".addExerciseDash")?.classList.remove("addExerciseDashVisible"); 
+}
+//-----------------------------------------------------------------------------
+function forwardMonth(){
+    clearCalendar();
+    changeDateUp(curYear,curMonth);
+    days.forEach(day=>day.classList.remove("daySelected"));
+    document.querySelector(".addExerciseDash")?.classList.remove("addExerciseDashVisible"); 
+}
+//-----------------------------------------------------------------------------
+async function dayClickEvent(){
+    const workoutArea = document.querySelector(".workout");
+    workoutArea.innerHTML =``;                       // clear previous data
+    const days = document.querySelectorAll(".day");
+    days.forEach(day=>day.classList.remove("daySelected"));
+    e.target.classList.add("daySelected");
+    daySelected = {"day" : e.target.dataset.day, "month" : e.target.dataset.month};
+    const dateInfo = JSON.parse(e.target.dataset.info);          //get info
+    if (e.target.dataset.idWorkout) {
+        createrWorkoutHeader(dateInfo);
+        getWorkoutFromWokroutID(e.target.dataset.idWorkout);
+    } else {
+        // prevent outsider from adding workout 
+        if (!await accessLevelValid()){
+            const workoutContainer = document.querySelector(".workout");
+            workoutContainer.style.display = "none";
+            return; 
+        } 
+        // otherwise add new workout for authorized user
+        createrWorkoutHeader(dateInfo);
+        createCursor(workoutArea);      // setup for starting a new workout
+    }
+    workoutArea.classList.toggle('visible');
 }
 //-----------------------------------------------------------------------------
 // arrow key event listeners for changing calendar dates
@@ -213,16 +237,10 @@ export function calendarListener(){
         if (getComputedStyle(calendar).visibility === "hidden") return;
         switch (event.key){
             case 'ArrowRight': 
-                clearCalendar();
-                changeDateUp(curYear,curMonth);
-                days.forEach(day=>day.classList.remove("daySelected"));
-                document.querySelector(".addExerciseDash")?.classList.remove("addExerciseDashVisible"); 
+                forwardMonth();
                 break;
             case 'ArrowLeft': 
-                clearCalendar();
-                changeDateDown(curYear,curMonth);
-                days.forEach(day=>day.classList.remove("daySelected"));
-                document.querySelector(".addExerciseDash")?.classList.remove("addExerciseDashVisible"); 
+                backMonth();
                 break;
             default:
                 return;
@@ -239,6 +257,8 @@ function addMonthAndYear(month, year){
         `<div class="dateWrapper">
             <div class="monthTitle">${months[month]}</div> 
             <div class="yearTitle">${year}</div>
+            <div id="backMonth">➞</div>
+            <div id="forwardMonth">➞</div>
         </div>`);
 }
 function removeMonthAndYear(){

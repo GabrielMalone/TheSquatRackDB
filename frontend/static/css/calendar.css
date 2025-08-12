@@ -131,6 +131,7 @@
     padding-bottom: 6%;
     padding-top: 3%;
     margin-left: 1%;
+    user-select: none;
 }
 .monthTitle{
     font-size: clamp(10pt, 3vw, 36pt);
@@ -138,7 +139,28 @@
     margin-right: 1vw;
 }
 .yearTitle{
+    display: flex;
+    flex: 1;
     color: var(--secondary-text-color);
     font-size: 2vw;
     filter: brightness(0.5);
+}
+#backMonth{
+    font-size: clamp(10pt, 3vw, 36pt);
+    color: var(--primary-text-color);
+    margin-right: 1vw;   
+    cursor: pointer;
+    transform: rotate(180deg);
+}
+#backMonth:hover{
+    color: var(--primary-add-color);
+}
+#forwardMonth{
+    font-size: clamp(10pt, 3vw, 36pt);
+    color: var(--primary-text-color);
+    margin-right: 1vw;
+    cursor: pointer;
+}
+#forwardMonth:hover{
+    color: var(--primary-add-color);
 }

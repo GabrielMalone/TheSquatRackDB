@@ -5,8 +5,8 @@
     display: none;
     flex-direction: column;
     position: relative;
-    min-width: 15%;
-    max-width: 15%;
+    min-width: 20%;
+    max-width: 20%;
     justify-content: flex-start;
     border-left: 1px solid var(--primary-border-color);
     background-color: var(--primary-background-color);
@@ -25,7 +25,6 @@
     flex-direction: column;
     overflow-y: auto;
     overflow-x: hidden;
-    width: 100%;
 }
 .findLifterWrapper{
     position: sticky;
@@ -41,14 +40,12 @@
     flex-direction: row;
     flex: 1;
     padding: 2%;
-    max-width: 95%;
 }
 .findLifterInput{
     display: flex;
     flex: 1;
     outline: 1px solid var(--primary-border-color);   
     background-color: var(--primary-background-color);
-    border-radius: 0px;
     font-size: clamp(8pt, 1vw, 12pt);
     border: none;
     color: var(--secondary-text-color);

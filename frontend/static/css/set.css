@@ -257,6 +257,7 @@
     color: var(--primary-text-color);
     padding-top: 2%;
     user-select: none;
+    filter: brightness(0.5);
 }
 /* make a new set comment */
 .setCommentButton:hover{
