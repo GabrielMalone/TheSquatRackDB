@@ -1,0 +1,76 @@
+@import url("https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&display=swap");
+
+.dayContainer {
+    all: unset;
+    display: grid; 
+    aspect-ratio: 1 / 1;
+    box-sizing: border-box;
+    border: solid 1px var(--color-border-dark);
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.dayContainer.otherMonth {
+    border: dotted 1px var(--color-border-dark);
+}
+
+.dayContainer.isToday {
+    background-color: var(--color-hover);
+}
+
+.dayContainer:hover {
+    background: var(--color-hover);
+}
+
+.dayNumber {
+    display: flex; 
+    flex-direction: row;
+    justify-content: end;
+    padding-right: var(--space-2);
+    font-size: var(--small-font-size-1);
+    color: var(--color-text-muted);
+}
+
+
+.dayNumber.isToday {
+    color: var(--color-today-date);
+}
+
+.dayBody {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--xsmall-font-size);
+    color: var(--color-text-muted);
+}
+
+.exercisesContainer {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    align-items: center;
+    justify-items: center;
+    height: var(--icon-size-24);
+}
+
+svg {
+    width: var(--icon-size-24);
+    height: 100%;
+}
+
+.S svg{
+    color: var(--color-squat-indicator);
+}
+.B svg{
+    color: var(--color-bench-indicator);
+}
+.D svg{
+    color: var(--color-deadl-indicator);
+}
+.A svg{
+    color: var(--color-accsr-indicator);
+}
+
+.title {
+    font-size: var(--xtra-small-font-size);
+}

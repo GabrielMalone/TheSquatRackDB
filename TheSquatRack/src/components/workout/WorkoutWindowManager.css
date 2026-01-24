@@ -1,0 +1,30 @@
+.workoutWindowManager {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: flex-end;
+    align-items: flex-start;
+    cursor: pointer;
+}
+
+.closeButton {
+    all: unset;
+    display: flex;
+    flex-direction: row;
+    justify-self: end;
+    padding-top: var(--space-2);
+    padding-right: var(--space-2);
+}
+
+.closeButton svg {
+    width: var(--icon-size-small);
+    height: 100%;
+    opacity: var(--dimmed);
+    color: var(--color-button-muted);
+    transition: color 0.08s ease, transform 0.08s ease;
+
+}
+
+.closeButton svg:hover {
+    opacity: var(--full);
+}

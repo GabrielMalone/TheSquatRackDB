@@ -1,0 +1,28 @@
+.exerciseSelectionHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-bottom: var(--space-7);
+}
+
+.exerciseSearchField {
+    all: unset;
+    border: 1px solid var(--color-border-muted);
+    border-radius: calc(5px * var(--ui-scale));
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    resize: none;
+    overflow: hidden;
+    font-size: var(--small-font-size-1);
+    color: var(--color-text-muted);
+    padding: var(--space-3);
+    padding-left: var(--space-5);
+    height: calc(35px * var(--ui-scale));
+    min-width: calc(400px * var(--ui-scale));
+}
+
+.exerciseSearchField::placeholder {
+    color: var(--color-text-muted);
+    padding-left: var(--space-5);
+}

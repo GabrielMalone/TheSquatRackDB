@@ -1,0 +1,27 @@
+.headerRoot{
+    display: grid;
+    width: 100%;
+    height: 150px;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+}
+
+.logo {
+    display: flex;
+    grid-column: 1/3;
+    grid-row: 2;
+    align-items: center;
+    color: var(--color-text-muted);
+    color: var(--color-text-muted);
+    font-size: var(--medium-font-size);
+    cursor: default;
+}
+
+.toolbar {
+    grid-column: 3;
+    grid-row: 2;
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    width: 500px;
+    justify-self: end;
+}

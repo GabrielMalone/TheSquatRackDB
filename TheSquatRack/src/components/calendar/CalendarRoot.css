@@ -1,0 +1,7 @@
+.calendarRoot {
+    width:calc(1000px * var(--ui-scale));
+    min-width: calc(900px * var(--ui-scale));;
+    margin-inline: auto;
+    padding-top: calc(50px * var(--ui-scale));
+    margin-bottom: calc(100px * var(--ui-scale));
+}

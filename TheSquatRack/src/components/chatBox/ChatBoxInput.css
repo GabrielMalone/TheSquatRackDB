@@ -1,0 +1,19 @@
+.chatBoxInputRoot{
+    display: grid;
+}
+
+.chatBoxInput {
+    all: unset;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    resize: none;
+    overflow: hidden;
+    font-size: var(--small-font-size-1);
+    color: var(--color-text-bright);
+    margin-left: var(--space-5);
+    margin-right: var(--space-5);
+    margin-bottom: var(--space-5);
+    padding: var(--space-5);
+    border-bottom: 1px solid var(--color-text-dark);
+}

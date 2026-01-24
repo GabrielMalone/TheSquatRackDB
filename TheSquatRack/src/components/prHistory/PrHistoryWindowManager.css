@@ -1,0 +1,28 @@
+.prHistoryWindowManager {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: flex-end;
+    cursor: pointer;
+}
+
+.closeButton {
+    all: unset;
+    display: flex;
+    flex-direction: row;
+    justify-self: end;
+    padding-right: var(--space-2);
+}
+
+.closeButton svg {
+    width: var(--icon-size-small);
+    height: 100%;
+    opacity: var(--dimmed);
+    color: var(--color-button-muted);
+}
+
+.closeButton svg:hover {
+    opacity: var(--full);
+}
+
+

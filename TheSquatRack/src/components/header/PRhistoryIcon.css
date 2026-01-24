@@ -1,0 +1,20 @@
+.prHistorySelect{
+    all: unset;
+    grid-column: 5;
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    cursor: pointer;
+    width: 100%;
+}
+
+.prHistorySelect svg{
+    width: var(--icon-size-medium);
+    height: 100%;
+    color: var(--color-text-muted);
+    opacity: var(--dimmed);
+}
+
+.prHistorySelect svg:hover{
+    opacity: var(--filled);
+}

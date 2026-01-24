@@ -1,0 +1,22 @@
+.curDay {
+    all: unset;
+    display: flex;
+    flex: 1;
+    cursor: pointer;
+    width: 100%;
+    user-select: none;
+    justify-content: right;
+}
+
+
+.curDay svg {
+    width: var(--icon-size-small);
+    height: 100%;
+    transition: color 0.15s ease, transform 0.15s ease;
+    color: var(--color-button-muted);
+    opacity: var(--dimmed);
+}
+
+.curDay svg:hover {
+    opacity: var(--filled);
+}

@@ -1,0 +1,174 @@
+.set {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    border-bottom: 1px dotted var(--color-border-dark);
+}
+.set:hover {
+    background-color: var(--color-hover);
+}
+.setItem {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    font-size: var(--small-font-size);
+    color: var(--color-text-muted);
+    padding: var(--space-5);
+    cursor: pointer;
+}           
+
+
+.icon svg{
+    width: var(--icon-size-24);
+    height: 100%;
+    color: var(--color-button-muted);
+}
+.icon svg:hover {
+    opacity: var(--dimmed);
+}
+.note {
+    all: unset;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: var(--space-5);
+    cursor: pointer;
+}
+.remove {
+    all: unset;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: var(--space-5);
+    color: var(--color-text-muted);
+    cursor: pointer;
+    opacity: var(--dimmed);
+}
+
+
+.weight.button {
+    all: unset;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    font-size: var(--small-font-size-2);
+    padding: var(--space-5);
+    cursor: pointer;
+    color: var(--color-text-muted);
+    opacity: var(--filled);
+}
+.weight.button:hover {
+    opacity: var(--dimmed);
+}
+.weight.input {
+    all: unset;
+    overflow: hidden;
+    text-align: center;
+    color: var(--color-text-bright);
+    font-size: var(--small-font-size-2);
+    appearance: textfield;
+    -moz-appearance: textfield;
+    width: 100%;
+}
+
+
+.reps.button {
+    all: unset;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    font-size: var(--small-font-size-2);
+    padding: var(--space-5);
+    cursor: pointer;
+    color: var(--color-text-muted);
+    opacity: var(--filled);
+}
+.reps.button:hover {
+    opacity: var(--dimmed);
+}
+.reps.input {
+    all: unset;
+    overflow: hidden;
+    text-align: center;
+    color: var(--color-text-bright);
+    font-size: var(--small-font-size-2);
+    appearance: textfield;
+    -moz-appearance: textfield;
+    width: 100%;
+    opacity: var(--filled);
+}
+
+
+.rpe.button {
+    all: unset;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    font-size: var(--small-font-size-2);
+    padding: var(--space-5);
+    color: var(--color-text-muted);
+    cursor: pointer;
+    opacity: var(--filled);
+}
+.rpe.button:hover {
+    opacity: var(--dimmed);
+}
+.rpe.input {
+    all: unset;
+    overflow: hidden;
+    text-align: center;
+    color: var(--color-text-bright);
+    font-size: var(--small-font-size-2);
+    appearance: textfield;
+    -moz-appearance: textfield;
+    width: 100%;
+}
+
+
+.unit {
+    all: unset;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    font-size: var(--small-font-size-2);
+    padding: var(--space-5);
+    color: var(--color-text-muted);
+    cursor: pointer;
+    opacity: var(--dimmed);
+}
+.unit:hover{
+    opacity: var(--filled);
+}
+
+
+.setNum.button{
+    all: unset;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    font-size: var(--small-font-size-2);
+    padding: var(--space-5);
+    color: var(--color-text-muted);
+    cursor: pointer;
+}
+
+.setNum.input{
+    all: unset;
+    overflow: hidden;
+    text-align: center;
+    font-size: var(--small-font-size-2);
+    color: var(--color-text-muted);
+    appearance: textfield;
+    -moz-appearance: textfield;
+    width: 100%;
+}
+
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}

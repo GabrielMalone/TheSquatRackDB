@@ -1,0 +1,36 @@
+.yearPicker{
+    position: relative;
+}
+
+.yearButton{
+    all: unset;
+    cursor: pointer;
+    font-size: var(--big-font-size);
+    color: var(--color-text-muted);
+    display: flex;
+    flex: 4;
+    justify-content: left;
+    user-select: none;
+    width: 4ch;
+}
+
+.yearInput{
+    all: unset;
+    font-size: var(--big-font-size);
+    color: var(--color-text-muted);
+    width: 4ch;
+}
+
+.yearButton:hover{
+    opacity: var(--dimmed);
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}

@@ -1,0 +1,15 @@
+.setHeader {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+}
+
+.setHeaderItem {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    font-size: var(--small-font-size-1);
+    color: var(--color-text-muted);
+    padding: var(--space-5);
+    cursor: default;
+}

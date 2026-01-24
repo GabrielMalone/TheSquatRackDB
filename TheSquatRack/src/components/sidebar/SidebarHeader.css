@@ -1,0 +1,12 @@
+.sidebarHeader {
+    display: grid;
+    justify-content: center;
+    padding-bottom: var(--space-5);
+    margin-bottom: var(--space-5);
+    cursor: default;
+}
+
+.sidebarHeaderText {
+    font-size: var(--24px);
+    color: var(--text-color-muted);
+}

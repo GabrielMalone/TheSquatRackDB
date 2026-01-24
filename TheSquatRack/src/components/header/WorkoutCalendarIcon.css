@@ -1,0 +1,20 @@
+.workoutCalendarIcon{
+    all: unset;
+    grid-column: 4;
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    cursor: pointer;
+    width: 100%;
+}
+
+.workoutCalendarIcon svg {
+    width: var(--icon-size-medium);
+    height: 100%;
+    color: var(--color-text-muted);
+    opacity: var(--dimmed);
+}
+
+.workoutCalendarIcon svg:hover {
+    opacity: var(--filled);
+}

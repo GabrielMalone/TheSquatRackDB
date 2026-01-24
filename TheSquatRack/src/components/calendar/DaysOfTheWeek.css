@@ -1,0 +1,11 @@
+.daysOfTheWeek{
+    display: flex;
+    flex-direction: row;
+    gap: var(--space-5);
+    padding-top: var(--space-5);
+    align-self: center;
+    justify-self: center;
+    font-size: var(--small-font-size);
+    color: var(--color-text-muted);
+    cursor: default;
+}

@@ -1,0 +1,98 @@
+.prHistoryRowRoot {
+    display:flex;
+    flex-direction: column;
+}
+
+.prExerciseNameHeader {
+    display: flex;
+    flex-direction: row;
+}
+
+.prExerciseName {
+    display: flex;
+    flex: 2;
+    font-size: var(--small-font-size-2);
+    color: var(--color-text-muted);
+    padding: var(--space-5);
+    padding-left: var(--space-7);
+}
+
+.removeExerciseIcon {
+    all: unset;
+    display: flex;
+    user-select: none;
+    padding-right: var(--space-5);
+}
+
+.removeExerciseIcon svg {
+    width: var(--icon-size-small);
+    height: 100%;
+    color: var(--color-button-muted);
+    opacity: var(--dimmed);
+    cursor: pointer;
+}
+.removeExerciseIcon svg:hover {
+    opacity: var(--filled);
+}
+
+.prHistoryRepsContainer {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: var(--space-2);
+    padding-left: var(--space-7);
+    padding-right: var(--space-7);
+    padding-bottom: var(--space-7);
+}
+
+.prExerciseBox {
+    all: unset;
+    display: grid;
+    aspect-ratio: 1 / 1;
+    box-sizing: border-box;
+    border: solid 1px var(--color-border-dark);
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.prExerciseBox:hover {
+    background-color: var(--color-hover);
+}
+
+.prReps {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: var(--small-font-size);
+    color: var(--color-text-muted);
+}
+
+
+.prWeightData {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    flex-direction: row;
+}
+
+.prWeight {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    font-size: var(--small-font-size-2);
+    color: var(--color-text-muted);
+    padding-left: var(--space-2);
+}
+
+.prUnit {
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    font-size: var(--small-font-size);
+    color: var(--color-text-muted);
+}
+
+.prDate {
+    display: flex;
+    justify-content: center;
+    font-size: var(--small-font-size);
+    color: var(--color-text-dark);
+}

@@ -1,0 +1,17 @@
+.chatBoxRoot {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 170px;
+    left: 260px;
+    z-index: 3;
+    width: 500px;
+    min-height: 0;
+    max-height: 70vh;
+    border: 1px solid var(--color-border-dark);
+    border-radius: 10px;
+    background-color: var(--color-bg);
+    /* box-shadow: 0 0 20px 20px var(--color-shadow); */
+    opacity: 100%;
+}
+

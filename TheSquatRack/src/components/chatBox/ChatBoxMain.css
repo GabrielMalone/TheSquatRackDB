@@ -1,0 +1,21 @@
+.chatBoxMainRoot {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    border-top: 1px solid var(--color-border-dark);
+    border-bottom: 1px solid var(--color-border-dark);
+    border-radius: 0px;
+    min-height: 0;
+    overflow-y: auto;
+    margin: var(--space-5);
+    padding: var(--space-2);
+}
+
+.emptyChat {
+    color: var(--color-text-muted);
+    font-size: var(--24px);
+}
+
+.chatMsgProfilePic svg{
+    width: var(--icon-size-small);
+}

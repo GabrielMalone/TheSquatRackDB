@@ -1,0 +1,25 @@
+.monthChange{
+    all: unset;
+    display: flex;
+    flex: 1;
+    flex-direction: row; 
+    cursor: pointer;
+    width: 100%;
+    user-select: none;
+    justify-content: right;
+}
+
+.monthChange svg {
+    width: var(--icon-size-medium);
+    height: 100%;
+    color: var(--color-button-muted);
+    opacity: var(--dimmed);
+}
+
+.monthChange svg:hover {
+    opacity: var(--filled);
+}
+
+.nextMonth{
+    justify-content: right;
+}

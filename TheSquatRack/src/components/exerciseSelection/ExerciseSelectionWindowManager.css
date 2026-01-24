@@ -1,0 +1,24 @@
+.exerciseSelectionWindowManager {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    padding-right: var(--space-5);
+}
+
+.minimize {
+    all: unset;
+    display: flex;
+    padding-top: var(--space-2);
+    padding-right: var(--space-2);
+    cursor: pointer;
+}
+
+.minimize svg {
+    width: var(--icon-size-small);
+    height: 100%;
+    color: var(--color-button-muted);
+}
+
+.minimize svg:hover {
+    opacity: var(--dimmed);
+}

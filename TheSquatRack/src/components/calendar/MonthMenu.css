@@ -1,0 +1,55 @@
+.monthPicker{
+    position: relative;
+}
+
+.monthPicker button {
+    all: unset;
+    cursor: pointer;
+    flex: 1;
+    font-size: var(--big-font-size);
+    color: var(--color-text-muted);
+    justify-content: left;
+    transition: color 0.08s ease, transform 0.08s ease;
+    user-select: none;
+    min-width: 9ch;
+}
+
+.monthPicker button:hover {
+    opacity: var(--dimmed);
+}
+
+.monthMenu {
+    position: absolute;
+    top: 115%;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    min-width: 225px;
+    background:var(--color-bg);
+    opacity: 100%;
+    border-radius: 10px;
+    border-top: 1px solid var(--color-border-dark);
+    border-left: 1px solid var(--color-border-dark);
+    border-right: 1px solid var(--color-border-dark);
+    border-bottom: 1px solid var(--color-border-dark);
+    z-index: 100;
+    padding: var(--size-1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.monthMenu button {
+    all: unset;
+    padding: 6px 10px;
+    cursor: pointer;
+    display: block;
+    font-size: var(--small-font-size);
+    color: var(--color-text-muted);
+}
+
+.monthMenu button:hover {
+    color:var(--color-text-muted);
+    background-color: var(--color-hover);
+}
+
+

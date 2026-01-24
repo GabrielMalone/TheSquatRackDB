@@ -1,0 +1,26 @@
+.profileIcon {
+    all: unset;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    grid-column: 8;
+    cursor: pointer;
+}
+
+.profileIcon svg {
+    align-self: center;
+    width: var(--icon-size-medium);
+    color: var(--color-text-muted);
+    opacity: var(--dimmed);
+}
+
+.profileIcon svg:hover {
+    opacity: var(--filled);
+}
+
+.headerUsername{
+    display: flex;
+    justify-content: center;
+    font-size: var(--xsmall-font-size);
+    color: var(--color-text-muted);
+}

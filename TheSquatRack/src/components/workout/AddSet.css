@@ -1,0 +1,35 @@
+.addSetContainer {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr); 
+    font-size: var(--small-font-size);
+    padding-top: var(--space-5);
+    padding-bottom: var(--space-5);
+}
+
+.addSetIcon {
+    all: unset;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.addSetIcon svg {
+    color: var(--color-addSet);
+    cursor: pointer;
+    width: var(--icon-size-24);
+    height: 100%;
+}
+
+.addSetIcon svg:hover {
+    opacity: var(--dimmed);
+}
+
+.addSetText {
+    grid-column: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    color: var(--color-addSet);
+    font-size: var(--small-font-size);
+    cursor: default;
+}

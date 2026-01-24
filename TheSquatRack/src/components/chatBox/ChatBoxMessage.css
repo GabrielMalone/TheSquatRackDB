@@ -1,0 +1,43 @@
+.chatBoxMessageRoot {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    scroll-behavior: smooth;
+    cursor: pointer;
+    margin-bottom: var(--space-4);
+}
+
+.chatText {
+    margin-bottom: var(--space-1);
+    font-size: var(--small-font-size-1);
+    color: var(--color-text-muted);
+}
+
+.otherChatter {
+    grid-column: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    color: var(--color-text-muted);
+}
+
+.selfChatter {
+    grid-column: 2;
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    text-align: right;
+    color: var(--color-text-muted);
+}
+
+.chatTime{
+    color: var(--color-border-dark);
+    font-size: var(--12px);
+}
+
+.chatTime:hover {
+    color: var(--color-text-muted);
+}
+
+.lastMsg {
+    color: var(--color-text-bright);
+}

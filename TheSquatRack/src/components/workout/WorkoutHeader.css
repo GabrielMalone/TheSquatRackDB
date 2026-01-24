@@ -1,0 +1,50 @@
+.workoutHeader {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+
+
+.workoutTitle {
+    display: flex;
+    justify-content: center;
+    font-size: var(--medium-font-size);
+    color: var(--color-text-muted);
+    width: 100%;
+    min-width: 0;
+ 
+}
+
+.workoutTitle button {
+    all: unset;
+    max-width: calc(20ch * var(--ui-scale));
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+    opacity: 100%;
+}
+
+.workoutTitle button:hover{
+    opacity: 50%;
+}
+
+.workoutTitle input {
+    all: unset;
+    max-width: 20ch;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.workoutDate{
+    display: flex;
+    font-size: var(--medium-font-size);
+    color: var(--color-text-muted);
+    width: 100%;
+    justify-content: center;
+    cursor: default;
+}

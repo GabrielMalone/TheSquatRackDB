@@ -1,0 +1,21 @@
+.themeIcon {
+    all: unset;
+    grid-column: 9;
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    justify-content: center;
+    cursor: pointer;
+    width: 100%;
+}
+
+.themeIcon svg {
+    width: var(--icon-size-medium);
+    height: 100%;
+    color: var(--color-text-muted);
+    opacity: var(--dimmed);
+}
+
+.themeIcon svg:hover {
+    opacity: var(--filled);
+}

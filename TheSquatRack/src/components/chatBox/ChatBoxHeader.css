@@ -1,0 +1,31 @@
+.chatBoxHeader {
+    display: grid;
+    grid-template-rows: repeat(2, 1fr);
+    height: fit-content;
+}
+
+.profilePicChatBoxHeader {
+    grid-row: 1;
+    display: grid;
+    justify-self: center;
+    cursor: pointer;
+}
+
+.profilePicChatBoxHeader svg {
+    width: var(--icon-size-large);
+    color: var(--color-text-muted);
+
+}
+
+.onlineProficHeader svg {
+    color: var(--color-online-indicator);
+}
+
+.userNameChatBoxHeader {
+    grid-row: 2;
+    display: flex;
+    justify-self: center;
+    font-size: var(--medium-font-size);
+    color: var(--color-text-muted);
+}
+

@@ -1,0 +1,15 @@
+.prHistoryHeader{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+
+.prHistoryTitle {
+    display: flex;
+    justify-content: center;
+    font-size: var(--medium-font-size);
+    color: var(--color-text-muted);
+    width: 100%;
+}

@@ -1,0 +1,19 @@
+.loginIcon {
+    all: unset;
+    display: flex;
+    grid-column: 7;
+    flex: 1;
+    flex-direction: row;
+    cursor: pointer;
+    justify-content: center;
+}
+
+.loginIcon svg {
+    width: var(--icon-size-medium);
+    color: var(--color-text-muted);
+    opacity: var(--dimmed);
+}
+
+.loginIcon svg:hover {
+    opacity: var(--filled);
+}

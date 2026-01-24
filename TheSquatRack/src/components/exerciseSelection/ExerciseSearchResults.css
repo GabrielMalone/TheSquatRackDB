@@ -1,0 +1,77 @@
+/* .searchResultsRoot {
+
+} */
+
+.exerciseSearchResultHeader {
+    display: grid;
+    grid-template-columns: 300px 200px 1fr;
+    color: var(--color-text-muted);
+    grid-column: 1/-1;
+    border-bottom: 1px solid var(--color-border-dark);
+    font-size: var(--small-font-size-2);
+    padding:var(--space-5);
+}
+
+.exerciseNameSearchResultHeader {
+    grid-column: 1;
+}
+
+.categorySearchResultHeader {
+    grid-column: 2;
+}
+
+.descriptionSearchResultHeader {
+    grid-column: 3;
+}
+
+.searchResultsListContainer{
+    max-height: calc(300px * var(--ui-scale));
+    overflow-x: hidden;
+}
+
+
+.searchResultItem {
+    all:unset;
+    display: grid;
+    width: 100%;
+    grid-template-columns: 300px 200px 1fr;
+    grid-column: 1/-1;
+    color: var(--color-text-muted);
+    padding-left: var(--space-5);
+    padding-top: var(--space-2);
+    padding-bottom: var(--space-2);
+    cursor: pointer;
+}
+
+.searchResultItem:hover {
+    background-color: var(--color-hover);
+}
+
+.searchResultName {
+    grid-column: 1;
+}
+
+.searchResultCategory {
+    grid-column: 2;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.searchResultCategory.squat svg{
+    color: var(--color-squat-indicator);
+}
+.searchResultCategory.bench svg {
+    color: var(--color-bench-indicator);
+}
+.searchResultCategory.deadlift svg {
+    color: var(--color-deadl-indicator);
+}
+.searchResultCategory.accessory svg {
+    color: var(--color-accsr-indicator);
+}
+
+.searchResultDescription {
+    grid-column: 3;
+}
