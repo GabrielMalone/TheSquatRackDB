@@ -15,8 +15,6 @@ export default function ChatBoxMessage( {msgData, total, num} ){
     const fromMe = (userData.idUser == idSender);
     const lastMsg = (total == num + 1);
 
-    console.log('sender user data:', userInChat);
-
     const otherClassName = lastMsg ? 'otherChatter chatText lastMsg' : 'otherChatter chatText';
     const selfClassName = lastMsg ? 'selfChatter chatText lastMsg' : 'selfChatter chatText';
 

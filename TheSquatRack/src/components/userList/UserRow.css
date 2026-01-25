@@ -1,9 +1,7 @@
 .userRow{
     all: unset;
     display: grid;
-    grid-template-columns: 20px 160px, 40px;
-    min-width: 200px;
-    max-width: 200px;
+    grid-template-columns: repeat(3, 1fr);
     cursor: pointer;
     border-radius: 10px;
     padding: var(--space-2);
@@ -18,11 +16,10 @@
 .userProfilePicInList{
     display: flex;
     grid-column: 1;
-    padding-right: var(--space-5);
+    justify-content: center;
 }
 
 .userProfilePicInList svg {
-    height: 100%;
     width: var(--icon-size-medium);
     color: var(--color-text-muted);
 }
@@ -33,25 +30,46 @@
     font-size: var(--small-font-size);
     color: var(--color-text-muted);
     align-items: center;
-    justify-content: left;
-    min-width: 100px;
+    width: 100px;
+    padding-bottom: var(--space-1);
 }
 
-.userOnlineStatus {
-    display: flex;
-    min-width: 40px;
-    grid-column: 3;
+.online {
+    color: var(--color-online-indicator);
 }
 
-.userOnlineStatus svg {
-    height: 100%;
-    width: var(--icon-size-small);
-}
-
-.online{
+.online svg {
     color: var(--color-online-indicator);
 }
 
 .offline{
     color: var(--color-offline-indicator);
+}
+
+.msgWaiting {
+    display: flex;
+    grid-column: 3;
+    justify-content: center;
+    color: var(--color-online-indicator);
+}
+
+.msgWaiting svg {
+    height: 100%;
+    width: var(--icon-size-small);
+}
+
+.fade {
+    animation: fadeInOut 2s ease-in-out infinite;
+}
+
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
 }

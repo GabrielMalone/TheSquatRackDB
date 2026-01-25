@@ -214,7 +214,23 @@ def sendMsg():
     res = queries.sendMsg(idConversation, idSender, msg)
     socketio.emit("msg_sent", res)
     return jsonify(res)
-
+#------------------------------------------------------------
+@app.route("/updateLastReadAt", methods=["POST"])
+def updateLastReadAt():
+    data = request.get_json()
+    idConversation = data["idConversation"]
+    idReader = data["idUser"]
+    res = queries.updateLastReadAt(idConversation, idReader)
+    socketio.emit("msg_read")
+    return jsonify(res)
+#------------------------------------------------------------
+@app.route("/getLastMsgInConversation", methods=["GET"])
+def getLastMsgInConversation():
+    idConversation = request.args.get("idConversation")
+    idUser = request.args.get("idUser")
+    res = queries.getLastMsgInConversation(idConversation, idUser)
+    return jsonify(res)
+#------------------------------------------------------------
 
 if __name__ == "__main__":
     socketio.run(app, host="0.0.0.0", port=5002, debug=True)

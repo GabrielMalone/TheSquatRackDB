@@ -9,7 +9,7 @@
     overflow-y: auto;
     margin: var(--space-5);
     padding: var(--space-2);
-}
+    }
 
 .emptyChat {
     color: var(--color-text-muted);

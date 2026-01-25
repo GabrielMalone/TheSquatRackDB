@@ -2,28 +2,30 @@ import { UsersOnlineContext } from './UserOnlineContext';
 import { get } from '../../hooks/fetcher.jsx'
 import { useSuspenseQuery, useQueryClient } from '@tanstack/react-query';
 import { socket } from '../../socket.js';
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
+import { AuthContext } from '../login/authContext.jsx';
 
 
 export function OnlineContextProvider({ children }) {
-
+    // ---------------------------------------------------------------------------
+    const { userData } = useContext(AuthContext);
     const queryClient = useQueryClient();
-   
+    // ---------------------------------------------------------------------------
     const {data : users } = useSuspenseQuery({
         queryKey: ["userList"],
         queryFn: () => get(`getLifters`),
     });
-
+    // ---------------------------------------------------------------------------
     useEffect(() => {
         
         function onPresenceChange() {
-            console.log('someone logged in/out');
             queryClient.invalidateQueries({ queryKey: ["userList"] });
         }
 
         function onMsgSent(data){
-            console.log('someone sent a message!', data.idConversation);
+            console.log('msg sent!', data);
             queryClient.invalidateQueries({ queryKey: ["conversationMessages", data.idConversation] });
+            queryClient.invalidateQueries({ queryKey: ["lastMessage", data.idConversation, userData.idUser ] });
         }
         
         socket.on("presence_changed", onPresenceChange);
@@ -34,9 +36,9 @@ export function OnlineContextProvider({ children }) {
             socket.off("msg_sent", onMsgSent)
         };
 
-    }, [queryClient]);
+    }, [queryClient, userData.idUser]);
 
-
+    // ---------------------------------------------------------------------------
     return (
         <UsersOnlineContext.Provider value={{ users }}>
             {children}

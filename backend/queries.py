@@ -13,6 +13,79 @@ def connect():
         database=os.getenv('DB_NAME'),
         host=os.getenv('DB_HOST', 'localhost') )
 #------------------------------------------------------------------------------
+def getLastMsgInConversation(idConversation, idUser):
+    cnx = connect()
+    if (cnx.is_connected()):
+        try:
+            cursor = cnx.cursor(buffered=True, dictionary=True)
+            cursor.execute(
+            '''
+            SELECT
+                m.idMessage,
+                m.idSender,
+                m.message,
+                m.msgDate,
+                c.lastReadAt AS lastReadDate
+            FROM 
+                Message m
+            JOIN 
+                ConversationParticipant c
+                ON m.idConversation = c.idConversation
+            WHERE 
+                m.idConversation = %s
+            AND 
+                c.idUser = %s
+            ORDER BY 
+                m.msgDate DESC
+            LIMIT 1;
+            ''', 
+                (idConversation, idUser) 
+            )
+            messages = cursor.fetchone()
+            return messages
+        except mysql.connector.Error as err:
+            print("MySQL Error:", err)     # This will show you the exact error
+            print("Error code:", err.errno)                # Numeric error code
+            cnx.rollback() 
+            return {
+                "success" : False,
+                "message" : f' server error: {err.errno}' 
+            }  
+        finally:
+            if cursor:
+                cursor.close()
+            cnx.close()       
+#------------------------------------------------------------------------------
+def updateLastReadAt(idConversation,idReader):
+    cnx = connect()
+    if (cnx.is_connected()):
+        try:
+            cursor = cnx.cursor(buffered=True)
+            cursor.execute(
+            '''
+            UPDATE ConversationParticipant
+            SET lastReadAt = GREATEST(
+                COALESCE(lastReadAt, '1970-01-01'),
+                NOW()
+            )
+            WHERE idConversation = %s
+            AND idUser = %s
+            ''', 
+                (idConversation, idReader) )
+            cnx.commit()
+            cursor.close()
+            cnx.close()
+            return {"success" : True}, 200
+        except mysql.connector.Error as err:
+            print("MySQL Error:", err)     # This will show you the exact error
+            print("Error code:", err.errno)                # Numeric error code
+            cnx.rollback() 
+            cnx.close()
+            return {
+                "success" : False,
+                "message" : f' server error: {err.errno}' 
+            }  
+#------------------------------------------------------------------------------
 def sendMsg(idConversation, idSender, message):
     cnx = connect()
     if not cnx.is_connected():
@@ -57,19 +130,23 @@ def getConversationMessages(idConversation):
                 m.idSender,
                 u.userName AS senderName,
                 m.message,
-                m.msgDate
+                m.msgDate,
+                c.lastReadAt AS lastRead
             FROM 
                 Message m
             JOIN 
                 User u
-            ON 
-                m.idSender = u.idUser
+                ON m.idSender = u.idUser
+            JOIN 
+                ConversationParticipant c
+                ON m.idConversation = c.idConversation
+            AND m.idSender = c.idUser
             WHERE 
                 m.idConversation = %s
             ORDER BY 
                 m.msgDate ASC;
             ''', 
-                (idConversation, ) 
+                (idConversation,) 
             )
             messages = cursor.fetchall()
             return messages
