@@ -8,9 +8,13 @@
 
 .chatText {
     margin-bottom: var(--space-1);
-    font-size: var(--small-font-size-1);
+    font-size: var(--small-font-size-2);
     color: var(--color-text-muted);
-    word-break: break-all;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    resize: none;
+    overflow: hidden;
 }
 
 .otherChatter {
@@ -30,7 +34,7 @@
     color: var(--color-text-muted);
 }
 
-.chatTime{
+.chatTime {
     color: var(--color-border-dark);
     font-size: var(--12px);
 }
