@@ -10,6 +10,7 @@
     margin-bottom: var(--space-1);
     font-size: var(--small-font-size-1);
     color: var(--color-text-muted);
+    word-break: break-all;
 }
 
 .otherChatter {

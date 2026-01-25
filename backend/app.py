@@ -1,8 +1,7 @@
 from flask import Flask, request, jsonify # pyright: ignore[reportMissingImports]
 from flask_cors import CORS # pyright: ignore[reportMissingModuleSource]
 import queries
-from flask_socketio import SocketIO, emit # type: ignore
-import os
+from flask_socketio import SocketIO, emit, join_room # type: ignore
 #------------------------------------------------------------
 app = Flask(__name__)
 CORS(app)
@@ -11,12 +10,34 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 
 @socketio.on("connect")
 def handle_connect():
-    print("client connected")
+    print("client_connected")
 
 @socketio.on("disconnect")
 def handle_disconnect():
     print("client disconnected")
 
+# can use this for force logout everywhere 
+@socketio.on("register_user")
+def register_user(data):
+    idUser = data.get("idUser")
+    join_room(f"user:{idUser}")
+
+@socketio.on("join_conversation")
+def join_conversation(data):
+    idConversation = data.get("idConversation")
+    join_room(f"conv:{idConversation}")
+
+# right now this works for 2 people but wont scale 
+# include idUser in data for scaling 
+# otherwise we just know someone else is typing
+@socketio.on("typing")
+def typing(data):
+    emit(
+        "user_typing",
+        data,
+        to=f"conv:{data['idConversation']}",
+        include_self=False
+    )
 #------------------------------------------------------------
 UPLOAD_ROOT = "uploads/users"
 #------------------------------------------------------------
@@ -218,7 +239,7 @@ def sendMsg():
 @app.route("/updateLastReadAt", methods=["POST"])
 def updateLastReadAt():
     data = request.get_json()
-    idConversation = data["idConversation"]
+    idConversation = data.get("idConversation") # null sometimes
     idReader = data["idUser"]
     res = queries.updateLastReadAt(idConversation, idReader)
     socketio.emit("msg_read")

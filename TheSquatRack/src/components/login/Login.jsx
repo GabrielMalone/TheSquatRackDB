@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { post } from "../../hooks/fetcher";
-
+import { socket } from "../../socket";
 
 export default function Login(){
 
@@ -27,6 +27,8 @@ export default function Login(){
                         profilePic: res.profilePic,
                         allUserData:res 
                     });
+                    socket.emit("register_user", { idUser: res.idUser });
+                    socket.connect();
                     navigate("/home");
                 }
             },

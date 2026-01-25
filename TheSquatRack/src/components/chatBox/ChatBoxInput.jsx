@@ -3,6 +3,7 @@ import { AuthContext } from '../login/authContext';
 import { useContext } from 'react';
 import { post } from '../../hooks/fetcher.jsx';
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { socket } from '../../socket.js';
 
 export default function ChatBoxInput({idConversation}) {
 
@@ -27,7 +28,22 @@ export default function ChatBoxInput({idConversation}) {
     });
 
     function handleSendMsg(msg){
+        if (msg === "") return;
         sndMsg.mutate(msg);
+    }
+
+    function notTyping(){
+        socket.emit("typing", {
+            idConversation,
+            isTyping: false
+        });
+    }
+
+    function amTyping(){
+        socket.emit("typing", {
+            idConversation,
+            isTyping: true
+        });
     }
 
     return (
@@ -37,18 +53,22 @@ export default function ChatBoxInput({idConversation}) {
                 onKeyDown={e=>{
                     if (e.key === 'Enter'){
                         e.preventDefault();
+                        notTyping();
                         handleSendMsg(e.target.value);
                         e.target.value="";
-                        
                     }
                 }}
-                onChange={()=>{
-                }}
+                onChange={amTyping}
                 placeholder='message...'
                 maxLength={1000}
                 spellCheck='false'
+                onBlur={notTyping}
+                onKeyUp={e=>{
+                    if(e.target.value === ""){
+                        notTyping();
+                    }
+                }}
             />
-
         </div>
     );
 }

@@ -7,10 +7,10 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import { get } from '../../hooks/fetcher';
 
 
-const defaultProf = <Icon icon="iconamoon:profile-circle-thin" />;
-const msgIcon = <Icon icon="bytesize:message"/>
-
 export default function UserRow({user}){
+
+    const defaultProf = <Icon icon="iconamoon:profile-circle-thin" />;
+    const msgIcon = <Icon icon="bytesize:message"/> 
     // -----------------------------------------------------------------------------------
     const { SetChatIsSelected, setUserInChat } = useContext(LayoutContext);
     const { userData } = useContext(AuthContext);
@@ -30,8 +30,9 @@ export default function UserRow({user}){
     });
     // -----------------------------------------------------------------------------------
     const hasUnread =
-        lastMsg && 
-        (lastMsg.lastReadDate === null
+        lastMsg &&  // does a msg exist
+        lastMsg.idSender !== userData.idUser && // dont render unread for own outgoing msg
+        (lastMsg.lastReadDate === null // if null then it's def unread
         ||
         new Date(lastMsg.lastReadDate) < new Date(lastMsg.msgDate));
     // -----------------------------------------------------------------------------------

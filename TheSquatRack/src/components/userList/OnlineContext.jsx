@@ -7,6 +7,7 @@ import { AuthContext } from '../login/authContext.jsx';
 
 
 export function OnlineContextProvider({ children }) {
+    
     // ---------------------------------------------------------------------------
     const { userData } = useContext(AuthContext);
     const queryClient = useQueryClient();
@@ -17,7 +18,7 @@ export function OnlineContextProvider({ children }) {
     });
     // ---------------------------------------------------------------------------
     useEffect(() => {
-        
+
         function onPresenceChange() {
             queryClient.invalidateQueries({ queryKey: ["userList"] });
         }
@@ -30,7 +31,7 @@ export function OnlineContextProvider({ children }) {
         
         socket.on("presence_changed", onPresenceChange);
         socket.on("msg_sent", onMsgSent);
-
+        
         return () => {
             socket.off("presence_changed", onPresenceChange);
             socket.off("msg_sent", onMsgSent)

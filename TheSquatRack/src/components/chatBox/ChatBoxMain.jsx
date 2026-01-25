@@ -5,6 +5,7 @@ import { post } from '../../hooks/fetcher.jsx';
 import ChatBoxMessage from './ChatBoxMessage.jsx';
 import { AuthContext } from '../login/authContext.jsx';
 import { useRef, useEffect, useContext } from 'react';
+import { socket } from '../../socket.js';
 
 export default function ChatBoxMain( { idConversation } ){
     // ---------------------------------------------------------------------------
@@ -17,6 +18,8 @@ export default function ChatBoxMain( { idConversation } ){
         queryFn: () => 
             get(`getConversationMessages?idConversation=${idConversation}`),
     });
+    // ---------------------------------------------------------------------------
+    socket.emit("join_conversation", { idConversation });
     // ---------------------------------------------------------------------------
     const updateLastRead = useMutation({
         mutationFn: () => {
@@ -41,7 +44,7 @@ export default function ChatBoxMain( { idConversation } ){
         setTimeout(() => {
             el.scrollTop = el.scrollHeight;
             updateLastRead.mutate();
-        }, 10);
+        }, 100);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [messages]);
     // ---------------------------------------------------------------------------
