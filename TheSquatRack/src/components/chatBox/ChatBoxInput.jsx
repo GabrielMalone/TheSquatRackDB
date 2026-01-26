@@ -5,11 +5,12 @@ import { post } from '../../hooks/fetcher.jsx';
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { socket } from '../../socket.js';
 import { Icon } from '@iconify/react';
+import { LayoutContext } from '../../layoutContext.js';
 
 export default function ChatBoxInput({idConversation}) {
 
     const { userData } = useContext(AuthContext); // currently logged in user
-
+    const { userInChat }    = useContext(LayoutContext); // get id of user to chat with from sidebar click
     const queryClient = useQueryClient();
 
     const ref = useRef();
@@ -40,8 +41,15 @@ export default function ChatBoxInput({idConversation}) {
     }
 
     function notTyping(){
-        socket.emit("typing", {
+        socket.emit("typingInChat", {
             idConversation,
+            idUserRecipient : userInChat.idUser, // to whom are we sending the typing emit
+            isTyping: false
+        });
+        socket.emit("typingInChatUserList", {
+            idConversation,
+            idUserTyping : userData.idUser, // who is typing
+            idUserRecipient : userInChat.idUser, // to whom are we sending the typing emit
             isTyping: false
         });
         if (ref.current){
@@ -50,8 +58,15 @@ export default function ChatBoxInput({idConversation}) {
     }
 
     function amTyping(){
-        socket.emit("typing", {
+        socket.emit("typingInChat", {
             idConversation,
+            idUserRecipient : userInChat.idUser, // to whom are we sending the typing emit
+            isTyping: true
+        });
+        socket.emit("typingInChatUserList", {
+            idConversation,
+            idUserTyping : userData.idUser, // who is typing
+            idUserRecipient : userInChat.idUser, // to whom are we sending the typing emit
             isTyping: true
         });
         if (ref.current){
@@ -66,7 +81,6 @@ export default function ChatBoxInput({idConversation}) {
             <textarea 
                 ref={ref}
                 className='chatBoxInput' 
-                valu
                 onKeyDown={e => {
                     if (e.key === 'Enter'){
                         e.preventDefault();
@@ -90,7 +104,7 @@ export default function ChatBoxInput({idConversation}) {
                 aria-label='send chat text'
                 onClick={handleSendMsg}
             >
-                <Icon icon='lets-icons:send-light'/>
+                <Icon icon='streamline:mail-send-email-message'/>
             </button>
         </div>
     );

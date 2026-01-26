@@ -24,7 +24,6 @@ export function OnlineContextProvider({ children }) {
         }
 
         function onMsgSent(data){
-            console.log('msg sent!', data);
             queryClient.invalidateQueries({ queryKey: ["conversationMessages", data.idConversation] });
             queryClient.invalidateQueries({ queryKey: ["lastMessage", data.idConversation, userData.idUser ] });
         }

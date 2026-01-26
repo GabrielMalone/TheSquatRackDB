@@ -26,18 +26,35 @@ def register_user(data):
 def join_conversation(data):
     idConversation = data.get("idConversation")
     join_room(f"conv:{idConversation}")
-
-# right now this works for 2 people but wont scale 
-# include idUser in data for scaling 
-# otherwise we just know someone else is typing
-@socketio.on("typing")
-def typing(data):
+    
+@socketio.on("typingInChat")
+def handle_typing(data):
+    idUserRecipient = data["idUserRecipient"]
+    isTyping = data["isTyping"]
     emit(
-        "user_typing",
-        data,
-        to=f"conv:{data['idConversation']}",
+        "user_typing_in_chat",
+        {
+            "idUserRecipient": idUserRecipient,
+            "isTyping": isTyping,
+        },
+        room=f"user:{idUserRecipient}",
         include_self=False
     )
+
+@socketio.on("typingInChatUserList")
+def handle_typing_for_user_list(data):
+    idUserTyping = data["idUserTyping"]
+    idUserRecipient = data["idUserRecipient"]
+    isTyping = data["isTyping"]
+    emit(
+        "user_typing_user_list",
+        {
+            "idUserTyping": idUserTyping,
+            "isTyping": isTyping,
+        },
+        room=f"user:{idUserRecipient}",
+        include_self=False
+    )  
 #------------------------------------------------------------
 UPLOAD_ROOT = "uploads/users"
 #------------------------------------------------------------
@@ -48,6 +65,9 @@ def getWorkoutsInDateRange():
     date2  = request.args.get("date2")
     res = queries.get_workouts_in_date_range(idUser, date1, date2);
     return jsonify(res)
+
+
+
 #------------------------------------------------------------
 @app.route("/updateSetNote", methods=["POST"])
 def updateSetNote():
@@ -122,6 +142,9 @@ def addSet():
     idExercise  = data["idExercise"]
     res = queries.addSet(setNumber, idWorkout, idExercise)
     return jsonify(res)
+
+
+
 #------------------------------------------------------------
 @app.route("/getAllExercises", methods=["GET"])
 def getAllExercises():
@@ -141,6 +164,9 @@ def createNewWorkout():
     idUser = data["idUser"]
     res = queries.createNewWorkout(date, idUser)
     return jsonify(res)
+
+
+
 #------------------------------------------------------------
 @app.route("/getPRDataForLift", methods=["GET"])
 def getPRDataForLift():
@@ -170,10 +196,16 @@ def getTrackedLifts():
     idUser = request.args.get("idUser")
     res = queries.getTrackedLifts(idUser)
     return jsonify(res)
+
+
+
 #------------------------------------------------------------
 @app.route("/getLifters", methods=["GET"])
 def getLifters():
     return jsonify(queries.getLifters())
+
+
+
 #------------------------------------------------------------
 @app.route("/setMode", methods=["POST"])
 def setMode():
@@ -188,6 +220,9 @@ def getMode():
     idUser = request.args.get("idUser")
     res = queries.getMode(idUser)
     return jsonify(res)
+
+
+
 #------------------------------------------------------------
 @app.route("/login", methods=["POST"])
 def login():
@@ -205,6 +240,9 @@ def logout():
     res = queries.logout(idUser)
     socketio.emit("presence_changed")
     return jsonify(res)
+
+
+
 #------------------------------------------------------------
 @app.route("/getConversationId", methods=["GET"])
 def getConversationId():
@@ -251,6 +289,9 @@ def getLastMsgInConversation():
     idUser = request.args.get("idUser")
     res = queries.getLastMsgInConversation(idConversation, idUser)
     return jsonify(res)
+
+
+
 #------------------------------------------------------------
 
 if __name__ == "__main__":

@@ -1,6 +1,6 @@
 .chatBoxInputRoot{
     display: grid;
-    grid-template-columns: 1fr 60px;
+    grid-template-columns: 1fr 70px;
     margin-left: var(--space-5);
     margin-bottom: var(--space-5);
 }
@@ -15,7 +15,6 @@
     overflow: hidden;
     font-size: var(--small-font-size-1);
     color: var(--color-text-bright);
-    border: 1px solid  var(--color-border-dark);
     border-radius: 10px;
     padding-top: var(--space-2);
     padding-left: var(--space-2);
@@ -26,13 +25,13 @@
     all: unset;
     display: flex;
     cursor: pointer;
-    justify-content: baseline;
+    justify-content: center;
     align-content: center;
 }
 
 .sendChatText svg {
     opacity: var(--dimmed);
-    width: var(--icon-size-medium);
+    width: var(--icon-size-small);
     color: var(--color-text-muted);
 }
 

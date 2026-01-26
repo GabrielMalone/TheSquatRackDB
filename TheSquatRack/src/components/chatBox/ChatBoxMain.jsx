@@ -4,22 +4,25 @@ import { get } from '../../hooks/fetcher.jsx';
 import { post } from '../../hooks/fetcher.jsx';
 import ChatBoxMessage from './ChatBoxMessage.jsx';
 import { AuthContext } from '../login/authContext.jsx';
-import { useRef, useEffect, useContext } from 'react';
+import { useRef, useEffect, useContext, useState } from 'react';
 import { socket } from '../../socket.js';
+import { Icon } from '@iconify/react';
+import { LayoutContext } from '../../layoutContext.js';
+
 
 export default function ChatBoxMain( { idConversation } ){
     // ---------------------------------------------------------------------------
     const queryClient = useQueryClient();
     const mainChatRef = useRef(null);
     const { userData } = useContext(AuthContext);
+    const [isTyping, setIsTyping] = useState(false);
+    const typingIcon = <Icon className='typingIconInChat' icon="eos-icons:typing"/>
     // ---------------------------------------------------------------------------
     const { data: messages } = useSuspenseQuery({
         queryKey: ["conversationMessages", idConversation],
         queryFn: () => 
             get(`getConversationMessages?idConversation=${idConversation}`),
     });
-    // ---------------------------------------------------------------------------
-    socket.emit("join_conversation", { idConversation });
     // ---------------------------------------------------------------------------
     const updateLastRead = useMutation({
         mutationFn: () => {
@@ -46,13 +49,38 @@ export default function ChatBoxMain( { idConversation } ){
             updateLastRead.mutate();
         }, 100);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [messages]);
+    }, [messages, isTyping]);
+    // ---------------------------------------------------------------------------
+    useEffect(()=>{                       
+        function handleTyping({ idUserRecipient , isTyping }){ 
+            if (idUserRecipient === userData.idUser){ 
+                setIsTyping( isTyping );
+            }
+        }   
+        socket.on("user_typing_in_chat", handleTyping);
+        return () => {
+            socket.off("user_typing_in_chat", handleTyping)
+        };
+    }, [userData.idUser]);
+    // ---------------------------------------------------------------------------
+    useEffect(() => {
+        if (!idConversation || !userData?.idUser) return;
+        socket.emit("join_conversation", {
+            idConversation,
+        });
+        return () => {
+            socket.emit("leave_conversation", {
+                idConversation,
+            });
+        };
+    }, [idConversation, userData.idUser]);
     // ---------------------------------------------------------------------------
     return (
         <div ref={mainChatRef} className='chatBoxMainRoot'>
             {messages.length > 0 ? messages.map((m, i)=>{
                 return <ChatBoxMessage key={m.idMessage} msgData={m} total={messages.length} num={i}/>
             }) :<div className='emptyChat'>no chat history</div>}
+            { isTyping ? <div className='typingIconInChat'>{typingIcon}</div> : null} 
         </div>
     );
 }
