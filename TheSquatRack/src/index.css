@@ -42,6 +42,7 @@
   --color-today: #0f0f0f;
   --color-today-date: #ffffff;
   --color-rpe: #A6A09B;
+  --color-chat-bg:#141414;;
 
   --color-shadow:rgb(0, 0, 0, .15);
 
@@ -76,9 +77,9 @@
   --color-border-dark: #dddddd;
   --color-text-muted: #666666;
   --color-text-dark: #dddddd;
-  --color-hover: #f8fafc;
+  --color-hover: #f5f5f5;
   --color-today: #ffffff;
-  --color-today-date: #673AB7;
+  --color-today-date: #000000;
   --color-button-muted: #616161;
   --color-close: #F48FB1;
   --color-rpe: #616161;
@@ -97,6 +98,7 @@
   --color-online-indicator: #81C784;
   --color-offline-indicator: #e60076;
   --color-shadow: rgb(0, 0, 0, 0.02);
+  --color-chat-bg: #f5f5f5;
 
 }
 

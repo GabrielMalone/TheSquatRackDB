@@ -1,11 +1,12 @@
 .userRow{
     all: unset;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     cursor: pointer;
     border-radius: 10px;
     padding: var(--space-2);
     opacity: var(--filled);
+    gap: var(--space-1);
 }
 
 .userRow:hover {
@@ -48,7 +49,7 @@
 
 .msgWaiting {
     display: flex;
-    grid-column: 3;
+    grid-column: 6;
     justify-content: center;
     color: var(--color-online-indicator);
 }
@@ -56,6 +57,18 @@
 .msgWaiting svg {
     height: 100%;
     width: var(--icon-size-small);
+}
+
+.newWorkoutPosted {
+    display: flex;
+    grid-column: 3;
+}
+.newWorkoutPosted svg {
+    height: 100%;
+    width: var(--icon-size-small);
+}
+.newWorkoutPosted svg:hover {
+
 }
 
 .fade {

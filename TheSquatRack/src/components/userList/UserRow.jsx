@@ -13,6 +13,7 @@ export default function UserRow({user}){
     const defaultProf = <Icon icon="iconamoon:profile-circle-thin" />;
     const typingIcon = <Icon className='typingIconInChat' icon="eos-icons:typing"/>
     const msgIcon = <Icon icon="bytesize:message"/> 
+    const newWorkoutIcon = <Icon icon='stash:chart-trend-up' />
     // -----------------------------------------------------------------------------------
     const { SetChatIsSelected, setUserInChat } = useContext(LayoutContext);
     const { userData } = useContext(AuthContext);
@@ -68,6 +69,9 @@ export default function UserRow({user}){
             </div>
             <div className='userNameInList'>
                 {user.userName}
+            </div>
+            <div className='newWorkoutPosted'>
+                {/* {newWorkoutIcon} */}
             </div>
             <div className="msgWaiting fade">
                 {hasUnread && !isTyping ? msgIcon : null}

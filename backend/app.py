@@ -11,22 +11,22 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 @socketio.on("connect")
 def handle_connect():
     print("client_connected")
-
+#------------------------------------------------------------
 @socketio.on("disconnect")
 def handle_disconnect():
     print("client disconnected")
-
+#------------------------------------------------------------
 # can use this for force logout everywhere 
 @socketio.on("register_user")
 def register_user(data):
     idUser = data.get("idUser")
     join_room(f"user:{idUser}")
-
+#------------------------------------------------------------
 @socketio.on("join_conversation")
 def join_conversation(data):
     idConversation = data.get("idConversation")
     join_room(f"conv:{idConversation}")
-    
+#------------------------------------------------------------
 @socketio.on("typingInChat")
 def handle_typing(data):
     idUserRecipient = data["idUserRecipient"]
@@ -40,7 +40,7 @@ def handle_typing(data):
         room=f"user:{idUserRecipient}",
         include_self=False
     )
-
+#------------------------------------------------------------
 @socketio.on("typingInChatUserList")
 def handle_typing_for_user_list(data):
     idUserTyping = data["idUserTyping"]
@@ -55,6 +55,7 @@ def handle_typing_for_user_list(data):
         room=f"user:{idUserRecipient}",
         include_self=False
     )  
+
 #------------------------------------------------------------
 UPLOAD_ROOT = "uploads/users"
 #------------------------------------------------------------
@@ -230,7 +231,24 @@ def login():
     userName = data["userName"]
     pwd = data["pwd"]
     res = queries.login(userName=userName, pwd=pwd)
+    # idUser = res["idUSer"]
     socketio.emit("presence_changed")
+    # eventually will need to be specific and emit this to 
+    # only people on this user's friends list
+
+    # actually have the data we need already, we just get
+    # all the ids of this current user's friends
+    # loop through them and emit to those rooms that were joined
+    # by users when they logged in e.g :
+    # friends = queries.get_friends(idUser)
+
+    # for friend_id in friends:
+    #     socketio.emit(
+    #         "presence_changed",
+    #         room=f"user:{friend_id}"
+    #     )
+
+
     return jsonify(res)
 #------------------------------------------------------------
 @app.route("/logout", methods=["POST"])
@@ -239,6 +257,7 @@ def logout():
     idUser = data["idUser"]
     res = queries.logout(idUser)
     socketio.emit("presence_changed")
+    # same as above
     return jsonify(res)
 
 

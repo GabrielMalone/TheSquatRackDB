@@ -20,6 +20,7 @@ export function OnlineContextProvider({ children }) {
     useEffect(() => {
 
         function onPresenceChange() {
+            // this will need to be updated in future to update a user list for this userid's users list
             queryClient.invalidateQueries({ queryKey: ["userList"] });
         }
 

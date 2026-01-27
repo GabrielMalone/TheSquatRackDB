@@ -3,10 +3,9 @@
     flex-direction: row;
     width: 100%;
     justify-content: flex-end;
-    cursor: pointer;
 }
 
-.closeButton {
+.minimizeProfile {
     all: unset;
     display: flex;
     flex-direction: row;
@@ -14,14 +13,15 @@
     padding-right: var(--space-2);
 }
 
-.closeButton svg {
+.minimizeProfile svg {
     width: var(--icon-size-small);
     height: 100%;
     opacity: var(--dimmed);
     color: var(--color-button-muted);
+    cursor: pointer;
 }
 
-.closeButton svg:hover {
+.minimizeProfile svg:hover {
     opacity: var(--full);
 }
 
