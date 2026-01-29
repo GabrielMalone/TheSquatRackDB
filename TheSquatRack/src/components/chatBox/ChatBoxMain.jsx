@@ -7,7 +7,6 @@ import { AuthContext } from '../login/authContext.jsx';
 import { useRef, useEffect, useContext, useState } from 'react';
 import { socket } from '../../socket.js';
 import { Icon } from '@iconify/react';
-import { LayoutContext } from '../../layoutContext.js';
 
 
 export default function ChatBoxMain( { idConversation } ){
@@ -79,7 +78,7 @@ export default function ChatBoxMain( { idConversation } ){
         <div ref={mainChatRef} className='chatBoxMainRoot'>
             {messages.length > 0 ? messages.map((m, i)=>{
                 return <ChatBoxMessage key={m.idMessage} msgData={m} total={messages.length} num={i}/>
-            }) :<div className='emptyChat'>no chat history</div>}
+            }) :<div className='emptyChat'>No chat history. Start a conersation!</div>}
             { isTyping ? <div className='typingIconInChat'>{typingIcon}</div> : null} 
         </div>
     );

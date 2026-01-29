@@ -4,43 +4,43 @@ import { useContext } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { post } from "../../hooks/fetcher";
+
 import { socket } from "../../socket";
 
-export default function Login(){
-
+export default function Login() {
+//------------------------------------------------------------------------------
     const navigate = useNavigate();
-
-    const { setUserData } = useContext(AuthContext);
-
+    const { setUserData, } = useContext(AuthContext);
+//------------------------------------------------------------------------------
     const login = useMutation({
-            mutationFn: ({userName, pwd}) => {
-                return post("login", {
-                    userName,
-                    pwd
-                })
-            },
-            onSuccess: (res) => {
-                if (res){
-                    setUserData({ 
-                        idUser:     res.idUser, 
-                        userName:   res.userName,
-                        profilePic: res.profilePic,
-                        allUserData:res 
-                    });
-                    socket.emit("register_user", { idUser: res.idUser });
-                    socket.connect();
-                    navigate("/home");
-                }
-            },
-        });
-
+        mutationFn: ({userName, pwd}) => {
+            return post("login", {
+                userName,
+                pwd
+            })
+        },
+        onSuccess: (res) => {
+            if (res){
+                setUserData({ 
+                    idUser:     res.idUser, 
+                    userName:   res.userName,
+                    profilePic: res.profilePic,
+                    allUserData:res 
+                });
+                socket.emit("register_user", { idUser: res.idUser });
+                socket.connect();
+                navigate("/home");
+            }
+        },
+    });
+//------------------------------------------------------------------------------
     function handleLogin(e){
         e.preventDefault();
         const userName = e.target.username.value;
         const pwd = e.target.pwd.value;
         login.mutate({userName, pwd});
     }
-
+//------------------------------------------------------------------------------
     return(
         <div className='loginRoot'>
             <div className="loginBox">

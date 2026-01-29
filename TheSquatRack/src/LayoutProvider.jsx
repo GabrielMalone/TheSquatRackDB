@@ -1,5 +1,6 @@
 import { LayoutContext } from "./layoutContext";
-import { useState } from "react";
+import { AuthContext } from "./components/login/authContext";
+import { useContext, useState } from "react";
 import Layout from "./Layout";
 import Header from "./components/header/Header";
 import Sidebar from "./components/sidebar/Sidebar";
@@ -9,8 +10,11 @@ import CalendarRoot from "./components/calendar/CalendarRoot";
 import WorkoutRoot from "./components/workout/WorkoutRoot";
 import PrHistoryRoot from "./components/prHistory/PrHistoryRoot";
 import ChatBox from "./components/chatBox/ChatBox";
+const BASE_URL = import.meta.env.VITE_API_BASE;
 
 export default function LayoutProvider(){
+
+    const { userData } = useContext(AuthContext);
 
     const [workoutIsPresent, setWorkoutIsPresent] = useState(false);
     const [chooseIsSelected, setChooseIsSelected] = useState(null);
@@ -20,6 +24,7 @@ export default function LayoutProvider(){
     const [addExerciseRoute, setAddExerciseRoute] = useState("");
     const [chatIsSelected, SetChatIsSelected] = useState(false);
     const [userInChat, setUserInChat] = useState(null);
+    const profilePicUrl = `${BASE_URL}getProfilePic?idUser=${userData.idUser}`;
 
     const layout = {
         workoutIsPresent, 
@@ -37,7 +42,8 @@ export default function LayoutProvider(){
         chatIsSelected,
         SetChatIsSelected,
         userInChat,
-        setUserInChat
+        setUserInChat,
+        profilePicUrl,
     }
 
     return(
@@ -46,9 +52,9 @@ export default function LayoutProvider(){
                 header={<Header />} 
                 sidebar={<Sidebar />}
             >
-
-            { profileIsSelected   ? <ProfileRoot />           : null }
+                
             { chatIsSelected      ? <ChatBox />               : null }
+            { profileIsSelected   ? <ProfileRoot />           : null }
             { chooseIsSelected    ? <ExerciseSelectionRoot /> : null }
             { calendarIsSelected  ? <CalendarRoot />          : null }
             { workoutIsPresent    ? <WorkoutRoot />           : null }

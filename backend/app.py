@@ -1,7 +1,8 @@
-from flask import Flask, request, jsonify # pyright: ignore[reportMissingImports]
+from flask import Flask, request, jsonify, send_from_directory, abort # pyright: ignore[reportMissingImports]
 from flask_cors import CORS # pyright: ignore[reportMissingModuleSource]
 import queries
 from flask_socketio import SocketIO, emit, join_room # type: ignore
+import os
 #------------------------------------------------------------
 app = Flask(__name__)
 CORS(app)
@@ -231,7 +232,7 @@ def login():
     userName = data["userName"]
     pwd = data["pwd"]
     res = queries.login(userName=userName, pwd=pwd)
-    # idUser = res["idUSer"]
+    idUser = res["idUser"]
     socketio.emit("presence_changed")
     # eventually will need to be specific and emit this to 
     # only people on this user's friends list
@@ -248,8 +249,23 @@ def login():
     #         room=f"user:{friend_id}"
     #     )
 
+    # make sure a folder exists for this user
+    user_dir = f"uploads/users/{idUser}"
+    os.makedirs(user_dir, exist_ok=True)
+    
 
     return jsonify(res)
+#------------------------------------------------------------
+@app.route("/getProfilePic", methods=["GET"])
+def getProfilePic():
+    idUser = request.args.get("idUser")
+    dir = os.path.join("uploads", "users", idUser)
+    fname = "profilePic.jpg"
+    if not os.path.exists(os.path.join(dir, fname)):
+        print(f"profile pic not found for {idUser}")
+        abort(404)
+        return jsonify({"success: false"}), 404
+    return send_from_directory(dir, fname)
 #------------------------------------------------------------
 @app.route("/logout", methods=["POST"])
 def logout():
@@ -259,9 +275,6 @@ def logout():
     socketio.emit("presence_changed")
     # same as above
     return jsonify(res)
-
-
-
 #------------------------------------------------------------
 @app.route("/getConversationId", methods=["GET"])
 def getConversationId():
@@ -314,4 +327,4 @@ def getLastMsgInConversation():
 #------------------------------------------------------------
 
 if __name__ == "__main__":
-    socketio.run(app, host="0.0.0.0", port=5002, debug=True)
+    socketio.run(app, host="0.0.0.0", port=5002, debug=True, use_reloader=True)

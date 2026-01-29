@@ -299,8 +299,8 @@ INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDesc
 INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDescription) VALUES ('Cable tricep extension', 'Cbl_Tricep', 'accessory', "tricep extensions on cable machine. aka tricep push-down.");
 INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDescription) VALUES ('Cable AB Crunch', 'Cbl_Crunch', 'accessory', "Ab crunch on cable machine.");
 
-INSERT INTO User (Email, userName, passwordHash)
-VALUES ('test1@example.com', 'goob', 'pass');
+INSERT INTO User (Email, userName, passwordHash, userFirst, userLast)
+VALUES ('test1@example.com', 'goob', 'pass', 'Gabriel', 'Malone' );
 
 INSERT INTO User (Email, userName, passwordHash)
 VALUES ('test2@example.com', 'curtis', 'pass');

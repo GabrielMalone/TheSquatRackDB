@@ -10,11 +10,13 @@
     margin-left: var(--space-5);
     margin-right: var(--space-5);
     margin-bottom: var(--space-5);
+    padding-right: var(--space-4);
 }
 
 .emptyChat {
     color: var(--color-text-muted);
     font-size: var(--24px);
+    padding: var(--space-5);
 }
 
 .chatMsgProfilePic svg{

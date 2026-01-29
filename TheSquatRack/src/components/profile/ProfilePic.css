@@ -1,0 +1,6 @@
+.profilePicRoot {
+    display: flex;
+    border: 1px solid var(--color-border-dark);
+    border-radius: 10px;
+    height: 250px;
+}

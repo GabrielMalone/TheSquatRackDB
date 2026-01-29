@@ -13,6 +13,8 @@ def connect():
         database=os.getenv('DB_NAME'),
         host=os.getenv('DB_HOST', 'localhost') )
 #------------------------------------------------------------------------------
+
+#------------------------------------------------------------------------------
 def getLastMsgInConversation(idConversation, idUser):
     cnx = connect()
     if (cnx.is_connected()):

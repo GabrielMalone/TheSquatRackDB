@@ -12,7 +12,23 @@
 
 .profileHeader {
     display: flex;
-    padding: var(--space-5);
     font-size: var(--medium-font-size);
+    margin-bottom: var(--space-3);
     justify-content: center;
+}
+
+.aboutSection{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-1);
+    margin: var(--space-5);
+}
+
+.profileFullName {
+    display: grid;
+    gap: var(--space-2);
+    grid-template-columns: 1fr 1fr;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
 }
