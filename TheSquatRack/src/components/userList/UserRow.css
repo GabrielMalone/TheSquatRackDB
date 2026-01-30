@@ -4,7 +4,6 @@
     grid-template-columns: repeat(6, 1fr);
     cursor: pointer;
     border-radius: 10px;
-    padding: var(--space-2);
     opacity: var(--filled);
     gap: var(--space-4);
 }
@@ -32,7 +31,7 @@
     font-size: var(--small-font-size);
     color: var(--color-text-muted);
     align-items: center;
-    width: 100px;
+    width: 50px;
     padding-bottom: var(--space-1);
 }
 
@@ -52,7 +51,7 @@
     display: flex;
     grid-column: 6;
     justify-content: center;
-    color: var(--color-online-indicator);
+    color: var(--color-text-muted);
 }
 
 .msgWaiting svg {
@@ -70,20 +69,4 @@
 }
 .newWorkoutPosted svg:hover {
 
-}
-
-.fade {
-    animation: fadeInOut 2s ease-in-out infinite;
-}
-
-@keyframes fadeInOut {
-    0% {
-        opacity: 0;
-    }
-    50% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-    }
 }

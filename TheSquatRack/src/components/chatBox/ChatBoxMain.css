@@ -24,6 +24,6 @@
 }
 
 .typingIconInChat svg {
-    color: var(--color-online-indicator);
+    color: var(--color-text-muted);
     width: var(--icon-size-small);
 }

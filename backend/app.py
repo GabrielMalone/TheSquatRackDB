@@ -56,7 +56,6 @@ def handle_typing_for_user_list(data):
         room=f"user:{idUserRecipient}",
         include_self=False
     )  
-
 #------------------------------------------------------------
 UPLOAD_ROOT = "uploads/users"
 #------------------------------------------------------------
@@ -67,9 +66,6 @@ def getWorkoutsInDateRange():
     date2  = request.args.get("date2")
     res = queries.get_workouts_in_date_range(idUser, date1, date2);
     return jsonify(res)
-
-
-
 #------------------------------------------------------------
 @app.route("/updateSetNote", methods=["POST"])
 def updateSetNote():
@@ -144,9 +140,6 @@ def addSet():
     idExercise  = data["idExercise"]
     res = queries.addSet(setNumber, idWorkout, idExercise)
     return jsonify(res)
-
-
-
 #------------------------------------------------------------
 @app.route("/getAllExercises", methods=["GET"])
 def getAllExercises():
@@ -166,9 +159,6 @@ def createNewWorkout():
     idUser = data["idUser"]
     res = queries.createNewWorkout(date, idUser)
     return jsonify(res)
-
-
-
 #------------------------------------------------------------
 @app.route("/getPRDataForLift", methods=["GET"])
 def getPRDataForLift():
@@ -198,16 +188,10 @@ def getTrackedLifts():
     idUser = request.args.get("idUser")
     res = queries.getTrackedLifts(idUser)
     return jsonify(res)
-
-
-
 #------------------------------------------------------------
 @app.route("/getLifters", methods=["GET"])
 def getLifters():
     return jsonify(queries.getLifters())
-
-
-
 #------------------------------------------------------------
 @app.route("/setMode", methods=["POST"])
 def setMode():
@@ -222,9 +206,6 @@ def getMode():
     idUser = request.args.get("idUser")
     res = queries.getMode(idUser)
     return jsonify(res)
-
-
-
 #------------------------------------------------------------
 @app.route("/login", methods=["POST"])
 def login():
@@ -257,9 +238,8 @@ def login():
     return jsonify(res)
 #------------------------------------------------------------
 @app.route("/getProfilePic", methods=["GET"])
-@cross_origin()  # VERY IMPORTANT for <img>
+@cross_origin() 
 def getProfilePic():
-    print('getting pic!')
     idUser = request.args.get("idUser")
 
     if not idUser:
@@ -268,7 +248,6 @@ def getProfilePic():
     path = os.path.join("uploads", "users", idUser, "profilePic.jpg")
 
     if not os.path.exists(path):
-        # DO NOT abort → abort returns HTML
         return "", 204  # clean "no image"
 
     return send_file(

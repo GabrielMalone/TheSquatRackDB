@@ -11,7 +11,6 @@ const BASE_URL = import.meta.env.VITE_API_BASE;
 
 export default function UserRow({user}){
 
-    const typingIcon = <Icon className='typingIconInChat' icon="eos-icons:typing"/>
     const msgIcon = <Icon icon="bytesize:message"/> 
     // const newWorkoutIcon = <Icon icon='stash:chart-trend-up' />
     // -----------------------------------------------------------------------------------
@@ -80,9 +79,8 @@ export default function UserRow({user}){
             <div className='newWorkoutPosted'>
                 {/* {newWorkoutIcon} */}
             </div>
-            <div className="msgWaiting fade">
+            <div className="msgWaiting">
                 {hasUnread && !isTyping ? msgIcon : null}
-                {isTyping ? typingIcon : null}
             </div>
         </button>
     );
