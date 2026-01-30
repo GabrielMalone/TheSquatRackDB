@@ -1,5 +1,5 @@
-from flask import Flask, request, jsonify, send_from_directory, abort # pyright: ignore[reportMissingImports]
-from flask_cors import CORS # pyright: ignore[reportMissingModuleSource]
+from flask import Flask, request, jsonify, send_file # pyright: ignore[reportMissingImports]
+from flask_cors import CORS, cross_origin # pyright: ignore[reportMissingModuleSource]
 import queries
 from flask_socketio import SocketIO, emit, join_room # type: ignore
 import os
@@ -257,15 +257,25 @@ def login():
     return jsonify(res)
 #------------------------------------------------------------
 @app.route("/getProfilePic", methods=["GET"])
+@cross_origin()  # VERY IMPORTANT for <img>
 def getProfilePic():
+    print('getting pic!')
     idUser = request.args.get("idUser")
-    dir = os.path.join("uploads", "users", idUser)
-    fname = "profilePic.jpg"
-    if not os.path.exists(os.path.join(dir, fname)):
-        print(f"profile pic not found for {idUser}")
-        abort(404)
-        return jsonify({"success: false"}), 404
-    return send_from_directory(dir, fname)
+
+    if not idUser:
+        return "", 400
+
+    path = os.path.join("uploads", "users", idUser, "profilePic.jpg")
+
+    if not os.path.exists(path):
+        # DO NOT abort → abort returns HTML
+        return "", 204  # clean "no image"
+
+    return send_file(
+        path,
+        mimetype="image/jpeg",
+        conditional=True
+    )
 #------------------------------------------------------------
 @app.route("/logout", methods=["POST"])
 def logout():

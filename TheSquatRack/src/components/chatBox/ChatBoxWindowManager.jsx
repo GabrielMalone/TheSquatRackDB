@@ -2,6 +2,7 @@ import './ChatBoxWindowManager.css';
 import { Icon } from '@iconify/react';
 import { LayoutContext } from '../../layoutContext';
 import { useContext } from 'react';
+import { minimizer } from '../../../config/UI';
 
 export default function ChatBoxWindowManager(){
    
@@ -13,7 +14,7 @@ export default function ChatBoxWindowManager(){
                 className='minimize'
                 onClick={()=>SetChatIsSelected(c=>!c)}
             >
-                <Icon icon="mdi:minimize" />
+                <Icon icon={minimizer} />
             </button>
         </div>
     );

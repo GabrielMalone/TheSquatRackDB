@@ -6,14 +6,14 @@ import { useContext, useEffect, useState } from 'react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { get } from '../../hooks/fetcher';
 import { socket } from '../../socket';
-
+import { Avatar } from '../profile/Avatar';
+const BASE_URL = import.meta.env.VITE_API_BASE;
 
 export default function UserRow({user}){
 
-    const defaultProf = <Icon icon="iconamoon:profile-circle-thin" />;
     const typingIcon = <Icon className='typingIconInChat' icon="eos-icons:typing"/>
     const msgIcon = <Icon icon="bytesize:message"/> 
-    const newWorkoutIcon = <Icon icon='stash:chart-trend-up' />
+    // const newWorkoutIcon = <Icon icon='stash:chart-trend-up' />
     // -----------------------------------------------------------------------------------
     const { SetChatIsSelected, setUserInChat } = useContext(LayoutContext);
     const { userData } = useContext(AuthContext);
@@ -65,7 +65,14 @@ export default function UserRow({user}){
             onClick={handleBeginChat}
         >
             <div className={userOnline}>
-                {user.profilePic ? user.profilePic : defaultProf}
+                {   user.profilePic ? 
+                    user.profilePic : 
+                    <Avatar 
+                        key={user.idUser}
+                        src={`${BASE_URL}getProfilePic?idUser=${user.idUser}`}
+                        size={48}
+                    />
+                }
             </div>
             <div className='userNameInList'>
                 {user.userName}

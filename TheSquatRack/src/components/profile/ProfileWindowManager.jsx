@@ -2,6 +2,7 @@ import './profileWindowManager.css';
 import { Icon } from '@iconify/react';
 import { LayoutContext } from '../../layoutContext';
 import { useContext } from 'react';
+import { minimizer } from '../../../config/UI';
 
 export default function ProfileWindowManager(){
 
@@ -13,7 +14,7 @@ export default function ProfileWindowManager(){
                 className='minimizeProfile'
                 onClick={()=>setProfileIsSelected(false)}
             >
-                <Icon icon="mdi:minimize" />
+                <Icon icon={minimizer} />
             </button>
         </div>
     );

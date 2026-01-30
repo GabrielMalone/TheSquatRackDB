@@ -24,7 +24,8 @@ export default function LayoutProvider(){
     const [addExerciseRoute, setAddExerciseRoute] = useState("");
     const [chatIsSelected, SetChatIsSelected] = useState(false);
     const [userInChat, setUserInChat] = useState(null);
-    const profilePicUrl = `${BASE_URL}getProfilePic?idUser=${userData.idUser}`;
+    const profilePicUrl = `${BASE_URL}/getProfilePic?idUser=${userData.idUser}`;
+
 
     const layout = {
         workoutIsPresent, 

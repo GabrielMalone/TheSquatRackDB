@@ -1,20 +1,25 @@
 import './ChatBoxHeader.css';
-import { Icon } from '@iconify/react';
-
-const defaultProf =  <Icon icon="iconamoon:profile-circle-thin" />;
+import { Avatar } from '../profile/Avatar';
+const BASE_URL = import.meta.env.VITE_API_BASE;
 
 export default function ChatBoxHeader({u}){
 
     const onlineIndicator = u.isLoggedIn 
         ? "profilePicChatBoxHeader onlineProficHeader" 
         : "profilePicChatBoxHeader";
+    
+    const onlineIndicatorName = u.isLoggedIn 
+        ? "userNameChatBoxHeader userNameChatBoxHeaderOnline" 
+        : "userNameChatBoxHeader";
+
+    const src = `${BASE_URL}/getProfilePic?idUser=${u.idUser}`;
 
     return (
         <div className='chatBoxHeader'>
             <div className={onlineIndicator}>
-                {u.profilePic ?? defaultProf}
+                {u.profilePic ?? <Avatar key={u.idUser} src={src} size={80}/>}
             </div>
-            <div className="userNameChatBoxHeader">
+            <div className={onlineIndicatorName}>
                 {u.userName}
             </div>
         </div>

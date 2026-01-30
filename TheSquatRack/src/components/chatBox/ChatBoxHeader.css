@@ -20,12 +20,21 @@
     color: var(--color-online-indicator);
 }
 
+
+.onlineProficHeaderName {
+    color: var(--color-online-indicator);
+}
+
 .userNameChatBoxHeader {
     grid-row: 2;
     display: flex;
     justify-self: center;
     font-size: var(--medium-font-size);
     color: var(--color-text-muted);
+}
+
+.userNameChatBoxHeaderOnline{
+    color: var(--color-online-indicator);
 }
 
 .typing {

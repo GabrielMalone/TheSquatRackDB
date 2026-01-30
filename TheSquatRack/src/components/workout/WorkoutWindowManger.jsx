@@ -2,6 +2,7 @@ import './WorkoutWindowManager.css';
 import { Icon } from "@iconify/react";
 import { LayoutContext } from '../../layoutContext';
 import { useContext } from 'react';
+import { minimizer } from '../../../config/UI';
 
 export default function WorkoutWindowManager(){
 
@@ -17,7 +18,7 @@ export default function WorkoutWindowManager(){
                     onClick={handleClose}
                     aria-label="workout close button"
             >
-                <Icon icon="mdi:minimize"/>
+                <Icon icon={minimizer}/>
             </button>
         </div>
     );

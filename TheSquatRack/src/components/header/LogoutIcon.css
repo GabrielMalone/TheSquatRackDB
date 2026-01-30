@@ -1,7 +1,8 @@
 .loginIcon {
     all: unset;
+    grid-column:8;
+    grid-row: 1;
     display: flex;
-    grid-column: 7;
     flex: 1;
     flex-direction: row;
     cursor: pointer;

@@ -2,6 +2,7 @@ import './ExerciseSelectionWindowManager.css';
 import { Icon } from '@iconify/react';
 import { LayoutContext } from '../../layoutContext';
 import { useContext } from 'react';
+import { minimizer } from '../../../config/UI';
 
 export default function ExerciseSelectionWindowManager(){
 
@@ -13,7 +14,7 @@ export default function ExerciseSelectionWindowManager(){
                 className='minimize'
                 onClick={()=>setChooseIsSelected(c=>!c)}
             >
-                <Icon icon="mdi:minimize" />
+                <Icon icon={minimizer} />
             </button>
         </div>
     );
