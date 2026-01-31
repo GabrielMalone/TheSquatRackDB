@@ -17,7 +17,7 @@ export default function ChatBoxHeader({u}){
     return (
         <div className='chatBoxHeader'>
             <div className={onlineIndicator}>
-                {u.profilePic ?? <Avatar key={u.idUser} src={src} size={80}/>}
+               <Avatar key={u.idUser} src={src} size={80} online={u.isLoggedIn}/>
             </div>
             <div className={onlineIndicatorName}>
                 {u.userName}

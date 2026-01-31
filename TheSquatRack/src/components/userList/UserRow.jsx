@@ -46,7 +46,6 @@ export default function UserRow({user}){
     // ---------------------------------------------------------------------------
     useEffect(()=>{
         function handleTyping({ idUserTyping , isTyping }){ // userBeing typed to
-            console.log(`sender id ${idUserTyping} user.id ${user.idUser}`);
             if (idUserTyping === user.idUser){
                 setIsTyping( isTyping );
             }
@@ -64,14 +63,12 @@ export default function UserRow({user}){
             onClick={handleBeginChat}
         >
             <div className={userOnline}>
-                {   user.profilePic ? 
-                    user.profilePic : 
-                    <Avatar 
-                        key={user.idUser}
-                        src={`${BASE_URL}getProfilePic?idUser=${user.idUser}`}
-                        size={48}
-                    />
-                }
+                <Avatar 
+                    key={user.idUser}
+                    src={`${BASE_URL}getProfilePic?idUser=${user.idUser}`}
+                    size={48}
+                    online={user.isLoggedIn}
+                />
             </div>
             <div className='userNameInList'>
                 {user.userName}

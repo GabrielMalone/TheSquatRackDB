@@ -4,7 +4,7 @@ import { AuthContext } from '../login/authContext';
 import { useContext } from 'react';
 import { Avatar } from '../profile/Avatar';
 
-export default function ProfileIcon(){
+export default function ProfileIcon() {
 
     const c = useContext(LayoutContext);
 
@@ -19,8 +19,7 @@ export default function ProfileIcon(){
             onClick={handleOnClick}
             aria-label="profile icon"
         >   
-
-            <Avatar key={userData.idUser} src={c.profilePicUrl } size={48}/>
+            <Avatar key={userData.idUser} src={c.profilePicUrl } size={48} online={false} isMe={true}/>
             {/* <div className='headerUsername'>{userName}</div> */}
         </button>
     );

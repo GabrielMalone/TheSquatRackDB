@@ -10,7 +10,7 @@ import { LayoutContext } from '../../layoutContext.js';
 export default function ChatBoxInput({idConversation}) {
 
     const { userData } = useContext(AuthContext); // currently logged in user
-    const { userInChat }    = useContext(LayoutContext); // get id of user to chat with from sidebar click
+    const { userInChat } = useContext(LayoutContext); // get id of user to chat with from sidebar click
     const queryClient = useQueryClient();
 
     const ref = useRef();
@@ -44,6 +44,7 @@ export default function ChatBoxInput({idConversation}) {
         socket.emit("typingInChat", {
             idConversation,
             idUserRecipient : userInChat.idUser, // to whom are we sending the typing emit
+            idUserTyping : userData.idUser,
             isTyping: false
         });
         socket.emit("typingInChatUserList", {
@@ -61,6 +62,7 @@ export default function ChatBoxInput({idConversation}) {
         socket.emit("typingInChat", {
             idConversation,
             idUserRecipient : userInChat.idUser, // to whom are we sending the typing emit
+            idUserTyping : userData.idUser,
             isTyping: true
         });
         socket.emit("typingInChatUserList", {

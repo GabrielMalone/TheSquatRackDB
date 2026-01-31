@@ -4,6 +4,7 @@ import { get } from '../../hooks/fetcher.jsx';
 import { post } from '../../hooks/fetcher.jsx';
 import ChatBoxMessage from './ChatBoxMessage.jsx';
 import { AuthContext } from '../login/authContext.jsx';
+import { LayoutContext } from '../../layoutContext.js';
 import { useRef, useEffect, useContext, useState } from 'react';
 import { socket } from '../../socket.js';
 import { Icon } from '@iconify/react';
@@ -14,7 +15,10 @@ export default function ChatBoxMain( { idConversation } ){
     const queryClient = useQueryClient();
     const mainChatRef = useRef(null);
     const { userData } = useContext(AuthContext);
+    const { userInChat } = useContext(LayoutContext); // get id of user to chat with from sidebar click
     const [isTyping, setIsTyping] = useState(false);
+    const [idUserRecipient, setIdUserRecipient] = useState(null);
+    const [idUserTyping, setIdUserTyping] = useState(null);
     const typingIcon = <Icon className='typingIconInChat' icon="eos-icons:typing"/>
     // ---------------------------------------------------------------------------
     const { data: messages } = useSuspenseQuery({
@@ -51,9 +55,11 @@ export default function ChatBoxMain( { idConversation } ){
     }, [messages, isTyping]);
     // ---------------------------------------------------------------------------
     useEffect(()=>{                       
-        function handleTyping({ idUserRecipient , isTyping }){ 
+        function handleTyping({ idUserRecipient , idUserTyping, isTyping }){ 
             if (idUserRecipient === userData.idUser){ 
                 setIsTyping( isTyping );
+                setIdUserRecipient( idUserRecipient );
+                setIdUserTyping( idUserTyping );
             }
         }   
         socket.on("user_typing_in_chat", handleTyping);
@@ -73,13 +79,22 @@ export default function ChatBoxMain( { idConversation } ){
             });
         };
     }, [idConversation, userData.idUser]);
+
+    
     // ---------------------------------------------------------------------------
     return (
         <div ref={mainChatRef} className='chatBoxMainRoot'>
             {messages.length > 0 ? messages.map((m, i)=>{
                 return <ChatBoxMessage key={m.idMessage} msgData={m} total={messages.length} num={i}/>
             }) :<div className='emptyChat'>No chat history. Start a conersation!</div>}
-            { isTyping ? <div className='typingIconInChat'>{typingIcon}</div> : null} 
+            {   isTyping 
+                && (userInChat.idUser === idUserTyping) 
+                && (idUserRecipient == userData.idUser ) ? 
+
+                <div className='typingIconInChat'>{typingIcon}</div> 
+
+                : null
+            } 
         </div>
     );
 }

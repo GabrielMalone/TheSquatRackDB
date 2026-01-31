@@ -7,6 +7,16 @@
     border: 1px solid var(--color-border-dark);
 }
 
+.avatarOnline {
+    border-radius: 5px;
+    box-shadow: var(--color-avatar-online);
+    border: 1px solid var(--color-online-indicator);
+}
+
+.avatarOffline {
+    opacity: var(--dimmed);
+}
+
 .avatar img {
     width: 100%;
     height: 100%;
@@ -15,8 +25,9 @@
     opacity: var(--filled);
 }
 
-.avatar img:hover{
-    opacity: var(--dimmed);
+
+.avatarMe:hover {
+    opacity: var(--filled);
 }
 
 .defaultAvatar {

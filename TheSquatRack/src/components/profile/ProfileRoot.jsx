@@ -7,9 +7,6 @@ import { useContext } from 'react';
 export default function ProfileRoot() {
     
     const { userData } = useContext(AuthContext);
-
-    console.log("USER",userData.allUserData);
-
     const firstName = userData.allUserData.userFirst ?? 'First Name';
     const lastName = userData.allUserData.userLast ?? 'Last Name';
 

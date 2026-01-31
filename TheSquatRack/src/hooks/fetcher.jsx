@@ -1,7 +1,5 @@
 const BASE_URL = import.meta.env.VITE_API_BASE;
 
-console.log("BASE URL", BASE_URL);
-
 export function get(endpoint){
     return fetch(BASE_URL + endpoint)
     .then(r=>r.json());
