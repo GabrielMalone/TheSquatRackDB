@@ -11,7 +11,7 @@ const BASE_URL = import.meta.env.VITE_API_BASE;
 
 export default function UserRow({user}){
 
-    const msgIcon = <Icon icon="bytesize:message"/> 
+    const msgIcon = <Icon icon="ph:chat-thin"/> 
     // const newWorkoutIcon = <Icon icon='stash:chart-trend-up' />
     // -----------------------------------------------------------------------------------
     const { SetChatIsSelected, setUserInChat } = useContext(LayoutContext);

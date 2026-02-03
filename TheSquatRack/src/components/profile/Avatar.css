@@ -10,11 +10,11 @@
 .avatarOnline {
     border-radius: 5px;
     box-shadow: var(--color-avatar-online);
-    border: 1px solid var(--color-online-indicator);
 }
 
 .avatarOffline {
     opacity: var(--dimmed);
+    filter: grayscale(100%);
 }
 
 .avatar img {
@@ -26,8 +26,11 @@
 }
 
 
-.avatarMe:hover {
+.avatarMe {
     opacity: var(--filled);
+}
+.avatarMe:hover {
+    opacity: var(--dimmed);
 }
 
 .defaultAvatar {

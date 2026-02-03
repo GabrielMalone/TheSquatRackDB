@@ -44,7 +44,7 @@
 }
 
 .searchResultItem:hover {
-    background-color: var(--color-hover);
+    opacity: var(--dimmed);
 }
 
 .searchResultName {

@@ -9,8 +9,8 @@ import { AuthContext } from '../login/authContext.jsx';
 
 export default function ThemeIcon() {
 
-    const lightIcon = "iconamoon:mode-light-light";
-    const darkIcon = "iconamoon:mode-dark-light"
+    const lightIcon = "material-symbols-light:light-mode-outline";
+    const darkIcon = "material-symbols-light:dark-mode-outline"
 
     // -------------------------------------------------------------------------
     const queryClient = useQueryClient();

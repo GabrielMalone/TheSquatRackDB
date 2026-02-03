@@ -26,7 +26,7 @@
   --medium-font-size: calc(48px * var(--ui-scale));
   --big-font-size: calc(64px * var(--ui-scale));
 
-  --color-online-indicator:rgba(76, 175, 80, 0.64);
+  --color-online-indicator:rgba(76, 175, 80, 0.94);
   --color-offline-indicator: #c95a8a;
   
   --color-border-dark: #212121;
@@ -42,10 +42,10 @@
   --color-today: #0f0f0f;
   --color-today-date: #ffffff;
   --color-rpe: #A6A09B;
-  --color-chat-bg:#141414;
+  --color-chat-bg:#0c0a09;
   --color-avatar-online: rgba(0, 0, 200, 0.55);
 
-  --color-avatar-online: 0px 0px 45px 0px rgba(76, 175, 80, 0.0);
+  --color-avatar-online: 0px 0px 45px 0px rgba(76, 107, 175, 0.2);
 
   --color-squat-indicator: #4f74c9;
   --color-bench-indicator: #7fbf3f;

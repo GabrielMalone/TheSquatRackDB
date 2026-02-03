@@ -1,16 +1,16 @@
 .userRow{
     all: unset;
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    width: 220px;
+    grid-template-columns: repeat(4, 1fr);
     cursor: pointer;
     border-radius: 10px;
     opacity: var(--filled);
-    gap: var(--space-4);
+    gap: var(--space-5);
 }
 
 .userRow:hover {
-    background-color: var(--color-bg-overlay);
-    opacity: var(--dimmed);
+    background-color: var(--color-hover);
 }
 
 .userProfilePicInList {
@@ -49,9 +49,10 @@
 
 .msgWaiting {
     display: flex;
-    grid-column: 6;
+    grid-column: 4;
     justify-content: center;
     color: var(--color-text-muted);
+    padding-right: var(--space-3);
 }
 
 .msgWaiting svg {

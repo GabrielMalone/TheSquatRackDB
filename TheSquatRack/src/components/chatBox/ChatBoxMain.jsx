@@ -19,7 +19,7 @@ export default function ChatBoxMain( { idConversation } ){
     const [isTyping, setIsTyping] = useState(false);
     const [idUserRecipient, setIdUserRecipient] = useState(null);
     const [idUserTyping, setIdUserTyping] = useState(null);
-    const typingIcon = <Icon className='typingIconInChat' icon="eos-icons:typing"/>
+    const typingIcon = <Icon className='typingIconInChat' icon="lets-icons:chat-alt-3-duotone"/>
     // ---------------------------------------------------------------------------
     const { data: messages } = useSuspenseQuery({
         queryKey: ["conversationMessages", idConversation],

@@ -7,8 +7,7 @@ import os
 app = Flask(__name__)
 CORS(app)
 #------------------------------------------------------------
-socketio = SocketIO(app, cors_allowed_origins="*")
-
+socketio = SocketIO(app, cors_allowed_origins="*", async_mode="threading")
 @socketio.on("connect")
 def handle_connect():
     print("client_connected")
@@ -21,6 +20,7 @@ def handle_disconnect():
 @socketio.on("register_user")
 def register_user(data):
     idUser = data.get("idUser")
+    print(f"welcome user id{idUser}")
     join_room(f"user:{idUser}")
 #------------------------------------------------------------
 @socketio.on("join_conversation")
@@ -30,12 +30,14 @@ def join_conversation(data):
 #------------------------------------------------------------
 @socketio.on("typingInChat")
 def handle_typing(data):
+    idUserTyping = data["idUserTyping"]
     idUserRecipient = data["idUserRecipient"]
     isTyping = data["isTyping"]
     emit(
         "user_typing_in_chat",
         {
             "idUserRecipient": idUserRecipient,
+            "idUserTyping" : idUserTyping,
             "isTyping": isTyping,
         },
         room=f"user:{idUserRecipient}",
@@ -233,8 +235,6 @@ def login():
     # make sure a folder exists for this user
     user_dir = f"uploads/users/{idUser}"
     os.makedirs(user_dir, exist_ok=True)
-    
-
     return jsonify(res)
 #------------------------------------------------------------
 @app.route("/getProfilePic", methods=["GET"])
@@ -310,10 +310,7 @@ def getLastMsgInConversation():
     idUser = request.args.get("idUser")
     res = queries.getLastMsgInConversation(idConversation, idUser)
     return jsonify(res)
-
-
-
 #------------------------------------------------------------
-
 if __name__ == "__main__":
+    print("ASYNC MODE:", socketio.async_mode)
     socketio.run(app, host="0.0.0.0", port=5002, debug=True, use_reloader=True)
