@@ -6,12 +6,13 @@ import { minimizer, dockIcon } from '../../../config/UI';
 
 export default function ChatBoxWindowManager(){
 
-    const { SetChatIsSelected, setChatIsDocked } = useContext(LayoutContext);
+    const { SetChatIsSelected, setChatIsDocked, setAddToChatIsSelected } = useContext(LayoutContext);
 
     return (
         <div className='exerciseSelectionWindowManager'>
             <button 
                 className='addToChat'
+                onClick={()=>setAddToChatIsSelected(a=>!a)}
             >
                 <Icon icon="lets-icons:user-add-light"/>
             </button>

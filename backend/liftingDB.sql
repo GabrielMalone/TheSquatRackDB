@@ -314,6 +314,9 @@ VALUES ('test4@example.com', 'yvette', 'pass');
 INSERT INTO User (Email, userName, passwordHash)
 VALUES ('test5@example.com', 'moose', 'pass');
 
+INSERT INTO User (Email, userName, passwordHash)
+VALUES ('test6@example.com', 'shawzito', 'pass');
+
 INSERT INTO Workout (Date, idUser, workoutTitle)
 VALUES ('2026-01-08 18:00:00', 1, 'Push Day');
 

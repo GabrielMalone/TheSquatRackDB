@@ -13,14 +13,6 @@ import { post } from '../../hooks/fetcher.jsx';
 
 export default function ChatBox(){
 
-    // TO DO --
-    // write a query that gets all the users in this current conversation , we already get the conversation id
-    // so can do it right after that
-    //
-    // map the users in the header instead of hardcoding them
-    //
-
-
     // --------------------------------------------------------------------------------------------
     const { userInChat, chatIsDocked } = useContext(LayoutContext); // get id of user to chat with from sidebar click
     const { userData } = useContext(AuthContext);  // currently logged in user
@@ -33,6 +25,7 @@ export default function ChatBox(){
         queryFn: () => 
             get(`getConversationId?idUser1=${userData.idUser}&idUser2=${u.idUser}`),
     });
+
     // --------------------------------------------------------------------------------------------
     const createConversation = useMutation({
         mutationFn: ()=>{
@@ -45,21 +38,30 @@ export default function ChatBox(){
             queryClient.invalidateQueries({
                 queryKey: ["conversationId", userData.idUser, u.idUser],
             });
+            queryClient.invalidateQueries({
+                queryKey: ["usersInConvo", conversation.idConversation],
+            });
         }
     });
+
+    const { data: usersInConvo } = useSuspenseQuery({
+        queryKey: ["usersInConvo", conversation?.idConversation],
+        queryFn: () => 
+            get(`getUsersInConversation?idConversation=${conversation?.idConversation}`),
+    });
+    
     // --------------------------------------------------------------------------------------------
     useEffect(() => {
         if (conversation === null) {
             createConversation.mutate();
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [conversation]);
-
+    }, [conversation, usersInConvo]);
     // --------------------------------------------------------------------------------------------
     return (
         <div className = {chatIsDocked ? 'chatBoxRoot docked' : 'chatBoxRoot'}>
             <ChatBoxWindowManager />
-            <ChatBoxHeader u={u} />
+            <ChatBoxHeader u={u} usersInConvo={usersInConvo}/>
             <ChatBoxMain idConversation={conversation?.idConversation} />
             <ChatBoxInput idConversation={conversation?.idConversation} />
         </div>

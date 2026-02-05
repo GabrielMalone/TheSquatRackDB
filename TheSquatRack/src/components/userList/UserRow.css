@@ -1,5 +1,6 @@
 .userRow{
     all: unset;
+    position:relative;
     display: grid;
     width: 220px;
     grid-template-columns: repeat(4, 1fr);
@@ -69,5 +70,21 @@
     width: var(--icon-size-small);
 }
 .newWorkoutPosted svg:hover {
+    display: flex;
+}
 
+.addToGroupChat {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    left: 5px;
+    top:  6px;
+    color: white;
+    background-color: rgb(255, 255,255, 0.5);
+    border-radius: 10px;
+}
+
+.addToGroupChat svg {
+    width: var(--icon-size-medium);
+    border-radius: 10px;
 }

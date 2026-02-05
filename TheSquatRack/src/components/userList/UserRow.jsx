@@ -11,10 +11,11 @@ const BASE_URL = import.meta.env.VITE_API_BASE;
 
 export default function UserRow({user}){
 
-    const msgIcon = <Icon icon="ph:chat-thin"/> 
+    const msgIcon = <Icon icon="ph:chat-thin"/> ;
+    const addToChatIcon = <Icon icon="lets-icons:user-add-light"/> ;
     // const newWorkoutIcon = <Icon icon='stash:chart-trend-up' />
     // -----------------------------------------------------------------------------------
-    const { SetChatIsSelected, setUserInChat } = useContext(LayoutContext);
+    const { SetChatIsSelected, setUserInChat, addToChatIsSelected } = useContext(LayoutContext);
     const { userData } = useContext(AuthContext);
     const userOnline = user.isLoggedIn ? "userProfilePicInList online" : "userProfilePicInList";
     const [ isTyping, setIsTyping ] = useState(false);
@@ -75,6 +76,9 @@ export default function UserRow({user}){
             </div>
             <div className='newWorkoutPosted'>
                 {/* {newWorkoutIcon} */}
+            </div>
+            <div className='addToGroupChat'>
+                {addToChatIsSelected ? addToChatIcon : null}
             </div>
             <div className="msgWaiting">
                 {hasUnread && !isTyping ? msgIcon : null}

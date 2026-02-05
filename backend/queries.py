@@ -13,7 +13,41 @@ def connect():
         database=os.getenv('DB_NAME'),
         host=os.getenv('DB_HOST', 'localhost') )
 #------------------------------------------------------------------------------
+def getUsersInConversation(idConversation):
+    cnx = connect()
+    if (cnx.is_connected()):
+        try:
+            cursor = cnx.cursor(buffered=True, dictionary=True)
+            cursor.execute(
+            '''
+            SELECT 
+                *
+            FROM 
+                User u
+            JOIN 
+                ConversationParticipant c
+            ON
+                u.Iduser = c.idUser
+            WHERE 
+                c.idConversation = %s
 
+            ''', 
+                (idConversation,) 
+            )
+            users = cursor.fetchall()
+            return users
+        except mysql.connector.Error as err:
+            print("MySQL Error:", err)     # This will show you the exact error
+            print("Error code:", err.errno)                # Numeric error code
+            cnx.rollback() 
+            return {
+                "success" : False,
+                "message" : f' server error: {err.errno}' 
+            }  
+        finally:
+            if cursor:
+                cursor.close()
+            cnx.close()        
 #------------------------------------------------------------------------------
 def getLastMsgInConversation(idConversation, idUser):
     cnx = connect()

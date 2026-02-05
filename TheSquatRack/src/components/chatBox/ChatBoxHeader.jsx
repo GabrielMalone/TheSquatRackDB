@@ -5,7 +5,7 @@ import { useContext } from 'react';
 
 const BASE_URL = import.meta.env.VITE_API_BASE;
 
-export default function ChatBoxHeader({u}){
+export default function ChatBoxHeader({u, usersInConvo}){
 
     const { userData } = useContext(AuthContext);
 
@@ -17,37 +17,31 @@ export default function ChatBoxHeader({u}){
         ? "userNameChatBoxHeader userNameChatBoxHeaderOnline" 
         : "userNameChatBoxHeader";
 
-    // this will need to be changed into a for loop 
-
-    return (
+    return(
         <div className='chatBoxHeader'>
-
-            <div 
-                className={onlineIndicator}
-                style={{gridColumn : 5}}
-            >
-                <Avatar key={u.idUser} src={`${BASE_URL}/getProfilePic?idUser=${u.idUser}`} size={80} online={u.isLoggedIn}/>
-            </div>
-            <div 
-                className={onlineIndicatorName}
-                style={{gridColumn : 5}}
-            >
-                {u.userName}
-            </div>
-
-            <div 
-                className={onlineIndicator}
-                style={{gridColumn : 6}}
-            >
-                <Avatar key={userData.idUser} src={`${BASE_URL}/getProfilePic?idUser=${userData.idUser}`} size={80} online={true}/>
-            </div>
-            <div 
-                className={onlineIndicatorName}
-                style={{gridColumn : 6}}
-            >
-                {userData.userName}
-            </div>
-
+            {usersInConvo.map((u)=>{
+                return(
+                    <div 
+                        className={onlineIndicator}
+                        key={u.idUser}
+                    >
+                        <Avatar 
+                            key={u.idUser} 
+                            src={`${BASE_URL}/getProfilePic?idUser=${u.idUser}`} 
+                            size={80} 
+                            online={u.isLoggedIn}
+                        />
+                        <div 
+                            className={onlineIndicatorName}
+                            style={u.idUser == userData.idUser ? 
+                                {"color" : "var(--color-text-muted)"} : 
+                                {"color" : "var(--color-text-muted)"}}
+                         >
+                            {u.userName}
+                        </div>
+                    </div>
+                );
+            })}
         </div>
-    );
+    );    
 }

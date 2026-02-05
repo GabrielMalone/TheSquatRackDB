@@ -45,7 +45,7 @@
   --color-chat-bg:#0c0a09;
   --color-shadow: rgb(0, 0, 0, 0.2);
   --color-avatar-online: 0px 0px 25px 1px rgba(76,175,80, 0.1);
-
+  --color-avatar-addToChat:rgba(0, 0, 0, 0.7);
   --color-squat-indicator: #4f74c9;
   --color-bench-indicator: #7fbf3f;
   --color-deadl-indicator: #c95a8a;
