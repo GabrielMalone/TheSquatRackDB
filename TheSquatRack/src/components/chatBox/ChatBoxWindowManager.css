@@ -22,3 +22,41 @@
 .minimize svg:hover {
     opacity: var(--dimmed);
 }
+
+.dockChatButton {
+    all: unset;
+    display: flex;
+    padding-top: var(--space-2);
+    padding-right: var(--space-2);
+    cursor: pointer;
+}
+
+.dockChatButton svg {
+    width: var(--icon-size-small);
+    height: 100%;
+    color: var(--color-button-muted);
+}
+
+.dockChatButton svg:hover {
+    opacity: var(--dimmed);
+}
+
+.addToChat {
+    all: unset;
+    display: flex;
+    flex: 2;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    justify-content: left;
+    padding-top: var(--space-2);
+    padding-left: var(--space-5);
+}
+
+.addToChat:hover {
+    opacity: var(--dimmed);
+}
+
+.addToChat svg {
+    height: 100%;
+    width: var(--icon-size-small);
+}

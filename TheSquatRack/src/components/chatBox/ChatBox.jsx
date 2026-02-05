@@ -12,10 +12,19 @@ import { get } from '../../hooks/fetcher.jsx';
 import { post } from '../../hooks/fetcher.jsx';
 
 export default function ChatBox(){
+
+    // TO DO --
+    // write a query that gets all the users in this current conversation , we already get the conversation id
+    // so can do it right after that
+    //
+    // map the users in the header instead of hardcoding them
+    //
+
+
     // --------------------------------------------------------------------------------------------
-    const { userInChat }    = useContext(LayoutContext); // get id of user to chat with from sidebar click
-    const { userData }      = useContext(AuthContext);  // currently logged in user
-    const { users }         = useContext(UsersOnlineContext); // get all the users' data that's dynamically updated via websocket
+    const { userInChat, chatIsDocked } = useContext(LayoutContext); // get id of user to chat with from sidebar click
+    const { userData } = useContext(AuthContext);  // currently logged in user
+    const { users } = useContext(UsersOnlineContext); // get all the users' data that's dynamically updated via websocket
     const u = users.filter(user=>user.idUser === userInChat.idUser)[0]; // match the above to the current user to chat with
     const queryClient = useQueryClient();
     // --------------------------------------------------------------------------------------------
@@ -48,7 +57,7 @@ export default function ChatBox(){
 
     // --------------------------------------------------------------------------------------------
     return (
-        <div className='chatBoxRoot'>
+        <div className = {chatIsDocked ? 'chatBoxRoot docked' : 'chatBoxRoot'}>
             <ChatBoxWindowManager />
             <ChatBoxHeader u={u} />
             <ChatBoxMain idConversation={conversation?.idConversation} />

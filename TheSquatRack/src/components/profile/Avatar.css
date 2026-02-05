@@ -28,6 +28,7 @@
 
 .avatarMe {
     opacity: var(--filled);
+    box-shadow: none;
 }
 .avatarMe:hover {
     opacity: var(--dimmed);

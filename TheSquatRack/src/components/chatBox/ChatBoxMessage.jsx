@@ -10,27 +10,32 @@ export default function ChatBoxMessage( {msgData, total, num} ){
     const msg = msgData.message;
     const idSender = msgData.idSender;
     const { userData } = useContext(AuthContext);
-    // const { userInChat } = useContext(LayoutContext);
+
+    const { userInChat } = useContext(LayoutContext);
+    
     const fromMe = (userData.idUser == idSender);
     const lastMsg = (total == num + 1);
-    // const srcOther = `${BASE_URL}getProfilePic?idUser=${userInChat.idUser}`;
-    // const srcMe = `${BASE_URL}getProfilePic?idUser=${userData.idUser}`;
 
-    const otherClassName = lastMsg ? 'otherChatter chatText lastMsg' : 'otherChatter chatText';
-    const selfClassName = lastMsg ? 'selfChatter chatText lastMsg' : 'selfChatter chatText';
-    const msgProfilePic = fromMe ? 'chatMsgProfilePic' : 'chatMsgProfilePic otherProfilePic';
+    const srcOther = `${BASE_URL}getProfilePic?idUser=${userInChat.idUser}`;
+    const srcMe = `${BASE_URL}getProfilePic?idUser=${userData.idUser}`;
+
+    const otherClassName  = lastMsg  ? 'otherChatter chatText lastMsg'  : 'otherChatter chatText';
+    const selfClassName   = lastMsg  ? 'selfChatter chatText lastMsg'   : 'selfChatter chatText';
+
+    // this will have to be made from a map and via all the users in the converastion
+    // for group chat implementation
 
     return (
         <div className='chatBoxMessageRoot'>
-            <div className={msgProfilePic}>{
-            !fromMe ?
-                    null
-                :   null
-            }
+            <div className={otherClassName}>
+                {fromMe ? null :  <Avatar src={srcOther} online={true}/>  }
+                {fromMe ? null :  msg  } 
             </div>
-            <div className={otherClassName}>{fromMe ? null : msg  }</div>
             <div className='chatTime otherChatter'>{fromMe ? null : msgData.msgDate}</div>
-            <div className={selfClassName}>{ fromMe ?  msg : null }</div>
+            <div className={selfClassName}>
+                { fromMe ?  msg : null }
+                { fromMe ? <Avatar src={srcMe} online={true}/> : null  }
+            </div>
             <div className='chatTime selfChatter'>{ fromMe ? msgData.msgDate : null}</div>
         </div>
     );

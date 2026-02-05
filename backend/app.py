@@ -3,6 +3,7 @@ from flask_cors import CORS, cross_origin # pyright: ignore[reportMissingModuleS
 import queries
 from flask_socketio import SocketIO, emit, join_room # type: ignore
 import os
+import threading
 #------------------------------------------------------------
 app = Flask(__name__)
 CORS(app)
@@ -10,7 +11,7 @@ CORS(app)
 socketio = SocketIO(app, cors_allowed_origins="*", async_mode="threading")
 @socketio.on("connect")
 def handle_connect():
-    print("client_connected")
+    print("client_connected on thread: ", threading.get_ident())
 #------------------------------------------------------------
 @socketio.on("disconnect")
 def handle_disconnect():
@@ -312,5 +313,5 @@ def getLastMsgInConversation():
     return jsonify(res)
 #------------------------------------------------------------
 if __name__ == "__main__":
-    print("ASYNC MODE:", socketio.async_mode)
+    print("ASYNC MODE:", socketio.async_mode) # check to see if threading
     socketio.run(app, host="0.0.0.0", port=5002, debug=True, use_reloader=True)
