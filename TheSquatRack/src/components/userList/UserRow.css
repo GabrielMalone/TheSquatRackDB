@@ -4,6 +4,7 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     cursor: pointer;
+    width: 300px;
     border-radius: 10px;
     opacity: var(--filled);
     gap: var(--space-5);
