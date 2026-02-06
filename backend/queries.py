@@ -13,6 +13,43 @@ def connect():
         database=os.getenv('DB_NAME'),
         host=os.getenv('DB_HOST', 'localhost') )
 #------------------------------------------------------------------------------
+def getGroupChatIds(idUser):
+    cnx = connect()
+    if (cnx.is_connected()):
+        try:
+            cursor = cnx.cursor(buffered=True, dictionary=True)
+            cursor.execute(
+            '''
+            SELECT 
+                *
+            FROM 
+                ConversationParticipant cp
+            JOIN
+                Conversation c
+            ON
+                cp.idConversation = c.idConversation
+            WHERE
+                c.type = 'group'
+            AND 
+                cp.idUser = %s
+            ''', 
+                (idUser,) 
+            )
+            groupChatIds = cursor.fetchall()
+            return groupChatIds
+        except mysql.connector.Error as err:
+            print("MySQL Error:", err)     # This will show you the exact error
+            print("Error code:", err.errno)                # Numeric error code
+            cnx.rollback() 
+            return {
+                "success" : False,
+                "message" : f' server error: {err.errno}' 
+            }  
+        finally:
+            if cursor:
+                cursor.close()
+            cnx.close()  
+#------------------------------------------------------------------------------
 def getConvoTitle(idConversation):
     cnx = connect()
     if (cnx.is_connected()):

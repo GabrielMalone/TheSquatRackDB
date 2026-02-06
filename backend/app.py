@@ -342,7 +342,12 @@ def addUserToExistingGroup():
     res = queries.addUserToExistingGroup(idConversation, idUser)
     return jsonify(res)
 #------------------------------------------------------------
-
+@app.route("/getGroupChatIds", methods=["GET"])
+def getGroupChatIds():
+    idUser = request.args.get("idUser")
+    res = queries.getGroupChatIds(idUser)
+    return jsonify(res)
+#------------------------------------------------------------
 if __name__ == "__main__":
     print("ASYNC MODE:", socketio.async_mode) # check to see if threading
     socketio.run(app, host="0.0.0.0", port=5002, debug=True, use_reloader=True)

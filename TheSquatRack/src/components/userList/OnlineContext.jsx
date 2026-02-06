@@ -4,12 +4,14 @@ import { useSuspenseQuery, useQueryClient } from '@tanstack/react-query';
 import { socket } from '../../socket.js';
 import { useContext, useEffect } from 'react';
 import { AuthContext } from '../login/authContext.jsx';
+import { LayoutContext } from '../../layoutContext.js';
 
 
 export function OnlineContextProvider({ children }) {
     
     // ---------------------------------------------------------------------------
     const { userData } = useContext(AuthContext);
+
     const queryClient = useQueryClient();
     // ---------------------------------------------------------------------------
     const {data : users } = useSuspenseQuery({

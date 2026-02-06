@@ -1,0 +1,16 @@
+.gcListRoot {
+
+    display: grid;
+    justify-content: center;
+    gap: var(--space-4);
+
+}
+
+.gcThreshold {
+
+    display: flex;
+    justify-content: center;
+    margin-top: var(--space-5);
+    font-size: var(--24px);
+
+}
