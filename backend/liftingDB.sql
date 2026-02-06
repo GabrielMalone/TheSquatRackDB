@@ -201,13 +201,25 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `thesquatrack`.`Conversation`;
 
-CREATE TABLE `thesquatrack`.`Conversation` (
+CREATE TABLE `Conversation` (
   `idConversation` INT NOT NULL AUTO_INCREMENT,
   `createdAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`idConversation`)
+
+  `type` ENUM('dm', 'group') NOT NULL,
+  `title` VARCHAR(255) NULL,
+  `createdBy` INT NOT NULL,
+  `isLocked` TINYINT NOT NULL DEFAULT 0,
+
+  PRIMARY KEY (`idConversation`),
+
+  INDEX `fk_conversation_creator_idx` (`createdBy`),
+
+  CONSTRAINT `fk_conversation_creator`
+    FOREIGN KEY (`createdBy`)
+    REFERENCES `User` (`idUser`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION
 ) ENGINE = InnoDB;
-
-
 -- -----------------------------------------------------
 -- Table `thesquatrack`.ConversationParticipant
 -- -----------------------------------------------------

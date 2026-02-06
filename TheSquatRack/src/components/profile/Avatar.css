@@ -4,7 +4,6 @@
     overflow: hidden;
     align-self: center;
     justify-content: center;
-    border: 1px solid var(--color-border-dark);
 }
 
 .avatarOnline {

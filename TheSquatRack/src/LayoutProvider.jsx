@@ -10,6 +10,8 @@ import CalendarRoot from "./components/calendar/CalendarRoot";
 import WorkoutRoot from "./components/workout/WorkoutRoot";
 import PrHistoryRoot from "./components/prHistory/PrHistoryRoot";
 import ChatBox from "./components/chatBox/ChatBox";
+import GroupChatBox from "./components/chatBox/GoupChatBox";
+
 const BASE_URL = import.meta.env.VITE_API_BASE;
 
 export default function LayoutProvider(){
@@ -23,14 +25,20 @@ export default function LayoutProvider(){
     const [calendarIsSelected, setCalendarIsSelected] = useState(true);
     const [addExerciseRoute, setAddExerciseRoute] = useState("");
     const [chatIsSelected, SetChatIsSelected] = useState(false);
+    const [groupChatIsSet, setGroupChatIsSet] = useState(false);
     const [userInChat, setUserInChat] = useState(null);
     const [chatIsDocked, setChatIsDocked] = useState(false);
-    const [addToChatIsSelected, setAddToChatIsSelected] = useState(false);
+    const [createGroupChatIsSelected, setCreateGroupChatIsSelected] = useState(false);
+    const [addToGroupChatIsSelected, setAddToGroupChatIsSelected] = useState(false);
+    const [conversationId, setConversationId] = useState(null);
+    const [groupConversationId, setGroupConversationId] = useState(null);
+    const [groupChatIsDocked, setGroupChatIsDocked] = useState(false);
 
     const profilePicUrl = `${BASE_URL}/getProfilePic?idUser=${userData.idUser}`;
 
 
     const layout = {
+
         workoutIsPresent, 
         setWorkoutIsPresent,
         chooseIsSelected,
@@ -45,13 +53,23 @@ export default function LayoutProvider(){
         setAddExerciseRoute,
         chatIsSelected,
         SetChatIsSelected,
+        groupChatIsSet,
+        setGroupChatIsSet,
         userInChat,
         setUserInChat,
         profilePicUrl,
         chatIsDocked,
         setChatIsDocked,
-        addToChatIsSelected,
-        setAddToChatIsSelected
+        groupChatIsDocked,
+        setGroupChatIsDocked,
+        createGroupChatIsSelected,
+        setCreateGroupChatIsSelected, 
+        conversationId,
+        setConversationId,
+        groupConversationId,
+        setGroupConversationId,
+        addToGroupChatIsSelected,
+        setAddToGroupChatIsSelected,
     }
 
     return(
@@ -62,6 +80,7 @@ export default function LayoutProvider(){
             >
                 
             { chatIsSelected      ? <ChatBox />               : null }
+            { groupChatIsSet      ? <GroupChatBox />          : null }
             { profileIsSelected   ? <ProfileRoot />           : null }
             { chooseIsSelected    ? <ExerciseSelectionRoot /> : null }
             { calendarIsSelected  ? <CalendarRoot />          : null }

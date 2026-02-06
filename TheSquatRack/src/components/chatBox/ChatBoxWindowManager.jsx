@@ -4,27 +4,58 @@ import { LayoutContext } from '../../layoutContext';
 import { useContext } from 'react';
 import { minimizer, dockIcon } from '../../../config/UI';
 
-export default function ChatBoxWindowManager(){
+export default function ChatBoxWindowManager({isGroupChat}){
 
-    const { SetChatIsSelected, setChatIsDocked, setAddToChatIsSelected } = useContext(LayoutContext);
+    const { 
+        
+            SetChatIsSelected, 
+            setChatIsDocked, 
+            setCreateGroupChatIsSelected, 
+            setAddToGroupChatIsSelected,
+            setGroupChatIsSet,
+            setGroupChatIsDocked
 
+         } = useContext(LayoutContext);
+         
     return (
         <div className='exerciseSelectionWindowManager'>
             <button 
                 className='addToChat'
-                onClick={()=>setAddToChatIsSelected(a=>!a)}
+                onClick={()=>{
+                    if (isGroupChat){
+                        console.log("ever here?");
+                        setAddToGroupChatIsSelected(a=>!a);
+                    } else {
+                        console.log("setCreateGroupChatIsSelected?");
+                        setCreateGroupChatIsSelected(a=>!a);
+                    }
+                }}
             >
                 <Icon icon="lets-icons:user-add-light"/>
             </button>
             <button 
                 className='minimize'
-                onClick={()=>SetChatIsSelected(c=>!c)}
+                onClick={()=>{
+                    if (isGroupChat){
+                        setGroupChatIsSet(g=>!g);
+                    } else {
+                        SetChatIsSelected(c=>!c);
+                        setCreateGroupChatIsSelected(false);
+                    }
+                }}
             >
                 <Icon icon={minimizer} />
             </button>
             <button 
                 className='dockChatButton'
-                onClick={()=>setChatIsDocked(d=>!d)}
+                onClick={()=>{
+                    if (isGroupChat){
+                        setGroupChatIsDocked(d=>!d);
+                    } else {
+                        setChatIsDocked(d=>!d);
+                    }
+        
+                }}
             >
                 <Icon icon={dockIcon} />
             </button>

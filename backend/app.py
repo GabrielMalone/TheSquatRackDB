@@ -318,6 +318,31 @@ def getUsersInConversation():
     res = queries.getUsersInConversation(idConversation)
     return jsonify(res)
 #------------------------------------------------------------
+@app.route("/createGroupConversationFromDM", methods=["POST"])
+def createGroupConversationFromDM():
+    data = request.get_json()
+    idCreator = data["idCreator"]
+    idUserB = data["idUserB"]
+    idUserNew = data["idUserNew"]
+    participants = [idCreator, idUserB, idUserNew]
+    res = queries.createGroupConversation(participants, idCreator)
+    return jsonify(res)
+#------------------------------------------------------------
+@app.route("/getConvoTitle", methods=["GET"])
+def getConvoTitle():
+    idConversation = request.args.get("idConversation")
+    res = queries.getConvoTitle(idConversation)
+    return jsonify(res)
+#------------------------------------------------------------
+@app.route("/addUserToExistingGroup", methods=["POST"])
+def addUserToExistingGroup():
+    data = request.get_json()
+    idConversation = data["idConversation"]
+    idUser = data["idUser"]
+    res = queries.addUserToExistingGroup(idConversation, idUser)
+    return jsonify(res)
+#------------------------------------------------------------
+
 if __name__ == "__main__":
     print("ASYNC MODE:", socketio.async_mode) # check to see if threading
     socketio.run(app, host="0.0.0.0", port=5002, debug=True, use_reloader=True)

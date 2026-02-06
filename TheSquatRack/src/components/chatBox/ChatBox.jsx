@@ -14,7 +14,13 @@ import { post } from '../../hooks/fetcher.jsx';
 export default function ChatBox(){
 
     // --------------------------------------------------------------------------------------------
-    const { userInChat, chatIsDocked } = useContext(LayoutContext); // get id of user to chat with from sidebar click
+    const { 
+
+            userInChat, 
+            chatIsDocked, 
+            setConversationId, 
+
+        } = useContext(LayoutContext); // get id of user to chat with from sidebar click
     const { userData } = useContext(AuthContext);  // currently logged in user
     const { users } = useContext(UsersOnlineContext); // get all the users' data that's dynamically updated via websocket
     const u = users.filter(user=>user.idUser === userInChat.idUser)[0]; // match the above to the current user to chat with
@@ -25,7 +31,6 @@ export default function ChatBox(){
         queryFn: () => 
             get(`getConversationId?idUser1=${userData.idUser}&idUser2=${u.idUser}`),
     });
-
     // --------------------------------------------------------------------------------------------
     const createConversation = useMutation({
         mutationFn: ()=>{
@@ -55,13 +60,14 @@ export default function ChatBox(){
         if (conversation === null) {
             createConversation.mutate();
         }
+        setConversationId(conversation?.idConversation);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [conversation, usersInConvo]);
     // --------------------------------------------------------------------------------------------
     return (
         <div className = {chatIsDocked ? 'chatBoxRoot docked' : 'chatBoxRoot'}>
-            <ChatBoxWindowManager />
-            <ChatBoxHeader u={u} usersInConvo={usersInConvo}/>
+            <ChatBoxWindowManager isGroupChat={false} />
+            <ChatBoxHeader isGroupChat={false} u={u} usersInConvo={usersInConvo}/>
             <ChatBoxMain idConversation={conversation?.idConversation} />
             <ChatBoxInput idConversation={conversation?.idConversation} />
         </div>

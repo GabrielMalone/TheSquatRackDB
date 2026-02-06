@@ -4,6 +4,7 @@
     gap: var(--space-2);
     height: fit-content;
     padding: var(--space-4);
+    margin: var(--space-5);
 }
 
 .profilePicChatBoxHeader {
@@ -33,6 +34,10 @@
 }
 
 
-.userNameChatBoxHeaderOnline {
+.chatTitle{
+    display: flex;
+    justify-content: center;
     color: var(--color-text-muted);
+    font-size: var(--small-font-size-2);
+    margin: var(--space-2);
 }

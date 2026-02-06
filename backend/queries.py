@@ -13,6 +13,36 @@ def connect():
         database=os.getenv('DB_NAME'),
         host=os.getenv('DB_HOST', 'localhost') )
 #------------------------------------------------------------------------------
+def getConvoTitle(idConversation):
+    cnx = connect()
+    if (cnx.is_connected()):
+        try:
+            cursor = cnx.cursor(buffered=True, dictionary=True)
+            cursor.execute(
+            '''
+            SELECT 
+                c.Title from Conversation c
+            WHERE 
+                c.idConversation = %s
+
+            ''', 
+                (idConversation,) 
+            )
+            users = cursor.fetchone()
+            return users
+        except mysql.connector.Error as err:
+            print("MySQL Error:", err)     # This will show you the exact error
+            print("Error code:", err.errno)                # Numeric error code
+            cnx.rollback() 
+            return {
+                "success" : False,
+                "message" : f' server error: {err.errno}' 
+            }  
+        finally:
+            if cursor:
+                cursor.close()
+            cnx.close()  
+#------------------------------------------------------------------------------
 def getUsersInConversation(idConversation):
     cnx = connect()
     if (cnx.is_connected()):
@@ -199,6 +229,82 @@ def getConversationMessages(idConversation):
                 cursor.close()
             cnx.close()       
 #------------------------------------------------------------------------------
+def createGroupConversation(participants, createdBy, title="New Group Chat"):
+    cnx = connect()
+    try:
+        cursor = cnx.cursor(dictionary=True)
+
+        n = len(participants)
+        placeholders = ",".join(["%s"] * n)
+
+        # 1. Look for existing exact group
+        cursor.execute(
+            f"""
+            SELECT cp.idConversation
+            FROM ConversationParticipant cp
+            JOIN Conversation c
+              ON c.idConversation = cp.idConversation
+            WHERE c.type = 'group'
+              AND cp.idUser IN ({placeholders})
+            GROUP BY cp.idConversation
+            HAVING
+              COUNT(DISTINCT cp.idUser) = %s
+              AND (
+                SELECT COUNT(*)
+                FROM ConversationParticipant cp2
+                WHERE cp2.idConversation = cp.idConversation
+              ) = %s
+            LIMIT 1
+            """,
+            participants + [n, n]
+        )
+
+        row = cursor.fetchone()
+        if row:
+            return row["idConversation"]
+
+        # 2. Create new group (NO start_transaction needed)
+        cursor.execute(
+            """
+            INSERT INTO Conversation (type, title, createdBy)
+            VALUES ('group', %s, %s)
+            """,
+            (title, createdBy)
+        )
+        groupId = cursor.lastrowid
+
+        cursor.executemany(
+            """
+            INSERT INTO ConversationParticipant (idConversation, idUser)
+            VALUES (%s, %s)
+            """,
+            [(groupId, uid) for uid in set(participants)]
+        )
+
+        cnx.commit()
+        return groupId
+
+    finally:
+        cursor.close()
+        cnx.close()
+#------------------------------------------------------------------------------
+def addUserToExistingGroup(groupConversationId, newUserId):
+    cnx = connect()
+    try:
+        cursor = cnx.cursor()
+        cursor.execute(
+            """
+            INSERT IGNORE INTO ConversationParticipant (idConversation, idUser)
+            VALUES (%s, %s)
+            """,
+            (groupConversationId, newUserId)
+        )
+        cnx.commit()
+        return True
+    finally:
+        cursor.close()
+        cnx.close()
+#------------------------------------------------------------------------------
 def createConversation(idSender, idRecipient):
     cnx = connect()
     if not cnx.is_connected():
@@ -208,7 +314,11 @@ def createConversation(idSender, idRecipient):
         cursor = cnx.cursor(dictionary=True)
         # Create conversation
         cursor.execute(
-            "INSERT INTO Conversation () VALUES ();"
+            """
+            INSERT INTO Conversation (type, createdBy)
+            VALUES ('dm', %s)
+            """,
+            (idSender,)
         )
         idConversation = cursor.lastrowid
         # Add participants
@@ -240,13 +350,16 @@ def getConversationId(idUser1, idUser2):
             cursor = cnx.cursor(buffered=True, dictionary=True)
             cursor.execute(
             '''
-            SELECT cp1.idConversation
-                FROM ConversationParticipant cp1
+                SELECT c.idConversation
+                FROM Conversation c
+                JOIN ConversationParticipant cp1
+                ON c.idConversation = cp1.idConversation
                 JOIN ConversationParticipant cp2
-                ON cp1.idConversation = cp2.idConversation
-                WHERE cp1.idUser = %s
+                ON c.idConversation = cp2.idConversation
+                WHERE c.type = 'dm'
+                AND cp1.idUser = %s
                 AND cp2.idUser = %s
-            LIMIT 1;
+                LIMIT 1;
             ''', 
                 (idUser1, idUser2) 
             )
