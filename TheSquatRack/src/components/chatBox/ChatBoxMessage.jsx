@@ -31,12 +31,22 @@ export default function ChatBoxMessage( {msgData, total, num} ){
                 {fromMe ? null :  <Avatar src={srcOther} online={true}/>  }
                 {fromMe ? null :  msg  } 
             </div>
-            <div className='chatTime otherChatter'>{fromMe ? null : msgData.msgDate}</div>
+            <div className='chatSenderName otherChatter'>
+                { fromMe ? null : msgData.senderName }
+            </div>
+            <div className='chatTime otherChatter'>
+                {fromMe ? null : msgData.msgDate}
+            </div>
             <div className={selfClassName}>
                 { fromMe ?  msg : null }
-                { fromMe ? <Avatar src={srcMe} online={true}/> : null  }
+                { fromMe ? <Avatar src={srcMe} online={true}/> : null  } 
             </div>
-            <div className='chatTime selfChatter'>{ fromMe ? msgData.msgDate : null}</div>
+            <div className='chatSenderName selfChatter'>
+                { fromMe ? msgData.senderName : null}
+            </div>
+            <div className='chatTime selfChatter'>
+                { fromMe ? msgData.msgDate : null}
+            </div>
         </div>
     );
 } 

@@ -35,6 +35,10 @@
     color: var(--color-text-muted);
 }
 
+.chatSenderName {
+    font-size: var(--small-font-size);
+}
+
 .chatTime {
     color: var(--color-border-dark);
     font-size: var(--12px);

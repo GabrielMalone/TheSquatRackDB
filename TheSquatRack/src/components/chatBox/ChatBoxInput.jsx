@@ -43,14 +43,14 @@ export default function ChatBoxInput({idConversation}) {
     function notTyping(){
         socket.emit("typingInChat", {
             idConversation,
-            idUserRecipient : userInChat.idUser, // to whom are we sending the typing emit
+            idUserRecipient : userInChat?.idUser, // to whom are we sending the typing emit
             idUserTyping : userData.idUser,
             isTyping: false
         });
         socket.emit("typingInChatUserList", {
             idConversation,
             idUserTyping : userData.idUser, // who is typing
-            idUserRecipient : userInChat.idUser, // to whom are we sending the typing emit
+            idUserRecipient : userInChat?.idUser, // to whom are we sending the typing emit
             isTyping: false
         });
         if (ref.current){
@@ -61,14 +61,14 @@ export default function ChatBoxInput({idConversation}) {
     function amTyping(){
         socket.emit("typingInChat", {
             idConversation,
-            idUserRecipient : userInChat.idUser, // to whom are we sending the typing emit
+            idUserRecipient : userInChat?.idUser, // to whom are we sending the typing emit
             idUserTyping : userData.idUser,
             isTyping: true
         });
         socket.emit("typingInChatUserList", {
             idConversation,
             idUserTyping : userData.idUser, // who is typing
-            idUserRecipient : userInChat.idUser, // to whom are we sending the typing emit
+            idUserRecipient : userInChat?.idUser, // to whom are we sending the typing emit
             isTyping: true
         });
         if (ref.current){
