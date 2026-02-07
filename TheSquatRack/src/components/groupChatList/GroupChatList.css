@@ -1,10 +1,22 @@
-.gcListRoot {
+.gcThreshold {
 
     display: flex;
-    flex-direction: column;
-    gap: var(--space-4);
+    border-top: 1px solid var(--color-border-dark);
+    border-bottom: 1px solid var(--color-border-dark);
+    padding-top: var(--space-5);
+    padding-bottom: var(--space-5);
+    margin-top: var(--space-5);
+    justify-content: center;
+    font-size: var(--24px);
+
+}
+
+.gcListRoot {
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-2);
     max-height: 40vh;
-    max-width: 300px;
     overflow: hidden;
     overflow-y: auto;
     padding-bottom: var(--space-4);
@@ -20,16 +32,5 @@
     display: none;
 }
 
-.gcThreshold {
 
-    border-top: 1px solid var(--color-border-dark);
-    border-bottom: 1px solid var(--color-border-dark);
-    padding-top: var(--space-5);
-    padding-bottom: var(--space-5);
-    display: flex;
-    margin-top: var(--space-5);
-    justify-content: center;
-    font-size: var(--24px);
-
-}
 
