@@ -13,7 +13,6 @@ export default function ChatBoxWindowManager({isGroupChat}){
             setCreateGroupChatIsSelected, 
             setAddToGroupChatIsSelected,
             setGroupChatIsSet,
-            setGroupChatIsDocked
 
          } = useContext(LayoutContext);
          
@@ -23,10 +22,8 @@ export default function ChatBoxWindowManager({isGroupChat}){
                 className='addToChat'
                 onClick={()=>{
                     if (isGroupChat){
-                        console.log("ever here?");
                         setAddToGroupChatIsSelected(a=>!a);
                     } else {
-                        console.log("setCreateGroupChatIsSelected?");
                         setCreateGroupChatIsSelected(a=>!a);
                     }
                 }}
@@ -38,6 +35,7 @@ export default function ChatBoxWindowManager({isGroupChat}){
                 onClick={()=>{
                     if (isGroupChat){
                         setGroupChatIsSet(g=>!g);
+                        setAddToGroupChatIsSelected(false)
                     } else {
                         SetChatIsSelected(c=>!c);
                         setCreateGroupChatIsSelected(false);
@@ -49,12 +47,7 @@ export default function ChatBoxWindowManager({isGroupChat}){
             <button 
                 className='dockChatButton'
                 onClick={()=>{
-                    if (isGroupChat){
-                        setGroupChatIsDocked(d=>!d);
-                    } else {
                         setChatIsDocked(d=>!d);
-                    }
-        
                 }}
             >
                 <Icon icon={dockIcon} />

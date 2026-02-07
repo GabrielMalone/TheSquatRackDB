@@ -23,7 +23,7 @@ export default function GroupChatList(){
 
     return (
         <div className='gcListRoot'>
-            {groupChatIds?.length > 0 ? <div className='gcThreshold'></div> : null}
+            {groupChatIds?.length > 0 ? <div className='gcThreshold'>Groups</div> : null}
             {groupChatIds?.map(gc=><GroupChatRow key={gc.idConversation} gcData={gc}/>)}
         </div>
     );

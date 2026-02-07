@@ -13,6 +13,32 @@ def connect():
         database=os.getenv('DB_NAME'),
         host=os.getenv('DB_HOST', 'localhost') )
 #------------------------------------------------------------------------------
+def changeGroupChatTitle(idConversation, title):
+    cnx = connect()
+    if (cnx.is_connected()):
+        try:
+            cursor = cnx.cursor(buffered=True)
+            cursor.execute(
+            '''
+            UPDATE Conversation
+            SET title =  %s
+            WHERE idConversation = %s
+            ''', 
+                (title, idConversation) )
+            cnx.commit()
+            cursor.close()
+            cnx.close()
+            return {"success" : True}, 200
+        except mysql.connector.Error as err:
+            print("MySQL Error:", err)     # This will show you the exact error
+            print("Error code:", err.errno)                # Numeric error code
+            cnx.rollback() 
+            cnx.close()
+            return {
+                "success" : False,
+                "message" : f' server error: {err.errno}' 
+            }      
+#------------------------------------------------------------------------------
 def getGroupChatIds(idUser):
     cnx = connect()
     if (cnx.is_connected()):

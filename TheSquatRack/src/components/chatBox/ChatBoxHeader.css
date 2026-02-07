@@ -3,7 +3,6 @@
     justify-content: center;
     gap: var(--space-2);
     height: fit-content;
-    padding: var(--space-4);
     margin: var(--space-5);
 }
 
@@ -30,14 +29,18 @@
 .userNameChatBoxHeader {
     display: flex;
     justify-content: center;
+    padding: var(--space-2);
     color: var(--color-text-muted);
 }
 
 
 .chatTitle{
-    display: flex;
-    justify-content: center;
+    
+    all: unset;
     color: var(--color-text-muted);
     font-size: var(--small-font-size-2);
-    margin: var(--space-2);
+    margin: auto;
+    text-align: center;
+    padding: var(--space-5);
+
 }

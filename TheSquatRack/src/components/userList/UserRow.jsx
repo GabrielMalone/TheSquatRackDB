@@ -25,7 +25,6 @@ export default function UserRow({user}){
             addToChatIsSelected, 
             createGroupChatIsSelected,
             setCreateGroupChatIsSelected,
-            conversationId, 
             setGroupChatIsSet,
             setGroupConversationId,
             setAddToGroupChatIsSelected,
@@ -73,10 +72,20 @@ export default function UserRow({user}){
             setGroupConversationId(data)
             setCreateGroupChatIsSelected(false);
             queryClient.invalidateQueries({
-                queryKey: ["conversationId", userData.idUser, user.idUser],
+                queryKey: ["conversationId"],
+                exact: false
             });
             queryClient.invalidateQueries({
-                queryKey: ["usersInConvo", conversationId],
+                queryKey: ["usersInConvo"],
+                exact: false
+            });
+            queryClient.invalidateQueries({
+                queryKey: ["getGroupChatIds"],
+                exact: false
+            });
+            queryClient.invalidateQueries({
+                queryKey: ["convoTitle"],
+                exact: false
             });
         }
     });
@@ -91,13 +100,21 @@ export default function UserRow({user}){
         },
         onSuccess: ()=> {
             setAddToGroupChatIsSelected(false);
-              queryClient.invalidateQueries({
+            queryClient.invalidateQueries({
                 queryKey: ["conversationId"],
-                exact : false
+                exact: false
             });
             queryClient.invalidateQueries({
                 queryKey: ["usersInConvo"],
-                exact : false
+                exact: false
+            });
+            queryClient.invalidateQueries({
+                queryKey: ["getGroupChatIds"],
+                exact: false
+            });
+            queryClient.invalidateQueries({
+                queryKey: ["convoTitle"],
+                exact: false
             });
         }
     });
@@ -106,6 +123,7 @@ export default function UserRow({user}){
         console.log("addgroup: ", addToGroupChatIsSelected);
         console.log("creategroup: ", createGroupChatIsSelected);
         if (addToGroupChatIsSelected){
+            SetChatIsSelected(false);
             addUserToExistingGroup.mutate();
             setCreateGroupChatIsSelected(false);
             return;
@@ -113,9 +131,11 @@ export default function UserRow({user}){
         if (createGroupChatIsSelected){
             createGroupConversationFromDM.mutate();
             setAddToGroupChatIsSelected(false);
+            SetChatIsSelected(false);
             setGroupChatIsSet(true);
         }
         else {
+            setGroupChatIsSet(false);
             SetChatIsSelected(true);
             setUserInChat(user);
         }

@@ -13,7 +13,7 @@ export default function GroupChatBox(){
 
     // --------------------------------------------------------------------------------------------
     const { 
-            groupChatIsDocked, 
+            chatIsDocked, 
             groupConversationId
         } = useContext(LayoutContext); // get id of user to chat with from sidebar click
 
@@ -27,7 +27,7 @@ export default function GroupChatBox(){
 
     // --------------------------------------------------------------------------------------------
     return (
-        <div className = {groupChatIsDocked ? 'groupChatBoxRoot groupChatdocked' : 'groupChatBoxRoot'}>
+        <div className = {chatIsDocked ? 'groupChatBoxRoot groupChatdocked' : 'groupChatBoxRoot'}>
             <ChatBoxWindowManager isGroupChat={true}/>
             <ChatBoxHeader isGroupChat={true} u={null} usersInConvo={usersInConvo}/>
             <ChatBoxMain idConversation={groupConversationId} />

@@ -36,7 +36,6 @@ export default function LayoutProvider(){
 
     const profilePicUrl = `${BASE_URL}/getProfilePic?idUser=${userData.idUser}`;
 
-
     const layout = {
 
         workoutIsPresent, 
