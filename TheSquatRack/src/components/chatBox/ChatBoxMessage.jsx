@@ -27,24 +27,26 @@ export default function ChatBoxMessage( {msgData, total, num} ){
 
     return (
         <div className='chatBoxMessageRoot'>
-            
             <div className={otherClassName}>
                 {fromMe ? null :  <Avatar src={srcOther} online={msgData.isLoggedIn}/>  }
+                <div className='chatSenderName otherChatter'>
+                    { fromMe ? null : msgData.senderName }
+                </div>
                 {fromMe ? null :  msg  } 
-            </div>
-            <div className='chatSenderName otherChatter'>
-                { fromMe ? null : msgData.senderName }
             </div>
             <div className='chatTime otherChatter'>
                 {fromMe ? null : msgData.msgDate}
             </div>
 
-            <div className={selfClassName}>
-                { fromMe ?  msg : null }
+
+            <div className='me'>
                 { fromMe ? <Avatar src={srcMe} online={true}/> : null  } 
             </div>
             <div className='chatSenderName selfChatter'>
                 { fromMe ? msgData.senderName : null}
+            </div>
+            <div className={selfClassName}>
+                { fromMe ?  msg : null }
             </div>
             <div className='chatTime selfChatter'>
                 { fromMe ? msgData.msgDate : null}

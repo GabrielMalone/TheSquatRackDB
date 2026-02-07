@@ -2,7 +2,7 @@ import './Avatar.css';
 import { Icon } from '@iconify/react';
 import { useState} from 'react';
 
-export function Avatar({ src, size = 42, online = false, isMe = false }) {
+export function Avatar({ src, size = 40, online = false, isMe = false }) {
 
   const [imgError, setImgError] = useState(false);
   let className = online ? "avatar avatarOnline" : "avatar avatarOffline";

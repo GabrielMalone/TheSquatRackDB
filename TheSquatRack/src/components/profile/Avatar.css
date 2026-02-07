@@ -1,10 +1,6 @@
 .avatar {
-    display: flex;
     border-radius: 5px;
     overflow: hidden;
-    align-self: center;
-    justify-content: center;
-    min-width: 40px;
 }
 
 .avatarOnline {
@@ -28,19 +24,13 @@
 
 .avatarMe {
     opacity: var(--filled);
-    box-shadow: none;
 }
+
 .avatarMe:hover {
     opacity: var(--dimmed);
 }
 
-.defaultAvatar {
-    display: flex;
-    align-self: center;
-    justify-content: center;
-}
-
 .defaultAvatar svg {
-    height: 100%;
+    display: block;
     width: 100%;
 }

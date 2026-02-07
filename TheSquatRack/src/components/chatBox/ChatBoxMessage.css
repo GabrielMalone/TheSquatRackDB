@@ -6,6 +6,7 @@
     scroll-behavior: smooth;
     cursor: pointer;
     margin-bottom: var(--space-4);
+
 }
 
 .chatText {
@@ -23,7 +24,7 @@
 .otherChatter {
 
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: wrap;
     gap: var(--space-2);
     color: var(--color-text-muted);
@@ -33,32 +34,38 @@
 .selfChatter {
 
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: wrap;
-    justify-content: right;
     text-align: right;
     gap: var(--space-2);
     color: var(--color-text-muted);
 }
 
+.me {
+    display: flex;
+    align-self: flex-end;
+    padding: var(--space-2);
+    padding-right: 0;
+}
+
 .chatSenderName {
+
     font-size: var(--small-font-size);
 }
 
 .chatTime {
+
     color: var(--color-border-dark);
     font-size: var(--12px);
 }
 
 .chatTime:hover {
+
     color: var(--color-text-muted);
 }
 
 .lastMsg {
+
     color: var(--color-text-muted);
 }
 
-.avatarChat {
-    align-self: flex-end;
-    margin: var(--space-1);
-}
