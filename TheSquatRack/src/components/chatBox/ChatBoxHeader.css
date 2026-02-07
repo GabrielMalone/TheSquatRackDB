@@ -1,11 +1,15 @@
 .chatBoxHeader {
+
     display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     justify-content: center;
     gap: var(--space-2);
-    height: fit-content;
+    max-height: 250px;
     margin: var(--space-5);
-    overflow: hidden;
-    overflow-x: scroll;
+    gap: var(--space-1);
+    overflow-y: scroll;
+
 }
 
 .profilePicChatBoxHeader {
@@ -29,6 +33,7 @@
 }
 
 .userNameChatBoxHeader {
+    
     display: flex;
     justify-content: center;
     padding: var(--space-2);

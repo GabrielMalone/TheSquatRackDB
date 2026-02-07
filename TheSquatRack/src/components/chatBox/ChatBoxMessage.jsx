@@ -19,16 +19,17 @@ export default function ChatBoxMessage( {msgData, total, num} ){
     const srcOther = `${BASE_URL}getProfilePic?idUser=${msgData.idSender}`;
     const srcMe = `${BASE_URL}getProfilePic?idUser=${userData.idUser}`;
 
-    const otherClassName  = lastMsg  ? 'otherChatter chatText lastMsg'  : 'otherChatter chatText';
-    const selfClassName   = lastMsg  ? 'selfChatter chatText lastMsg'   : 'selfChatter chatText';
+    const otherClassName  = lastMsg  ? 'otherChatter chatText lastMsg avatarChat'  : 'otherChatter chatText avatarChat';
+    const selfClassName   = lastMsg  ? 'selfChatter chatText lastMsg avatarChat'   : 'selfChatter chatText avatarChat';
 
     // this will have to be made from a map and via all the users in the converastion
     // for group chat implementation
 
     return (
         <div className='chatBoxMessageRoot'>
+            
             <div className={otherClassName}>
-                {fromMe ? null :  <Avatar src={srcOther} online={true}/>  }
+                {fromMe ? null :  <Avatar src={srcOther} online={msgData.isLoggedIn}/>  }
                 {fromMe ? null :  msg  } 
             </div>
             <div className='chatSenderName otherChatter'>
@@ -37,6 +38,7 @@ export default function ChatBoxMessage( {msgData, total, num} ){
             <div className='chatTime otherChatter'>
                 {fromMe ? null : msgData.msgDate}
             </div>
+
             <div className={selfClassName}>
                 { fromMe ?  msg : null }
                 { fromMe ? <Avatar src={srcMe} online={true}/> : null  } 
@@ -47,6 +49,7 @@ export default function ChatBoxMessage( {msgData, total, num} ){
             <div className='chatTime selfChatter'>
                 { fromMe ? msgData.msgDate : null}
             </div>
+
         </div>
     );
 } 

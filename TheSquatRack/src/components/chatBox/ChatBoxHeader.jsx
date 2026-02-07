@@ -85,6 +85,7 @@ export default function ChatBoxHeader({isGroupChat, u, usersInConvo}){
                         />
                         <div 
                             className="userNameChatBoxHeader"
+                            key={u.idUser}
                             style={
                                 u.isLoggedIn ? 
                                 {"color" : "var(--color-text-bright)"} : 

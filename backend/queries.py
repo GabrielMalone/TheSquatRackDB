@@ -258,6 +258,7 @@ def getConversationMessages(idConversation):
                 m.idConversation,
                 m.idSender,
                 u.userName AS senderName,
+                u.isLoggedIn,
                 m.message,
                 m.msgDate,
                 c.lastReadAt AS lastRead

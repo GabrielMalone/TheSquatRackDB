@@ -1,12 +1,15 @@
 .chatBoxMessageRoot {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
     scroll-behavior: smooth;
     cursor: pointer;
     margin-bottom: var(--space-4);
 }
 
 .chatText {
+    
     margin-bottom: var(--space-1);
     font-size: var(--small-font-size-2);
     color: var(--color-text-muted);
@@ -18,17 +21,20 @@
 }
 
 .otherChatter {
-    grid-column: 1;
+
     display: flex;
-    justify-content: left;
+    flex-direction: row;
+    flex-wrap: wrap;
     gap: var(--space-2);
     color: var(--color-text-muted);
+    width: 100%;
 }
 
 .selfChatter {
-    grid-column: 2;
+
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: right;
     text-align: right;
     gap: var(--space-2);
@@ -49,10 +55,10 @@
 }
 
 .lastMsg {
-    color: var(--color-text-bright);
+    color: var(--color-text-muted);
 }
 
-.avatar {
-    min-width: 40px;
-    align-self: end;
+.avatarChat {
+    align-self: flex-end;
+    margin: var(--space-1);
 }

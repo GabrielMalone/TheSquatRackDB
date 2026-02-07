@@ -4,6 +4,7 @@
     overflow: hidden;
     align-self: center;
     justify-content: center;
+    min-width: 40px;
 }
 
 .avatarOnline {
