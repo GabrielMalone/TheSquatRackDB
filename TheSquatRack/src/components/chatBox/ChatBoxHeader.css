@@ -9,7 +9,7 @@
     min-height: 110px;
     margin: var(--space-5);
     gap: var(--space-1);
-    overflow-y: scroll;
+    overflow-y: auto;
 
 }
 
