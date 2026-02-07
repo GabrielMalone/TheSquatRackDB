@@ -4,6 +4,7 @@
     padding-bottom: var(--space-5);
     margin-bottom: var(--space-5);
     cursor: default;
+    border-bottom: 1px solid var(--color-border-dark);
 }
 
 .sidebarHeaderText {

@@ -78,7 +78,7 @@ export default function ChatBoxHeader({isGroupChat, u, usersInConvo}){
                     >
                         <Avatar 
                             key={u.idUser} 
-                            src={`${BASE_URL}/getProfilePic?idUser=${u.idUser}`} 
+                            src={u.hasProfilePic ? `${BASE_URL}/getProfilePic?idUser=${u.idUser}` : null} 
                             size={80} 
                             online={u.isLoggedIn}
                             

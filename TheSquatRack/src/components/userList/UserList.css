@@ -1,9 +1,10 @@
 .userListRoot {
+
     display: flex;
     flex-direction: column;
     gap: var(--space-1);
     padding-bottom: var(--space-5);
-    max-height: 50vh;
+    max-height: 30vh;
     overflow: hidden;
     overflow-y: auto;
     

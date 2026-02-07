@@ -18,7 +18,7 @@ USE `thesquatrack` ;
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `thesquatrack`.`User` ;
 
-CREATE TABLE IF NOT EXISTS `thesquatrack`.`User` (
+CREATE TABLE IF NOT EXISTS `User` (
   `idUser` INT NOT NULL AUTO_INCREMENT,
   `userName` VARCHAR(45) NOT NULL,
   `passwordHash` VARCHAR(255) NOT NULL,
@@ -26,18 +26,18 @@ CREATE TABLE IF NOT EXISTS `thesquatrack`.`User` (
   `userLast` VARCHAR(45) NULL,
   `Email` VARCHAR(45) NOT NULL,
   `dateCreated` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `hasProfilePic` TINYINT(1) NOT NULL DEFAULT 0,
   `profilePic` VARCHAR(255) NULL,
   `isAdmin` TINYINT NOT NULL DEFAULT 0,
   `isPublic` TINYINT NOT NULL DEFAULT 1,
   `isLoggedIn` TINYINT NOT NULL DEFAULT 0,
   `isLightMode` TINYINT NOT NULL DEFAULT 1,
   `coachedBy` INT NULL,
+
   PRIMARY KEY (`idUser`),
-  UNIQUE INDEX `userName_UNIQUE` (`userName` ASC) VISIBLE,
-  UNIQUE INDEX `idUser_UNIQUE` (`idUser` ASC) VISIBLE,
-  UNIQUE INDEX `Email_UNIQUE` (`Email` ASC) VISIBLE
-)
-ENGINE = InnoDB;
+  UNIQUE (`userName`),
+  UNIQUE (`Email`)
+) ENGINE=InnoDB;
 
 -- ----------------------------------------------------- 
 -- Table `thesquatrack`.`Workout`
@@ -311,23 +311,25 @@ INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDesc
 INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDescription) VALUES ('Cable tricep extension', 'Cbl_Tricep', 'accessory', "tricep extensions on cable machine. aka tricep push-down.");
 INSERT INTO Exercise (ExerciseName, abbreviation, ExerciseCategory, ExerciseDescription) VALUES ('Cable AB Crunch', 'Cbl_Crunch', 'accessory', "Ab crunch on cable machine.");
 
-INSERT INTO User (Email, userName, passwordHash, userFirst, userLast)
-VALUES ('test1@example.com', 'goob', 'pass', 'Gabriel', 'Malone' );
+INSERT INTO User (Email, userName, passwordHash, userFirst, userLast, hasProfilePic)
+VALUES ('test1@example.com', 'goob', 'pass', 'Gabriel', 'Malone', 1);
 
-INSERT INTO User (Email, userName, passwordHash)
-VALUES ('test2@example.com', 'curtis', 'pass');
+INSERT INTO User (Email, userName, passwordHash, hasProfilePic)
+VALUES ('test2@example.com', 'curtis', 'pass', 1);
 
-INSERT INTO User (Email, userName, passwordHash)
-VALUES ('test3@example.com', 'stella', 'pass');
+INSERT INTO User (Email, userName, passwordHash, hasProfilePic)
+VALUES ('test3@example.com', 'stella', 'pass', 1);
 
-INSERT INTO User (Email, userName, passwordHash)
-VALUES ('test4@example.com', 'yvette', 'pass');
+INSERT INTO User (Email, userName, passwordHash, hasProfilePic)
+VALUES ('test4@example.com', 'yvette', 'pass', 1);
 
-INSERT INTO User (Email, userName, passwordHash)
-VALUES ('test5@example.com', 'moose', 'pass');
+INSERT INTO User (Email, userName, passwordHash, hasProfilePic)
+VALUES ('test5@example.com', 'moose', 'pass', 1);
 
-INSERT INTO User (Email, userName, passwordHash)
-VALUES ('test6@example.com', 'shawzito', 'pass');
+INSERT INTO User (Email, userName, passwordHash, hasProfilePic)
+VALUES ('test6@example.com', 'shawzito', 'pass', 1);
+
+
 
 INSERT INTO Workout (Date, idUser, workoutTitle)
 VALUES ('2026-01-08 18:00:00', 1, 'Push Day');

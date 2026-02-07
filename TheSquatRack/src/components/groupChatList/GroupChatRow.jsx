@@ -44,7 +44,7 @@ export default function GroupChatRow({gcData}){
                         >
                             <Avatar 
                                 key={u.idUser} 
-                                src={`${BASE_URL}/getProfilePic?idUser=${u.idUser}`} 
+                                src={u.hasProfilePic ? `${BASE_URL}/getProfilePic?idUser=${u.idUser}`: null} 
                                 size={40} 
                                 online={u.isLoggedIn}
                                 

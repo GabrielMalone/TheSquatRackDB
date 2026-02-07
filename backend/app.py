@@ -4,9 +4,11 @@ import queries
 from flask_socketio import SocketIO, emit, join_room # type: ignore
 import os
 import threading
+from load_mock_users import load_mock_users
 #------------------------------------------------------------
 app = Flask(__name__)
 CORS(app)
+load_mock_users()
 #------------------------------------------------------------
 socketio = SocketIO(app, cors_allowed_origins="*", async_mode="threading")
 @socketio.on("connect")

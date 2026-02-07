@@ -162,7 +162,7 @@ export default function UserRow({user}){
             <div className={userOnline}>
                 <Avatar 
                     key={user.idUser}
-                    src={`${BASE_URL}getProfilePic?idUser=${user.idUser}`}
+                    src={user.hasProfilePic ? `${BASE_URL}getProfilePic?idUser=${user.idUser}` : null}
                     size={48}
                     online={user.isLoggedIn}
                 />

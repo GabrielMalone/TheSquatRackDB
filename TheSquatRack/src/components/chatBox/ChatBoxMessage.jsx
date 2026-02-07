@@ -7,14 +7,14 @@ const BASE_URL = import.meta.env.VITE_API_BASE;
 
 export default function ChatBoxMessage( {msgData, total, num} ){
 
-
-
     const msg = msgData.message;
     const idSender = msgData.idSender;
     const { userData } = useContext(AuthContext);
 
     const fromMe = (userData.idUser == idSender);
     const lastMsg = (total == num + 1);
+
+    console.log("msg data:" , msgData);
 
     const srcOther = `${BASE_URL}getProfilePic?idUser=${msgData.idSender}`;
     const srcMe = `${BASE_URL}getProfilePic?idUser=${userData.idUser}`;
