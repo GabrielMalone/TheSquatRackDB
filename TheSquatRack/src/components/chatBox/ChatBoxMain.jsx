@@ -88,7 +88,7 @@ export default function ChatBoxMain( { idConversation } ){
                 return <ChatBoxMessage key={m.idMessage} msgData={m} total={messages.length} num={i}/>
             }) :<div className='emptyChat'>No chat history. Start a conersation!</div>}
             {   isTyping 
-                && (userInChat.idUser === idUserTyping) 
+                && (userInChat?.idUser === idUserTyping) 
                 && (idUserRecipient == userData.idUser ) ? 
 
                 <div className='typingIconInChat'>{typingIcon}</div> 

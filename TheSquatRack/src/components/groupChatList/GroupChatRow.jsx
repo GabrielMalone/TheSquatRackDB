@@ -30,7 +30,7 @@ export default function GroupChatRow({gcData}){
             }}  
         >
             <div className='gcRowTitle'>{gcData.title}</div> 
-                <div className='gcRowUserGrid'>
+            <div className='gcRowUserGrid'>
                 {usersInConvo.map((u)=>{
                     return(
                         <div 

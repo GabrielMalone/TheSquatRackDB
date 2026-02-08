@@ -1,10 +1,11 @@
 .sidebarHeader {
+
     display: grid;
     justify-content: center;
-    padding-bottom: var(--space-5);
+    margin-top: var(--space-5);
     margin-bottom: var(--space-5);
     cursor: default;
-    border-bottom: 1px solid var(--color-border-dark);
+
 }
 
 .sidebarHeaderText {

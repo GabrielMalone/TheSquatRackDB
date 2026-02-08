@@ -8,11 +8,11 @@
     opacity: var(--filled);
     border-radius: 10px;
     height: 160px;
+  
 }
 
 .gcRowTitle {
 
-    display: flex;
     justify-content: center;
     padding: var(--space-2);
     font-size: var(--small-font-size);
@@ -20,20 +20,21 @@
 }
 
 .gcRowUserGrid {
-
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 120px;
+    max-height: 120px;
     border: 1px solid var(--color-border-dark);
     border-radius: 10px;
-    padding: var(--space-2);
-    overflow: hidden;
     overflow-y: scroll;
-
+    margin: auto;
+    padding: var(--space-2);
 }
 
 .gcRowUserGrid:hover {
     background-color: var(--color-hover);
+    opacity: var(--dimmed);
 }
 
 

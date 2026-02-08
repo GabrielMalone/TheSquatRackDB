@@ -76,19 +76,19 @@ export default function ChatBoxHeader({isGroupChat, u, usersInConvo}){
                         className={onlineIndicator}
                         key={u.idUser}
                     >
-                        <Avatar 
-                            src={u.hasProfilePic ? `${BASE_URL}/getProfilePic?idUser=${u.idUser}` : null} 
-                            size={80} 
-                            online={u.isLoggedIn}
-                            
-                        />
                         <div 
                             className="userNameChatBoxHeader"
                             style={
                                 u.isLoggedIn ? 
                                 {"color" : "var(--color-text-bright)"} : 
-                                {"color" : "var(--color-text-muted)"}}
+                                {"color" : "var(--color-text-muted)"}
+                            }
                          >
+                            <Avatar 
+                                src={u.hasProfilePic ? `${BASE_URL}/getProfilePic?idUser=${u.idUser}` : null} 
+                                size={80} 
+                                online={u.isLoggedIn}
+                            />
                             {u.userName}
                         </div>
                     </div>
