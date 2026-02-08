@@ -24,6 +24,8 @@ export function OnlineContextProvider({ children }) {
         function onPresenceChange() {
             // this will need to be updated in future to update a user list for this userid's users list
             queryClient.invalidateQueries({ queryKey: ["userList"] });
+            queryClient.invalidateQueries({ queryKey: ["usersInConvo"] });
+            queryClient.invalidateQueries({ queryKey: ["conversationMessages"] });   
         }
 
         function onMsgSent(data){

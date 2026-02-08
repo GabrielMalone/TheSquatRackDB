@@ -19,8 +19,6 @@ export default function GroupChatList(){
             
     });
 
-    console.log(groupChatIds);
-
     return (
         <>
         {groupChatIds?.length > 0 ? <div className='gcThreshold'>Groups</div> : null}

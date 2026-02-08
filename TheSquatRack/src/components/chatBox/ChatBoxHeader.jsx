@@ -77,7 +77,6 @@ export default function ChatBoxHeader({isGroupChat, u, usersInConvo}){
                         key={u.idUser}
                     >
                         <Avatar 
-                            key={u.idUser} 
                             src={u.hasProfilePic ? `${BASE_URL}/getProfilePic?idUser=${u.idUser}` : null} 
                             size={80} 
                             online={u.isLoggedIn}
@@ -85,7 +84,6 @@ export default function ChatBoxHeader({isGroupChat, u, usersInConvo}){
                         />
                         <div 
                             className="userNameChatBoxHeader"
-                            key={u.idUser}
                             style={
                                 u.isLoggedIn ? 
                                 {"color" : "var(--color-text-bright)"} : 

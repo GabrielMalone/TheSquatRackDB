@@ -11,7 +11,6 @@ export default function GroupChatRow({gcData}){
     // -----------------------------------------------------------------------------------
    
     // -----------------------------------------------------------------------------------
-    // console.log('gcdata:', gcData);
     const { setGroupConversationId, setGroupChatIsSet, SetChatIsSelected } = useContext(LayoutContext);
     // what do we want -- we want title of gc
     // then all the user avatars in the gc
@@ -21,8 +20,6 @@ export default function GroupChatRow({gcData}){
             get(`getUsersInConversation?idConversation=${gcData.idConversation}`),
     });
     
-    console.log("users in this gc: ", usersInConvo);
-
     return (
         <button 
             className='groupChatRowRoot'

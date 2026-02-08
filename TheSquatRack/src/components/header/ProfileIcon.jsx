@@ -7,8 +7,7 @@ import { Avatar } from '../profile/Avatar';
 export default function ProfileIcon() {
 
     const c = useContext(LayoutContext);
-
-    const { userData } = useContext(AuthContext);
+    
     // const userName = userData.userName;
     function handleOnClick(){
         c.setProfileIsSelected(p=>!p);
@@ -19,7 +18,7 @@ export default function ProfileIcon() {
             onClick={handleOnClick}
             aria-label="profile icon"
         >   
-            <Avatar key={userData.idUser} src={c.profilePicUrl} size={48} online={true} isMe={true}/>
+            <Avatar src={c.profilePicUrl} size={48} online={true} isMe={true}/>
             {/* <div className='headerUsername'>{userName}</div> */}
         </button>
     );

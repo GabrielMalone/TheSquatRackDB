@@ -11,7 +11,9 @@ import { post } from '../../hooks/fetcher';
 
 const BASE_URL = import.meta.env.VITE_API_BASE;
 
-export default function UserRow({user}){
+export default function UserRow({user, ourConversationId}){
+
+    console.log("our conversation id: ", ourConversationId);
     // -----------------------------------------------------------------------------------
     const msgIcon = <Icon icon="ph:chat-thin"/> ;
     const addToChatIcon = <Icon icon="lets-icons:user-add-light"/> ;
@@ -38,17 +40,14 @@ export default function UserRow({user}){
     const userOnline = user.isLoggedIn ? "userProfilePicInList online" : "userProfilePicInList";
     const [ isTyping, setIsTyping ] = useState(false);
     // -----------------------------------------------------------------------------------
-    const { data: conversation } = useSuspenseQuery({
-        queryKey: ["conversationId", userData.idUser, user.idUser],
-        queryFn: () => 
-            get(`getConversationId?idUser1=${userData.idUser}&idUser2=${user.idUser}`),
-    });
+
+    // -----------------------------------------------------------------------------------
     // -----------------------------------------------------------------------------------
     const { data: lastMsg } = useSuspenseQuery({
-            queryKey: ["lastMessage", conversation?.idConversation, userData.idUser],
+            queryKey: ["lastMessage", ourConversationId, userData.idUser],
             queryFn: () => 
-                get(`getLastMsgInConversation?idConversation=${conversation?.idConversation}&idUser=${userData.idUser}`),
-            enabled: !!conversation?.idConversation
+                get(`getLastMsgInConversation?idConversation=${ourConversationId}&idUser=${userData.idUser}`),
+            enabled: !!ourConversationId
     });
     // -----------------------------------------------------------------------------------
     const hasUnread =
@@ -71,10 +70,9 @@ export default function UserRow({user}){
         onSuccess: (data)=> {
             setGroupConversationId(data)
             setCreateGroupChatIsSelected(false);
-            queryClient.invalidateQueries({
-                queryKey: ["conversationId"],
-                exact: false
-            });
+            // queryClient.invalidateQueries({
+            //     queryKey: ["conversationId", userData?.idUser, user.idUser],
+            // });
             queryClient.invalidateQueries({
                 queryKey: ["usersInConvo"],
                 exact: false
@@ -100,10 +98,9 @@ export default function UserRow({user}){
         },
         onSuccess: ()=> {
             setAddToGroupChatIsSelected(false);
-            queryClient.invalidateQueries({
-                queryKey: ["conversationId"],
-                exact: false
-            });
+            // queryClient.invalidateQueries({
+            //     queryKey: ["conversationId", userData?.idUser, user.idUser],
+            // });
             queryClient.invalidateQueries({
                 queryKey: ["usersInConvo"],
                 exact: false
@@ -120,8 +117,6 @@ export default function UserRow({user}){
     });
     // -----------------------------------------------------------------------------------
     function handleBeginChat() {
-        console.log("addgroup: ", addToGroupChatIsSelected);
-        console.log("creategroup: ", createGroupChatIsSelected);
         if (addToGroupChatIsSelected){
             SetChatIsSelected(false);
             addUserToExistingGroup.mutate();
@@ -161,7 +156,6 @@ export default function UserRow({user}){
         >
             <div className={userOnline}>
                 <Avatar 
-                    key={user.idUser}
                     src={user.hasProfilePic ? `${BASE_URL}getProfilePic?idUser=${user.idUser}` : null}
                     size={48}
                     online={user.isLoggedIn}

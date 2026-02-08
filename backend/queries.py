@@ -442,6 +442,42 @@ def getConversationId(idUser1, idUser2):
                 cursor.close()
             cnx.close()      
 #------------------------------------------------------------------------------
+def getConversationIdsForUser(idUser):
+    cnx = connect()
+    if (cnx.is_connected()):
+        try:
+            cursor = cnx.cursor(buffered=True, dictionary=True)
+            cursor.execute(
+            '''
+            SELECT
+                c.idConversation,
+                cp_other.idUser AS otherUserId
+            FROM Conversation c
+            JOIN ConversationParticipant cp_me
+                ON cp_me.idConversation = c.idConversation
+            JOIN ConversationParticipant cp_other
+                ON cp_other.idConversation = c.idConversation
+            WHERE c.type = 'dm'
+            AND cp_me.idUser = %s
+            AND cp_other.idUser != %s;
+            ''', 
+                (idUser, idUser) 
+            )
+            conversationIds = cursor.fetchall()
+            return conversationIds
+        except mysql.connector.Error as err:
+            print("MySQL Error:", err)     # This will show you the exact error
+            print("Error code:", err.errno)                # Numeric error code
+            cnx.rollback() 
+            return {
+                "success" : False,
+                "message" : f' server error: {err.errno}' 
+            }  
+        finally:
+            if cursor:
+                cursor.close()
+            cnx.close()     
+#------------------------------------------------------------------------------
 def getMode(idUser):
     cnx = connect()
     if (cnx.is_connected()):

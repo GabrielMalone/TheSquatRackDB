@@ -72,7 +72,6 @@ export default function WorkoutRoot(){
                 workoutDate={selectedDayId}
                 workoutTitle={w?.workoutTitle}
                 idWorkout={w?.idWorkout}
-                key={w?.idWorkout}
             />
 
             {w?.lifts?.map(lift => {

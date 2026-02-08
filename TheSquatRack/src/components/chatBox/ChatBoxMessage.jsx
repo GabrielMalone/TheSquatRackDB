@@ -14,8 +14,6 @@ export default function ChatBoxMessage( {msgData, total, num} ){
     const fromMe = (userData.idUser == idSender);
     const lastMsg = (total == num + 1);
 
-    console.log("msg data:" , msgData);
-
     const srcOther = `${BASE_URL}getProfilePic?idUser=${msgData.idSender}`;
     const srcMe = `${BASE_URL}getProfilePic?idUser=${userData.idUser}`;
 
@@ -27,6 +25,7 @@ export default function ChatBoxMessage( {msgData, total, num} ){
 
     return (
         <div className='chatBoxMessageRoot'>
+
             <div className={otherClassName}>
                 {fromMe ? null :  <Avatar src={srcOther} online={msgData.isLoggedIn}/>  }
                 <div className='chatSenderName otherChatter'>

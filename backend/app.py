@@ -8,7 +8,7 @@ from load_mock_users import load_mock_users
 #------------------------------------------------------------
 app = Flask(__name__)
 CORS(app)
-load_mock_users()
+# load_mock_users()
 #------------------------------------------------------------
 socketio = SocketIO(app, cors_allowed_origins="*", async_mode="threading")
 @socketio.on("connect")
@@ -356,6 +356,12 @@ def changeGroupChatTitle():
     idConversation = data["idConversation"]
     title = data["title"]
     res = queries.changeGroupChatTitle(idConversation, title)
+    return jsonify(res)
+#------------------------------------------------------------
+@app.route("/getConversationIdsForUser", methods=["GET"])
+def getConversationIdsForUser():
+    idUser = request.args.get("idUser")
+    res = queries.getConversationIdsForUser(idUser)
     return jsonify(res)
 #------------------------------------------------------------
 if __name__ == "__main__":
