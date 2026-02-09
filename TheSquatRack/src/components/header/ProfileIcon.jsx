@@ -18,7 +18,7 @@ export default function ProfileIcon() {
             onClick={handleOnClick}
             aria-label="profile icon"
         >   
-            <Avatar src={c.profilePicUrl} size={48} online={true} isMe={true}/>
+            <Avatar src={c.profilePicUrl} size={32} online={true} isMe={true}/>
             {/* <div className='headerUsername'>{userName}</div> */}
         </button>
     );

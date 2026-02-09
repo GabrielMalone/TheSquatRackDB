@@ -13,7 +13,7 @@
     white-space: nowrap;
     overflow: hidden;
     resize: none;
-    overflow-x: scroll;
+    overflow-x: auto;
     font-size: var(--small-font-size-1);
     color: var(--color-text-bright);
     border: 1px solid var(--color-border-dark);

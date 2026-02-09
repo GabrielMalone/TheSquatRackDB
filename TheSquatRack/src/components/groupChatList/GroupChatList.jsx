@@ -20,11 +20,8 @@ export default function GroupChatList(){
     });
 
     return (
-        <div className='groupsRoot'>
-            {groupChatIds?.length > 0 ? <div className='gcThreshold'>Groups</div> : null}
-            <div className='gcListRoot'>
-                {groupChatIds?.map(gc=><GroupChatRow key={gc.idConversation} gcData={gc}/>)}
-            </div>
+        <div className='gcListRoot'>
+            {groupChatIds?.map(gc=><GroupChatRow key={gc.idConversation} gcData={gc}/>)}
         </div>
     );
 }

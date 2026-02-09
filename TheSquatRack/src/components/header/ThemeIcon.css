@@ -13,9 +13,9 @@
     width: var(--icon-size-medium);
     height: 100%;
     color: var(--color-text-muted);
-    opacity: var(--filled);
+    opacity: var(--dimmed);
 }
 
 .themeIcon svg:hover {
-    opacity: var(--dimmed);
+    opacity: var(--filled);
 }

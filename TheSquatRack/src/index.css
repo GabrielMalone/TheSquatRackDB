@@ -19,6 +19,7 @@
   --icon-size-large: calc(96px * var(--ui-scale));
 
   --12px: calc(12px * var(--ui-scale));
+  --20px: calc(20px * var(--ui-scale));
   --24px: calc(24px * var(--ui-scale));
   --xsmall-font-size: calc(12px * var(--ui-scale));
   --small-font-size: calc(16px * var(--ui-scale));
@@ -110,4 +111,17 @@ body {
   font-family: var(--font-sans);
   background: var(--color-bg);
   box-sizing: border-box;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: none;
+}
+
+/* Chrome / Safari / Edge */
+*::-webkit-scrollbar {
+  display: none;
+}
+html {
+  scrollbar-gutter: stable;
 }

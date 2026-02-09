@@ -33,6 +33,7 @@ export default function LayoutProvider(){
     const [conversationId, setConversationId] = useState(null);
     const [groupConversationId, setGroupConversationId] = useState(null);
     const [groupChatIsDocked, setGroupChatIsDocked] = useState(false);
+    const [groupChatListSelected, setGroupChatListSelected] = useState(false);
 
     const profilePicUrl = `${BASE_URL}/getProfilePic?idUser=${userData.idUser}`;
 
@@ -69,6 +70,8 @@ export default function LayoutProvider(){
         setGroupConversationId,
         addToGroupChatIsSelected,
         setAddToGroupChatIsSelected,
+        groupChatListSelected,
+        setGroupChatListSelected
     }
 
     return(
