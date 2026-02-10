@@ -12,6 +12,8 @@ export default function UserList(){
     const { userData } = useContext(AuthContext)
     const { users } = useContext(UsersOnlineContext);
 
+    // -------------------------------------------------------------
+
     const { data: conversations } = useSuspenseQuery({
         queryKey: ["conversationIds", userData.idUser],
         queryFn: () => 

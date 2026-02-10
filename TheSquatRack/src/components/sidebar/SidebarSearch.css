@@ -1,0 +1,24 @@
+.sidebarSearchRoot{
+
+    display: flex;
+    margin: auto;
+    width: 200px;
+
+}
+
+.sidebarSearchBox{
+
+    all: unset;
+    white-space: nowrap;
+    overflow: hidden;
+    resize: none;
+    overflow-x: auto;
+    font-size: var(--small-font-size);
+    border: 1px solid var(--color-border-dark);
+    color: var(--color-text-bright);
+    border-radius: 10px;
+    line-height: 40px;
+    height: 40px;
+    width: 200px;
+    padding-left: var(--space-3);
+}

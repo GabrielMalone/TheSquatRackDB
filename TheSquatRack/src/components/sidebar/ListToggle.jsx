@@ -2,10 +2,11 @@ import './ListToggle.css'
 import { Icon } from '@iconify/react';
 import { LayoutContext } from '../../layoutContext';
 import { useContext } from 'react';
+import SidebarSearch from './SidebarSearch';
 
 export default function ListToggle() {
 
-    const { setGroupChatListSelected } = useContext(LayoutContext);
+    const { setGroupChatListSelected } = useContext(LayoutContext);    
 
     return (
         <div className='listToggleRoot'>
@@ -33,6 +34,7 @@ export default function ListToggle() {
                     />
                 </button>
             </div>
+            <SidebarSearch />
         </div>
     );
 }

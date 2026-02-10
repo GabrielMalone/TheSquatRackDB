@@ -1,7 +1,8 @@
 .listToggleRoot {
 
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    gap: var(--space-5);
 
 }
 
@@ -9,8 +10,6 @@
 
     display: flex;
     flex-direction: row;
-    gap: var(--space-5);
-    margin: auto;
 
 }
 
@@ -19,15 +18,18 @@
     color: var(--color-text-muted);
     width: var(--icon-size-small);
     opacity: var(--dimmed);
-    cursor: pointer;
+    cursor: pointer;    
 
 }
 
 #dmsIcon:hover {
+
     opacity: var(--filled);
+
 }
 
 #groupChatIcon:hover {
+
     opacity: var(--filled);
 }
 

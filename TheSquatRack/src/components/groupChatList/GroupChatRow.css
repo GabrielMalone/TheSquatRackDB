@@ -32,8 +32,11 @@
 }
 
 .gcRowUserGrid:hover {
-    background-color: var(--color-hover);
-    opacity: var(--dimmed);
+
+    /* background-color: var(--color-hover);
+    opacity: var(--dimmed); */
+
 }
+
 
 

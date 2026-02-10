@@ -13,7 +13,6 @@ const BASE_URL = import.meta.env.VITE_API_BASE;
 
 export default function UserRow({user, ourConversationId}){
 
-    console.log("our conversation id: ", ourConversationId);
     // -----------------------------------------------------------------------------------
     const msgIcon = <Icon icon="ph:chat-thin"/> ;
     const addToChatIcon = <Icon icon="lets-icons:user-add-light"/> ;

@@ -21,6 +21,12 @@
     opacity: var(--filled);
 }
 
+.avatar:hover img{
+
+    opacity: var(--dimmed);
+
+}
+
 
 .avatarMe {
     opacity: var(--filled);
