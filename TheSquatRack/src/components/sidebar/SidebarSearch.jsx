@@ -1,12 +1,19 @@
 import './SidebarSearch.css'
-import { useContext, useMemo, useState } from 'react';
-import { UsersOnlineContext } from '../userList/UserOnlineContext';
+import { useContext, useMemo } from 'react';
+import { UsersOnlineContext } from '../userList/UserOnlineContext'
+import { LayoutContext } from '../../layoutContext';
 
 export default function SidebarSearch(){
     // -------------------------------------------------------------
-    const [searchQuery, setSearchQuery] = useState("");
+
+    // place the searchresults from handleasarch users in the layout context too
+    // then when we search we create the userlist from the search results
 
     const { users } = useContext(UsersOnlineContext)
+    // need the groups too
+
+    const { setIsUserSearching, setFoundUsers, groupChatListSelected } = useContext(LayoutContext);
+
     // -------------------------------------------------------------
     // map them for search and memoize 
     const userMap = useMemo(() => {
@@ -21,28 +28,48 @@ export default function SidebarSearch(){
 
         q = q.toLowerCase();
 
+        let results = []
+
         if (q.length < 1) {
           
              return;
         }
+        if (! groupChatListSelected){
+            // users search
+            const resultsMap = new Map();
 
-        const resultsMap = new Map();
-        const results = [];
-
-        for (const [key, user] of userMap.entries()) {
-            if (key.toLowerCase().includes(q)) {
-                resultsMap.set(user.userName, user);
+            for (const [key, user] of userMap.entries()) {
+                if (key.toLowerCase().includes(q)) {
+                    resultsMap.set(user.userName, user);
+                }
             }
-        }
-        // eslint-disable-next-line no-unused-vars
-        for (const [key, lift] of resultsMap.entries()) {
-            results.push(lift);
-        }
-        results.sort((a, b) =>{
-            return a.exerciseID - b.exerciseID;
-        });
+            // eslint-disable-next-line no-unused-vars
+            for (const [key, lift] of resultsMap.entries()) {
+                results.push(lift);
+            }
+            results.sort((a, b) =>{
+                return a.exerciseID - b.exerciseID;
+            });
 
-        console.log("results! ", results)
+        } else {
+            // groups search
+            const resultsMap = new Map();
+
+            for (const [key, user] of userMap.entries()) {
+                if (key.toLowerCase().includes(q)) {
+                    resultsMap.set(user.userName, user);
+                }
+            }
+            // eslint-disable-next-line no-unused-vars
+            for (const [key, lift] of resultsMap.entries()) {
+                results.push(lift);
+            }
+            results.sort((a, b) =>{
+                return a.exerciseID - b.exerciseID;
+            });            
+        }
+
+        setFoundUsers(results);
      
     }
     // -------------------------------------------------------------
@@ -56,7 +83,11 @@ export default function SidebarSearch(){
                     }
                 }}
                 onChange={(e)=>{
-                    setSearchQuery(e.target.value)
+                    if (e.target.value===""){
+                        setIsUserSearching(false);
+                        return;
+                    }
+                    setIsUserSearching(true);
                     handleSearchUsers(e.target.value);
                 }}
                 placeholder='search'

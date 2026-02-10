@@ -8,9 +8,10 @@
 
 .listIcons {
 
-    display: flex;
     flex-direction: row;
-
+    gap: var(--space-2);
+    display: flex;
+    
 }
 
 .listIcons svg {
@@ -19,7 +20,8 @@
     width: var(--icon-size-small);
     opacity: var(--dimmed);
     cursor: pointer;    
-
+    display: flex;
+    height: auto;
 }
 
 #dmsIcon:hover {

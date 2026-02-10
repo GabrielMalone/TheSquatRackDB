@@ -7,10 +7,7 @@ import { get } from '../../hooks/fetcher';
 
 export default function GroupChatList(){
     
-    // okay here write a query to get all the group chats this user is a part of
-
     const { userData } = useContext(AuthContext)
-
 
     const { data: groupChatIds } = useSuspenseQuery({
         queryKey: ["getGroupChatIds", userData.idUser],
