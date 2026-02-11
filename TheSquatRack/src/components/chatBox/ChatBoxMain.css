@@ -15,16 +15,43 @@
 }
 
 .emptyChat {
+
     color: var(--color-text-muted);
     font-size: var(--24px);
     padding: var(--space-5);
+
 }
 
 .chatMsgProfilePic svg{
+
     width: var(--icon-size-small);
+
+}
+
+
+.typingInChat {
+
+    display: flex;
+
+
+}
+
+.userTyping {
+
+    display: flex;
+    margin-top: auto;
+    margin-bottom: auto;
+    color: var(--color-text-muted);
+    font-size: var(--12px);
+    font-style: italic;
+    text-align: center;
+
 }
 
 .typingIconInChat svg {
-    color: var(--color-text-muted);
+
+    display: flex;
+    color: var(--color-online-indicator);
     width: var(--icon-size-small);
+
 }

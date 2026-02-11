@@ -20,19 +20,26 @@
 }
 
 .profilePicChatBoxHeader svg {
+
     color: var(--color-text-muted);
+
 }
 
 .onlineProficHeader svg {
+
     color: var(--color-online-indicator);
+
 }
 
 
 .onlineProficHeaderName {
+
     color: var(--color-online-indicator);
+
 }
 
 .userNameChatBoxHeader {
+
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -40,6 +47,7 @@
     text-align: center;
     color: var(--color-text-muted);
     font-size: var(--small-font-size);
+    
 }
 
 .chatTitle{

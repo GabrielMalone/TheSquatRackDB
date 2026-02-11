@@ -43,30 +43,30 @@ export default function UserList(){
         <div className='userListRoot'>
             
             { 
-                isUserSearching ?
+            isUserSearching ?
 
-                fu.map((user)=>{
-                    return (
-                        <UserRow 
-                            key={user.idUser} 
-                            user={user} 
-                            ourConversationId={
-                                conversations.find(c => c.otherUserId === user.idUser)?.idConversation
-                            }
-                        />
-                    );})
-                
-                :
+            fu.map((user)=>{
+                return (
+                    <UserRow 
+                        key={user.idUser} 
+                        user={user} 
+                        ourConversationId={
+                            conversations.find(c => c.otherUserId === user.idUser)?.idConversation
+                        }
+                    />
+                );})
+            
+            :
 
-                u.map((user)=>{
-                    return (
-                        <UserRow 
-                            key={user.idUser} 
-                            user={user} 
-                            ourConversationId={
-                                conversations.find(c => c.otherUserId === user.idUser)?.idConversation
-                            }
-                        />
+            u.map((user)=>{
+                return (
+                    <UserRow 
+                        key={user.idUser} 
+                        user={user} 
+                        ourConversationId={
+                            conversations.find(c => c.otherUserId === user.idUser)?.idConversation
+                        }
+                    />
                 );})
             }
 

@@ -91,7 +91,14 @@ export default function ChatBoxMain( { idConversation } ){
                 && (userInChat?.idUser === idUserTyping) 
                 && (idUserRecipient == userData.idUser ) ? 
 
-                <div className='typingIconInChat'>{typingIcon}</div> 
+                <div className='typingInChat'>
+                    <div className='typingIconInChat'>
+                        {typingIcon}
+                    </div> 
+                    <div className='userTyping'>
+                        {userInChat.userName} is typing
+                    </div>
+                </div>
 
                 : null
             } 

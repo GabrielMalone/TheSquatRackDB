@@ -35,6 +35,7 @@ export default function LayoutProvider(){
     const [groupChatIsDocked, setGroupChatIsDocked] = useState(false);
     const [groupChatListSelected, setGroupChatListSelected] = useState(false);
     const [isUserSearching, setIsUserSearching] = useState(false);
+    const [groupChats, setGroupChats] = useState(null);
     const [foundUsers, setFoundUsers] = useState(null)
 
     const profilePicUrl = `${BASE_URL}/getProfilePic?idUser=${userData.idUser}`;
@@ -77,10 +78,11 @@ export default function LayoutProvider(){
         isUserSearching,
         setIsUserSearching,
         foundUsers,
-        setFoundUsers
-    }
+        setFoundUsers,
+        groupChats,
+        setGroupChats
 
-    console.log("user is searching: ", isUserSearching, foundUsers);
+    }
 
     return(
         <LayoutContext.Provider value={layout}>

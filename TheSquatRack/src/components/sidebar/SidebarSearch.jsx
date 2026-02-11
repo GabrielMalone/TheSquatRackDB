@@ -10,9 +10,7 @@ export default function SidebarSearch(){
     // then when we search we create the userlist from the search results
 
     const { users } = useContext(UsersOnlineContext)
-    // need the groups too
-
-    const { setIsUserSearching, setFoundUsers, groupChatListSelected } = useContext(LayoutContext);
+    const { setIsUserSearching, setFoundUsers, groupChatListSelected, groupChats } = useContext(LayoutContext);
 
     // -------------------------------------------------------------
     // map them for search and memoize 
@@ -35,38 +33,23 @@ export default function SidebarSearch(){
              return;
         }
         if (! groupChatListSelected){
+            
             // users search
-            const resultsMap = new Map();
-
             for (const [key, user] of userMap.entries()) {
                 if (key.toLowerCase().includes(q)) {
-                    resultsMap.set(user.userName, user);
+                    results.push(user);
                 }
             }
-            // eslint-disable-next-line no-unused-vars
-            for (const [key, lift] of resultsMap.entries()) {
-                results.push(lift);
-            }
-            results.sort((a, b) =>{
-                return a.exerciseID - b.exerciseID;
-            });
 
         } else {
-            // groups search
-            const resultsMap = new Map();
 
-            for (const [key, user] of userMap.entries()) {
+            // groups search
+            for (const [key, gc] of groupChats.entries()) {
                 if (key.toLowerCase().includes(q)) {
-                    resultsMap.set(user.userName, user);
+                    results.push(gc);
                 }
             }
-            // eslint-disable-next-line no-unused-vars
-            for (const [key, lift] of resultsMap.entries()) {
-                results.push(lift);
-            }
-            results.sort((a, b) =>{
-                return a.exerciseID - b.exerciseID;
-            });            
+
         }
 
         setFoundUsers(results);
